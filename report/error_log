@@ -1,0 +1,241 @@
+[06-Apr-2019 12:56:01 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing/savedata.php on line 4
+[06-Apr-2019 13:02:04 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing/savedata.php on line 4
+[06-Apr-2019 13:04:17 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing/savedata.php on line 4
+[11-Apr-2019 17:26:05 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 4
+[11-Apr-2019 17:27:56 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 4
+[11-Apr-2019 17:32:27 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 4
+[11-Apr-2019 17:33:40 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 4
+[11-Apr-2019 17:39:17 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(142): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[11-Apr-2019 17:39:46 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 4
+[11-Apr-2019 18:12:16 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:12:16 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:12:16 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:13:09 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:13:09 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:13:09 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:13:15 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:13:15 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:13:15 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:15:41 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:15:41 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:15:41 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:15:45 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:15:45 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:15:45 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:18:08 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:18:08 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:18:08 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:18:08 Etc/GMT] PHP Notice:  Undefined variable: favicon in /home/spicisgc/public_html/project/roofing_latest/index.php on line 10
+[11-Apr-2019 18:18:08 Etc/GMT] PHP Notice:  Undefined variable: logo in /home/spicisgc/public_html/project/roofing_latest/index.php on line 17
+[11-Apr-2019 18:18:24 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:18:24 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:18:24 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:18:24 Etc/GMT] PHP Notice:  Undefined variable: favicon in /home/spicisgc/public_html/project/roofing_latest/index.php on line 10
+[11-Apr-2019 18:18:24 Etc/GMT] PHP Notice:  Undefined variable: logo in /home/spicisgc/public_html/project/roofing_latest/index.php on line 17
+[11-Apr-2019 18:20:01 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:20:01 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 14
+[11-Apr-2019 18:20:01 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 15
+[11-Apr-2019 18:20:01 Etc/GMT] PHP Notice:  Undefined variable: favicon in /home/spicisgc/public_html/project/roofing_latest/index.php on line 10
+[11-Apr-2019 18:20:01 Etc/GMT] PHP Notice:  Undefined variable: logo in /home/spicisgc/public_html/project/roofing_latest/index.php on line 17
+[11-Apr-2019 18:21:58 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:21:58 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:21:58 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[11-Apr-2019 18:22:07 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:22:07 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:22:07 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[11-Apr-2019 18:24:06 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:24:06 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:24:06 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[11-Apr-2019 18:25:21 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:25:21 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:25:21 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[11-Apr-2019 18:25:25 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:25:25 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:25:25 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[11-Apr-2019 18:26:09 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:26:09 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:26:09 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[11-Apr-2019 18:26:14 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:26:14 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:26:14 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[11-Apr-2019 18:26:14 Etc/GMT] PHP Notice:  Undefined variable: db in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:26:14 Etc/GMT] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 16
+[11-Apr-2019 18:26:14 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/connection.php on line 17
+[18-Apr-2019 03:38:34 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 03:41:58 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 04:22:33 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 114
+[18-Apr-2019 04:22:33 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 04:23:24 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 114
+[18-Apr-2019 04:23:24 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 04:25:08 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 114
+[18-Apr-2019 04:25:08 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 04:26:18 Etc/GMT] PHP Notice:  Undefined index: imagebox in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 4
+[18-Apr-2019 04:27:28 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 04:27:53 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 04:30:53 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 06:47:25 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 114
+[18-Apr-2019 06:47:25 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 06:47:55 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 114
+[18-Apr-2019 06:47:55 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[18-Apr-2019 06:50:14 Etc/GMT] PHP Notice:  Trying to get property of non-object in /home/spicisgc/public_html/project/roofing_latest/savedata.php on line 114
+[18-Apr-2019 06:50:14 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing_latest/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing_latest/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing_latest/savedata.php(140): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing_latest/fpdf.php on line 271
+[19-Apr-2019 05:27:50 Etc/GMT] PHP Notice:  Undefined index: id in /home/spicisgc/public_html/project/roofing-crm/report/index.php on line 5
+[19-Apr-2019 05:59:21 Etc/GMT] PHP Parse error:  syntax error, unexpected '.' in /home/spicisgc/public_html/project/roofing-crm/report/savedata.php on line 10
+[19-Apr-2019 07:06:22 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php(124): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php on line 271
+[19-Apr-2019 11:03:04 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php(124): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php on line 271
+[20-Apr-2019 02:23:38 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php(124): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php on line 271
+[20-Apr-2019 11:23:56 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:23:59 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:24:01 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:24:03 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:24:09 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:24:38 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:24:39 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:24:41 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 100
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:48:55 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 11:49:24 Etc/GMT] PHP Notice:  Undefined variable: nbsp in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 109
+[20-Apr-2019 12:11:52 Etc/GMT] PHP Fatal error:  Call to undefined method PDF::WriteHTML() in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 119
+[20-Apr-2019 12:11:54 Etc/GMT] PHP Fatal error:  Call to undefined method PDF::WriteHTML() in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 119
+[20-Apr-2019 12:17:08 Etc/GMT] PHP Fatal error:  Call to undefined method PDF::WriteHTML() in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 119
+[20-Apr-2019 12:23:11 Etc/GMT] PHP Notice:  Use of undefined constant image - assumed 'image' in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:23:11 Etc/GMT] PHP Notice:  Use of undefined constant logo - assumed 'logo' in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:23:11 Etc/GMT] PHP Warning:  Division by zero in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:23:11 Etc/GMT] PHP Notice:  Use of undefined constant png - assumed 'png' in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:25:01 Etc/GMT] PHP Fatal error:  Using $this when not in object context in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:25:03 Etc/GMT] PHP Fatal error:  Using $this when not in object context in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:25:28 Etc/GMT] PHP Fatal error:  Using $this when not in object context in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:25:29 Etc/GMT] PHP Fatal error:  Using $this when not in object context in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:25:31 Etc/GMT] PHP Fatal error:  Using $this when not in object context in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 112
+[20-Apr-2019 12:28:04 Etc/GMT] PHP Parse error:  syntax error, unexpected ';' in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 110
+[20-Apr-2019 12:28:06 Etc/GMT] PHP Parse error:  syntax error, unexpected ';' in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 110
+[20-Apr-2019 13:01:03 Etc/GMT] PHP Fatal error:  Uncaught exception 'Exception' with message 'FPDF error: Some data has already been output, can't send PDF file' in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php:271
+Stack trace:
+#0 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(1063): FPDF->Error('Some data has a...')
+#1 /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php(999): FPDF->_checkoutput()
+#2 /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php(138): FPDF->Output()
+#3 {main}
+  thrown in /home/spicisgc/public_html/project/roofing-crm/report/fpdf.php on line 271
+[20-Apr-2019 18:28:50 Etc/GMT] PHP Notice:  Undefined index: id in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 96
+[20-Apr-2019 18:28:50 Etc/GMT] PHP Notice:  Undefined index: id in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 97
+[20-Apr-2019 18:28:50 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 101
+[20-Apr-2019 18:28:59 Etc/GMT] PHP Notice:  Undefined index: id in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 96
+[20-Apr-2019 18:28:59 Etc/GMT] PHP Notice:  Undefined index: id in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 97
+[20-Apr-2019 18:28:59 Etc/GMT] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/spicisgc/public_html/project/roofing-crm/report/pdffile.php on line 101
