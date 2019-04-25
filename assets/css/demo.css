@@ -1,0 +1,148 @@
+@media (min-width: 992px){
+    .typo-line{
+        padding-left: 140px;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .typo-line .category{
+        transform: translateY(-50%);
+        top: 50%;
+        left: 0px;
+        position: absolute;
+    }
+}
+
+.all-icons [class*="pe-"]{
+    font-size: 40px;
+}
+.all-icons input{
+    border: 0;
+}
+.all-icons .font-icon-detail{
+    text-align: center;
+    padding: 45px 0px 30px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+.all-icons .font-icon-detail input{
+    margin: 25px auto 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+    color: #aaa;
+    font-size: 13px;
+}
+
+#map{
+    position:relative;
+    width:100%;
+    height: calc(100% - 60px);
+}
+
+.places-buttons .btn{
+    margin-bottom: 30px
+}
+.sidebar .nav > li.active-pro{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+}
+.sidebar .nav > li.active-pro a{
+    background: rgba(255, 255, 255, 0.14);
+    opacity: 1;
+    color: #FFFFFF;
+}
+
+.table-upgrade td:nth-child(2),
+.table-upgrade td:nth-child(3){
+    text-align: center;
+}
+
+@media all and (max-width: 991px)  {
+    .sidebar .nav > li.active-pro{
+        position: initial;
+    }
+}
+img{width:100%}
+.image_div img {
+
+height: 140px;
+
+}.image_div {
+
+    float: left;
+    width: 100%;
+    padding: 20px 0;
+
+}.upload-area{
+width: 100%;
+border: 2px solid aliceblue;
+border-radius: 3px;
+margin: 0 auto;
+margin-top: 0px;
+margin-top: 50px;
+text-align: center;
+overflow: auto;
+background: rgba(199,199,199,.4);margin-bottom:20px;
+}
+
+.upload-area:hover{
+cursor: pointer;
+}
+
+.upload-area h1{
+text-align: center;
+font-weight: normal;
+font-family: sans-serif;
+line-height: 31px;
+color: darkslategray;font-size:20px;
+}
+
+.jobphoto{
+display: none !important;
+}
+#wait{display:none;width:69px;height:89px;border:1px solid black;position:fixed;top:50%;left:50%;padding:2px;z-index: 99999999999999;}
+.color-ul li {
+
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border: 1px solid gray;
+    margin-right: 3px;
+    margin-left: 16px;
+
+}
+.color-ul {
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+.red{background:#ff3333;}
+.green{background:#00ff00;}
+.orange{background-color:orange;}
+.black{background:#000000;}
+.del-photo.pe-7s-close {
+    color: white;
+    font-size: 33px;
+    position: absolute;
+    background: black;top:-17px;
+    display:none;right:0;
+}
+.image_div > div {
+    position: relative;
+}
+.image_div > div:hover .del-photo{display:block;
+    
+}
+#myTable .pe-7s-close {
+
+    width: 30px;
+    color: white;
+    font-size: 30px;
+    background: red;
+
+}
