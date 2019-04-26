@@ -342,6 +342,30 @@ class Server extends CI_Controller {
 		echo $posts['color'];
 	}
 
+	public function imagerotate(){
+		$posts = $this->input->post();
+	  	$filename   =   $_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/".$posts['name'];//base_url()."assets/job_photo/".$posts['name'];
+		$savename     = $filename;
+		$angle=90;
+	    // Your original file
+        $original   =   imagecreatefromjpeg($filename);
+        // Rotate
+        $rotated    =   imagerotate($original, $angle, 0);
+        // If you have no destination, save to browser
+        if($savename == false) {
+                header('Content-Type: image/jpeg');
+                imagejpeg($rotated);
+            }
+        else{
+            // Save to a directory with a new filename
+            imagejpeg($rotated,$savename);
+		}
+        // Standard destroy command
+        imagedestroy($rotated);
+
+	   //echo $_SERVER['DOCUMENT_ROOT'];
+	}
+
 
 
 }

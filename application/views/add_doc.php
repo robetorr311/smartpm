@@ -18,6 +18,7 @@ echo '</div>';
 ?>
                             </div>
                             <div class="content">
+							<input type="hidden" />
                                <div class="image_div">
                                <table class="table table-hover table-striped">   
               <?php $i=0; foreach( $docs as $doc ) : ?>  
@@ -41,7 +42,7 @@ echo '</div>';
        	<div class="form-element">
 				<input type="file" class="jobdoc" name="doc[]" id="<?php echo $jobid; ?>" multiple />
 				<div class="upload-doc-area"  id="<?php echo $jobid; ?>">
-					<h1>Drag and Drop file here<br/>Or<br/>Click to select file</h1>
+					<h1>Drag and Drop file here <br/>Or<br/>Click to select file</h1>
 				</div>
 			</div>
             </div>
