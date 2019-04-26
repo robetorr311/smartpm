@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller {
 			die;
 		}
 		
-		$expireAfter = 10;
+		$expireAfter = 30;
 		 
 		//Check to see if our "last action" session
 		//variable has been set.
