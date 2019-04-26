@@ -207,14 +207,6 @@ class Server extends CI_Controller {
 		
 	}
 	public function ajaxupload_jobphoto(){
-		
-		/*if ( 0 < $_FILES['file']['error'] ) {
-			echo 'Error: ' . $_FILES['file']['error'] . '<br>';
-		}
-		else {
-			move_uploaded_file($_FILES['file']['tmp_name'], 'assets/job_photo/' . $_FILES['file']['name']);
-			echo $_FILES['file']['name'];
-		}*/
 		       
  if(is_array($_FILES) && !empty($_FILES['photo']))  
  {  
@@ -242,6 +234,37 @@ class Server extends CI_Controller {
 		
 	}
 	
+	public function ajaxupload_jobdoc(){
+		       
+ if(is_array($_FILES) && !empty($_FILES['doc']))  
+ {  
+	  $doc=array();
+	  $doc_name=array();$i=0;
+      foreach($_FILES['doc']['name'] as $key => $filename)  
+     {  	
+		  	
+           $file_name = explode(".", $filename);  
+           $allowed_extension = array("jpg","pdf","jpeg","gif","png","doc","docx","xls","xlsx","ppt","pptx","txt","zip","rar","gzip");  
+           if(in_array($file_name[1], $allowed_extension))  
+           {  
+                $new_name = $_FILES["doc"]["name"][$key];  
+                $sourcePath = $_FILES["doc"]["tmp_name"][$key];  
+                $targetPath = "assets/job_doc/".$new_name;  
+                move_uploaded_file($sourcePath, $targetPath);  
+				$doc[$i]=$_FILES["doc"]["name"][$key];
+				$i++;
+           } 
+      }
+
+		echo json_encode($doc);
+      
+      
+ }
+		
+	}
+	
+	
+	
 	public function ajaxsave(){
 		$posts = $this->input->post();
 		if($posts['id']=='logo'){
@@ -267,23 +290,39 @@ class Server extends CI_Controller {
 			$insertId = $this->db->insert_id();
 			echo '<div id="ph'.$insertId.'" class="col-md-2"><i class="del-photo pe-7s-close" id="'.$insertId.'"></i><a href="#" class="pop"><img src="'.base_url().'assets/job_photo/'.$data[$i].'" /></a></div>';
 		}
+	}
+	
+	public function ajaxsave_jobdoc(){
+		$posts = $this->input->post();
+		$data = json_decode($posts['name'], true);
+		//print_r($data);
 		
-		//$params = array();
-		//$params['job_id'] 		= $posts['id'];
-		//$params['image_name'] 		= $posts['name'];
-		//$params['entry_date'] 		= date('Y-m-d h:i:s');
-		//$params['is_active'] 		= TRUE;
-		//$this->db->insert('jobs_photo', $params);
-		//$insertId = $this->db->insert_id();
-		//echo $insertId;
-		
-		//'<div id="ph'+photoid+'" class="col-md-2"><i class="del-photo pe-7s-close" id="'+photoid+'"></i><a href="#" class="pop"><img src="'+baseUrl+'assets/job_photo/'+php_script_response+'" /></a></div>'
+		for($i=0;$i<count($data);$i++){
+			$params = array();
+			$params['job_id'] 		= $posts['id'];
+			$params['doc_name'] 		= $data[$i];
+			$params['entry_date'] 		= date('Y-m-d h:i:s');
+			$params['is_active'] 		= TRUE;
+			$this->db->insert('jobs_doc', $params);
+			$insertId = $this->db->insert_id();
+			echo '<tr id="doc'.$insertId.'"><td></td><td>'.$data[$i].'</td><td><i class="del-doc pe-7s-close" id="'.$insertId.'"></i></td><td><a href="'.base_url().'assets/job_doc/'.$data[$i].'"  target="_blank">view</a></td></tr>';
+			
+
+			 
+		}
 	}
 	 
 	public function deletephoto(){
 	   
 		$posts = $this->input->post();
 		$this->db->query("UPDATE jobs_photo SET is_active=0 WHERE id='".$posts['id']."'");
+		return true;
+	}
+	
+	public function deletedoc(){
+	   
+		$posts = $this->input->post();
+		$this->db->query("UPDATE jobs_doc SET is_active=0 WHERE id='".$posts['id']."'");
 		return true;
 	}
 	
