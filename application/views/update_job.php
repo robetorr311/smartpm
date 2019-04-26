@@ -107,9 +107,11 @@ echo '</div>';
                                     
                                     <hr>
                                     <a href="<?php echo base_url('index.php/dashboard/addphoto/'.$job->id);?>" class="btn btn-success btn-fill">Photo</a>
+									
   <!-- <a href="http://developeradda.tech/project/roofing-crm/report/?id=<?php echo $job->id ?>" target="_blank" class="btn btn-danger btn-fill">Photo Report</a>-->
    <a href="<?php echo base_url();?>index.php/dashboard/alljobreport/<?php echo $job->id ?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
+   <a href="<?php echo base_url('index.php/dashboard/adddoc/'.$job->id);?>" class="btn btn-danger btn-fill">Docs</a>
                                 </div>
 								                                   <?php endforeach; ?>
 					</div>

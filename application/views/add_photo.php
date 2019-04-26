@@ -22,7 +22,7 @@ echo '</div>';
                                   
               <?php foreach( $imgs as $img ) : ?>  
               
-              <div class="col-md-2" id="ph<?php echo $img->id; ?>"><i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i><a href="#" class="pop"><img src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" /></a></div>
+              <div class="col-md-2" id="ph<?php echo $img->id; ?>"><i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i><a alt="photo<?php echo $img->id; ?>" href="#" class="pop"><img src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" /></a></div>
               
                                    <?php endforeach; ?>
                                </div>

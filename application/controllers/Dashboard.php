@@ -114,6 +114,20 @@ class Dashboard extends CI_Controller {
 		$this->load->view('add_photo', $data);
 		$this->load->view('footer');
 	}
+	
+	public function adddoc($job_id = NULL)
+	{	
+	    $data = array(
+         'jobid' => $job_id
+         );
+        $params = array();
+		$params['job_id'] =$job_id;
+		$params['is_active'] =1;
+		$data['docs'] = $this->Common_model->get_all_where( 'jobs_doc', $params );
+		$this->load->view('header');
+		$this->load->view('add_doc', $data);
+		$this->load->view('footer');
+	}
 	public function logout(){
 		$this->session->sess_destroy();
 		foreach($_SESSION as $keys => $values) {
