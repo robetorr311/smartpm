@@ -332,6 +332,31 @@
 						}
 					 });
 				});
+
+
+				
+$(document).on('click', '.doc_list span',  function () {
+					var id = $(this).attr('class');
+					$('#doctext'+id).toggle();
+					$('#docp'+id).toggle();
+				});
+
+			
+ $(document).on('change', '.docname',  function () {
+					var data = $(this).val();
+					var id = $(this).attr('name');
+					$.ajax({
+						url: baseUrl+'index.php/server/updatedocname',
+						data: {na: data, id: id},        
+						type: 'post',
+						success: function(php_script_response){
+
+						$('#doctext'+id).toggle();
+						$('#docp'+id).toggle();
+						$('#docp'+id).html(data);
+						}
+					 });
+				});	
 				
 			
     	});
@@ -356,7 +381,7 @@
               });
 			  
 		  $('#rotate').click(function(){
-				var angle = ($('.imagepreview').data('angle') - 90) || -90;
+			var angle = ($('.imagepreview').data('angle') - 90) || -90;
 			    $('.imagepreview').css({'transform': 'rotate(' + angle + 'deg)'});
 			   // $('.imagepreview').data('angle', angle);
 			    var name=$(this).attr('name');
@@ -367,8 +392,7 @@
 						success: function(php_script_response){
 							//alert(php_script_response);
 							 $('.imagepreview').data('angle', angle);
-						//	 alert(imgclass);
-							 $('.img'+imgclass).data('angle', angle);
+						
 						}
 					 });
 			});

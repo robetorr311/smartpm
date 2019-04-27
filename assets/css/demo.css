@@ -178,5 +178,18 @@ display: none !important;
 }.modal-body {
     overflow-y: scroll;
 }.del-doc {
+    font-size: 29px;
+background: red;
+color: white;
+}
+.pop img {
+
+    border: 2px solid gray;
+    margin-bottom: 20px;
+
+}
+.doc_list td span {
+    float: left;
+    display: block;
     font-size: 30px;
 }

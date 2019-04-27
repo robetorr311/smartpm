@@ -6,7 +6,7 @@
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">Add Photo</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
+                                <h4 class="title" style="float: left;">Photos</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
 <div class="clearfix"></div>
                                  <?= $this->session->flashdata('message') ?>
                                                              <?php if (validation_errors())
@@ -22,7 +22,7 @@ echo '</div>';
                                   
               <?php foreach( $imgs as $img ) : ?>  
               
-              <div class="col-md-2" id="ph<?php echo $img->id; ?>"><i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i><a alt="<?php echo $img->image_name ?>" href="#<?php echo $img->id; ?>" class="pop"><img class="img#<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" /></a></div>
+              <div class="col-md-2" id="ph<?php echo $img->id; ?>"><i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i><a alt="<?php echo $img->image_name ?>" href="#<?php echo $img->id; ?>" class="pop"><img class="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" /></a></div>
               
                                    <?php endforeach; ?>
                                </div>
