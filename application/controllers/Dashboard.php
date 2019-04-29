@@ -62,9 +62,53 @@ class Dashboard extends CI_Controller {
 		$params['is_active'] = 1;
 		$query['job'] = $this->Common_model->get_all_where( 'jobs', $params );
 		$this->load->view('header');
+		$this->load->view('cash_job',$query);
+		$this->load->view('footer');
+	}
+	public function alllead()
+	{	
+		$params = array();
+		$params['is_active'] = 1;
+		$query['job'] = $this->Common_model->get_all_where( 'jobs', $params );
+		$this->load->view('header');
 		$this->load->view('job',$query);
 		$this->load->view('footer');
 	}
+	public function allinsurance()
+	{	
+		$params = array();
+		$params['is_active'] = 1;
+		$query['job'] = $this->Common_model->get_all_where( 'jobs', $params );
+		$this->load->view('header');
+		$this->load->view('insurance_job',$query);
+		$this->load->view('footer');
+	}
+	public function teams()
+	{	
+		$params = array();
+		$params['is_active'] = 1;
+		$query['job'] = $this->Common_model->get_all_where( 'jobs', $params );
+		$this->load->view('header');
+		$this->load->view('team',$query);
+		$this->load->view('footer');
+	}
+	public function addteams()
+	{	
+		$this->load->view('header');
+		$this->load->view('add_team');
+		$this->load->view('footer');
+	}
+
+	public function user()
+	{	
+		$params = array();
+		$params['is_active'] = 1;
+		$query['job'] = $this->Common_model->get_all_where( 'jobs', $params );
+		$this->load->view('header');
+		$this->load->view('user',$query);
+		$this->load->view('footer');
+	}
+
 	public function addjob()
 	{
 		$this->load->view('header');

@@ -31,6 +31,9 @@ class Server extends CI_Controller {
 			$this->session->set_userdata('admindata',$result1);
 					redirect('dashboard');
 				} else {
+					$message = '<div class="error" title="Error:">Username or Password not correct. Please try again!</div>';
+					$this->session->set_flashdata('message',$message);
+
 					$this->load->view('login');
 				}
 			}else
@@ -51,29 +54,21 @@ class Server extends CI_Controller {
 		{
 			$this->form_validation->set_rules('username','Username','trim|required');
 			$this->form_validation->set_rules('password','Password','trim|required');
-			$this->form_validation->set_rules('email','Email','trim|required');
-			$this->form_validation->set_rules('mobile','Mobile','trim|required');
+			$this->form_validation->set_rules('email','Email','trim|required|is_unique[users.email]');
 			if( $this->form_validation->run() == TRUE ) {
 				$posts = $this->input->post();
 				$posts = $this->input->post();
 				$params = array();
 				$params['username'] 		= $posts['username'];
 				$params['password'] 		= $posts['password'];
-			//	$params['mobile'] 		= $posts['mobile'];
 				$params['email'] 		= $posts['email'];
-			//	$params['entry_date'] 			= date('Y-m-d h:i:s');
-			//	$params['is_active'] 			= TRUE;
 				$query = $this->Common_model->add_record( 'users', $params );
 			    if( $query ) {
-					$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
-					$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Account Created Successfully! Please login</strong>';
-					$message .= '</div>';
+					$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
 					$this->session->set_flashdata('message',$message);
 					$this->load->view('login');
 				} else {
-					$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
-					$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Account not created!</strong>';
-					$message .= '</div>';
+					$message = '<div class="error" title="Error:" >Account not created. Please try again!</div>';
 					$this->session->set_flashdata('message',$message);
 				    redirect('home/register');
 				}

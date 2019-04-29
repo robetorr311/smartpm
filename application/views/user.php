@@ -7,25 +7,24 @@
                                          <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                    <a href="<?php echo base_url('index.php/dashboard/addjob');?>" class="btn btn-info btn-fill pull-right">Add New Job</a>
+                                
                                  </div>
                             </div>
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>
-                                <h4 class="title">Job List</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title">User List</h4>
+                               
                             </div>
-                            <div class="content table-responsive table-full-width">
+                            <div class="content table-responsive table-full-width user" >
                                 <table class="table table-hover table-striped">
-                                    <thead>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Job Name</th>
+                                    <thead style="background: gray;">
+                                        
+                                        <th>User ID</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Address</th>
                                         <th>Email</th>
-                                        <th>Status</th>
+                                        <th>Team</th>
                                       
                                         
                                     </thead>
@@ -34,18 +33,17 @@
                                     <?php if( !empty( $job ) ) : ?>
               <?php foreach( $job as $jobs ) : ?>  
                 <tr>
-               <td><a href="<?php echo base_url();?>index.php/dashboard/update_job/<?php echo $jobs->id ?>"><img src="<?php echo base_url('assets/img/document_edit.png');?>" style="width: 35px;"/></a></td>
+               
                   <td><?php echo $jobs->id ?></td>
-                  <td><?php echo $jobs->job_name ?></td>
                   <td><?php echo $jobs->firstname ?></td>
                   <td><?php echo $jobs->lastname ?></td>
                   <td><?php echo $jobs->address ?></td>
                   <td><?php echo $jobs->email ?></td>
                   <td><select class="form-control">
-                        <option value="lead">Lead</option>
-                        <option value="lead">Cash job</option>
-                        <option value="lead">Insurance job</option>
-                        <option value="lead">Closed</option>
+                        <option value="lead">Select Team</option>
+                        <option value="lead">Team 1</option>
+                        <option value="lead">Team 2</option>
+                        <option value="lead">Team 3</option>
                     </select>
                  </td>
                  </tr>

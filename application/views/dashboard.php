@@ -2,32 +2,33 @@
     <div class="row dashbord-box">
        <div class="col-md-2">
         	<div class="box alert-success">
-        		<span>07</span>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span>07</span>
         		<p>Open Leads</p>
+        		</a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-warning">
-        		<span>07</span>
-        		<p>Open Cash Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/alljob');?>"><span>656</span>
+        		<p>Open Cash Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-danger">
-        		<span>07</span>
-        		<p>Open Insurance Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/allinsurance');?>"><span>40</span>
+        		<p>Open Insurance Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-info">
-        		<span>07</span>
-        		<p>Complete Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span>407</span>
+        		<p>Complete Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-warning">
-        		<span>07</span>
-        		<p>Closed Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span>057</span>
+        		<p>Closed Jobs</p></a>
         	</div>
         </div>
 	</div>

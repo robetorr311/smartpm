@@ -194,9 +194,9 @@ color: white;
     font-size: 30px;
 }
 .dashbord-box .box {
-    padding: 34px 15px;
+  padding: 15px 15px;
 color: white;
-min-height: 170px;
+min-height: 130px;
 }
 .box span {
     font-size: 30px;
@@ -207,5 +207,16 @@ min-height: 170px;
 }.box p {
    font-size: 16px;
 font-weight: bold;
-text-align: center;
+text-align: center;color: darkolivegreen;
+}
+
+.user th {
+    color: white !important;
+    padding: 20px 10px !important;
+}
+.table-striped > tbody > tr:nth-of-type(2n) {
+    background-color: #fff;
+}
+.box a {
+    color: white;
 }

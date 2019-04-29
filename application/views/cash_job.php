@@ -7,13 +7,13 @@
                                          <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                    <a href="<?php echo base_url('index.php/dashboard/addjob');?>" class="btn btn-info btn-fill pull-right">Add New Job</a>
+                                   <!-- <a href="<?php echo base_url('index.php/dashboard/addjob');?>" class="btn btn-info btn-fill pull-right">Add New Job</a>-->
                                  </div>
                             </div>
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>
-                                <h4 class="title">Job List</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title">Cash Job List</h4>
+                                
                             </div>
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
@@ -25,7 +25,6 @@
                                         <th>Last Name</th>
                                         <th>Address</th>
                                         <th>Email</th>
-                                        <th>Status</th>
                                       
                                         
                                     </thead>
@@ -41,14 +40,7 @@
                   <td><?php echo $jobs->lastname ?></td>
                   <td><?php echo $jobs->address ?></td>
                   <td><?php echo $jobs->email ?></td>
-                  <td><select class="form-control">
-                        <option value="lead">Lead</option>
-                        <option value="lead">Cash job</option>
-                        <option value="lead">Insurance job</option>
-                        <option value="lead">Closed</option>
-                    </select>
-                 </td>
-                 </tr>
+                </tr>
 
 
                       <?php endforeach; ?>
