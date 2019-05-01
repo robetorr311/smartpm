@@ -8,7 +8,7 @@ class Tasks extends CI_Controller
         parent::__construct();
 
         authAdminAccess();
-        sessionTimeout();
+        // sessionTimeout();
 
         $this->load->model('TaskModel');
         $this->load->library(['pagination', 'form_validation']);
@@ -102,7 +102,7 @@ class Tasks extends CI_Controller
         $id = $this->uri->segment(2);
         if ($id) {
             // check with TaskPredecessor
-            
+
             $this->task->delete($id);
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
