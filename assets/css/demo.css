@@ -300,3 +300,37 @@ img {
 .max-1000-form-container {
 	max-width: 1000px;
 }
+.modal-body {
+	overflow-y: scroll;
+}
+.del-doc {
+	font-size: 29px;
+	background: red;
+	color: white;
+}
+.pop img {
+	border: 2px solid gray;
+	margin-bottom: 20px;
+}
+.doc_list td span {
+	float: left;
+	display: block;
+	font-size: 30px;
+}
+.dashbord-box .box {
+	padding: 34px 15px;
+	color: white;
+	min-height: 170px;
+}
+.box span {
+	font-size: 30px;
+	float: right;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+}
+.box p {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+}

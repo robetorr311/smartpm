@@ -298,14 +298,18 @@ class Server extends CI_Controller {
 		//print_r($data);
 		
 		for($i=0;$i<count($data);$i++){
+			 $search = '.'.strtolower(pathinfo($data[$i], PATHINFO_EXTENSION));
+             $trimmed = str_replace($search, '', $data[$i]) ;
+
 			$params = array();
 			$params['job_id'] 		= $posts['id'];
 			$params['doc_name'] 		= $data[$i];
+		    $params['name'] 		= $trimmed;
 			$params['entry_date'] 		= date('Y-m-d h:i:s');
 			$params['is_active'] 		= TRUE;
 			$this->db->insert('jobs_doc', $params);
 			$insertId = $this->db->insert_id();
-			echo '<tr id="doc'.$insertId.'"><td></td><td>'.$data[$i].'</td><td><i class="del-doc pe-7s-close" id="'.$insertId.'"></i></td><td><a href="'.base_url().'assets/job_doc/'.$data[$i].'"  target="_blank">view</a></td></tr>';
+			echo '<tr id="doc'.$insertId.'"><td style="width: 30px"></td><td style="width: 30px"><i class="del-doc pe-7s-close" id="'.$insertId.'"></i></td><td style="width: 30px"><a href="'.base_url().'assets/job_doc/'.$data[$i].'"  target="_blank">view</a></td><td><p id="docp'.$insertId.'">'.$trimmed.'</p><input style="width: 100%;display:none" name="'.$insertId.'" type="text"  class="docname" id="doctext'.$insertId.'" /><span class="'.$insertId.'">Edit</span></td><td >'.$data[$i].'</td></tr>';
 			
 
 			 
@@ -340,6 +344,65 @@ class Server extends CI_Controller {
 		$this->db->query("UPDATE admin_setting SET color='".$posts['color']."' WHERE user_id='".$array['admininfo']['id']."'");
 		 $this->session->set_userdata("color",$posts['color']);
 		echo $posts['color'];
+	}
+
+	public function imagerotate(){
+		$posts = $this->input->post();
+	  	$filename   =   $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$posts['name'];//base_url()."assets/job_photo/".$posts['name'];
+		$savename     = $filename;
+		$angle=90;
+		
+		$original_extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+		if($original_extension == "jpg" or $original_extension == "jpeg"){
+                    $original = imagecreatefromjpeg($filename);
+                }
+		if($original_extension == "gif"){
+			$original = imagecreatefromgif($filename);
+		}
+		if($original_extension == "png"){
+			$original = imagecreatefrompng($filename);
+		}
+		
+	    // Your original file
+       // $original   =   imagecreatefromjpeg($filename);
+        // Rotate
+        $rotated    =   imagerotate($original, $angle, 0);
+        // If you have no destination, save to browser
+        if($savename == false) {
+                header('Content-Type: image/jpeg');
+                imagejpeg($rotated);
+            }
+        else{
+            if($original_extension == "jpg" or $original_extension=="jpeg"){
+                    imagejpeg($rotated, $savename);
+                }
+			if($original_extension == "gif"){
+				imagegif($rotated, $savename);
+			}
+			if($original_extension == "png"){
+				imagepng($rotated, $savename);
+			}
+			
+			// Save to a directory with a new filename
+           // imagejpeg($rotated,$savename);
+		}
+        // Standard destroy command
+        imagedestroy($rotated);
+
+	   //echo $_SERVER['DOCUMENT_ROOT'];
+	}
+
+	public function updatedocname(){
+	   
+		$posts = $this->input->post();
+		$name= $posts['na'];
+		//$this->db->query("UPDATE jobs_doc SET name='".$name."' WHERE id='".$posts['id']."'");
+
+		$this->db->set('name', $name);  //Set the column name and which value to set..
+		$this->db->where('id', $posts['id']); //set column_name and value in which row need to update
+		$this->db->update('jobs_doc');
+		return true;
+		echo $name;
 	}
 
 

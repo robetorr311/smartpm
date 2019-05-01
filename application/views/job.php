@@ -26,7 +26,7 @@
                                         <th>Address</th>
                                         <th>Email</th>
                                       
-                                        <th>Report Link</th>
+                                        
                                     </thead>
                                     <tbody id="myTable">
 
@@ -40,10 +40,6 @@
                   <td><?php echo $jobs->lastname ?></td>
                   <td><?php echo $jobs->address ?></td>
                   <td><?php echo $jobs->email ?></td>
-                 <!-- <td><a href="<?php echo base_url();?>index.php/dashboard/update_job/<?php echo $jobs->id ?>">Update</a></td>-->
-                  <td><!--<a href="http://developeradda.tech/project/roofing_latest/pdffile.php?id=33" target="_blank">View</a>-->
-                  <a href="<?php echo base_url();?>report/pdffile.php?id=<?php echo $jobs->id ?>" target="_blank" class="btn btn-danger btn-fill">Latest Report</a>
-  <!-- <a href="http://developeradda.tech/project/roofing-crm/index.php/dashboard/alljobreport/<?php echo $jobs->id ?>" class="btn btn-success btn-fill">All Report</a>-->
                 </tr>
 
 

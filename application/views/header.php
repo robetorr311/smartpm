@@ -74,7 +74,7 @@
               <li>
                     <a href="<?php echo base_url('index.php/dashboard/alljob');?>">
                         <i class="pe-7s-user"></i>
-                        <p>Jobs</p>
+                        <p>Cash Jobs</p>
                     </a>
                 </li>
               <li>
@@ -89,7 +89,18 @@
                         <p>Setting</p>
                     </a>
                 </li>
-               
+                 <li>
+                    <a href="<?php echo base_url('index.php/dashboard');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Leads</p>
+                    </a>
+                </li>
+               <li>
+                    <a href="<?php echo base_url('index.php/dashboard');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Insurance Jobs</p>
+                    </a>
+                </li>
                
             </ul>
     	</div>
