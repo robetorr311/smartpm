@@ -15,7 +15,7 @@ echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><
 echo validation_errors();
 echo '</div>';
 }
-?>
+?> 
                             </div>
                             <div class="content">
                                <div class="image_div">

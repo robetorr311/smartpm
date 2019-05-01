@@ -220,3 +220,24 @@ text-align: center;color: darkolivegreen;
 .box a {
     color: white;
 }
+.table-responsive{
+    width: 98% !important;
+}
+th {
+    color: white !important;
+    padding: 20px 10px !important;
+    background: gray;
+}
+.status {
+   font-size: 20px;
+font-weight: bold;
+float: right;
+display: block;
+color: white;
+padding: 4px 20px;
+border-radius: 2px;
+}
+.open{background-color:  green}
+.closed{
+   background-color:  red !important; 
+}

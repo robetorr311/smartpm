@@ -1,36 +1,41 @@
  <div class="container-fluid">
     <div class="row dashbord-box">
+      
+              <?php foreach( $data->result() as $dat ) : ?> 
+                          
+                           
+     
        <div class="col-md-2">
         	<div class="box alert-success">
-        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span>07</span>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span><?php echo $dat->LEAD; ?></span>
         		<p>Open Leads</p>
         		</a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-warning">
-        		<a href="<?php echo base_url('index.php/dashboard/alljob');?>"><span>656</span>
+        		<a href="<?php echo base_url('index.php/dashboard/alljob');?>"><span><?php echo $dat->CASH; ?></span>
         		<p>Open Cash Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-danger">
-        		<a href="<?php echo base_url('index.php/dashboard/allinsurance');?>"><span>40</span>
+        		<a href="<?php echo base_url('index.php/dashboard/allinsurance');?>"><span><?php echo $dat->INSURANCE; ?></span>
         		<p>Open Insurance Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-info">
-        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span>407</span>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span><?php echo $dat->CASH; ?></span>
         		<p>Complete Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-warning">
-        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span>057</span>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span><?php echo $dat->CLOSED; ?></span>
         		<p>Closed Jobs</p></a>
         	</div>
-        </div>
+        </div> <?php endforeach; ?>
 	</div>
 </div>
 <div class="container-fluid">

@@ -97,13 +97,18 @@ class Server extends CI_Controller {
 			$this->form_validation->set_rules('city','City','trim|required');
 			$this->form_validation->set_rules('country','State','trim|required');
 			$this->form_validation->set_rules('zip','Postal Code','trim|required');
-			$this->form_validation->set_rules('phone1','Phone 1','trim|required');
-			$this->form_validation->set_rules('phone2','Phone 2','trim');
+			$this->form_validation->set_rules('phone1','Cell Phone','trim|required');
+			$this->form_validation->set_rules('phone2','Home Phone','trim');
 			$this->form_validation->set_rules('email','Email','trim');
 			if( $this->form_validation->run() == TRUE ) {
-				$posts = $this->input->post();
 				
+				$getjob=$this->db->query('SELECT * FROM jobs');
+				$total=$getjob->num_rows();
+				$total++;
+
+				$posts = $this->input->post();
 				$params['job_name'] 		= $posts['jobname'];
+				$params['status'] 		='lead';
 				$params['firstname'] 		= $posts['firstname'];
 				$params['lastname'] 		= $posts['lastname'];
 				$params['address'] 		= $posts['address'];
@@ -115,7 +120,11 @@ class Server extends CI_Controller {
 				$params['email'] 		= $posts['email'];			
 				$params['entry_date'] 			= date('Y-m-d h:i:s');
 				$params['is_active'] 			= TRUE;
+				$params['job_number'] 		= 'RJOB'.$total;
 				$query = $this->Common_model->add_record( 'jobs', $params );
+
+			  //$query = $this->Common_model->add_record( 'status', $params );
+
 				if( $query ) {
 					$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
 					$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Saved Successfully!</strong>';
@@ -142,6 +151,8 @@ class Server extends CI_Controller {
 
 	public function update_job(){
 		if( isset($_POST) && count($_POST) > 0 ) {
+			$posts = $this->input->post();
+
 			$this->form_validation->set_rules('jobname','Job Name','trim|required');
 			$this->form_validation->set_rules('firstname','First Name','trim|required');
 			$this->form_validation->set_rules('lastname','Last Name','trim|required');
@@ -153,11 +164,15 @@ class Server extends CI_Controller {
 			$this->form_validation->set_rules('phone2','Phone 2','trim');
 			$this->form_validation->set_rules('email','Email','trim');
 			if( $this->form_validation->run() == FALSE ) {
-					$this->load->view('header');
-					$this->load->view('add_job');
-					$this->load->view('footer');
+					$errors = validation_errors();
+					$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
+					$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>'.validation_errors().'</strong>';
+					$errors .= '</div>';
+           			$this->session->set_flashdata('message', $errors);
+					redirect('dashboard/update_job/'.$posts['id']);
+				
 			} else {
-				$posts = $this->input->post();
+				
 				$params = array();
 				$params['job_name'] 		= $posts['jobname'];
 				$params['firstname'] 		= $posts['firstname'];
@@ -170,26 +185,125 @@ class Server extends CI_Controller {
 				$params['phone2'] 		= $posts['phone2'];
 				$params['email'] 		= $posts['email'];	
 
-				//$query=array('content'=>$params['content']);
 				$this->db->where('id',$posts['id']);
 				$this->db->update('jobs',$params);
 				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
 				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Saved Successfully!</strong>';
 				$message .= '</div>';
 				$this->session->set_flashdata('message',$message);
-				redirect('dashboard/alljob');
-				
+				redirect('dashboard/update_job/'.$posts['id']);
 
 			}
 
 		}else{
 
-					$this->load->view('header');
-				$this->load->view('add_job');
-				$this->load->view('footer');
+				redirect('dashboard/alllead');
 		}
 	}
+
+	public function additional_party_add(){
+		if( isset($_POST) && count($_POST) > 0 ) {
+			$posts = $this->input->post();
+		    $this->form_validation->set_rules('firstname','First Name','trim|required');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required');
+			$this->form_validation->set_rules('email','Email','trim|required');
+			$this->form_validation->set_rules('phone','Phone','trim|required');
+			if( $this->form_validation->run() == FALSE ) {
+					$errors = validation_errors();
+					$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
+					$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>'.validation_errors().' for Additional Party</strong>';
+					$errors .= '</div>';
+           			$this->session->set_flashdata('message', $errors);
+					redirect('dashboard/update_job/'.$posts['id']);
+				
+			} else {
+
+				$params = array();
+				$params['job_id'] 		= $posts['id'];
+				$params['fname'] 		= $posts['firstname'];
+				$params['lname'] 		= $posts['lastname'];
+				$params['email'] 		= $posts['email'];
+				$params['phone'] 		= $posts['phone'];
+				
+
+				$query = $this->Common_model->add_record( 'job_add_party', $params );
+				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
+				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Additional info Record Added Successfully!</strong>';
+				$message .= '</div>';
+				$this->session->set_flashdata('message',$message);
+				redirect('dashboard/update_job/'.$posts['id']);
+			}
+		}
+		
+	}
+
+
+	public function additional_party_update(){
+		if( isset($_POST) && count($_POST) > 0 ) {
+			$posts = $this->input->post();
+		    $this->form_validation->set_rules('firstname','First Name','trim|required');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required');
+			$this->form_validation->set_rules('email','Email','trim|required');
+			$this->form_validation->set_rules('phone','Phone','trim|required');
+			if( $this->form_validation->run() == FALSE ) {
+					$errors = validation_errors();
+					$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
+					$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>'.validation_errors().' for Additional Party</strong>';
+					$errors .= '</div>';
+           			$this->session->set_flashdata('message', $errors);
+					redirect('dashboard/update_job/'.$posts['id']);
+				
+			} else {
+
+				$params = array();
+			
+				$params['fname'] 		= $posts['firstname'];
+				$params['lname'] 		= $posts['lastname'];
+				$params['email'] 		= $posts['email'];
+				$params['phone'] 		= $posts['phone'];
+
+				$this->db->where('job_id',$posts['id']);
+				$this->db->update('job_add_party',$params);
+				
+				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
+				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Additional info Record Updated Successfully!</strong>';
+				$message .= '</div>';
+				$this->session->set_flashdata('message',$message);
+				redirect('dashboard/update_job/'.$posts['id']);
+			}
+		}
+		
+	}
+
 	
+
+	public function save_team(){
+		if( isset($_POST) && count($_POST) > 0 ) {
+			$posts = $this->input->post();
+		    $this->form_validation->set_rules('teamname','Team Name','trim|required');
+			$this->form_validation->set_rules('remark','Remark','trim');
+			if( $this->form_validation->run() == FALSE ) {
+					$this->load->view('header');
+					$this->load->view('add_team');
+					$this->load->view('footer');
+				
+			} else {
+
+				$params = array();
+				$params['team_name'] 		= $posts['teamname'];
+				$params['remark'] 		= $posts['remark'];
+				$params['is_active'] 		= True;
+				$query = $this->Common_model->add_record( 'teams', $params );
+				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
+				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Added Successfully!</strong>';
+				$message .= '</div>';
+				$this->session->set_flashdata('message',$message);
+				redirect('dashboard/teams');
+			}
+		}
+		
+	}
+
 	public function ajaxupload(){
 		
 		if ( 0 < $_FILES['file']['error'] ) {
@@ -311,6 +425,14 @@ class Server extends CI_Controller {
 		}
 	}
 	 
+	public function updatestatus(){
+	   
+		$posts = $this->input->post();
+		$this->db->query("UPDATE jobs SET status='".$posts['status']."' WHERE id='".$posts['id']."'");
+		return true;
+	}
+	
+
 	public function deletephoto(){
 	   
 		$posts = $this->input->post();

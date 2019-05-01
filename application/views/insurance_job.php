@@ -15,7 +15,7 @@
                                 <h4 class="title">Insurance Job List</h4>
                                 <p class="category">Here is a subtitle for this table</p>
                             </div>
-                            <div class="content table-responsive table-full-width">
+                            <div class="content table-responsive">
                                 <table class="table table-hover table-striped">
                                     <thead>
                                         <th></th>
@@ -33,7 +33,7 @@
                                     <?php if( !empty( $job ) ) : ?>
               <?php foreach( $job as $jobs ) : ?>  
                 <tr>
-               <td><a href="<?php echo base_url();?>index.php/dashboard/update_job/<?php echo $jobs->id ?>"><img src="<?php echo base_url('assets/img/document_edit.png');?>" style="width: 35px;"/></a></td>
+               <td style="width: 30px"><a href="<?php echo base_url();?>index.php/dashboard/insurance_view_job/<?php echo $jobs->id ?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
                   <td><?php echo $jobs->id ?></td>
                   <td><?php echo $jobs->job_name ?></td>
                   <td><?php echo $jobs->firstname ?></td>
