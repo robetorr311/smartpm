@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 if (!function_exists('authAdminAccess')) {
     function authAdminAccess()
     {
-        $CI = &get_instance();
+        $CI =& get_instance();
         if (!$CI->session->userdata('admininfo')) {
             $CI->session->sess_destroy();
             delete_cookie('tokenCookie');
@@ -23,7 +23,7 @@ if (!function_exists('authAdminAccess')) {
 if (!function_exists('sessionTimeout')) {
     function sessionTimeout()
     {
-        $CI = &get_instance();
+        $CI =& get_instance();
         $expireAfter = 10;
 
         //Check to see if our "last action" session

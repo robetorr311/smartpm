@@ -42,7 +42,7 @@ class Tasks extends CI_Controller
         $this->load->view('header', [
             'title' => 'Tasks'
         ]);
-        $this->load->view('tasks/new');
+        $this->load->view('tasks/create');
         $this->load->view('footer');
     }
 
