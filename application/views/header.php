@@ -20,7 +20,8 @@
 
     <!--  Light Bootstrap Table core CSS    -->
     <link href="<?php echo base_url();?>assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
-
+    
+    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap-tagsinput.css') ?>">
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="<?php echo base_url();?>assets/css/demo.css" rel="stylesheet" />
@@ -31,6 +32,15 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?php echo base_url();?>assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
+    <!-- JS FILES -->
+    <!--   Core JS Files   -->
+    <script src="<?php echo base_url();?>assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--  Notifications Plugin    -->
+    <script src="<?php echo base_url();?>assets/js/bootstrap-notify.js"></script>
+    <!-- bootstrap tagsinput JS -->
+	<script src="<?= base_url('assets/js/bootstrap-tagsinput.min.js') ?>"></script>
+	<script src="<?= base_url('assets/js/bootstrap3-typeahead.min.js') ?>"></script>
 </head>
 <body>
 
@@ -71,6 +81,12 @@
                     <a href="<?php echo base_url('index.php/dashboard/alljob');?>">
                         <i class="pe-7s-user"></i>
                         <p>Cash Jobs</p>
+                    </a>
+                </li>
+              <li>
+                    <a href="<?php echo base_url('tasks');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Tasks</p>
                     </a>
                 </li>
                 <li>
@@ -114,7 +130,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Dashboard</a>
+                    <a class="navbar-brand" href="#"><?= $title ?></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     
