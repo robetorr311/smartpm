@@ -1,4 +1,6 @@
- <div class="container-fluid">
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?> <div class="container-fluid">
                 <div class="row">
            <?= $this->session->flashdata('message') ?>
                    <div class="col-md-8">

@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?><!DOCTYPE html>
 <html>
 <head>
   <title>Registration system PHP and MySQL</title>

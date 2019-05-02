@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/<?php echo $array['admindata']['favicon']; ?>">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Roofing Project</title>
+	<title><?= $title ?> - SmartPM CRM</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -92,7 +92,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/admininfo');?>">
+                    <a href="<?php echo base_url('setting');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Setting</p>
                     </a>
