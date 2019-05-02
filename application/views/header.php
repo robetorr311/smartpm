@@ -71,6 +71,12 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                 <li>
+                    <a href="<?php echo base_url('index.php/dashboard/alllead');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Leads </p>
+                    </a>
+                </li>
               <li>
                     <a href="<?php echo base_url('index.php/dashboard/alljob');?>">
                         <i class="pe-7s-user"></i>
@@ -84,23 +90,31 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/admininfo');?>">
-                        <i class="pe-7s-note2"></i>
-                        <p>Setting</p>
-                    </a>
-                </li>
-                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard');?>">
-                        <i class="pe-7s-note2"></i>
-                        <p>Leads</p>
-                    </a>
-                </li>
-               <li>
-                    <a href="<?php echo base_url('index.php/dashboard');?>">
+                    <a href="<?php echo base_url('index.php/dashboard/allinsurance');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Insurance Jobs</p>
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo base_url('index.php/dashboard/teams');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Teams</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('index.php/dashboard/user');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('setting');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Setting</p>
+                    </a>
+                </li>
+                
+               
                
             </ul>
     	</div>

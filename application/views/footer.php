@@ -354,6 +354,28 @@ $(document).on('click', '.doc_list span',  function () {
 				});	
 				
 			
+			$('#leadstatus').change(function(){
+				
+				$('.status').html($(this).val());
+				if($(this).val()=='closed'){
+					$('.status').addClass('closed');
+				}else{
+					$('.status').removeClass('closed');
+					$('.status').addClass('open');
+				}
+				var value=$(this).val();
+				var id=$('.hidden_id').val();
+				$.ajax({
+						url: baseUrl+'index.php/server/updatestatus',
+						data: {status: value, id: id},        
+						type: 'post',
+						success: function(php_script_response){
+							
+						
+						}
+					 });
+				});
+
     	});
 	</script>
 	<script>

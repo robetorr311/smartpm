@@ -318,9 +318,9 @@ img {
 	font-size: 30px;
 }
 .dashbord-box .box {
-	padding: 34px 15px;
+	padding: 15px 15px;
 	color: white;
-	min-height: 170px;
+	min-height: 130px;
 }
 .box span {
 	font-size: 30px;
@@ -333,4 +333,36 @@ img {
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
+	color: darkolivegreen;
+}
+
+.user th {
+	color: white !important;
+	padding: 20px 10px !important;
+}
+.table-striped > tbody > tr:nth-of-type(2n) {
+	background-color: #fff;
+}
+.box a {
+	color: white;
+}
+th {
+	color: white !important;
+	padding: 20px 10px !important;
+	background: gray;
+}
+.status {
+	font-size: 20px;
+	font-weight: bold;
+	float: right;
+	display: block;
+	color: white;
+	padding: 4px 20px;
+	border-radius: 2px;
+}
+.open {
+	background-color: green;
+}
+.closed {
+	background-color: red !important;
 }
