@@ -1,4 +1,6 @@
- <div class="container-fluid">
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?> <div class="container-fluid">
                 <div class="row">
                    <div class="col-md-8">
                         <div class="card">
@@ -51,7 +53,7 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Address</label>
+                                                <label>Street Address</label>
                                                 <input class="form-control" placeholder="Address" name="address" value="<?= set_value('address') ?>" type="text">
                                             </div>
                                         </div>
@@ -81,13 +83,13 @@ echo '</div>';
                                  <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Phone 1</label>
+                                                <label>Cell Phone</label>
                                                 <input class="form-control" placeholder="Phone 1" name="phone1" value="<?= set_value('phone1') ?>" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Phone 2</label>
+                                                <label>Home Phone</label>
                                                 <input class="form-control" placeholder="Phone 2" name="phone2" value="<?= set_value('phone2') ?>" type="text">
                                             </div>
                                         </div>

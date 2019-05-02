@@ -1,4 +1,6 @@
- <div class="container-fluid">
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?> <div class="container-fluid">
                 <div class="row">
                    <div class="col-md-12">
                         <div class="card">
@@ -15,7 +17,7 @@ echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><
 echo validation_errors();
 echo '</div>';
 }
-?>
+?> 
                             </div>
                             <div class="content">
                                <div class="image_div">

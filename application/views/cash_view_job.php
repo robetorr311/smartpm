@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">Update Job</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
+                                <h4 class="title" style="float: left;">View</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
 <div class="clearfix"></div>
                                 
                                                              <?php if(validation_errors())
@@ -32,7 +32,7 @@ echo '</div>';
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Job Name</label>
-                                                <input class="form-control" placeholder="Job Name" name="jobname" value="<?php echo $job->job_name ?>" type="text">
+                                               <p> <?php echo $job->job_name ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -41,13 +41,13 @@ echo '</div>';
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input class="form-control" name="firstname" value="<?php echo $job->firstname ?>" placeholder="" type="text">
+                                                <p><?php echo $job->firstname ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input class="form-control" placeholder="Last Name" name="lastname" value="<?php echo $job->lastname ?>" type="text">
+                                                <p><?php echo $job->lastname ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@ echo '</div>';
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input class="form-control" placeholder="Address" name="address" value="<?php echo $job->address ?>" type="text">
+                                                <p><?php echo $job->address ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -65,19 +65,19 @@ echo '</div>';
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>City</label>
-                                                <input class="form-control" placeholder="City" value="<?php echo $job->city ?>" name="city" type="text">
+                                               <p><?php echo $job->city ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>State</label>
-                                                <input class="form-control" placeholder="Country" Name="country" value="<?php echo $job->state ?>" type="text">
+                                               <p><?php echo $job->state ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Postal Code</label>
-                                                <input class="form-control" placeholder="ZIP Code" value="<?php echo $job->zip ?>" name="zip" type="text">
+                                              <p><?php echo $job->zip ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -86,19 +86,19 @@ echo '</div>';
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Phone 1</label>
-                                                <input class="form-control" placeholder="Phone 1" name="phone1" value="<?php echo $job->phone1 ?>" type="text">
+                                               <p><?php echo $job->phone1 ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Phone 2</label>
-                                                <input class="form-control" placeholder="Phone 2" name="phone2" value="<?php echo $job->phone2 ?>" type="text">
+                                               <p><?php echo $job->phone2 ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input class="form-control" name="email" placeholder="Email" value="<?php echo $job->email ?>" type="email">
+                                                <p><?php echo $job->email ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -127,19 +127,22 @@ echo '</div>';
                     </div>
 
  <div class="col-md-4">
+     <div class="card">
+ <div class="header">
+                                    <h4 class="title" style="float: left;">Assign Group</h4> 
+                                    <div class="clearfix"></div>
+                                         <div class="content">
+                                             <select class="form-control"><option>Group 1</option>
+                                             <option>Group 1</option>
+                                         <option>Group 1</option></select>
+
+                                         </div>     
+     </div> </div>
             <div class="card">
                 <div class="header">
-                                    <h4 class="title" style="float: left;">Job Status</h4><span class="status <?php if($status=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo $status; ?></span> 
+                                    <h4 class="title" style="float: left;">Job Status</h4><span class="status open"><?php echo $status; ?></span> 
                                     <div class="clearfix"></div>
-                                    <div class="content">
-                                            <select class="form-control" id="leadstatus">
-                                                <option value="">update</option>
-                            <option value="lead">Lead</option>
-                            <option value="cash">Cash job</option>
-                            <option value="insurance">Insurance job</option>
-                            <option value="closed">Closed</option>
-                        </select>
-                                    </div>                       
+                                         <div class="content"></div>         
                                 </div>
              </div>
         <div class="card">
@@ -147,7 +150,7 @@ echo '</div>';
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">Additional Party(If any)</h4> 
+                                <h4 class="title" style="float: left;">Additional Party Detail</h4> 
                                 <div class="clearfix"></div>
                               
                                                            
@@ -162,22 +165,22 @@ echo '</div>';
                                             <div class="form-group">
                                                 <input type="hidden"  name="id" value="<?php echo $jobid; ?>"></input>
                                                 <label>First Name</label>
-                                                <input class="form-control" name="firstname" value="<?php echo $info->fname ?>" placeholder="First Name" type="text">
+                                               <p><?php echo $info->fname ?></p>
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input class="form-control" placeholder="Last Name" name="lastname" value="<?php echo $info->lname ?>" type="text">
+                                                <p><?php echo $info->lname ?></p>
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input class="form-control" placeholder="Phone" name="phone" value="<?php echo $info->phone ?>" type="text">
+                                                <p><?php echo $info->phone ?></p>
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input class="form-control" placeholder="Email" name="email" value="<?php echo $info->email ?>" type="text">
+                                                <p><?php echo $info->email ?></p>
                                             </div>
                                              <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
                                         </div>
@@ -191,26 +194,7 @@ echo '</div>';
                                     <div class="row">
                                          <input type="hidden" name="id" value="<?php echo $jobid; ?>"></input>
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>First Name</label>
-                                                <input class="form-control" name="firstname" value="" placeholder="First Name" type="text">
-                                            </div>
-                                       
-                                            <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input class="form-control" placeholder="Last Name" name="lastname" value="" type="text">
-                                            </div>
-                                       
-                                            <div class="form-group">
-                                                <label>Phone</label>
-                                                <input class="form-control" placeholder="Phone" name="phone" value="" type="text">
-                                            </div>
-                                       
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input class="form-control" placeholder="Email" name="email" value="" type="text">
-                                            </div>
-                                             <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                                           No record!
                                         </div>
                                     </div>
 

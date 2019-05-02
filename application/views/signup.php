@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?><!DOCTYPE html>
 <html>
 <head>
   <title>Registration system PHP and MySQL</title>
@@ -28,22 +30,23 @@ echo '</div>';
   	</div>
   	<div class="input-group">
   		<label>Password</label>
-  		<input type="password" name="password">
+  		<input type="password" name="password" id="pwd">
   	</div>
-  	<div class="input-group">
+  <!--	<div class="input-group">
   		<label>Mobile</label>
   		<input type="text" name="mobile">
-  	</div>
+  	</div>-->
   		<div class="input-group">
   		<label>Email</label>
   		<input type="email" name="email">
   	</div>
   	<div class="input-group">
-  		<button type="submit" class="btn" name="login_user">Register</button>
+  		<button type="submit" id="submit" class="btn" name="login_user">Register</button>
   	</div>
   	<p>
   Already have a account? <a href="<?php echo base_url(); ?>">Login</a>
   	</p>
-  <?php echo form_close(); ?>      
+  <?php echo form_close(); ?>  
+   <script src="<?php echo base_url();?>assets/js/md5.js"></script>    
 </body>
 </html>

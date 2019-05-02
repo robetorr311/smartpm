@@ -1,35 +1,43 @@
- <div class="container-fluid">
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?> <div class="container-fluid">
     <div class="row dashbord-box">
+      
+              <?php foreach( $data->result() as $dat ) : ?> 
+                          
+                           
+     
        <div class="col-md-2">
         	<div class="box alert-success">
-        		<span>07</span>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span><?php echo $dat->LEAD; ?></span>
         		<p>Open Leads</p>
+        		</a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-warning">
-        		<span>07</span>
-        		<p>Open Cash Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/alljob');?>"><span><?php echo $dat->CASH; ?></span>
+        		<p>Open Cash Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-danger">
-        		<span>07</span>
-        		<p>Open Insurance Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/allinsurance');?>"><span><?php echo $dat->INSURANCE; ?></span>
+        		<p>Open Insurance Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-info">
-        		<span>07</span>
-        		<p>Complete Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span><?php echo $dat->CASH; ?></span>
+        		<p>Complete Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-warning">
-        		<span>07</span>
-        		<p>Closed Jobs</p>
+        		<a href="<?php echo base_url('index.php/dashboard/alllead');?>"><span><?php echo $dat->CLOSED; ?></span>
+        		<p>Closed Jobs</p></a>
         	</div>
-        </div>
+        </div> <?php endforeach; ?>
 	</div>
 </div>
 <div class="container-fluid">
