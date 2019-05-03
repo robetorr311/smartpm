@@ -20,12 +20,12 @@ echo '</div>';
 }
 ?>
                             </div>
-                            <div class="content">
+                            <div class="content view">
                                   <?php
                                 $status='';
                                    foreach( $jobs as $job ) : ?>  
 
-                                <?php echo form_open('server/update_job',array('id'=>"jobform",'autocomplete'=>"off"));?>
+                                
                                 <?php  $status= $job->status; ?>
                                     <div class="row">
                                         <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>"></input>
@@ -104,10 +104,9 @@ echo '</div>';
                                     </div>
 
 
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                                 
                                     <div class="clearfix"></div>
-                                <?php echo form_close(); ?>
-      
+                              
                             
                        
 					   <div class="footer" style="margin-bottom: 10px;">
@@ -189,16 +188,16 @@ echo '</div>';
                                  <?php echo form_close(); ?>
                                  <?php endforeach; ?>
                                 <?php else : ?>
-                                   <?php echo form_open('server/additional_party_add',array('id'=>"jobform",'autocomplete'=>"off"));?>
+                                   
 
                                     <div class="row">
-                                         <input type="hidden" name="id" value="<?php echo $jobid; ?>"></input>
+                                         
                                         <div class="col-md-12">
                                            No record!
                                         </div>
                                     </div>
 
-                                 <?php echo form_close(); ?>
+                               
 
                                 <?php endif; ?>
                             </div>

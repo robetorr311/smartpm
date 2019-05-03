@@ -8,16 +8,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                  <div class="col-md-6">
                                          <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
                                  </div>
-                                  <div class="col-md-6">
-                                    <!--  <a href="<?php echo base_url('index.php/dashboard/addjob');?>" class="btn btn-info btn-fill pull-right">Add New Job</a> -->
-                                 </div>
+                                
                             </div>
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>
-                                <h4 class="title">Insurance Job List</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title">Cash Job List</h4>
+                                
                             </div>
-                            <div class="content table-responsive">
+                            <div class="content table-responsive ">
                                 <table class="table table-hover table-striped">
                                     <thead>
                                         <th></th>
@@ -32,16 +30,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </thead>
                                     <tbody id="myTable">
 
-                                    <?php if( !empty( $job ) ) : ?>
-              <?php foreach( $job as $jobs ) : ?>  
+                                    <?php if( !empty( $jobs ) ) : ?>
+              <?php foreach( $jobs as $job ) : ?>  
                 <tr>
-               <td style="width: 30px"><a href="<?php echo base_url();?>index.php/dashboard/insurance_view_job/<?php echo $jobs->id ?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
-                  <td><?php echo $jobs->id ?></td>
-                  <td><?php echo $jobs->job_name ?></td>
-                  <td><?php echo $jobs->firstname ?></td>
-                  <td><?php echo $jobs->lastname ?></td>
-                  <td><?php echo $jobs->address ?></td>
-                  <td><?php echo $jobs->email ?></td>
+            
+              <td style="width: 30px"><a href="<?php echo base_url('cash_job/'.$job->id);?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
+                  <td><?php echo $job->id ?></td>
+                  <td><?php echo $job->job_name ?></td>
+                  <td><?php echo $job->firstname ?></td>
+                  <td><?php echo $job->lastname ?></td>
+                  <td><?php echo $job->address ?></td>
+                  <td><?php echo $job->email ?></td>
                 </tr>
 
 

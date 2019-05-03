@@ -9,42 +9,40 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                          <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                    <a href="<?php echo base_url('index.php/dashboard/addteams');?>" class="btn btn-info btn-fill pull-right">Create New Team</a>
+                                   
                                  </div>
                             </div>
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>
-                                <h4 class="title">Team List</h4>
-                                
+                                <h4 class="title">Insurance Job List</h4>
+                            
                             </div>
                             <div class="content table-responsive">
                                 <table class="table table-hover table-striped">
                                     <thead>
                                         <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Team Name</th>
-                                        <th>Remark</th>
-                                       
-                                        
-                                       
+                                        <th>ID</th>
+                                        <th>Job Name</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Address</th>
+                                        <th>Email</th>
                                       
                                         
                                     </thead>
                                     <tbody id="myTable">
 
-                                    <?php if( !empty( $teams ) ) : ?>
-              <?php foreach( $teams as $team ) : ?>  
+                                    <?php if( !empty( $job ) ) : ?>
+              <?php foreach( $job as $jobs ) : ?>  
                 <tr>
-              
-              <td style="width: 30px"><i class="del-doc pe-7s-trash" id=""></i></td>
-                <td style="width: 30px"><a href="<?php echo base_url();?>index.php/dashboard/team_detail/<?php echo $team->id ?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
-                <td><span class=""><i class="del-edit pe-7s-note" style="font-size: 30px;" /></span></td>
-                  <td><?php echo $team->team_name ?></td>
-                  <td><?php echo $team->remark ?></td>
-                
-                
-                 </tr>
+               <td style="width: 30px"><a href="<?php echo base_url('insurance_job/'.$jobs->id);?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
+                  <td><?php echo $jobs->id ?></td>
+                  <td><?php echo $jobs->job_name ?></td>
+                  <td><?php echo $jobs->firstname ?></td>
+                  <td><?php echo $jobs->lastname ?></td>
+                  <td><?php echo $jobs->address ?></td>
+                  <td><?php echo $jobs->email ?></td>
+                </tr>
 
 
                       <?php endforeach; ?>

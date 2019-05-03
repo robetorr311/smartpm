@@ -318,7 +318,6 @@ img {
 	font-size: 30px;
 }
 .dashbord-box .box {
-<<<<<<< HEAD
   padding: 15px 15px;
 color: white;
 min-height: 130px;
@@ -366,21 +365,13 @@ border-radius: 2px;
 .closed{
    background-color:  red !important; 
 }
-=======
-	padding: 34px 15px;
-	color: white;
-	min-height: 170px;
+.view label {
+   
+    line-height: 24px;
+    margin-right: 20px;
+    font-weight: bold;margin-bottom: 0;
+}.view p {
+    margin-bottom: 10px;
+}.view .form-group {
+    margin-bottom: 0;
 }
-.box span {
-	font-size: 30px;
-	float: right;
-	width: 100%;
-	text-align: center;
-	font-weight: bold;
-}
-.box p {
-	font-size: 16px;
-	font-weight: bold;
-	text-align: center;
-}
->>>>>>> 24ebbd8cba86d285836de50a282c576931b5df67

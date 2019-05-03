@@ -66,19 +66,19 @@
 
             <ul class="nav">
                  <li >
-                    <a href="<?php echo base_url('index.php/dashboard');?>">
+                    <a href="<?php echo base_url('dashboard');?>">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                  <li>
-                    <a href="<?php echo base_url('index.php/dashboard/alllead');?>">
+                    <a href="<?php echo base_url('leads');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Leads </p>
                     </a>
                 </li>
               <li>
-                    <a href="<?php echo base_url('index.php/dashboard/alljob');?>">
+                    <a href="<?php echo base_url('cash_jobs');?>">
                         <i class="pe-7s-user"></i>
                         <p>Cash Jobs</p>
                     </a>
@@ -90,19 +90,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/allinsurance');?>">
+                    <a href="<?php echo base_url('insurance_jobs');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Insurance Jobs</p>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/teams');?>">
+                    <a href="<?php echo base_url('teams');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Teams</p>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/user');?>">
+                    <a href="<?php echo base_url('users');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Users</p>
                     </a>

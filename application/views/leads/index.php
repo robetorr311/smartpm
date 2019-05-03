@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                          <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                    <a href="<?php echo base_url('index.php/dashboard/addjob');?>" class="btn btn-info btn-fill pull-right">Add New Job</a>
+                                    <a href="<?php echo base_url('lead/new');?>" class="btn btn-info btn-fill pull-right">Add New Job</a>
                                  </div>
                             </div>
                             <div class="header">
@@ -41,36 +41,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </thead>
                                     <tbody id="myTable">
 
-                                    <?php if( !empty( $job ) ) : ?>
-              <?php foreach( $job as $jobs ) : ?>  
+                                    <?php if( !empty( $leads ) ) : ?>
+              <?php foreach( $leads as $lead ) : ?>  
                 <tr> <!--<td style="width: 30px"><i class="del-doc pe-7s-trash" id=""></i></td>-->
-                <td style="width: 30px"><a href="<?php echo base_url();?>index.php/dashboard/view_job/<?php echo $jobs->id ?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
-              <td><a href="<?php echo base_url();?>index.php/dashboard/update_job/<?php echo $jobs->id ?>"><span class=""><i class="del-edit pe-7s-note" style="font-size: 30px;" /></span></a></td>
+                <td style="width: 30px"><a href="<?php echo base_url('lead/'.$lead->id);?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
+              <td><a href="<?php echo base_url('lead/'.$lead->id.'/edit');?>"><span class=""><i class="del-edit pe-7s-note" style="font-size: 30px;" /></span></a></td>
               
-                  <td><?php echo $jobs->job_number ?></td>
-                  <td><?php echo $jobs->job_name ?></td>
-                  <td><?php echo $jobs->firstname ?></td>
-                  <td><?php echo $jobs->lastname ?></td>
-                  <td><?php echo $jobs->address ?></td>
-                  <td><?php echo $jobs->city ?></td>
-                  <td><?php echo $jobs->state ?></td>
-                  <td><?php echo $jobs->zip ?></td>
-                  <td><?php echo $jobs->phone1 ?></td>
-                  <td><?php echo $jobs->phone2 ?></td>
-                  <td><?php echo $jobs->email ?></td>
-                 <!-- <td><select class="form-control">
-                        <option value="lead">Lead</option>
-                        <option value="lead">Cash job</option>
-                        <option value="lead">Insurance job</option>
-                        <option value="lead">Closed</option>
-                    </select>-->
-                 </td>
+                  <td><?php echo $lead->job_number ?></td>
+                  <td><?php echo $lead->job_name ?></td>
+                  <td><?php echo $lead->firstname ?></td>
+                  <td><?php echo $lead->lastname ?></td>
+                  <td><?php echo $lead->address ?></td>
+                  <td><?php echo $lead->city ?></td>
+                  <td><?php echo $lead->state ?></td>
+                  <td><?php echo $lead->zip ?></td>
+                  <td><?php echo $lead->phone1 ?></td>
+                  <td><?php echo $lead->phone2 ?></td>
+                  <td><?php echo $lead->email ?></td>
                  </tr>
-
-
-                      <?php endforeach; ?>
+                  <?php endforeach; ?>
             <?php else : ?>
-               <p class="mb-15">  No Record Found!</p>
+                  <tr>
+                      <td colspan="13" class="text-center">No Record Found!</td>
+                  </tr>
             <?php endif; ?>
                
 
@@ -78,8 +71,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                   
                                     </tbody>
                                 </table>
-
-                            </div>
+<div class="pagination">
+                        <?= $pagiLinks ?>
+                    </div>
+                            </div> 
                         </div>
                     </div>
 					   </div>
