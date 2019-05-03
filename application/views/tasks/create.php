@@ -31,8 +31,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select name="type" class="form-control">
-                                        <option value="" disabled selected>Type</option>
-                                        <option value="1">Option 1</option>
+                                        <option value="" disabled selected>Select Type</option>
+                                        <?php foreach ($types as $id => $type) {
+                                            echo '<option value="' . $id . '">' . $type . '</option>';
+                                        } ?>
                                     </select>
                                 </div>
                             </div>
@@ -40,8 +42,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Importance Level</label>
                                     <select name="level" class="form-control">
-                                        <option value="" disabled selected>Importance Level</option>
-                                        <option value="1">Option 1</option>
+                                        <option value="" disabled selected>Select Importance Level</option>
+                                        <?php foreach ($levels as $id => $level) {
+                                            echo '<option value="' . $id . '">' . $level . '</option>';
+                                        } ?>
                                     </select>
                                 </div>
                             </div>
@@ -49,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Assigned To</label>
                                     <select name="assigned_to" class="form-control">
-                                        <option value="" disabled selected>Assigned To</option>
+                                        <option value="" disabled selected>Select Assigned To</option>
                                         <option value="1">Option 1</option>
                                     </select>
                                 </div>
@@ -129,8 +133,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 afterSelect: function() {
                     this.$element[0].value = '';
                 },
-                displayKey: 'value',
-                allowDuplicates: false
+                displayKey: 'value'
             }
         });
         $('input#tag_users').tagsinput({
@@ -161,40 +164,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 afterSelect: function() {
                     this.$element[0].value = '';
                 },
-                displayKey: 'value',
-                allowDuplicates: false
+                displayKey: 'value'
             }
         });
         $('input#predecessor_tasks').tagsinput({
             itemValue: 'id',
-            itemText: 'value',
+            itemText: 'name',
             typeahead: {
-                source: [{
-                        id: 1,
-                        value: 'Amsterdam'
-                    },
-                    {
-                        id: 2,
-                        value: 'Washington'
-                    },
-                    {
-                        id: 3,
-                        value: 'Sydney'
-                    },
-                    {
-                        id: 4,
-                        value: 'Beijing'
-                    },
-                    {
-                        id: 5,
-                        value: 'Cairo'
-                    }
-                ],
+                source: <?= json_encode($tasks) ?>,
                 afterSelect: function() {
                     this.$element[0].value = '';
-                },
-                displayKey: 'value',
-                allowDuplicates: false
+                }
             }
         });
     });

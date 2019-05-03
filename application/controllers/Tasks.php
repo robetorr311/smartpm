@@ -39,10 +39,18 @@ class Tasks extends CI_Controller
 
     public function create()
     {
+        $types = TaskModel::getTypes();
+        $levels = TaskModel::getLevels();
+        $tasks = $this->task->getTaskList();
+
         $this->load->view('header', [
             'title' => 'Tasks'
         ]);
-        $this->load->view('tasks/create');
+        $this->load->view('tasks/create', [
+            'types' => $types,
+            'levels' => $levels,
+            'tasks' => $tasks
+        ]);
         $this->load->view('footer');
     }
 
@@ -53,6 +61,9 @@ class Tasks extends CI_Controller
         $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
         $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric');
         $this->form_validation->set_rules('note', 'Note', 'trim|required');
+        $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
+        $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
+        $this->form_validation->set_rules('predecessor_tasks', 'Predecessor Tasks', 'is_own_ids[tasks, Tasks]');
 
         if ($this->form_validation->run() == TRUE) {
             $taskData = $this->input->post();
@@ -97,6 +108,15 @@ class Tasks extends CI_Controller
         }
     }
 
+    // public function edit()
+    // {
+    //     $this->load->view('header', [
+    //         'title' => 'Tasks'
+    //     ]);
+    //     $this->load->view('tasks/create');
+    //     $this->load->view('footer');
+    // }
+
     public function delete()
     {
         $id = $this->uri->segment(2);
@@ -110,11 +130,11 @@ class Tasks extends CI_Controller
         redirect('tasks');
     }
 
-    private function extractTagsArray($string)
-    {
-        $string = preg_replace('/ /', '', $string);
-        $string = preg_replace('/,/', '', $string);
-        $string = explode('@', $string);
-        return $string;
-    }
+    // private function extractTagsArray($string)
+    // {
+    //     $string = preg_replace('/ /', '', $string);
+    //     $string = preg_replace('/,/', '', $string);
+    //     $string = explode('@', $string);
+    //     return $string;
+    // }
 }
