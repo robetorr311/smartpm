@@ -5,6 +5,19 @@ class TaskModel extends CI_Model
 {
     private $table = 'tasks';
 
+    private static $type = [
+        1 => 'Type 1',
+        2 => 'Type 2',
+        3 => 'Type 3',
+        4 => 'Type 4',
+        5 => 'Type 5'
+    ];
+    private static $level = [
+        1 => 'Low',
+        2 => 'Normal',
+        3 => 'High'
+    ];
+
     public function allTasks($start = 0, $limit = 10)
     {
         $this->db->select('tasks.*, users_created_by.username as created_username, users_assigned_to.username as assigned_username');
@@ -22,6 +35,14 @@ class TaskModel extends CI_Model
         return $this->db->count_all('tasks');
     }
 
+    public function getTaskList($select = 'id, name')
+    {
+        $this->db->select($select);
+        $this->db->from($this->table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function insert($data)
     {
         $data['status'] = '0';
@@ -35,5 +56,28 @@ class TaskModel extends CI_Model
         return $this->db->delete($this->table, [
             'id' => $id
         ]);
+    }
+
+    /**
+     * Static Methods
+     */
+    public static function typetostr($id)
+    {
+        return self::$type[$id];
+    }
+
+    public static function getTypes()
+    {
+        return self::$type;
+    }
+    
+    public static function leveltostr($id)
+    {
+        return self::$level[$id];
+    }
+
+    public static function getLevels()
+    {
+        return self::$level;
     }
 }
