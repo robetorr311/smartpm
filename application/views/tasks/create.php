@@ -69,7 +69,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tag Clients</label>
-                                    <input class="form-control" placeholder="Tag Clients (@job_#)" name="tag_clients" id="tag_clients" type="text">
+                                    <input class="form-control" placeholder="Tag Clients" name="tag_clients" id="tag_clients" type="text">
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tag Users</label>
-                                    <input class="form-control" placeholder="Tag Users (@username)" name="tag_users" id="tag_users" type="text">
+                                    <input class="form-control" placeholder="Tag Users" name="tag_users" id="tag_users" type="text">
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Predecessor Tasks</label>
-                                    <input class="form-control" placeholder="Predecessor Tasks (@task_#)" name="predecessor_tasks" id="predecessor_tasks" type="text">
+                                    <input class="form-control" placeholder="Predecessor Tasks" name="predecessor_tasks" id="predecessor_tasks" type="text">
                                 </div>
                             </div>
                         </div>
