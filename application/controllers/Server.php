@@ -104,7 +104,7 @@ class Server extends CI_Controller {
 			$params['is_active'] 		= TRUE;
 			$this->db->insert('jobs_doc', $params);
 			$insertId = $this->db->insert_id();
-			echo '<tr id="doc'.$insertId.'"><td style="width: 30px"></td><td style="width: 30px"><i class="del-doc pe-7s-close" id="'.$insertId.'"></i></td><td style="width: 30px"><a href="'.base_url().'assets/job_doc/'.$data[$i].'"  target="_blank">view</a></td><td><p id="docp'.$insertId.'">'.$trimmed.'</p><input style="width: 100%;display:none" name="'.$insertId.'" type="text"  class="docname" id="doctext'.$insertId.'" /><span class="'.$insertId.'">Edit</span></td><td >'.$data[$i].'</td></tr>';
+			echo '<tr id="doc'.$insertId.'"><td style="width: 30px"></td><td style="width: 30px"><i class="del-doc pe-7s-trash" id="'.$insertId.'"></i></td><td style="width: 30px"><a href="'.base_url().'assets/job_doc/'.$data[$i].'"  target="_blank"><i class="pe-7s-news-paper" style="font-size: 30px"></i></a></td><td><span class="'.$insertId.'"><i class="del-edit pe-7s-note"></i></span></td><td><p id="docp'.$insertId.'">'.$trimmed.'</p><input style="width: 100%;display:none" name="'.$insertId.'" type="text"  class="docname" id="doctext'.$insertId.'" /></td><td >'.$data[$i].'</td></tr>';
 			
 
 			 
