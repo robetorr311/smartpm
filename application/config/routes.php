@@ -82,3 +82,6 @@ $route['team/(:num)/edit'] = 'teams/edit';
 $route['team/(:num)/update'] = 'teams/update';
 $route['team/new'] = 'teams/new';
 $route['team/store'] = 'teams/store';
+
+
+$route['login'] = 'server/index';

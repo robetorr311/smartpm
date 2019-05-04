@@ -318,6 +318,7 @@ img {
 	font-size: 30px;
 }
 .dashbord-box .box {
+<<<<<<< HEAD
   padding: 15px 15px;
 color: white;
 min-height: 130px;
@@ -332,27 +333,43 @@ min-height: 130px;
    font-size: 16px;
 font-weight: bold;
 text-align: center;color: darkolivegreen;
+=======
+	padding: 15px 15px;
+	color: white;
+	min-height: 130px;
+}
+.box span {
+	font-size: 30px;
+	float: right;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+}
+.box p {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	color: darkolivegreen;
+>>>>>>> ad924bbbec34d0011dae3e857ee253ceb738ed51
 }
 
 .user th {
-    color: white !important;
-    padding: 20px 10px !important;
+	color: white !important;
+	padding: 20px 10px !important;
 }
 .table-striped > tbody > tr:nth-of-type(2n) {
-    background-color: #fff;
+	background-color: #fff;
 }
 .box a {
-    color: white;
-}
-.table-responsive{
-    width: 98% !important;
+	color: white;
 }
 th {
-    color: white !important;
-    padding: 20px 10px !important;
-    background: gray;
+	color: white !important;
+	padding: 20px 10px !important;
+	background: gray;
 }
 .status {
+<<<<<<< HEAD
    font-size: 20px;
 font-weight: bold;
 float: right;

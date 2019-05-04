@@ -31,8 +31,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tr>
                                         <td><?php echo $task->id ?></td>
                                         <td><?php echo $task->name ?></td>
-                                        <td><?php echo $task->type ?></td>
-                                        <td><?php echo $task->level ?></td>
+                                        <td><?php echo TaskModel::typetostr($task->type) ?></td>
+                                        <td><?php echo TaskModel::leveltostr($task->level) ?></td>
                                         <td><?php echo $task->assigned_username ?></td>
                                         <td><?php echo $task->created_username ?></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>

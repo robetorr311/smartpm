@@ -12,7 +12,9 @@ class Server extends CI_Controller {
 	}
 	public function index()
 	{
-		
+		 echo ok;
+		 die;
+		 
 		if( isset($_POST) && count($_POST) > 0 ) 
 		{
 			$this->form_validation->set_rules('username','Username','trim|required');

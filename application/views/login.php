@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <img src="<?php echo base_url(); ?>assets/img/logo.png"  style="width:200px"/>
   
   </div>
-  <?php echo form_open('server/index',array('id'=>"loginform",'autocomplete'=>"off"));?>
+  <?php echo form_open('server',array('method'=>'post'));?>
  <h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Sign in to continue</h2>
   <?= $this->session->flashdata('message') ?>
 
