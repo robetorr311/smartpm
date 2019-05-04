@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller {
 		$query['data'] = $this->db->query("select SUM(if(status='cash',1,NULL)) as CASH, SUM(if(status='insurance',1,NULL)) as INSURANCE, SUM(if(status='lead',1,NULL)) as LEAD , SUM(if(status='closed',1,NULL)) as CLOSED from jobs");
 		$this->load->view('header',['title' => 'Dashboard']);
 		$this->load->view('dashboard/index',$query);
-		$this->load->view('footer');
+		$this->load->view('footer'); 
 	}
 
 

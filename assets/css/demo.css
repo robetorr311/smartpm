@@ -318,7 +318,6 @@ img {
 	font-size: 30px;
 }
 .dashbord-box .box {
-<<<<<<< HEAD
   padding: 15px 15px;
 color: white;
 min-height: 130px;
@@ -333,7 +332,6 @@ min-height: 130px;
    font-size: 16px;
 font-weight: bold;
 text-align: center;color: darkolivegreen;
-=======
 	padding: 15px 15px;
 	color: white;
 	min-height: 130px;
@@ -350,7 +348,6 @@ text-align: center;color: darkolivegreen;
 	font-weight: bold;
 	text-align: center;
 	color: darkolivegreen;
->>>>>>> ad924bbbec34d0011dae3e857ee253ceb738ed51
 }
 
 .user th {
@@ -369,7 +366,6 @@ th {
 	background: gray;
 }
 .status {
-<<<<<<< HEAD
    font-size: 20px;
 font-weight: bold;
 float: right;

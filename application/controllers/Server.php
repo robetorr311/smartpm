@@ -5,99 +5,13 @@ class Server extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['Login','Common_model']);
+	
 		$this->load->helper(['form','security','cookie']);
 		$this->load->library(['form_validation','email','user_agent','session']);
 		$this->datetime = date("Y-m-d H:i:s");
 	}
-	public function index()
-	{
-		 echo ok;
-		 die;
-		 
-		if( isset($_POST) && count($_POST) > 0 ) 
-		{
-			$this->form_validation->set_rules('username','Username','trim|required');
-			$this->form_validation->set_rules('password','Password','trim|required');
-			if( $this->form_validation->run() == TRUE ) {
-				$posts = $this->input->post();
-				$result = $this->Login->get_user('users',['id','username'],['username'=>$posts['username'], 'password' => $posts['password']]);
-				
-			   
-				if($result) {
-					$this->session->set_userdata('isLoggedIn','true');
-					$this->session->set_userdata('admininfo',$result);
-					
-			$array = json_decode(json_encode($this->session->userdata), true);
-			$result1 = $this->Login->get_user('admin_setting',['color','url','favicon'],['user_id'=>$array['admininfo']['id']]);
-			
-			$this->session->set_userdata('admindata',$result1);
-					redirect('dashboard');
-				} else {
-					$message = '<div class="error" title="Error:">Username or Password not correct. Please try again!</div>';
-					$this->session->set_flashdata('message',$message);
 
-					$this->load->view('login');
-				}
-			}else
-			{
-			    	$this->load->view('login');
-			}
-		}
-		else{
-		    	redirect('home');
-		}
-		//$this->load->view('welcome_message');
-	}
 	
-	public function register()
-	{
-		
-		if( isset($_POST) && count($_POST) > 0 ) 
-		{
-			$this->form_validation->set_rules('username','Username','trim|required');
-			$this->form_validation->set_rules('password','Password','trim|required');
-			$this->form_validation->set_rules('email','Email','trim|required|is_unique[users.email]');
-			if( $this->form_validation->run() == TRUE ) {
-				$posts = $this->input->post();
-				$posts = $this->input->post();
-				$params = array();
-				$params['username'] 		= $posts['username'];
-				$params['password'] 		= $posts['password'];
-				$params['email'] 		= $posts['email'];
-				$query = $this->Common_model->add_record( 'users', $params );
-			    if( $query ) {
-					$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
-					$this->session->set_flashdata('message',$message);
-					$this->load->view('login');
-				} else {
-					$message = '<div class="error" title="Error:" >Account not created. Please try again!</div>';
-					$this->session->set_flashdata('message',$message);
-				    redirect('home/register');
-				}
-			}else
-			{
-			    		$this->load->view('signup');
-			}
-		}
-		else{
-		    	redirect('home/register');
-		}
-		//$this->load->view('welcome_message');
-	}
-	
-
-	public function ajaxupload(){
-		
-		if ( 0 < $_FILES['file']['error'] ) {
-			echo 'Error: ' . $_FILES['file']['error'] . '<br>';
-		}
-		else {
-			move_uploaded_file($_FILES['file']['tmp_name'], 'assets/img/' . $_FILES['file']['name']);
-			echo $_FILES['file']['name'];
-		}
-		
-	}
 	public function ajaxupload_jobphoto(){
 		       
  if(is_array($_FILES) && !empty($_FILES['photo']))  
@@ -156,17 +70,6 @@ class Server extends CI_Controller {
 	}
 	
 	
-	
-	public function ajaxsave(){
-		$posts = $this->input->post();
-		if($posts['id']=='logo'){
-		$this->db->query("UPDATE admin_setting SET url='".$posts['name']."' WHERE name='".$posts['id']."'");
-		}
-		else{
-		$this->db->query("UPDATE admin_setting SET favicon='".$posts['name']."'");
-		}
-		echo $posts['name'];
-	}
 	public function ajaxsave_jobphoto(){
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
@@ -208,12 +111,6 @@ class Server extends CI_Controller {
 		}
 	}
 	 
-	public function updatestatus(){
-	   
-		$posts = $this->input->post();
-		$this->db->query("UPDATE jobs SET status='".$posts['status']."' WHERE id='".$posts['id']."'");
-		return true;
-	}
 	
 
 	public function deletephoto(){
@@ -237,15 +134,7 @@ class Server extends CI_Controller {
 		return true;
 	}
 	
-	public function ajaxcolor(){
-	   
-	    $array = json_decode(json_encode($this->session->userdata), true);
-		$posts = $this->input->post();
-		$this->db->query("UPDATE admin_setting SET color='".$posts['color']."' WHERE user_id='".$array['admininfo']['id']."'");
-		 $this->session->set_userdata("color",$posts['color']);
-		echo $posts['color'];
-	}
-
+	
 	public function imagerotate(){
 		$posts = $this->input->post();
 	  	$filename   =   $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$posts['name'];//base_url()."assets/job_photo/".$posts['name'];
