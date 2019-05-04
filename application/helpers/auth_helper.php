@@ -24,7 +24,7 @@ if (!function_exists('sessionTimeout')) {
     function sessionTimeout()
     {
         $CI = &get_instance();
-        $expireAfter = 10;
+        $expireAfter = 30;
 
         //Check to see if our "last action" session
         //variable has been set.

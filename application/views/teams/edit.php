@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?> <div class="container-fluid">
-                <div class="row">
+                <div class="row">  <div class="col-md-12">        
+  <?= $this->session->flashdata('message') ?>
+                                                            </div>
                    <div class="col-md-8">
                         <div class="card">
                            
@@ -15,22 +17,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
 
                             <div class="content">
-                                                     <div class="col-md-12">         <p style="color: green;">
-  <?php $this->session->flashdata('message') ?>
-                                                             <?php if(validation_errors())
-{   
-echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
-echo validation_errors();
-echo '</div>';
-}
-?></div>
-                                <?php echo form_open('server/save_team',array('id'=>"teamjobform",'autocomplete'=>"off"));?>
+                                     <?php if( !empty( $teams ) ) : ?>
+              <?php foreach( $teams as $team ) : ?>                
+                                <?php echo form_open('team/'.$team->id.'/update',array('method'=>'post'));?>
                                     <div class="row">
                                         
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Team Name(Region Name)</label>
-                                                <input class="form-control" placeholder="Job Name" name="teamname" value="" type="text">
+                                                <input  name="id" value="<?php echo $team->id ?>" type="hidden">
+                                                <input class="form-control" placeholder="Job Name" name="teamname" value="<?php echo $team->team_name ?>" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -41,7 +37,7 @@ echo '</div>';
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Remark</label>
-                                                <textarea class="form-control" placeholder="Address" name="remark" ></textarea>
+                                                <textarea class="form-control" placeholder="Address" name="remark" ><?php echo $team->remark ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -51,9 +47,13 @@ echo '</div>';
                                 
 
 
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                                    <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                                     <div class="clearfix"></div>
-                                <?php echo form_close(); ?>      
+                                <?php echo form_close(); ?>    
+                                <?php endforeach; ?>
+            <?php else : ?>
+               <p class="mb-15">  Something Wrong!</p>
+            <?php endif; ?>  
                             </div>
                        
                           

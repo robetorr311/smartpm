@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">View</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
+                                <h4 class="title" style="float: left;">Lead Detail</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
 <div class="clearfix"></div>
                                 
                                                              <?php if(validation_errors())
@@ -20,19 +20,20 @@ echo '</div>';
 }
 ?>
                             </div>
-                            <div class="content">
+                            <div class="content view">
                                   <?php
                                 $status='';
-                                   foreach( $jobs as $job ) : ?>  
+                                   foreach( $leads as $lead ) : ?>  
 
-                                <?php echo form_open('server/update_job',array('id'=>"jobform",'autocomplete'=>"off"));?>
-                                <?php  $status= $job->status; ?>
+                               
+                                <?php  $status= $lead->status; ?>
                                     <div class="row">
-                                        <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>"></input>
+                                       
                                         <div class="col-md-12">
+                                             <input type="hidden" name="id" class="hidden_id" value="<?php echo $lead->id ?>"/>
                                             <div class="form-group">
-                                                <label>Job Name</label>
-                                               <p> <?php echo $job->job_name ?></p>
+                                                <label style="line-height: 30px;">Job Name :</label>
+                                               <p style="font-size: 25px"> <?php echo $lead->job_name ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -40,14 +41,14 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
-                                                <p><?php echo $job->firstname ?></p>
+                                                <label>First Name :</label>
+                                                <p><?php echo $lead->firstname ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
-                                                <p><?php echo $job->lastname ?></p>
+                                                <label>Last Name :</label>
+                                                <p><?php echo $lead->lastname ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -55,8 +56,8 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Address</label>
-                                                <p><?php echo $job->address ?></p>
+                                                <label>Address :</label>
+                                                <p><?php echo $lead->address ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -64,20 +65,20 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>City</label>
-                                               <p><?php echo $job->city ?></p>
+                                                <label>City :</label>
+                                               <p><?php echo $lead->city ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>State</label>
-                                               <p><?php echo $job->state ?></p>
+                                                <label>State :</label>
+                                               <p><?php echo $lead->state ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Postal Code</label>
-                                              <p><?php echo $job->zip ?></p>
+                                                <label>Postal Code :</label>
+                                              <p><?php echo $lead->zip ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -85,43 +86,41 @@ echo '</div>';
                                  <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Phone 1</label>
-                                               <p><?php echo $job->phone1 ?></p>
+                                                <label>Cell Phone :</label>
+                                               <p><?php echo $lead->phone1 ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Phone 2</label>
-                                               <p><?php echo $job->phone2 ?></p>
+                                                <label>Home Phone :</label>
+                                               <p><?php echo $lead->phone2 ?></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                <p><?php echo $job->email ?></p>
+                                                <label>Email :</label>
+                                                <p><?php echo $lead->email ?></p>
                                             </div>
                                         </div>
                                     </div>
 
 
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
                                     <div class="clearfix"></div>
-                                <?php echo form_close(); ?>
-      
+                           
                             
                        
-					   <div class="footer" style="margin-bottom: 10px;">
+                       <div class="footer" style="margin-bottom: 10px;">
                                     
                                     <hr>
-                                    <a href="<?php echo base_url('index.php/dashboard/addphoto/'.$job->id);?>" class="btn btn-success btn-fill">Photo</a>
-									
-  <!-- <a href="http://developeradda.tech/project/roofing-crm/report/?id=<?php echo $job->id ?>" target="_blank" class="btn btn-danger btn-fill">Photo Report</a>-->
-   <a href="<?php echo base_url();?>index.php/dashboard/alljobreport/<?php echo $job->id ?>" class="btn btn-danger btn-fill">All Report</a>
+                                    <a href="<?php echo base_url('index.php/dashboard/addphoto/'.$lead->id);?>" class="btn btn-success btn-fill">Photo</a>
+                                    
+  <!-- <a href="http://developeradda.tech/project/roofing-crm/report/?id=<?php echo $lead->id ?>" target="_blank" class="btn btn-danger btn-fill">Photo Report</a>-->
+   <a href="<?php echo base_url();?>index.php/dashboard/alljobreport/<?php echo $lead->id ?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-   <a href="<?php echo base_url('index.php/dashboard/adddoc/'.$job->id);?>" class="btn btn-danger btn-fill">Docs</a>
+   <a href="<?php echo base_url('index.php/dashboard/adddoc/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
                                 </div>
-								                                   <?php endforeach; ?>
-					</div>
+                                                                   <?php endforeach; ?>
+                    </div>
                           
                         </div>
                     </div>
@@ -178,21 +177,20 @@ echo '</div>';
                                  <?php echo form_close(); ?>
                                  <?php endforeach; ?>
                                 <?php else : ?>
-                                   <?php echo form_open('server/additional_party_add',array('id'=>"jobform",'autocomplete'=>"off"));?>
-
+                                   
                                     <div class="row">
-                                         <input type="hidden" name="id" value="<?php echo $jobid; ?>"></input>
+                                         
                                         <div class="col-md-12">
                                            No record!
                                         </div>
                                     </div>
 
-                                 <?php echo form_close(); ?>
+                              
 
                                 <?php endif; ?>
                             </div>
                         </div>
 </div>
-					   </div>
+                       </div>
                         </div>
   

@@ -1,7 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?> <div class="container-fluid">
-                <div class="row">
+                <div class="row"> <div class="col-md-12">
+       <?= $this->session->flashdata('message') ?>
+       
+        </div>
                    <div class="col-md-8">
                         <div class="card">
                            
@@ -15,16 +18,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
 
                             <div class="content">
-                                                     <div class="col-md-12">         <p style="color: green;">
-  <?php $this->session->flashdata('message') ?>
-                                                             <?php if(validation_errors())
-{   
-echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
-echo validation_errors();
-echo '</div>';
-}
-?></div>
-                                <?php echo form_open('server/save_job',array('id'=>"jobform",'autocomplete'=>"off"));?>
+       
+                                <?php echo form_open('lead/store',array('method'=>'post'));?>
                                     <div class="row">
                                         
                                         <div class="col-md-12">

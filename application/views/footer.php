@@ -50,7 +50,7 @@
 					var form_data = new FormData();      					
 					form_data.append('file', file_data);
 					$.ajax({
-						url: baseUrl+'index.php/server/ajaxupload', // point to server-side PHP script     
+						url: baseUrl+'setting/ajaxupload', // point to server-side PHP script     
 						dataType: 'text',  // what to expect back from the PHP script, if anything
 						cache: false,
 						contentType: false,
@@ -61,11 +61,11 @@
 							//alert(php_script_response); 
 							$.ajax({
 								type: 'POST',
-								url: baseUrl+'index.php/server/ajaxsave', // point to server-side PHP script     
+								url: baseUrl+'setting/ajaxsave', // point to server-side PHP script     
 								data: {id: id, name:php_script_response},                         
 								success: function(php_script_response){
 									$('.'+id+'img').attr('src',baseUrl+'assets/img/'+php_script_response ); // 
-								alert();
+							
 								}
 							});
 						}
@@ -279,7 +279,7 @@
 					var color = $(this).attr('class');
 				                            
 					$.ajax({
-						url: baseUrl+'index.php/server/ajaxcolor',
+						url: baseUrl+'setting/ajaxcolor',
 						data: {color: color},        
 						type: 'post',
 						success: function(php_script_response){
@@ -366,7 +366,7 @@ $(document).on('click', '.doc_list span',  function () {
 				var value=$(this).val();
 				var id=$('.hidden_id').val();
 				$.ajax({
-						url: baseUrl+'index.php/server/updatestatus',
+						url: baseUrl+'lead/updatestatus',
 						data: {status: value, id: id},        
 						type: 'post',
 						success: function(php_script_response){

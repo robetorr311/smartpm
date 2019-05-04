@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
     <div class="row admin"><?= $this->session->flashdata('message') ?>			
 			  <?php if( !empty( $data ) ) : ?>
               <?php foreach( $data->result() as $datas ) : ?> 
-                   <div class="col-md-6">
-                        <div class="card"> 
+                   <div class=""><div class="col-md-6" >
+                        <div class="card" style="min-height:200px"> 
                             <div class="header">
                                 <h4 class="title">Update Logo</h4>
                                 <p class="category">Here is a subtitle for this table</p>
@@ -25,8 +25,8 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                             </div>
                         </div>
                     </div>
-					<div class="col-md-6">
-                        <div class="card">  
+					<div class="col-md-6" >
+                        <div class="card" style="min-height:200px">  
                             <div class="header">
                                 <h4 class="title">Update Favicon</h4>
                                 <p class="category">Here is a subtitle for this table</p>
@@ -45,9 +45,9 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
 								</div>
                             </div>
                         </div>
-                    </div>     
-                    <div class="col-md-6">
-                        <div class="card">
+                    </div>     </div>   
+                    <div class="col-md-6" >
+                        <div class="card" style="min-height:200px">
                             <div class="header">
                                 <h4 class="title">Admin Color</h4>
                                 <p class="category">Here is a subtitle for this table</p>

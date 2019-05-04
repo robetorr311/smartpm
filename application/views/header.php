@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head> 
-    <?php $array = json_decode(json_encode($this->session->userdata), true); ?>
+    <?php $admin = json_decode(json_encode($this->session->userdata), true); ?>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/<?php echo $array['admindata']['favicon']; ?>">
+	<link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/<?php echo $admin['admindata']['favicon']; ?>">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 	<title><?= $title ?> - SmartPM CRM</title>
@@ -47,7 +47,7 @@
 <div class="wrapper">
    
     <?php //print_r($array['admindata']) ?>
-    <div class="sidebar" <?php if($this->session->userdata("color")!=''){ echo "data-color=".$this->session->userdata("color"); }else{ echo "data-color=".$array['admindata']['color']; }?> data-image="assets/img/sidebar-5.jpg">
+    <div class="sidebar" <?php if($this->session->userdata("color")!=''){ echo "data-color=".$this->session->userdata("color"); }else{ echo "data-color=".$admin['admindata']['color']; }?> data-image="assets/img/sidebar-5.jpg">
 
     <!--
 
@@ -60,25 +60,25 @@
             <div class="logo">
                 <a href="#" class="simple-text">
                     CRM
-                 <!-- <img src="<?php echo base_url(); ?>assets/img/<?php echo $array['admindata']['url']; ?>" />-->
+                
                 </a>
             </div>
 
             <ul class="nav">
                  <li >
-                    <a href="<?php echo base_url('index.php/dashboard');?>">
+                    <a href="<?php echo base_url('dashboard');?>">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                  <li>
-                    <a href="<?php echo base_url('index.php/dashboard/alllead');?>">
+                    <a href="<?php echo base_url('leads');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Leads </p>
                     </a>
                 </li>
               <li>
-                    <a href="<?php echo base_url('index.php/dashboard/alljob');?>">
+                    <a href="<?php echo base_url('cash_jobs');?>">
                         <i class="pe-7s-user"></i>
                         <p>Cash Jobs</p>
                     </a>
@@ -90,19 +90,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/allinsurance');?>">
+                    <a href="<?php echo base_url('insurance_jobs');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Insurance Jobs</p>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/teams');?>">
+                    <a href="<?php echo base_url('teams');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Teams</p>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('index.php/dashboard/user');?>">
+                    <a href="<?php echo base_url('users');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Users</p>
                     </a>
@@ -138,11 +138,11 @@
                     <ul class="nav navbar-nav navbar-right">
 					
                        <li>
-							 <a href="">Welcome <strong><?php echo $array['admininfo']['username']; ?></strong></a>
+							 <a href="">Welcome <strong><?php echo $admin['admininfo']['fullname']; ?></strong></a>
 					   </li>
                         <li>
                             
-<a href="<?php echo base_url('index.php/dashboard/logout');?>" style="color: red;"><p>Log out</p></a>                         
+<a href="<?php echo base_url('logout');?>" style="color: red;"><p>Log out</p></a>                         
                         </li>
 						<li class="separator hidden-lg"></li>
                     </ul>

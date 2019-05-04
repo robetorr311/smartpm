@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'home';
+$route['default_controller'] = 'account';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -58,3 +58,29 @@ $route['tasks/(:num)'] = 'tasks/index';
 $route['task/create'] = 'tasks/create';
 $route['task/store'] = 'tasks/store';
 $route['task/(:num)/delete'] = 'tasks/delete';
+
+$route['leads'] = 'leads/index';
+$route['lead/(:num)'] = 'leads/view';
+$route['lead/(:num)/edit'] = 'leads/edit';
+$route['lead/(:num)/update'] = 'leads/update';
+$route['lead/new'] = 'leads/new';
+$route['lead/store'] = 'leads/store';
+$route['lead/updatestatus'] = 'leads/updatestatus';
+
+$route['party/(:num)/add'] = 'party/index';
+$route['party/(:num)/update'] = 'party/update';
+
+$route['cash_jobs'] = 'cash_jobs/index';
+$route['cash_job/(:num)'] = 'cash_jobs/view';
+
+$route['insurance_jobs'] = 'insurance_jobs/index';
+$route['insurance_job/(:num)'] = 'insurance_jobs/view';
+
+$route['teams'] = 'teams/index';
+$route['team/(:num)'] = 'teams/view';
+$route['team/(:num)/edit'] = 'teams/edit';
+$route['team/(:num)/update'] = 'teams/update';
+$route['team/new'] = 'teams/new';
+$route['team/store'] = 'teams/store';
+
+

@@ -12,36 +12,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
   
   </div>
 	 
-  <?php echo form_open('server/register',array('id'=>"registerform",'autocomplete'=>"off"));?>
+  <?php echo form_open('account/save');?>
   <h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Create Account</h2>
-  <p style="color: green;">
-  <?= $this->session->flashdata('message') ?></p>
 
-                                                              <?php if (validation_errors())
-{   
-echo '<div class="error" title="Error:">';
-echo validation_errors();
-echo '</div>';
-}
-?>
+  <?= $this->session->flashdata('message') ?>
+
+                                                       
   	<div class="input-group">
   		<label>Username</label>
-  		<input type="text" name="username" >
+  		<input type="email" name="username" placeholder="abc@gmail.com" required="">
   	</div>
   	<div class="input-group">
   		<label>Password</label>
-  		<input type="password" name="password" id="pwd">
+  		<input type="password" name="password" required="">
   	</div>
-  <!--	<div class="input-group">
-  		<label>Mobile</label>
-  		<input type="text" name="mobile">
-  	</div>-->
   		<div class="input-group">
-  		<label>Email</label>
-  		<input type="email" name="email">
+  		<label>Full Name</label>
+  		<input type="text" name="fullname" required="">
   	</div>
   	<div class="input-group">
-  		<button type="submit" id="submit" class="btn" name="login_user">Register</button>
+  		<button type="submit" id="submit" class="btn" >Register</button>
   	</div>
   	<p>
   Already have a account? <a href="<?php echo base_url(); ?>">Login</a>
