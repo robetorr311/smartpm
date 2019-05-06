@@ -11,7 +11,7 @@ if (!function_exists('authAdminAccess')) {
         if (!$CI->session->userdata('admininfo')) {
             $CI->session->sess_destroy();
             delete_cookie('tokenCookie');
-            redirect('/home');
+            redirect('/account');
             die();
         }
     }

@@ -47,7 +47,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                       <?php endforeach; ?>
             <?php else : ?>
-               <p class="mb-15">  No Record Found!</p>
+               <tr>
+                      <td colspan="13" class="text-center">No Record Found!</td>
+                  </tr>
             <?php endif; ?>
                
 

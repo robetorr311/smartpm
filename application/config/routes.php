@@ -80,6 +80,7 @@ $route['teams'] = 'teams/index';
 $route['team/(:num)'] = 'teams/view';
 $route['team/(:num)/edit'] = 'teams/edit';
 $route['team/(:num)/update'] = 'teams/update';
+$route['team/(:num)/delete'] = 'teams/delete';
 $route['team/new'] = 'teams/new';
 $route['team/store'] = 'teams/store';
 

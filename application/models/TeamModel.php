@@ -40,10 +40,9 @@ class TeamModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
-    public function delete($id)
+    public function delete($condition)
     {
-        return $this->db->delete($this->table, [
-            'id' => $id
-        ]);
+       $this->db->where($condition);
+       return  $this->db->update($this->table, ['is_active' => 0]);
     }
 }

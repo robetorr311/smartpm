@@ -17,50 +17,82 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <h4 class="title">User List</h4>
                                
                             </div>
-                            <div class="content table-responsive table-full-width user" >
+                            <div class="content table-responsive user" >
+                          
                                 <table class="table table-hover table-striped">
-                                    <thead style="background: gray;">
-                                        
-                                        <th>User ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Address</th>
-                                        <th>Email</th>
+                                    <thead>
+                                        <tr><th>SN</th>
+                                        <th>Username</th>
+                                        <th>Full Name</th>
                                         <th>Team</th>
-                                      
                                         
-                                    </thead>
-                                    <tbody id="myTable">
-
-                                    <?php if( !empty( $job ) ) : ?>
-              <?php foreach( $job as $jobs ) : ?>  
-                <tr>
-               
-                  <td><?php echo $jobs->id ?></td>
-                  <td><?php echo $jobs->firstname ?></td>
-                  <td><?php echo $jobs->lastname ?></td>
-                  <td><?php echo $jobs->address ?></td>
-                  <td><?php echo $jobs->email ?></td>
-                  <td><select class="form-control">
-                        <option value="lead">Select Team</option>
-                        <option value="lead">Team 1</option>
-                        <option value="lead">Team 2</option>
-                        <option value="lead">Team 3</option>
-                    </select>
-                 </td>
-                 </tr>
-
-
-                      <?php endforeach; ?>
-            <?php else : ?>
-               <p class="mb-15">  No Record Found!</p>
-            <?php endif; ?>
-               
-
-
-                                  
+                                    </tr></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>test@gmail.com</td>
+                                            <td>User1</td>
+                                            <td><select class="form-control"><option>select</option>
+                                            <option>Team 1</option>
+                                          <option>Team 2</option>
+                                        <option>Team 3</option></select>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                           <td>test@gmail.com</td>
+                                            <td>User1</td>
+                                             <td><select class="form-control"><option>select</option>
+                                            <option>Team 1</option>
+                                          <option>Team 2</option>
+                                        <option>Team 3</option></select>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                           <td>test@gmail.com</td>
+                                            <td>User1</td>
+                                             <td><select class="form-control"><option>select</option>
+                                            <option>Team 1</option>
+                                          <option>Team 2</option>
+                                        <option>Team 3</option></select>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                             <td>test@gmail.com</td>
+                                            <td>User1</td>
+                                            <td><select class="form-control"><option>select</option>
+                                            <option>Team 1</option>
+                                          <option>Team 2</option>
+                                        <option>Team 3</option></select>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>test@gmail.com</td>
+                                            <td>User1</td>
+                                            <td><select class="form-control"><option>select</option>
+                                            <option>Team 1</option>
+                                          <option>Team 2</option>
+                                        <option>Team 3</option></select>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>test@gmail.com</td>
+                                            <td>User1</td>
+                                             <td><select class="form-control"><option>select</option>
+                                            <option>Team 1</option>
+                                          <option>Team 2</option>
+                                        <option>Team 3</option></select>
+                                          </td>
+                                        </tr>
                                     </tbody>
                                 </table>
+
+
+                                
 
                             </div>
                         </div>
