@@ -7,6 +7,7 @@ class TaskJobTagsModel extends CI_Model
 
     public function insertByJobArr($jobs, $task_id)
     {
+        print_r($jobs); die();
         if (is_array($jobs) && count($jobs) > 0) {
             $data = $this->buildByUserArr($jobs, $task_id);
             $insert = $this->db->insert_batch($this->table, $data);

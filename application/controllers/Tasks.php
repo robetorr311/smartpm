@@ -89,8 +89,10 @@ class Tasks extends CI_Controller
                 ]);
 
                 $jobs = $taskData['tag_clients'];
-                $jobs = explode(',', $jobs);
-                $this->task_job_tags->insertByJobArr($jobs, $insert);
+                if (!empty($jobs)) {
+                    $jobs = explode(',', $jobs);
+                    $this->task_job_tags->insertByJobArr($jobs, $insert);
+                }
 
                 // if (preg_match_all('~(@\w+)~', $note, $matches, PREG_PATTERN_ORDER)) {
                 //     $usernames = $matches[1];
@@ -98,12 +100,16 @@ class Tasks extends CI_Controller
                 // }
 
                 $users = $taskData['tag_users'];
-                $users = explode(',', $users);
-                $this->task_user_tags->insertByUserArr($users, $insert);
+                if (!empty($users)) {
+                    $users = explode(',', $users);
+                    $this->task_user_tags->insertByUserArr($users, $insert);
+                }
 
                 $predec_tasks = $taskData['predecessor_tasks'];
-                $predec_tasks = explode(',', $predec_tasks);
-                $this->task_predecessor->insertByTaskArr($predec_tasks, $insert);
+                if (!empty($predec_tasks)) {
+                    $predec_tasks = explode(',', $predec_tasks);
+                    $this->task_predecessor->insertByTaskArr($predec_tasks, $insert);
+                }
 
                 redirect('task/' . $insert);
             }
