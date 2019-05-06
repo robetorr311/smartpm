@@ -10,10 +10,15 @@ class Tasks extends CI_Controller
         authAdminAccess();
         // sessionTimeout();
 
-        $this->load->model('TaskModel');
+        $this->load->model(['TaskModel', 'Login', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->task = new TaskModel();
+        $this->login = new Login();
+        $this->task_notes = new TaskNotesModel();
+        $this->task_user_tags = new TaskUserTagsModel();
+        $this->task_predecessor = new TaskPredecessorModel();
+        $this->task_job_tags = new TaskJobTagsModel();
     }
 
     public function index()
@@ -42,6 +47,7 @@ class Tasks extends CI_Controller
         $types = TaskModel::getTypes();
         $levels = TaskModel::getLevels();
         $tasks = $this->task->getTaskList();
+        $users = $this->login->getUserList();
 
         $this->load->view('header', [
             'title' => 'Tasks'
@@ -49,7 +55,8 @@ class Tasks extends CI_Controller
         $this->load->view('tasks/create', [
             'types' => $types,
             'levels' => $levels,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'users' => $users
         ]);
         $this->load->view('footer');
     }
@@ -76,32 +83,33 @@ class Tasks extends CI_Controller
             if ($insert) {
                 $note = $taskData['note'];
 
-                // insert note
+                $this->task_notes->insert([
+                    'note' => $note,
+                    'task_id' => $insert
+                ]);
 
                 $jobs = $taskData['tag_clients'];
-                $jobs = $this->extractTagsArray($jobs);
-
-                $users = $taskData['tag_users'];
-                $users = $this->extractTagsArray($users);
-
-                $predec_tasks = $taskData['predecessor_tasks'];
-                $predec_tasks = $this->extractTagsArray($predec_tasks);
+                $jobs = explode(',', $jobs);
+                $this->task_job_tags->insertByJobArr($jobs, $insert);
 
                 // if (preg_match_all('~(@\w+)~', $note, $matches, PREG_PATTERN_ORDER)) {
                 //     $usernames = $matches[1];
                 //     array_merge($users, $usernames);
                 // }
 
-                // insert TaskJobTags
+                $users = $taskData['tag_users'];
+                $users = explode(',', $users);
+                $this->task_user_tags->insertByUserArr($users, $insert);
 
-                // insert TaskUserTags
+                $predec_tasks = $taskData['predecessor_tasks'];
+                $predec_tasks = explode(',', $predec_tasks);
+                $this->task_predecessor->insertByTaskArr($predec_tasks, $insert);
 
-                // insert TaskPredecessor
-
-                redirect('task/' + $insert);
+                redirect('task/' . $insert);
             }
 
             $this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
+            redirect('task/create');
         } else {
             $this->session->set_flashdata('errors', validation_errors());
             redirect('task/create');

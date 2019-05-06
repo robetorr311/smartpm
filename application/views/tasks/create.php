@@ -54,7 +54,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Assigned To</label>
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled selected>Select Assigned To</option>
-                                        <option value="1">Option 1</option>
+                                        <?php foreach ($users as $user) {
+                                            echo '<option value="' . $user->id . '">' . $user->fullname . ' (' . $user->username . ')</option>';
+                                        } ?>
                                     </select>
                                 </div>
                             </div>
@@ -138,33 +140,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         });
         $('input#tag_users').tagsinput({
             itemValue: 'id',
-            itemText: 'value',
+            itemText: function(item) {
+                return item.fullname + ' (' + item.username + ')';
+            },
             typeahead: {
-                source: [{
-                        id: 1,
-                        value: 'Amsterdam'
-                    },
-                    {
-                        id: 2,
-                        value: 'Washington'
-                    },
-                    {
-                        id: 3,
-                        value: 'Sydney'
-                    },
-                    {
-                        id: 4,
-                        value: 'Beijing'
-                    },
-                    {
-                        id: 5,
-                        value: 'Cairo'
-                    }
-                ],
+                source: <?= json_encode($users) ?>,
                 afterSelect: function() {
                     this.$element[0].value = '';
-                },
-                displayKey: 'value'
+                }
             }
         });
         $('input#predecessor_tasks').tagsinput({
