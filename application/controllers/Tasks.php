@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Tasks extends CI_Controller
 {
+    private $title = 'Tasks';
+
     public function __construct()
     {
         parent::__construct();
@@ -32,7 +34,7 @@ class Tasks extends CI_Controller
         $this->pagination->initialize($pagiConfig);
         $tasks = $this->task->allTasks($start, $limit);
         $this->load->view('header', [
-            'title' => 'Tasks'
+            'title' => $this->title
         ]);
         $this->load->view('tasks/index', [
             'tasks' => $tasks,
@@ -49,7 +51,7 @@ class Tasks extends CI_Controller
         $users = $this->login->getUserList();
 
         $this->load->view('header', [
-            'title' => 'Tasks'
+            'title' => $this->title
         ]);
         $this->load->view('tasks/create', [
             'types' => $types,
@@ -124,7 +126,7 @@ class Tasks extends CI_Controller
     // public function edit()
     // {
     //     $this->load->view('header', [
-    //         'title' => 'Tasks'
+    //         'title' => $this->title
     //     ]);
     //     $this->load->view('tasks/create');
     //     $this->load->view('footer');
@@ -132,7 +134,26 @@ class Tasks extends CI_Controller
 
     public function show($id)
     {
-        echo $id;
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            $notes = $this->task_notes->getNotesByTaskId($id);
+            $jobs = false;
+            $users = $this->task_user_tags->getUsersByTaskId($id);
+            $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
+            $this->load->view('header', [
+                'title' => $this->title
+            ]);
+            $this->load->view('tasks/view', [
+                'task' => $task,
+                'notes' => $notes,
+                'jobs' => $jobs,
+                'users' => $users,
+                'predec_tasks' => $predec_tasks
+            ]);
+            $this->load->view('footer');
+        } else {
+            redirect('tasks');
+        }
     }
 
     public function delete($id)

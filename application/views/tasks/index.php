@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?php echo base_url('tasks/create'); ?>" class="btn btn-info btn-fill pull-right">New Task</a>
+            <a href="<?= base_url('tasks/create') ?>" class="btn btn-info btn-fill pull-right">New Task</a>
         </div>
     </div>
     <div class="row">
@@ -28,6 +28,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Name</th>
                             <th>Type</th>
                             <th>Level</th>
+                            <th>Status</th>
                             <th>Assigned To</th>
                             <th>Created By</th>
                             <th class="text-center">View</th>
@@ -38,12 +39,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php if (!empty($tasks)) : ?>
                                 <?php foreach ($tasks as $task) : ?>
                                     <tr>
-                                        <td><?php echo $task->id ?></td>
-                                        <td><?php echo $task->name ?></td>
-                                        <td><?php echo TaskModel::typetostr($task->type) ?></td>
-                                        <td><?php echo TaskModel::leveltostr($task->level) ?></td>
-                                        <td><?php echo $task->assigned_username ?></td>
-                                        <td><?php echo $task->created_username ?></td>
+                                        <td><?= $task->id ?></td>
+                                        <td><?= $task->name ?></td>
+                                        <td><?= TaskModel::typetostr($task->type) ?></td>
+                                        <td><?= TaskModel::leveltostr($task->level) ?></td>
+                                        <td><?= TaskModel::statustostr($task->status) ?></td>
+                                        <td><?= $task->assigned_username ?></td>
+                                        <td><?= $task->created_username ?></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id . '/delete') ?>" data-method="DELETE" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
@@ -51,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php endforeach; ?>
                             <?php else : ?>
                                 <tr>
-                                    <td colspan="9" class="text-center">No Record Found!</td>
+                                    <td colspan="10" class="text-center">No Record Found!</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

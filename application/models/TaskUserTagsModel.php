@@ -22,6 +22,17 @@ class TaskUserTagsModel extends CI_Model
         return $this->db->delete($this->table);
     }
 
+    public function getUsersByTaskId($id)
+    {
+        $this->db->select('users.username as username');
+        $this->db->from($this->table);
+        $this->db->join('users', 'task_user_tags.user_id=users.id', 'left');
+        $this->db->where('task_id', $id);
+        $query = $this->db->get();
+        $result = $query->result();
+        return (count($result) > 0) ? $result : false;
+    }
+
     /**
      * Private Methods
      */

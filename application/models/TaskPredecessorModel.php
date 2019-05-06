@@ -23,6 +23,17 @@ class TaskPredecessorModel extends CI_Model
         return $this->db->delete($this->table);
     }
 
+    public function getTasksByTaskId($id)
+    {
+        $this->db->select('tasks.name as name');
+        $this->db->from($this->table);
+        $this->db->join('tasks', 'task_predecessor.predecessor_task_id=tasks.id', 'left');
+        $this->db->where('task_id', $id);
+        $query = $this->db->get();
+        $result = $query->result();
+        return (count($result) > 0) ? $result : false;
+    }
+
     /**
      * Private Methods
      */

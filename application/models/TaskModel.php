@@ -42,6 +42,18 @@ class TaskModel extends CI_Model
         return $this->db->count_all('tasks');
     }
 
+    public function getTaskById($id)
+    {
+        $this->db->select('tasks.*, users_created_by.username as created_username, users_assigned_to.username as assigned_username');
+        $this->db->from($this->table);
+        $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
+        $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
+        $this->db->where('tasks.id', $id);
+        $query = $this->db->get();
+        $result = $query->result();
+        return (count($result) > 0) ? $result[0] : false;
+    }
+
     public function getTaskList($select = 'id, name')
     {
         $this->db->select($select);
@@ -93,5 +105,9 @@ class TaskModel extends CI_Model
     public static function getLevels()
     {
         return self::$level;
+    }
+
+    public static function statustostr($id) {
+        return self::$status[$id];
     }
 }
