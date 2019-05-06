@@ -156,20 +156,33 @@ class Tasks extends CI_Controller
         }
     }
 
+    public function addNote($id)
+    {
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            redirect('task/' . $id);
+        } else {
+            redirect('tasks');
+        }
+    }
+
     public function delete($id)
     {
-        if ($id) {
-            if ($this->task->isAllowedToDelete($id)) {
-                $this->task_notes->deleteRelated($id);
-                $this->task_job_tags->deleteRelated($id);
-                $this->task_user_tags->deleteRelated($id);
-                $this->task_predecessor->deleteRelated($id);
-                $this->task->delete($id);
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            if ($id) {
+                if ($this->task->isAllowedToDelete($id)) {
+                    $this->task_notes->deleteRelated($id);
+                    $this->task_job_tags->deleteRelated($id);
+                    $this->task_user_tags->deleteRelated($id);
+                    $this->task_predecessor->deleteRelated($id);
+                    $this->task->delete($id);
+                } else {
+                    $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
+                }
             } else {
-                $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             }
-        } else {
-            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
         redirect('tasks');
     }

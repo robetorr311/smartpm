@@ -48,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $task->created_username ?></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('task/' . $task->id . '/delete') ?>" data-method="DELETE" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('task/' . $task->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

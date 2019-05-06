@@ -295,12 +295,12 @@ $("input[type=filhe]").change(function () {
 /**
  * Custom Script Added
  */
-$('a[data-method="DELETE"]').click(function (e) {
+$('a[data-method="POST"]').click(function (e) {
   e.preventDefault();
   var method = $(this).data('method');
   var url = $(this).attr('href');
   var parent = $(this).parent();
   var id = Date.now();
-  parent.append('<form action="' + url + '" method="POST" style="display:none;">' + (method == 'DELETE' ? '<input type="hidden" name="_method" value="DELETE">' : '') + '<button type="submit" id="' + id + '"></button></form>');
-  parent.find('#' + id).click();
+  parent.append('<form id="' + id + '" action="' + url + '" method="POST" style="display:none;"></form>');
+  parent.find('form#' + id).submit();
 });
