@@ -16,6 +16,28 @@ class TaskPredecessorModel extends CI_Model
         }
     }
 
+    public function deleteRelated($task_id)
+    {
+        $this->db->where('task_id', $task_id);
+        $this->db->or_where('predecessor_task_id', $task_id);
+        return $this->db->delete($this->table);
+    }
+
+    public function getTasksByTaskId($id)
+    {
+        $this->db->select('tasks.name as name');
+        $this->db->from($this->table);
+        $this->db->join('tasks', 'task_predecessor.predecessor_task_id=tasks.id', 'left');
+        $this->db->where('task_id', $id);
+        $query = $this->db->get();
+        $result = $query->result();
+        return (count($result) > 0) ? $result : false;
+    }
+
+    /**
+     * Private Methods
+     */
+
     private function buildByTaskArr($tasks, $task_id)
     {
         $return = [];

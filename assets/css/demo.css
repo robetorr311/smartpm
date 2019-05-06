@@ -318,20 +318,22 @@ img {
 	font-size: 30px;
 }
 .dashbord-box .box {
-  padding: 15px 15px;
-color: white;
-min-height: 130px;
+	padding: 15px 15px;
+	color: white;
+	min-height: 130px;
 }
 .box span {
-    font-size: 30px;
-    float: right;
-    width: 100%;
-    text-align: center;
-    font-weight: bold;
-}.box p {
-   font-size: 16px;
-font-weight: bold;
-text-align: center;color: darkolivegreen;
+	font-size: 30px;
+	float: right;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+}
+.box p {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	color: darkolivegreen;
 	padding: 15px 15px;
 	color: white;
 	min-height: 130px;
@@ -366,25 +368,42 @@ th {
 	background: gray;
 }
 .status {
-   font-size: 20px;
-font-weight: bold;
-float: right;
-display: block;
-color: white;
-padding: 4px 20px;
-border-radius: 2px;
+	font-size: 20px;
+	font-weight: bold;
+	float: right;
+	display: block;
+	color: white;
+	padding: 4px 20px;
+	border-radius: 2px;
 }
-.open{background-color:  green}
-.closed{
-   background-color:  red !important; 
+.open {
+	background-color: green;
+}
+.closed {
+	background-color: red !important;
 }
 .view label {
-   
-    line-height: 24px;
-    margin-right: 20px;
-    font-weight: bold;margin-bottom: 0;
-}.view p {
-    margin-bottom: 10px;
-}.view .form-group {
-    margin-bottom: 0;
+	line-height: 24px;
+	margin-right: 20px;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+.view p {
+	margin-bottom: 10px;
+}
+.view .form-group {
+	margin-bottom: 0;
+}
+span.info-tag {
+	background-color: #63d8f1;
+	color: #ffffff;
+	display: inline-block;
+	padding: 0 5px;
+	margin: 0 5px;
+	border-radius: 4px;
+	font-size: 13px;
+	line-height: 24px;
+}
+.card.task-notes-card .note-item:first-child hr {
+	margin-top: 0;
 }

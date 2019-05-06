@@ -17,6 +17,13 @@ class TaskModel extends CI_Model
         2 => 'Normal',
         3 => 'High'
     ];
+    private static $status = [
+        0 => 'Created',
+        1 => 'Working',
+        2 => 'Stuck',
+        3 => 'Hold',
+        4 => 'Completed'
+    ];
 
     public function allTasks($start = 0, $limit = 10)
     {
@@ -33,6 +40,18 @@ class TaskModel extends CI_Model
     public function getCount()
     {
         return $this->db->count_all('tasks');
+    }
+
+    public function getTaskById($id)
+    {
+        $this->db->select('tasks.*, users_created_by.username as created_username, users_assigned_to.username as assigned_username');
+        $this->db->from($this->table);
+        $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
+        $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
+        $this->db->where('tasks.id', $id);
+        $query = $this->db->get();
+        $result = $query->result();
+        return (count($result) > 0) ? $result[0] : false;
     }
 
     public function getTaskList($select = 'id, name')
@@ -53,9 +72,16 @@ class TaskModel extends CI_Model
 
     public function delete($id)
     {
-        return $this->db->delete($this->table, [
-            'id' => $id
-        ]);
+        $this->db->where('id', $id);
+        return $this->db->delete($this->table);
+    }
+
+    public function isAllowedToDelete($task_id)
+    {
+        $this->db->where('id IN (SELECT predecessor_task_id FROM task_predecessor WHERE task_id=' . $task_id . ')');
+        $this->db->where('status !=', 4);
+        $count = $this->db->count_all_results($this->table);
+        return ($count === 0);
     }
 
     /**
@@ -79,5 +105,9 @@ class TaskModel extends CI_Model
     public static function getLevels()
     {
         return self::$level;
+    }
+
+    public static function statustostr($id) {
+        return self::$status[$id];
     }
 }
