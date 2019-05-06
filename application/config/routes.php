@@ -56,9 +56,10 @@ $route['translate_uri_dashes'] = FALSE;
 $route['tasks'] = 'tasks/index';
 $route['tasks/(:num)'] = 'tasks/index/$1';
 $route['task/create'] = 'tasks/create';
-$route['task/store'] = 'tasks/store';
+$route['task/store']['post'] = 'tasks/store';
 $route['task/(:num)'] = 'tasks/show/$1';
-$route['task/(:num)/delete'] = 'tasks/delete/$1';
+$route['task/(:num)/add-note']['post'] = 'tasks/addNote/$1';
+$route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
 $route['lead/(:num)'] = 'leads/view';
