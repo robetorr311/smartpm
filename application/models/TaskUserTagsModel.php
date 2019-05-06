@@ -16,6 +16,16 @@ class TaskUserTagsModel extends CI_Model
         }
     }
 
+    public function deleteRelated($task_id)
+    {
+        $this->db->where('task_id', $task_id);
+        return $this->db->delete($this->table);
+    }
+
+    /**
+     * Private Methods
+     */
+
     private function buildByUserArr($users, $task_id)
     {
         $return = [];

@@ -8,6 +8,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
     <div class="row">
         <div class="col-md-12">
+            <?php
+            if (!empty($this->session->flashdata('errors'))) {
+                echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+                echo $this->session->flashdata('errors');
+                echo '</div>';
+            }
+            ?>
+        </div>
+        <div class="col-md-12">
             <div class="card">
                 <div class="header">
                     <h4 class="title">Tasks</h4>

@@ -21,9 +21,8 @@ class Tasks extends CI_Controller
         $this->task_job_tags = new TaskJobTagsModel();
     }
 
-    public function index()
+    public function index($start = 0)
     {
-        $start = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
         $limit = 10;
         $pagiConfig = [
             'base_url' => base_url('tasks'),
@@ -131,18 +130,32 @@ class Tasks extends CI_Controller
     //     $this->load->view('footer');
     // }
 
-    public function delete()
+    public function show($id)
     {
-        $id = $this->uri->segment(2);
-        if ($id) {
-            // check with TaskPredecessor
+        echo $id;
+    }
 
-            $this->task->delete($id);
+    public function delete($id)
+    {
+        if ($id) {
+            if ($this->task->isAllowedToDelete($id)) {
+                $this->task_notes->deleteRelated($id);
+                $this->task_job_tags->deleteRelated($id);
+                $this->task_user_tags->deleteRelated($id);
+                $this->task_predecessor->deleteRelated($id);
+                $this->task->delete($id);
+            } else {
+                $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
+            }
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
         redirect('tasks');
     }
+
+    /**
+     * Private Methods
+     */
 
     // private function extractTagsArray($string)
     // {

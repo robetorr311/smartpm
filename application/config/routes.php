@@ -54,10 +54,11 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['tasks'] = 'tasks/index';
-$route['tasks/(:num)'] = 'tasks/index';
+$route['tasks/(:num)'] = 'tasks/index/$1';
 $route['task/create'] = 'tasks/create';
 $route['task/store'] = 'tasks/store';
-$route['task/(:num)/delete'] = 'tasks/delete';
+$route['task/(:num)/delete'] = 'tasks/delete/$1';
+$route['task/(:num)'] = 'tasks/show/$1';
 
 $route['leads'] = 'leads/index';
 $route['lead/(:num)'] = 'leads/view';

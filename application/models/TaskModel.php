@@ -17,6 +17,13 @@ class TaskModel extends CI_Model
         2 => 'Normal',
         3 => 'High'
     ];
+    private static $status = [
+        0 => 'Created',
+        1 => 'Working',
+        2 => 'Stuck',
+        3 => 'Hold',
+        4 => 'Completed'
+    ];
 
     public function allTasks($start = 0, $limit = 10)
     {
@@ -53,9 +60,16 @@ class TaskModel extends CI_Model
 
     public function delete($id)
     {
-        return $this->db->delete($this->table, [
-            'id' => $id
-        ]);
+        $this->db->where('id', $id);
+        return $this->db->delete($this->table);
+    }
+
+    public function isAllowedToDelete($task_id)
+    {
+        $this->db->where('id IN (SELECT predecessor_task_id FROM task_predecessor WHERE task_id=' . $task_id . ')');
+        $this->db->where('status !=', 4);
+        $count = $this->db->count_all_results($this->table);
+        return ($count === 0);
     }
 
     /**
