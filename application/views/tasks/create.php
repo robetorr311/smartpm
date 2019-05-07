@@ -8,14 +8,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <h4 class="title">Create Task</h4>
                 </div>
                 <div class="content">
-                    <div class="col-md-12">
-                        <?php
-                        if (!empty($this->session->flashdata('errors'))) {
-                            echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
-                            echo $this->session->flashdata('errors');
-                            echo '</div>';
-                        }
-                        ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php
+                            if (!empty($this->session->flashdata('errors'))) {
+                                echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+                                echo $this->session->flashdata('errors');
+                                echo '</div>';
+                            }
+                            ?>
+                        </div>
                     </div>
                     <form action="<?= base_url('task/store') ?>" method="post">
                         <div class="row">

@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html>
 <head>
-  <title>Registration system PHP and MySQL</title>
+  <title>Registration</title>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/register.css">
 </head>
 <body>

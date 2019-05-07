@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Tasks extends CI_Controller
 {
+    private $title = 'Tasks';
+
     public function __construct()
     {
         parent::__construct();
@@ -21,9 +23,8 @@ class Tasks extends CI_Controller
         $this->task_job_tags = new TaskJobTagsModel();
     }
 
-    public function index()
+    public function index($start = 0)
     {
-        $start = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
         $limit = 10;
         $pagiConfig = [
             'base_url' => base_url('tasks'),
@@ -33,7 +34,7 @@ class Tasks extends CI_Controller
         $this->pagination->initialize($pagiConfig);
         $tasks = $this->task->allTasks($start, $limit);
         $this->load->view('header', [
-            'title' => 'Tasks'
+            'title' => $this->title
         ]);
         $this->load->view('tasks/index', [
             'tasks' => $tasks,
@@ -50,7 +51,7 @@ class Tasks extends CI_Controller
         $users = $this->login->getUserList();
 
         $this->load->view('header', [
-            'title' => 'Tasks'
+            'title' => $this->title
         ]);
         $this->load->view('tasks/create', [
             'types' => $types,
@@ -125,24 +126,70 @@ class Tasks extends CI_Controller
     // public function edit()
     // {
     //     $this->load->view('header', [
-    //         'title' => 'Tasks'
+    //         'title' => $this->title
     //     ]);
     //     $this->load->view('tasks/create');
     //     $this->load->view('footer');
     // }
 
-    public function delete()
+    public function show($id)
     {
-        $id = $this->uri->segment(2);
-        if ($id) {
-            // check with TaskPredecessor
-
-            $this->task->delete($id);
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            $notes = $this->task_notes->getNotesByTaskId($id);
+            $jobs = false;
+            $users = $this->task_user_tags->getUsersByTaskId($id);
+            $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
+            $this->load->view('header', [
+                'title' => $this->title
+            ]);
+            $this->load->view('tasks/view', [
+                'task' => $task,
+                'notes' => $notes,
+                'jobs' => $jobs,
+                'users' => $users,
+                'predec_tasks' => $predec_tasks
+            ]);
+            $this->load->view('footer');
         } else {
-            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('tasks');
+        }
+    }
+
+    public function addNote($id)
+    {
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            redirect('task/' . $id);
+        } else {
+            redirect('tasks');
+        }
+    }
+
+    public function delete($id)
+    {
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            if ($id) {
+                if ($this->task->isAllowedToDelete($id)) {
+                    $this->task_notes->deleteRelated($id);
+                    $this->task_job_tags->deleteRelated($id);
+                    $this->task_user_tags->deleteRelated($id);
+                    $this->task_predecessor->deleteRelated($id);
+                    $this->task->delete($id);
+                } else {
+                    $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
+                }
+            } else {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            }
         }
         redirect('tasks');
     }
+
+    /**
+     * Private Methods
+     */
 
     // private function extractTagsArray($string)
     // {
