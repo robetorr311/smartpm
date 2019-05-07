@@ -33,6 +33,12 @@ class Teams extends CI_Controller {
 			$this->load->view('footer');
 		}
 
+		 public function view(){
+		 	$data = $this->team->get_all_where(['id' => $this->uri->segment(2)]);
+			$this->load->view('header',['title' => 'Team Detail']);
+			$this->load->view('teams/view',['datas' => $data]);
+			$this->load->view('footer');
+	    }
 
 	    public function store(){
 		if( isset($_POST) && count($_POST) > 0 ) {
@@ -103,5 +109,11 @@ class Teams extends CI_Controller {
 			$this->load->view('header',['title' => 'Team Update']);
 			$this->load->view('teams/edit',['teams' => $teams,'jobid' => $this->uri->segment(2)]);
 			$this->load->view('footer');
+	    }
+
+
+	   public function delete(){
+			$teams = $this->team->delete(['id' => $this->uri->segment(2)]);
+			redirect('teams');
 	    }
 }

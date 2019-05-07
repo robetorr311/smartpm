@@ -15,7 +15,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>
                                 <h4 class="title">Job List</h4>
-                                <p class="category">Here is a subtitle for this table</p>
                             </div>
                             <div class="content table-responsive" style="overflow-x: scroll;width: 100%;">
                                 <table class="table table-hover table-striped">

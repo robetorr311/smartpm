@@ -320,15 +320,9 @@ img {
 .dashbord-box .box {
 	padding: 15px 15px;
 	color: white;
-	min-height: 130px;
+	min-height: 190px;
 }
-.box span {
-	font-size: 30px;
-	float: right;
-	width: 100%;
-	text-align: center;
-	font-weight: bold;
-}
+
 .box p {
 	font-size: 16px;
 	font-weight: bold;
@@ -339,7 +333,7 @@ img {
 	min-height: 130px;
 }
 .box span {
-	font-size: 30px;
+	font-size: 43px;
 	float: right;
 	width: 100%;
 	text-align: center;
