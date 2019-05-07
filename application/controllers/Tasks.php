@@ -82,17 +82,24 @@ class Tasks extends CI_Controller
                 'assigned_to' => $taskData['assigned_to']
             ]);
             if ($insert) {
+                $errors = '';
                 $note = $taskData['note'];
 
-                $this->task_notes->insert([
+                $noteInsert = $this->task_notes->insert([
                     'note' => $note,
                     'task_id' => $insert
                 ]);
+                if (!$noteInsert) {
+                    $errors .= '<p>Unable to add Note.</p>';
+                }
 
                 $jobs = $taskData['tag_clients'];
                 if (!empty($jobs)) {
                     $jobs = explode(',', $jobs);
-                    $this->task_job_tags->insertByJobArr($jobs, $insert);
+                    $jobsInsert = $this->task_job_tags->insertByJobArr($jobs, $insert);
+                    if (!$jobsInsert) {
+                        $errors .= '<p>Unable to tag Jobs.</p>';
+                    }
                 }
 
                 // if (preg_match_all('~(@\w+)~', $note, $matches, PREG_PATTERN_ORDER)) {
@@ -103,13 +110,23 @@ class Tasks extends CI_Controller
                 $users = $taskData['tag_users'];
                 if (!empty($users)) {
                     $users = explode(',', $users);
-                    $this->task_user_tags->insertByUserArr($users, $insert);
+                    $usersInsert = $this->task_user_tags->insertByUserArr($users, $insert);
+                    if (!$usersInsert) {
+                        $errors .= '<p>Unable to tag Users.</p>';
+                    }
                 }
 
                 $predec_tasks = $taskData['predecessor_tasks'];
                 if (!empty($predec_tasks)) {
                     $predec_tasks = explode(',', $predec_tasks);
-                    $this->task_predecessor->insertByTaskArr($predec_tasks, $insert);
+                    $predec_tasksInsert = $this->task_predecessor->insertByTaskArr($predec_tasks, $insert);
+                    if (!$predec_tasksInsert) {
+                        $errors .= '<p>Unable to tag Predecessor Tasks.</p>';
+                    }
+                }
+
+                if (!empty($errors)) {
+                    $this->session->set_flashdata('errors', $errors);
                 }
 
                 redirect('task/' . $insert);
@@ -160,6 +177,20 @@ class Tasks extends CI_Controller
     {
         $task = $this->task->getTaskById($id);
         if ($task) {
+            $this->form_validation->set_rules('note', 'Note', 'trim|required');
+
+            if ($this->form_validation->run() == TRUE) {
+                $noteData = $this->input->post();
+                $insert = $this->task_notes->insert([
+                    'note' => $noteData['note'],
+                    'task_id' => $id
+                ]);
+                if (!$insert) {
+                    $this->session->set_flashdata('errors', '<p>Unable to add Note.</p>');
+                }
+            } else {
+                $this->session->set_flashdata('errors', validation_errors());
+            }
             redirect('task/' . $id);
         } else {
             redirect('tasks');
@@ -176,7 +207,10 @@ class Tasks extends CI_Controller
                     $this->task_job_tags->deleteRelated($id);
                     $this->task_user_tags->deleteRelated($id);
                     $this->task_predecessor->deleteRelated($id);
-                    $this->task->delete($id);
+                    $delete = $this->task->delete($id);
+                    if (!$delete) {
+                        $this->session->set_flashdata('errors', '<p>Unable to delete Task.</p>');
+                    }
                 } else {
                     $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
                 }
