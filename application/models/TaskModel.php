@@ -62,12 +62,25 @@ class TaskModel extends CI_Model
         return $query->result();
     }
 
+    public function getTaskListExcept($id, $select = 'id, name')
+    {
+        $this->db->where('id !=', $id);
+        return $this->getTaskList($select);
+    }
+
     public function insert($data)
     {
         $data['status'] = '0';
         $data['created_by'] = $this->session->userdata('admininfo')->id;
         $insert = $this->db->insert($this->table, $data);
         return $insert ? $this->db->insert_id() : $insert;
+    }
+
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        $update = $this->db->update($this->table, $data);
+        return $update;
     }
 
     public function delete($id)

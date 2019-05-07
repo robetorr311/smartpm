@@ -16,6 +16,13 @@ class TaskPredecessorModel extends CI_Model
         }
     }
 
+    public function deleteByTaskArr($tasks, $task_id)
+    {
+        $this->db->where_in('predecessor_task_id', $tasks);
+        $this->db->where('task_id', $task_id);
+        return $this->db->delete($this->table);
+    }
+
     public function deleteRelated($task_id)
     {
         $this->db->where('task_id', $task_id);
@@ -25,7 +32,7 @@ class TaskPredecessorModel extends CI_Model
 
     public function getTasksByTaskId($id)
     {
-        $this->db->select('tasks.name as name');
+        $this->db->select('tasks.*');
         $this->db->from($this->table);
         $this->db->join('tasks', 'task_predecessor.predecessor_task_id=tasks.id', 'left');
         $this->db->where('task_id', $id);
