@@ -16,6 +16,12 @@ class TaskUserTagsModel extends CI_Model
         }
     }
 
+    public function deleteByUserArr($users, $task_id)
+    {
+        $this->db->where_in('user_id', $users);
+        return $this->deleteRelated($task_id);
+    }
+
     public function deleteRelated($task_id)
     {
         $this->db->where('task_id', $task_id);
@@ -24,7 +30,7 @@ class TaskUserTagsModel extends CI_Model
 
     public function getUsersByTaskId($id)
     {
-        $this->db->select('users.username as username');
+        $this->db->select('users.id as id, users.username as username, users.fullname as fullname');
         $this->db->from($this->table);
         $this->db->join('users', 'task_user_tags.user_id=users.id', 'left');
         $this->db->where('task_id', $id);

@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12 max-1000-form-container">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Create Task</h4>
+                    <h4 class="title">Edit Task</h4>
                 </div>
                 <div class="content">
                     <div class="row">
@@ -19,12 +19,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             ?>
                         </div>
                     </div>
-                    <form action="<?= base_url('task/store') ?>" method="post">
+                    <form action="<?= base_url('task/' . $task->id . '/update') ?>" method="post">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Task Name</label>
-                                    <input class="form-control" placeholder="Task Name" name="name" type="text">
+                                    <input class="form-control" placeholder="Task Name" name="name" type="text" value="<?= $task->name ?>">
                                 </div>
                             </div>
                         </div>
@@ -33,9 +33,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select name="type" class="form-control">
-                                        <option value="" disabled selected>Select Type</option>
+                                        <option value="" disabled>Select Type</option>
                                         <?php foreach ($types as $id => $type) {
-                                            echo '<option value="' . $id . '">' . $type . '</option>';
+                                            echo '<option value="' . $id . '"' . ($id == $task->type ? ' selected' : '') . '>' . $type . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="level" class="form-control">
                                         <option value="" disabled selected>Select Importance Level</option>
                                         <?php foreach ($levels as $id => $level) {
-                                            echo '<option value="' . $id . '">' . $level . '</option>';
+                                            echo '<option value="' . $id . '"' . ($id == $task->level ? ' selected' : '') . '>' . $level . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -57,17 +57,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled selected>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '">' . $user->fullname . ' (' . $user->username . ')</option>';
+                                            echo '<option value="' . $user->id . '"' . ($user->id == $task->created_by ? ' selected' : '') . '>' . $user->fullname . ' (' . $user->username . ')</option>';
                                         } ?>
                                     </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Note</label>
-                                    <textarea class="form-control" name="note" placeholder="Note" rows="10"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +91,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <a href="<?= base_url('tasks') ?>" class="btn btn-info btn-fill">Back</a>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Create</button>
+                                    <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                                 </div>
                             </div>
                         </div>
@@ -156,6 +148,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }
             }
         });
+        <?php
+        if ($tag_users) {
+            foreach ($tag_users as $tag_user) {
+                echo "$('input#tag_users').tagsinput('add', " . json_encode($tag_user) . ");";
+            }
+        }
+        ?>
         $('input#predecessor_tasks').tagsinput({
             itemValue: 'id',
             itemText: 'name',
@@ -166,5 +165,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }
             }
         });
+        <?php
+        if ($predec_tasks) {
+            foreach ($predec_tasks as $predec_task) {
+                echo "$('input#predecessor_tasks').tagsinput('add', " . json_encode($predec_task) . ");";
+            }
+        }
+        ?>
     });
 </script>
