@@ -273,7 +273,7 @@ class Tasks extends CI_Controller
             $this->load->view('header', [
                 'title' => $this->title
             ]);
-            $this->load->view('tasks/view', [
+            $this->load->view('tasks/show', [
                 'task' => $task,
                 'notes' => $notes,
                 'jobs' => $jobs,
