@@ -310,6 +310,15 @@ class Tasks extends CI_Controller
         }
     }
 
+    public function deleteNote($id, $note_id)
+    {
+        $delete = $this->task_notes->delete($note_id, $id);
+        if (!$delete) {
+            $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+        }
+        redirect('task/' . $id);
+    }
+
     public function delete($id)
     {
         $task = $this->task->getTaskById($id);

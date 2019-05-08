@@ -24,6 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             echo '<div class="col-md-12">';
                             echo '<hr>';
                             echo '<label>' . $note->created_username . '</label>';
+                            echo '<a href="' . base_url('task/' . $task->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';
                             echo '</div>';
                             echo '</div>';
@@ -136,6 +137,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 echo '<p>-</p>';
                             }
                             ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Created By</label>
+                            <p><?= $task->created_username ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Created At</label>
+                            <p><?= $task->created_at ?></p>
                         </div>
                     </div>
                     <div class="clearfix"></div>

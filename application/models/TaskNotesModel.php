@@ -12,6 +12,15 @@ class TaskNotesModel extends CI_Model
         return $insert ? $this->db->insert_id() : $insert;
     }
 
+    public function delete($id, $task_id = false)
+    {
+        $this->db->where('id', $id);
+        if ($task_id) {
+            $this->db->where('task_id', $task_id);
+        }
+        return $this->db->delete($this->table);
+    }
+
     public function deleteRelated($task_id)
     {
         $this->db->where('task_id', $task_id);
