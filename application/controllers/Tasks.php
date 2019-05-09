@@ -140,6 +140,15 @@ class Tasks extends CI_Controller
         }
     }
 
+    public function complete($id)
+    {
+        $completed = $this->task->complete($id);
+        if (!$completed) {
+            $this->session->set_flashdata('errors', '<p>Unable to mark Task as Completed.</p>');
+        }
+        redirect('tasks');
+    }
+
     public function edit($id)
     {
         $task = $this->task->getTaskById($id);

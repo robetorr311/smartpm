@@ -160,6 +160,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <p><?= $task->created_at ?></p>
                         </div>
                     </div>
+                    <?php if ($task->status != 4) { ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?= base_url('task/' . $task->id .'/complete' ) ?>" data-method="POST" class="btn btn-info btn-fill col-xs-12">Mark As Complete</a>
+                        </div>
+                    </div>
+                    <?php } ?>
                     <div class="clearfix"></div>
                 </div>
             </div>

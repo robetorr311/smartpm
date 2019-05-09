@@ -109,6 +109,17 @@ class TaskModel extends CI_Model
         return ($count === 0);
     }
 
+    public function complete($id)
+    {
+        $this->db->where([
+            'id' => $id,
+            'is_deleted' => FALSE
+        ]);
+        return $this->db->update($this->table, [
+            'status' => 4
+        ]);
+    }
+
     /**
      * Static Methods
      */
