@@ -13,9 +13,8 @@ class Migration_Update_tasks_related_table extends CI_Migration
     {
         $fields = [
             'is_deleted' => [
-                'type' => 'INT',
-                'constraint' => 1,
-                'default' => 0
+                'type' => 'BOOLEAN',
+                'default' => FALSE
             ]
         ];
 
