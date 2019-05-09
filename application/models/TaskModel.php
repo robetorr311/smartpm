@@ -6,16 +6,17 @@ class TaskModel extends CI_Model
     private $table = 'tasks';
 
     private static $type = [
-        1 => 'Type 1',
-        2 => 'Type 2',
-        3 => 'Type 3',
-        4 => 'Type 4',
-        5 => 'Type 5'
+        0 => 'Call',
+        1 => 'Meeting',
+        2 => 'Bid/Estimate',
+        3 => 'Site Visit',
+        4 => 'Follow Up',
+        5 => 'Send Document'
     ];
     private static $level = [
-        1 => 'Low',
-        2 => 'Normal',
-        3 => 'High'
+        0 => 'Low',
+        1 => 'Normal',
+        2 => 'High'
     ];
     private static $status = [
         0 => 'Created',
@@ -62,12 +63,25 @@ class TaskModel extends CI_Model
         return $query->result();
     }
 
+    public function getTaskListExcept($id, $select = 'id, name')
+    {
+        $this->db->where('id !=', $id);
+        return $this->getTaskList($select);
+    }
+
     public function insert($data)
     {
         $data['status'] = '0';
         $data['created_by'] = $this->session->userdata('admininfo')->id;
         $insert = $this->db->insert($this->table, $data);
         return $insert ? $this->db->insert_id() : $insert;
+    }
+
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        $update = $this->db->update($this->table, $data);
+        return $update;
     }
 
     public function delete($id)
@@ -89,7 +103,7 @@ class TaskModel extends CI_Model
      */
     public static function typetostr($id)
     {
-        return self::$type[$id];
+        return isset(self::$type[$id]) ? self::$type[$id] : $id;
     }
 
     public static function getTypes()
@@ -99,7 +113,7 @@ class TaskModel extends CI_Model
     
     public static function leveltostr($id)
     {
-        return self::$level[$id];
+        return isset(self::$level[$id]) ? self::$level[$id] : $id;
     }
 
     public static function getLevels()
@@ -108,6 +122,6 @@ class TaskModel extends CI_Model
     }
 
     public static function statustostr($id) {
-        return self::$status[$id];
+        return isset(self::$status[$id]) ? self::$status[$id] : $id;
     }
 }
