@@ -34,29 +34,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     ?>
                 </div>
             </div>
-            <div class="card">
+            <div class="card add-note-card">
                 <div class="header">
                     <h4 class="title">Add Note</h4>
                 </div>
                 <div class="content view">
-                    <form action="<?= base_url('task/' . $task->id . '/add-note') ?>" method="post">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Your Note</label>
-                                    <textarea class="form-control" name="note" placeholder="Your Note" rows="10"></textarea>
+                    <div class="row add-note-form">
+                        <div class="col-md-12">
+                            <form action="<?= base_url('task/' . $task->id . '/add-note') ?>" method="post">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Your Note</label>
+                                            <textarea class="form-control" name="note" placeholder="Your Note" rows="10" ctrl-enter-submit></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <a href="<?= base_url('tasks') ?>" class="btn btn-info btn-fill">Back</a>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <a href="<?= base_url('tasks') ?>" class="btn btn-info btn-fill">Back</a>
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
