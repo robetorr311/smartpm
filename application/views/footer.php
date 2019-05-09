@@ -376,6 +376,26 @@ $(document).on('click', '.doc_list span',  function () {
 					 });
 				});
 
+/*  add user to team */
+
+			$('#add_team').change(function(){
+				
+				var teamid=$(this).val();
+				var id=$('.hidden_id').val();
+				$.ajax({
+						url: baseUrl+'user/adduser',
+						data: {teamid: teamid, userid: id},        
+						type: 'post',
+						success: function(php_script_response){
+						
+
+							
+						}
+					 });
+				});
+
+
+
     	});
 	</script>
 	<script>

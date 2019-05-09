@@ -20,6 +20,10 @@ class Migration_Update_users_table extends CI_Migration
                 'type' => 'varchar',
                 'constraint' => 100
             ],
+            'phone' => [
+                'type' => 'varchar',
+                'constraint' => 20
+            ],
         ];
         $this->dbforge->add_column('users', $fields);
         $this->dbforge->drop_column('users', 'email');
@@ -29,6 +33,7 @@ class Migration_Update_users_table extends CI_Migration
     {
         $this->dbforge->drop_column('users', 'usertype');
         $this->dbforge->drop_column('users', 'fullname');
+         $this->dbforge->drop_column('users', 'phone');
         $fields = [
             'email' => [
                 'type' => 'varchar',

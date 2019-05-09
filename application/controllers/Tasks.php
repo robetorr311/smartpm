@@ -9,7 +9,7 @@ class Tasks extends CI_Controller
     {
         parent::__construct();
 
-        authAdminAccess();
+        authAdminAccess(); 
         // sessionTimeout();
 
         $this->load->model(['TaskModel', 'Login', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);

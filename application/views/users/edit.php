@@ -9,26 +9,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="content view">
                                   <?php
                                 
-                                   foreach( $datas as $data ) : ?>  
+                                   foreach( $users as $user ) : ?>  
 
                                
                          
                                     <div class="row">
                                        
-                                        <div class="col-md-12">
                                            
                                             <div class="form-group">
-                                                <label style="line-height: 30px;">Team Name :</label>
-                                               <p style="font-size: 25px"> <?php echo $data->team_name ?></p>
+                                                <label style="line-height: 30px;">User Name :</label>
+                                               <p style="font-size: 25px"> <?php echo $user->fullname ?></p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Reamrk :</label>
-                                                <p><?php echo $data->remark ?></p>
+                                                <label>Email :</label>
+                                                <p><?php echo $user->username ?></p>
+                                            </div>
+                                        </div>
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Phone :</label>
+                                                <p>999999999</p>
                                             </div>
                                         </div>
                                        </div>
@@ -103,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                                    <h4 class="title" style="float: left;">Team Status</h4>
+                                    <h4 class="title" style="float:left;">User Status</h4>
 <span class="status open">Active</span> 
                                     <div class="clearfix"></div>
                                          <div class="content"></div>         

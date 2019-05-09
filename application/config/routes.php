@@ -87,3 +87,9 @@ $route['team/new'] = 'teams/new';
 $route['team/store'] = 'teams/store';
 
 
+$route['users'] = 'users/index';
+$route['user/(:num)'] = 'users/view';
+$route['user/(:num)/delete'] = 'users/delete';
+$route['user/adduser'] = 'users/adduser';
+
+

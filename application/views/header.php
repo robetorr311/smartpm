@@ -65,6 +65,7 @@
             </div>
 
             <ul class="nav">
+                <?php if($admin['admininfo']['usertype']=='admin'){ ?>
                  <li >
                     <a href="<?php echo base_url('dashboard');?>">
                         <i class="pe-7s-graph"></i>
@@ -113,9 +114,27 @@
                         <p>Setting</p>
                     </a>
                 </li>
-                
+               <?php } else { ?>
+                <li>
+                    <a href="<?php echo base_url('dashboard');?>">
+                        <i class="pe-7s-graph"></i>
+                        <p>User Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('dashboard');?>">
+                        <i class="pe-7s-graph"></i>
+                        <p>User Team Detail</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('dashboard');?>">
+                        <i class="pe-7s-graph"></i>
+                        <p>User Task</p>
+                    </a>
+                </li>
                
-               
+                <?php } ?>
             </ul>
     	</div>
     </div>

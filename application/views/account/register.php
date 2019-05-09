@@ -30,6 +30,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
   		<label>Full Name</label>
   		<input type="text" name="fullname" required="">
   	</div>
+    <div class="input-group">
+      <label>Phone</label>
+      <input type="text" name="phone" required="">
+    </div>
+    <!--<div class="input-group">
+      <label>User Type</label>
+     <select name="usertype" required="">
+        <option value="">Select</option>
+        <option value="company">Company</option>
+        <option value="member">Member</option>
+     </select>
+    </div>-->
   	<div class="input-group">
   		<button type="submit" id="submit" class="btn" >Register</button>
   	</div>
