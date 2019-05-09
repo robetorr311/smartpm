@@ -144,6 +144,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <div class="row">
                         <div class="col-md-12">
+                            <label>Status</label>
+                            <p><?= TaskModel::statustostr($task->status) ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <label>Created By</label>
                             <p><?= $task->created_username ?></p>
                         </div>

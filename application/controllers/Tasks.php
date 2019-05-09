@@ -146,6 +146,7 @@ class Tasks extends CI_Controller
         if ($task) {
             $types = TaskModel::getTypes();
             $levels = TaskModel::getLevels();
+            $status = TaskModel::getStatus();
             $tasks = $this->task->getTaskListExcept($id);
             $users = $this->login->getUserList();
             // $jobs = false;
@@ -160,6 +161,7 @@ class Tasks extends CI_Controller
                 'levels' => $levels,
                 'tasks' => $tasks,
                 'users' => $users,
+                'status' => $status,
                 'tag_users' => $tag_users,
                 'predec_tasks' => $predec_tasks
             ]);
@@ -177,6 +179,7 @@ class Tasks extends CI_Controller
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
             $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
             $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric');
+            $this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
             $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
             $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
             $this->form_validation->set_rules('predecessor_tasks', 'Predecessor Tasks', 'is_own_ids[tasks, Tasks]');
@@ -187,7 +190,8 @@ class Tasks extends CI_Controller
                     'name' => $taskData['name'],
                     'type' => $taskData['type'],
                     'level' => $taskData['level'],
-                    'assigned_to' => $taskData['assigned_to']
+                    'assigned_to' => $taskData['assigned_to'],
+                    'status' => $taskData['status']
                 ]);
                 if ($update) {
                     $errors = '';

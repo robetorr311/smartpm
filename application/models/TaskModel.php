@@ -136,4 +136,9 @@ class TaskModel extends CI_Model
     {
         return isset(self::$status[$id]) ? self::$status[$id] : $id;
     }
+
+    public static function getStatus()
+    {
+        return self::$status;
+    }
 }

@@ -29,7 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select name="type" class="form-control">
@@ -40,7 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Importance Level</label>
                                     <select name="level" class="form-control">
@@ -51,13 +51,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Assigned To</label>
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled selected>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
                                             echo '<option value="' . $user->id . '"' . ($user->id == $task->created_by ? ' selected' : '') . '>' . $user->fullname . ' (' . $user->username . ')</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="" disabled selected>Select Status</option>
+                                        <?php foreach ($status as $key => $value) {
+                                            echo '<option value="' . $key . '"' . ($key == $task->status ? ' selected' : '') . '>' . $value . '</option>';
                                         } ?>
                                     </select>
                                 </div>
