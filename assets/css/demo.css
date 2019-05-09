@@ -398,6 +398,11 @@ span.info-tag {
 	font-size: 13px;
 	line-height: 24px;
 }
-.card.task-notes-card .note-item:first-child hr {
+.card.task-notes-card .view hr:first-child {
 	margin-top: 0;
+}
+.card.task-notes-card .note-item {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-top: solid 1px rgba(63, 63, 68, 0.15);
 }

@@ -22,7 +22,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         foreach ($notes as $note) {
                             echo '<div class="row note-item">';
                             echo '<div class="col-md-12">';
-                            echo '<hr>';
                             echo '<label>' . $note->created_username . '</label>';
                             echo '<a href="' . base_url('task/' . $task->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';

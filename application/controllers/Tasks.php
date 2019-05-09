@@ -86,7 +86,7 @@ class Tasks extends CI_Controller
                 $note = $taskData['note'];
 
                 $noteInsert = $this->task_notes->insert([
-                    'note' => $note,
+                    'note' => nl2br($note),
                     'task_id' => $insert
                 ]);
                 if (!$noteInsert) {
@@ -295,7 +295,7 @@ class Tasks extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $noteData = $this->input->post();
                 $insert = $this->task_notes->insert([
-                    'note' => $noteData['note'],
+                    'note' => nl2br($noteData['note']),
                     'task_id' => $id
                 ]);
                 if (!$insert) {
