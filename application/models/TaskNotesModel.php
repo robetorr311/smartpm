@@ -18,13 +18,17 @@ class TaskNotesModel extends CI_Model
         if ($task_id) {
             $this->db->where('task_id', $task_id);
         }
-        return $this->db->delete($this->table);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
     }
 
     public function deleteRelated($task_id)
     {
         $this->db->where('task_id', $task_id);
-        return $this->db->delete($this->table);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
     }
 
     public function getNotesByTaskId($id)
@@ -32,7 +36,10 @@ class TaskNotesModel extends CI_Model
         $this->db->select('task_notes.*, users_created_by.username as created_username');
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'task_notes.created_by=users_created_by.id', 'left');
-        $this->db->where('task_id', $id);
+        $this->db->where([
+            'task_notes.task_id' => $id,
+            'task_notes.is_deleted' => FALSE
+        ]);
         $query = $this->db->get();
         $result = $query->result();
         return (count($result) > 0) ? $result : false;

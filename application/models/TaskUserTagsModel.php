@@ -25,15 +25,21 @@ class TaskUserTagsModel extends CI_Model
     public function deleteRelated($task_id)
     {
         $this->db->where('task_id', $task_id);
-        return $this->db->delete($this->table);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
     }
 
     public function getUsersByTaskId($id)
     {
         $this->db->select('users.id as id, users.username as username, users.fullname as fullname');
         $this->db->from($this->table);
-        $this->db->join('users', 'task_user_tags.user_id=users.id', 'left');
-        $this->db->where('task_id', $id);
+        $this->db->join('users', 'task_user_tags.user_id=users.id');
+        $this->db->where([
+            'task_user_tags.task_id' => $id,
+            'task_user_tags.is_deleted' => FALSE,
+            // 'users.is_deleted' => FALSE
+        ]);
         $query = $this->db->get();
         $result = $query->result();
         return (count($result) > 0) ? $result : false;
