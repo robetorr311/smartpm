@@ -66,7 +66,29 @@
 
             <ul class="nav">
                 <?php  //if($admin['admininfo']['usertype']=='admin'){ ?>
-                 <li >
+                <li class="">
+                  <a class="nav-link" data-toggle="collapse" href="#componentsCollapse">
+                    <i class="pe-7s-graph"></i>
+                        <p>Setting  <b class="caret"></b></p>
+                     
+                   
+                  </a>
+                  <div class="collapse submenu" id="componentsCollapse">
+                    <ul class="nav">
+                      <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url('setting');?>">
+                          <span class="sidebar-normal"> GENERAL </span>
+                        </a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url('setting/status_tag');?>">
+                          <span class="sidebar-normal"> STATUS TAG </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                 <li  class="<?= !empty($dashboard) ? 'active' : '' ?>">
                     <a href="<?php echo base_url('dashboard');?>">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
@@ -109,12 +131,12 @@
                         <p>Users</p>
                     </a>
                 </li>
-                <li>
+              <!--  <li>
                     <a href="<?php echo base_url('setting');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Setting</p>
                     </a>
-                </li>
+                </li>-->
                <?php // } else { ?>
         <!--        <li>
                     <a href="<?php echo base_url('dashboard');?>">

@@ -46,5 +46,12 @@ class Setting extends CI_Controller {
 			echo $posts['color'];
 		}
 
+		public function status_tag(){
+	    	
+			$this->load->view('header',['title' => 'Status Tags']);
+			$this->load->view('setting/status');
+			$this->load->view('footer');
+	    }
+
 
 }

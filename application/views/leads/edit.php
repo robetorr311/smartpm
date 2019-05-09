@@ -135,9 +135,7 @@ echo '</div>';
                                             <select class="form-control" id="leadstatus">
                                                 <option value="">Change Status</option>
                             <option value="lead">Lead</option>
-                            <option value="cash">Cash job</option>
-                            <option value="insurance">Insurance job</option>
-                            <option value="closed">Closed</option>
+                            <option value="closed">Signed</option>
                         </select>
                                     </div>                       
                                 </div>

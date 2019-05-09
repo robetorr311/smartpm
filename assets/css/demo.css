@@ -401,3 +401,17 @@ span.info-tag {
 .card.task-notes-card .note-item:first-child hr {
 	margin-top: 0;
 }
+.submenu{
+	background-color: gray;
+}
+.nav .nav{
+	margin-top: -4px;
+}
+.status-box h4 {
+    margin: 0;
+        margin-bottom: 0px;
+    margin-bottom: 5px;
+    font-size: 18px;
+}.status-box th {
+    padding: 10px !important;
+}

@@ -94,4 +94,6 @@ $route['user/(:num)'] = 'users/view';
 $route['user/(:num)/delete'] = 'users/delete';
 $route['user/adduser'] = 'users/adduser';
 
+$route['setting/status_tag'] = 'setting/status_tag';
+
 
