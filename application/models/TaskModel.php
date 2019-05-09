@@ -98,6 +98,14 @@ class TaskModel extends CI_Model
         return ($count === 0);
     }
 
+     public function getTaskByUserId($id)
+    {
+        $this->db->where('assigned_to', $id);
+        $query = $this->db->get('tasks');
+        return $result = $query->result();
+        
+    }
+
     /**
      * Static Methods
      */

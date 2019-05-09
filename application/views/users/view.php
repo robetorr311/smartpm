@@ -5,9 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
            <?= $this->session->flashdata('message') ?>
                    <div class="col-md-8">
                         <div class="card">
-                            <pre>
-                            <?php print_r($tasks->result()); ?>
-</pre>
+                            
                             <div class="content view">
                                   <?php
                                 
@@ -61,22 +59,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <thead>
                                         <tr><th>SN</th>
                                         <th>Task Name</th>
-                                        <th>Assigned Date</th>
-                                        
+                                        <th>Type</th>
+                                        <th>Level</th>
                                     </tr></thead>
-                                    <tbody>
+                                    <tbody>   <?php if( !empty( $tasks ) ) : ?>
+                                         <?php $i=1;  
+                                         foreach( $tasks as $task ) : ?> 
                                         <tr>
-                                            <td>1</td>
-                                            <td>Dakota Rice</td>
-                                            <td>06 May 2019</td>
-                                          
+                                            <td><?php echo $i ?></td>
+                                            <td><?php echo $task->name; ?></td>
+                                            <td><?= TaskModel::typetostr($task->type) ?></td>
+                                            <td><?= TaskModel::leveltostr($task->level) ?></td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Minerva Hooper</td>
-                                            <td>06 May 2019</td>
-                                            
-                                        </tr>
+                                           <?php $i++;
+                                            endforeach; ?>
+                                       <?php else : ?>
+                  <tr>
+                      <td colspan="13" class="text-center">No Record Found!</td>
+                  </tr>
+            <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>

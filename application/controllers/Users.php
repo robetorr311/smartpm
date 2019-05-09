@@ -6,12 +6,13 @@ class Users extends CI_Controller {
 	    {
 	        parent::__construct();
 	        authAdminAccess();
-	        $this->load->model(['UserModel','TeamModel','UserTeamTrackModel','TaskUserTagsModel']);
+	        $this->load->model(['UserModel','TeamModel','UserTeamTrackModel','TaskUserTagsModel','TaskModel']);
 
 	        $this->user = new UserModel();
 	        $this->team = new TeamModel();
 	        $this->task_team_track = new UserTeamTrackModel();
 	        $this->task_user_tags = new TaskUserTagsModel();
+	        $this->task= new TaskModel();
 	    }
 
 	    public function index(){
@@ -28,8 +29,7 @@ class Users extends CI_Controller {
 			$params['id'] =$this->uri->segment(2);
 			$query['users'] = $this->user->get_all_where($params);
 			$query['teams'] = $this->team->get_all_where(['is_active'=>1]);
-			$query['tasks'] = $this->db->query("SELECT  a.name, b.job_id, c.note FROM tasks a  INNER JOIN task_job_tags b ON a.id = b.task_id INNER JOIN task_notes c ON a.id = c.task_id WHERE   a.assigned_to =".$this->uri->segment(2));
-
+			$query['tasks'] = $this->task->getTaskByUserId($this->uri->segment(2));
 			$this->load->view('header',['title' => 'Users Detail']);
 			$this->load->view('users/view',$query);
 			$this->load->view('footer');

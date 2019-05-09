@@ -6,15 +6,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="card">
                              <div class="row header">
                                  <div class="col-md-6">
-                                         <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
+                                         <input class="form-control" id="myInput"  placeholder="Search Lead" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                    <a href="<?php echo base_url('lead/new');?>" class="btn btn-info btn-fill pull-right">Add New Job</a>
+                                    <a href="<?php echo base_url('lead/new');?>" class="btn btn-info btn-fill pull-right">Add New Lead</a>
                                  </div>
                             </div>
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>
-                                <h4 class="title">Job List</h4>
+                                <h4 class="title">Lead List</h4>
                             </div>
                             <div class="content table-responsive" style="overflow-x: scroll;width: 100%;">
                                 <table class="table table-hover table-striped">
@@ -23,8 +23,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <th></th>
                                         <th></th>
 
-                                        <th>Job ID</th>
-                                        <th>Job Name</th>
+                                        <th>Lead ID</th>
+                                        <th>Lead Name</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Address</th>

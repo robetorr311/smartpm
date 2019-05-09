@@ -13,10 +13,7 @@ class UserModel extends CI_Model
         return $result->result();   
     }
 
-    public function add_user($table, $condition){
-       
-    }
+   
 
-    
     
 }

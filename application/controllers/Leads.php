@@ -108,7 +108,7 @@ class Leads extends CI_Controller {
 					$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Job Not Saved Successfully!</strong>';
 					$message .= '</div>';
 					$this->session->set_flashdata('message',$message);
-					redirect('leads/');
+					
 				}
 			}
 			else{
@@ -118,7 +118,9 @@ class Leads extends CI_Controller {
 					$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>'.validation_errors().' </strong>';
 					$errors .= '</div>';
            			$this->session->set_flashdata('message', $errors);
-					redirect('lead/new');
+					$this->load->view('header',['title' => 'Add New Leads']);
+					$this->load->view('leads/new');
+					$this->load->view('footer');
 			}
 		}
 		

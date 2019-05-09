@@ -65,7 +65,7 @@
             </div>
 
             <ul class="nav">
-                <?php if($admin['admininfo']['usertype']=='admin'){ ?>
+                <?php  //if($admin['admininfo']['usertype']=='admin'){ ?>
                  <li >
                     <a href="<?php echo base_url('dashboard');?>">
                         <i class="pe-7s-graph"></i>
@@ -84,18 +84,19 @@
                         <p>Cash Jobs</p>
                     </a>
                 </li>
+                  <li>
+                    <a href="<?php echo base_url('insurance_jobs');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Insurance Jobs</p>
+                    </a>
+                </li>
               <li>
                     <a href="<?php echo base_url('tasks');?>">
                         <i class="pe-7s-note"></i>
                         <p>Tasks</p>
                     </a>
                 </li>
-                <li>
-                    <a href="<?php echo base_url('insurance_jobs');?>">
-                        <i class="pe-7s-note2"></i>
-                        <p>Insurance Jobs</p>
-                    </a>
-                </li>
+              
                 <li>
                     <a href="<?php echo base_url('teams');?>">
                         <i class="pe-7s-note2"></i>
@@ -114,8 +115,8 @@
                         <p>Setting</p>
                     </a>
                 </li>
-               <?php } else { ?>
-                <li>
+               <?php // } else { ?>
+        <!--        <li>
                     <a href="<?php echo base_url('dashboard');?>">
                         <i class="pe-7s-graph"></i>
                         <p>User Dashboard</p>
@@ -133,8 +134,8 @@
                         <p>User Task</p>
                     </a>
                 </li>
-               
-                <?php } ?>
+               -->
+                <?php // } ?>
             </ul>
     	</div>
     </div>
