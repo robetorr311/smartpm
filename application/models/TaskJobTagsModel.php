@@ -20,7 +20,9 @@ class TaskJobTagsModel extends CI_Model
     public function deleteRelated($task_id)
     {
         $this->db->where('task_id', $task_id);
-        return $this->db->delete($this->table);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
     }
 
     /**

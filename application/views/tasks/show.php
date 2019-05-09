@@ -22,8 +22,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         foreach ($notes as $note) {
                             echo '<div class="row note-item">';
                             echo '<div class="col-md-12">';
-                            echo '<hr>';
                             echo '<label>' . $note->created_username . '</label>';
+                            echo '<a href="' . base_url('task/' . $task->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';
                             echo '</div>';
                             echo '</div>';
@@ -34,29 +34,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     ?>
                 </div>
             </div>
-            <div class="card">
+            <div class="card add-note-card">
                 <div class="header">
                     <h4 class="title">Add Note</h4>
                 </div>
                 <div class="content view">
-                    <form action="<?= base_url('task/' . $task->id . '/add-note') ?>" method="post">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Your Note</label>
-                                    <textarea class="form-control" name="note" placeholder="Your Note" rows="10"></textarea>
+                    <div class="row add-note-form">
+                        <div class="col-md-12">
+                            <form action="<?= base_url('task/' . $task->id . '/add-note') ?>" method="post">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Your Note</label>
+                                            <textarea class="form-control" name="note" placeholder="Your Note" rows="10" ctrl-enter-submit></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <a href="<?= base_url('tasks') ?>" class="btn btn-info btn-fill">Back</a>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <a href="<?= base_url('tasks') ?>" class="btn btn-info btn-fill">Back</a>
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,6 +140,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 echo '<p>-</p>';
                             }
                             ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Created By</label>
+                            <p><?= $task->created_username ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Created At</label>
+                            <p><?= $task->created_at ?></p>
                         </div>
                     </div>
                     <div class="clearfix"></div>

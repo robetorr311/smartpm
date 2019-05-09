@@ -32,6 +32,7 @@ class TaskModel extends CI_Model
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
         $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
+        $this->db->where('is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -40,7 +41,8 @@ class TaskModel extends CI_Model
 
     public function getCount()
     {
-        return $this->db->count_all('tasks');
+        $this->db->where('is_deleted', FALSE);
+        return $this->db->count_all_results('tasks');
     }
 
     public function getTaskById($id)
@@ -49,7 +51,10 @@ class TaskModel extends CI_Model
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
         $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
-        $this->db->where('tasks.id', $id);
+        $this->db->where([
+            'tasks.id' => $id,
+            'is_deleted' => FALSE
+        ]);
         $query = $this->db->get();
         $result = $query->result();
         return (count($result) > 0) ? $result[0] : false;
@@ -59,13 +64,17 @@ class TaskModel extends CI_Model
     {
         $this->db->select($select);
         $this->db->from($this->table);
+        $this->db->where('is_deleted', FALSE);
         $query = $this->db->get();
         return $query->result();
     }
 
     public function getTaskListExcept($id, $select = 'id, name')
     {
-        $this->db->where('id !=', $id);
+        $this->db->where([
+            'id !=' => $id,
+            'is_deleted' => FALSE
+        ]);
         return $this->getTaskList($select);
     }
 
@@ -87,12 +96,14 @@ class TaskModel extends CI_Model
     public function delete($id)
     {
         $this->db->where('id', $id);
-        return $this->db->delete($this->table);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
     }
 
     public function isAllowedToDelete($task_id)
     {
-        $this->db->where('id IN (SELECT predecessor_task_id FROM task_predecessor WHERE task_id=' . $task_id . ')');
+        $this->db->where('id IN (SELECT predecessor_task_id FROM task_predecessor WHERE task_id=' . $task_id . ' AND is_deleted=FALSE)');
         $this->db->where('status !=', 4);
         $count = $this->db->count_all_results($this->table);
         return ($count === 0);
@@ -118,7 +129,7 @@ class TaskModel extends CI_Model
     {
         return self::$type;
     }
-    
+
     public static function leveltostr($id)
     {
         return isset(self::$level[$id]) ? self::$level[$id] : $id;
@@ -129,7 +140,8 @@ class TaskModel extends CI_Model
         return self::$level;
     }
 
-    public static function statustostr($id) {
+    public static function statustostr($id)
+    {
         return isset(self::$status[$id]) ? self::$status[$id] : $id;
     }
 }

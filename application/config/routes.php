@@ -59,6 +59,7 @@ $route['task/create'] = 'tasks/create';
 $route['task/store']['post'] = 'tasks/store';
 $route['task/(:num)'] = 'tasks/show/$1';
 $route['task/(:num)/add-note']['post'] = 'tasks/addNote/$1';
+$route['task/(:num)/note/(:num)/delete']['post'] = 'tasks/deleteNote/$1/$2';
 $route['task/(:num)/edit'] = 'tasks/edit/$1';
 $route['task/(:num)/update']['post'] = 'tasks/update/$1';
 $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';

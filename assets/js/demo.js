@@ -295,12 +295,29 @@ $("input[type=filhe]").change(function () {
 /**
  * Custom Script Added
  */
-$('a[data-method="POST"]').click(function (e) {
-  e.preventDefault();
-  var method = $(this).data('method');
-  var url = $(this).attr('href');
-  var parent = $(this).parent();
-  var id = Date.now();
-  parent.append('<form id="' + id + '" action="' + url + '" method="POST" style="display:none;"></form>');
-  parent.find('form#' + id).submit();
+
+$(document).ready(function () {
+  /**
+   * Anchor Tag POST request feature
+   */
+  $('a[data-method="POST"]').click(function (e) {
+    e.preventDefault();
+    var method = $(this).data('method');
+    var url = $(this).attr('href');
+    var parent = $(this).parent();
+    var id = Date.now();
+    parent.append('<form id="' + id + '" action="' + url + '" method="POST" style="display:none;"></form>');
+    parent.find('form#' + id).submit();
+  });
+
+  /**
+   * TextArea Submit form on Ctrl+Enter feature
+   */
+  $('textarea[ctrl-enter-submit]').keydown(function (e) {
+    if (e.ctrlKey && e.keyCode == 13) {
+      e.preventDefault();
+      $(this).closest('form').submit();
+      return false;
+    }
+  });
 });

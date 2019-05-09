@@ -86,7 +86,7 @@ class Tasks extends CI_Controller
                 $note = $taskData['note'];
 
                 $noteInsert = $this->task_notes->insert([
-                    'note' => $note,
+                    'note' => nl2br($note),
                     'task_id' => $insert
                 ]);
                 if (!$noteInsert) {
@@ -273,7 +273,7 @@ class Tasks extends CI_Controller
             $this->load->view('header', [
                 'title' => $this->title
             ]);
-            $this->load->view('tasks/view', [
+            $this->load->view('tasks/show', [
                 'task' => $task,
                 'notes' => $notes,
                 'jobs' => $jobs,
@@ -295,7 +295,7 @@ class Tasks extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $noteData = $this->input->post();
                 $insert = $this->task_notes->insert([
-                    'note' => $noteData['note'],
+                    'note' => nl2br($noteData['note']),
                     'task_id' => $id
                 ]);
                 if (!$insert) {
@@ -308,6 +308,15 @@ class Tasks extends CI_Controller
         } else {
             redirect('tasks');
         }
+    }
+
+    public function deleteNote($id, $note_id)
+    {
+        $delete = $this->task_notes->delete($note_id, $id);
+        if (!$delete) {
+            $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+        }
+        redirect('task/' . $id);
     }
 
     public function delete($id)
