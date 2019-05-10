@@ -109,6 +109,17 @@ class TaskModel extends CI_Model
         return ($count === 0);
     }
 
+    public function complete($id)
+    {
+        $this->db->where([
+            'id' => $id,
+            'is_deleted' => FALSE
+        ]);
+        return $this->db->update($this->table, [
+            'status' => 4
+        ]);
+    }
+
     /**
      * Static Methods
      */
@@ -135,5 +146,10 @@ class TaskModel extends CI_Model
     public static function statustostr($id)
     {
         return isset(self::$status[$id]) ? self::$status[$id] : $id;
+    }
+
+    public static function getStatus()
+    {
+        return self::$status;
     }
 }
