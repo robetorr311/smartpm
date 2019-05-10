@@ -336,22 +336,16 @@ class Tasks extends CI_Controller
     {
         $task = $this->task->getTaskById($id);
         if ($task) {
-            if ($id) {
-                if ($this->task->isAllowedToDelete($id)) {
-                    $this->task_notes->deleteRelated($id);
-                    $this->task_job_tags->deleteRelated($id);
-                    $this->task_user_tags->deleteRelated($id);
-                    $this->task_predecessor->deleteRelated($id);
-                    $delete = $this->task->delete($id);
-                    if (!$delete) {
-                        $this->session->set_flashdata('errors', '<p>Unable to delete Task.</p>');
-                    }
-                } else {
-                    $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
-                }
-            } else {
-                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            $this->task_notes->deleteRelated($id);
+            $this->task_job_tags->deleteRelated($id);
+            $this->task_user_tags->deleteRelated($id);
+            $this->task_predecessor->deleteRelated($id);
+            $delete = $this->task->delete($id);
+            if (!$delete) {
+                $this->session->set_flashdata('errors', '<p>Unable to delete Task.</p>');
             }
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
         redirect('tasks');
     }
