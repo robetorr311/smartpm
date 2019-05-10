@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Your Note</label>
-                                            <textarea class="form-control" name="note" placeholder="Your Note" rows="10" ctrl-enter-submit></textarea>
+                                            <textarea class="form-control" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
                                         </div>
                                     </div>
                                 </div>
