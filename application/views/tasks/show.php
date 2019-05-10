@@ -133,7 +133,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             if ($predec_tasks) {
                                 echo '<p>';
                                 foreach ($predec_tasks as $predec_task) {
-                                    echo '<span class="info-tag">' . $predec_task->name . '</span>';
+                                    echo '<a href="' . base_url('task/' . $predec_task->id) . '"><span class="info-tag">' . $predec_task->name . '</span></a>';
                                 }
                                 echo '</p>';
                             } else {
