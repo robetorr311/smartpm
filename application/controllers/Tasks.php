@@ -142,9 +142,18 @@ class Tasks extends CI_Controller
 
     public function complete($id)
     {
-        $completed = $this->task->complete($id);
-        if (!$completed) {
-            $this->session->set_flashdata('errors', '<p>Unable to mark Task as Completed.</p>');
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            if ($this->task->isAllowedToDelete($id)) {
+                $completed = $this->task->complete($id);
+                if (!$completed) {
+                    $this->session->set_flashdata('errors', '<p>Unable to mark Task as Completed.</p>');
+                }
+            } else {
+                $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
         redirect('tasks');
     }
@@ -176,6 +185,7 @@ class Tasks extends CI_Controller
             ]);
             $this->load->view('footer');
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
@@ -271,6 +281,7 @@ class Tasks extends CI_Controller
                 redirect('task/' . $id . '/edit');
             }
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
@@ -295,6 +306,7 @@ class Tasks extends CI_Controller
             ]);
             $this->load->view('footer');
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
@@ -319,17 +331,24 @@ class Tasks extends CI_Controller
             }
             redirect('task/' . $id);
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
 
     public function deleteNote($id, $note_id)
     {
-        $delete = $this->task_notes->delete($note_id, $id);
-        if (!$delete) {
-            $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            $delete = $this->task_notes->delete($note_id, $id);
+            if (!$delete) {
+                $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+            }
+            redirect('task/' . $id);
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('tasks');
         }
-        redirect('task/' . $id);
     }
 
     public function delete($id)
