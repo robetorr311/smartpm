@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Note</label>
-                                    <textarea class="form-control" name="note" placeholder="Note" rows="10"></textarea>
+                                    <textarea id="note-input" class="form-control" name="note" placeholder="Note" rows="10"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -165,6 +165,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     this.$element[0].value = '';
                 }
             }
+        });
+        
+        var u = ['Peter', 'Tom', 'Anne', 'Jonas', 'Jimmy', 'Jenny'];
+        $('#note-input').atwho({
+            at: '@',
+            data: u,
+            headerTpl: '<div class="atwho-header">User List:</div>',
+            limit: 200
         });
     });
 </script>
