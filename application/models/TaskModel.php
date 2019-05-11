@@ -109,12 +109,23 @@ class TaskModel extends CI_Model
         return ($count === 0);
     }
 
+
      public function getTaskByUserId($id)
     {
         $this->db->where('assigned_to', $id);
         $query = $this->db->get('tasks');
         return $result = $query->result();
         
+}
+    public function complete($id)
+    {
+        $this->db->where([
+            'id' => $id,
+            'is_deleted' => FALSE
+        ]);
+        return $this->db->update($this->table, [
+            'status' => 4
+        ]);
     }
 
     /**
@@ -143,5 +154,10 @@ class TaskModel extends CI_Model
     public static function statustostr($id)
     {
         return isset(self::$status[$id]) ? self::$status[$id] : $id;
+    }
+
+    public static function getStatus()
+    {
+        return self::$status;
     }
 }

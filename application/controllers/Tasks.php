@@ -140,12 +140,31 @@ class Tasks extends CI_Controller
         }
     }
 
+    public function complete($id)
+    {
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            if ($this->task->isAllowedToDelete($id)) {
+                $completed = $this->task->complete($id);
+                if (!$completed) {
+                    $this->session->set_flashdata('errors', '<p>Unable to mark Task as Completed.</p>');
+                }
+            } else {
+                $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+        }
+        redirect('tasks');
+    }
+
     public function edit($id)
     {
         $task = $this->task->getTaskById($id);
         if ($task) {
             $types = TaskModel::getTypes();
             $levels = TaskModel::getLevels();
+            $status = TaskModel::getStatus();
             $tasks = $this->task->getTaskListExcept($id);
             $users = $this->login->getUserList();
             // $jobs = false;
@@ -160,11 +179,13 @@ class Tasks extends CI_Controller
                 'levels' => $levels,
                 'tasks' => $tasks,
                 'users' => $users,
+                'status' => $status,
                 'tag_users' => $tag_users,
                 'predec_tasks' => $predec_tasks
             ]);
             $this->load->view('footer');
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
@@ -177,6 +198,7 @@ class Tasks extends CI_Controller
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
             $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
             $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric');
+            $this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
             $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
             $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
             $this->form_validation->set_rules('predecessor_tasks', 'Predecessor Tasks', 'is_own_ids[tasks, Tasks]');
@@ -187,7 +209,8 @@ class Tasks extends CI_Controller
                     'name' => $taskData['name'],
                     'type' => $taskData['type'],
                     'level' => $taskData['level'],
-                    'assigned_to' => $taskData['assigned_to']
+                    'assigned_to' => $taskData['assigned_to'],
+                    'status' => $taskData['status']
                 ]);
                 if ($update) {
                     $errors = '';
@@ -258,6 +281,7 @@ class Tasks extends CI_Controller
                 redirect('task/' . $id . '/edit');
             }
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
@@ -282,6 +306,7 @@ class Tasks extends CI_Controller
             ]);
             $this->load->view('footer');
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
@@ -306,39 +331,40 @@ class Tasks extends CI_Controller
             }
             redirect('task/' . $id);
         } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('tasks');
         }
     }
 
     public function deleteNote($id, $note_id)
     {
-        $delete = $this->task_notes->delete($note_id, $id);
-        if (!$delete) {
-            $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            $delete = $this->task_notes->delete($note_id, $id);
+            if (!$delete) {
+                $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+            }
+            redirect('task/' . $id);
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('tasks');
         }
-        redirect('task/' . $id);
     }
 
     public function delete($id)
     {
         $task = $this->task->getTaskById($id);
         if ($task) {
-            if ($id) {
-                if ($this->task->isAllowedToDelete($id)) {
-                    $this->task_notes->deleteRelated($id);
-                    $this->task_job_tags->deleteRelated($id);
-                    $this->task_user_tags->deleteRelated($id);
-                    $this->task_predecessor->deleteRelated($id);
-                    $delete = $this->task->delete($id);
-                    if (!$delete) {
-                        $this->session->set_flashdata('errors', '<p>Unable to delete Task.</p>');
-                    }
-                } else {
-                    $this->session->set_flashdata('errors', '<p>Predecessor Tasks not Completed.</p>');
-                }
-            } else {
-                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            $this->task_notes->deleteRelated($id);
+            $this->task_job_tags->deleteRelated($id);
+            $this->task_user_tags->deleteRelated($id);
+            $this->task_predecessor->deleteRelated($id);
+            $delete = $this->task->delete($id);
+            if (!$delete) {
+                $this->session->set_flashdata('errors', '<p>Unable to delete Task.</p>');
             }
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
         redirect('tasks');
     }

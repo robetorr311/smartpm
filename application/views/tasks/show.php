@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Your Note</label>
-                                            <textarea class="form-control" name="note" placeholder="Your Note" rows="10" ctrl-enter-submit></textarea>
+                                            <textarea class="form-control" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -133,13 +133,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             if ($predec_tasks) {
                                 echo '<p>';
                                 foreach ($predec_tasks as $predec_task) {
-                                    echo '<span class="info-tag">' . $predec_task->name . '</span>';
+                                    echo '<a href="' . base_url('task/' . $predec_task->id) . '"><span class="info-tag">' . $predec_task->name . '</span></a>';
                                 }
                                 echo '</p>';
                             } else {
                                 echo '<p>-</p>';
                             }
                             ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Status</label>
+                            <p><?= TaskModel::statustostr($task->status) ?></p>
                         </div>
                     </div>
                     <div class="row">
@@ -154,6 +160,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <p><?= $task->created_at ?></p>
                         </div>
                     </div>
+                    <?php if ($task->status != 4) { ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?= base_url('task/' . $task->id .'/complete' ) ?>" data-method="POST" class="btn btn-info btn-fill col-xs-12">Mark As Complete</a>
+                        </div>
+                    </div>
+                    <?php } ?>
                     <div class="clearfix"></div>
                 </div>
             </div>
