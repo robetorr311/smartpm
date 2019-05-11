@@ -127,16 +127,21 @@ echo '</div>';
 
  <div class="col-md-4">
             <div class="card">
+                <?php  foreach( $leadstatus as $status ) : ?>  
                 <div class="header">
-                                    <h4 class="title" style="float: left;">Job Status</h4><span class="status <?php if($status=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo $status; ?></span> 
-                                    <div class="clearfix"></div>
-                                         <div class="content"></div>         
-                                </div>
+                    <h4 class="title" style="float: left;">Lead Status</h4><span class="status <?php if($status->lead!='open'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $status->lead; ?></span> 
+                    <div class="clearfix" style="padding: 10px;" ></div>  
+
+                     <h4 class="title" style="float: left;">Contract Status</h4><span class="status <?php if($status=='signed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus = $status->contract; ?></span> 
+                    <div class="clearfix" style="padding: 10px;"></div>
+
+                     <h4 class="title" style="float: left;">Job Type</h4><span class="status <?php if($status==''){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus =  $status->job;  ?></span> 
+                    <div class="clearfix" style="padding: 10px;"></div>         
+                </div>
+                <?php endforeach; ?>  
              </div>
         <div class="card">
-                           
-                           
-                
+
                             <div class="header">
                                 <h4 class="title" style="float: left;">Additional Party Detail</h4> 
                                 <div class="clearfix"></div>

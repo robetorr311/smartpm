@@ -5,6 +5,16 @@ class LeadModel extends CI_Model
 {
     private $table = 'jobs';
 
+    public function getAllJob(){
+
+        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
+        $this->db->from($this->table);
+        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        $query = $this->db->get();
+        return $query->result();     
+    }
+
+
    	public function get_all_where( $tablename, $condition ){
 
         $this->db->where($condition);
@@ -12,6 +22,19 @@ class LeadModel extends CI_Model
 		$result = $this->db->get($tablename);
 		return $result->result();	
 	}
+
+    public function getJob($condition ){
+
+        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
+        $this->db->from($this->table);
+        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        $this->db->where(['status.job'=>$condition,
+                          'status.contract'=>'signed',
+                          'status.lead'=>'open'
+                        ]);
+        $query = $this->db->get();
+        return $query->result();     
+    }
     
     public function getCount()
     {     

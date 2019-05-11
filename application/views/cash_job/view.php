@@ -22,11 +22,11 @@ echo '</div>';
                             </div>
                             <div class="content view">
                                   <?php
-                                $status='';
+                              
                                    foreach( $jobs as $job ) : ?>  
 
                                 
-                                <?php  $status= $job->status; ?>
+                              
                                     <div class="row">
                                         <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>"></input>
                                         <div class="col-md-12">
@@ -137,13 +137,15 @@ echo '</div>';
 
                                          </div>     
      </div> </div>
-            <div class="card">
+            <!--<div class="card">
                 <div class="header">
-                                    <h4 class="title" style="float: left;">Job Status</h4><span class="status open"><?php echo $status; ?></span> 
+                                    <h4 class="title" style="float: left;">Job Status</h4>
+
+                                    <span class="status open"><?php echo $status; ?></span> 
                                     <div class="clearfix"></div>
                                          <div class="content"></div>         
                                 </div>
-             </div>
+             </div>-->
         <div class="card">
                            
                            

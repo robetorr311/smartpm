@@ -81,7 +81,7 @@
                         </a>
                       </li>
                       <li class="nav-item ">
-                        <a class="nav-link" href="<?php echo base_url('setting/status_tag');?>">
+                        <a class="nav-link" href="<?php echo base_url('setting/status');?>">
                           <span class="sidebar-normal"> STATUS TAG </span>
                         </a>
                       </li>

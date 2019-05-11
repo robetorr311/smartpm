@@ -22,17 +22,17 @@ echo '</div>';
                             </div>
                             <div class="content">
                                   <?php
-                                $status='';
+                             
                                    foreach( $leads as $lead ) : ?>  
 
                                 <?php echo form_open('lead/'.$lead->id.'/update',array('method'=>'post'));?>
-                                <?php  $status= $lead->status; ?>
+                         
                                     <div class="row">
                                        
                                         <div class="col-md-12">
                                             <div class="form-group"> <input type="hidden" name="id" class="hidden_id" value="<?php echo $lead->id ?>"/>
-                                                <label>Job Name</label>
-                                                <input class="form-control" placeholder="Job Name" name="jobname" value="<?php echo $lead->job_name ?>" type="text">
+                                                <label>Lead Name</label>
+                                                <input class="form-control" placeholder="Lead Name" name="jobname" value="<?php echo $lead->job_name ?>" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -127,15 +127,51 @@ echo '</div>';
                     </div>
 
  <div class="col-md-4">
+    <?php
+        $lstatus="";
+        $cstatus="";
+        $jtype=""; ?>
+<?php foreach( $leadstatus as $status ) : 
+    $lstatus = $status->lead;
+    $cstatus = $status->contract;
+    $jtype = $status->job;
+endforeach; ?>
             <div class="card">
                 <div class="header">
-                                    <h4 class="title" style="float: left;">Job Status</h4><span class="status <?php if($status=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo $status; ?></span> 
+                                    <h4 class="title" style="float: left;">Lead Status</h4><span class="status lead <?php if($lstatus=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php if($lstatus!=''){echo $lstatus; }else{ echo "None"; } ?></span> 
                                     <div class="clearfix"></div>
                                     <div class="content">
-                                            <select class="form-control" id="leadstatus">
+                                            <select class="form-control lead-status" id="lead">
                                                 <option value="">Change Status</option>
-                            <option value="lead">Lead</option>
-                            <option value="closed">Signed</option>
+                        <?php foreach( $lead_status_tags as $s_tags ) : ?>     
+                            <option value="<?php echo $s_tags->status_value ?>"><?php echo $s_tags->status_value ?></option>
+                        <?php endforeach; ?>
+                        </select>
+                                    </div>                       
+                                </div>
+           
+                <div class="header">
+                                    <h4 class="title" style="float: left;">Contract Status</h4><span class="status contract <?php if($cstatus=='unsigned'){ echo 'closed';}else{ echo 'open';} ?>"><?php if($cstatus!=''){echo $cstatus; }else{ echo "None"; } ?></span> 
+                                    <div class="clearfix"></div>
+                                    <div class="content">
+                                            <select class="form-control lead-status" id="contract">
+                                                <option value="">Change Status</option>
+                             <?php foreach( $contract_status_tags as $contract ) : ?>     
+                            <option value="<?php echo $contract->status_value ?>"><?php echo $contract->status_value ?></option>
+                        <?php endforeach; ?>
+                        </select>
+                                    </div>                       
+                                </div>
+             
+                <div class="header">
+                                    <h4 class="title" style="float: left;">Job Type</h4><span class="status job <?php if($jtype==''){ echo 'closed';}else{ echo 'open';} ?>"><?php if($jtype!=''){echo $jtype; }else{ echo "None"; } ?></span> 
+                                    <div class="clearfix"></div>
+                                    <div class="content">
+                                            <select class="form-control lead-status" id="job">
+                                                <option value="">Change Status</option>
+                          <?php foreach( $job_type_tags as $job ) : ?>     
+                            <option value="<?php echo $job->status_value ?>"><?php echo $job->status_value ?></option>
+                        <?php endforeach; ?>
                         </select>
                                     </div>                       
                                 </div>

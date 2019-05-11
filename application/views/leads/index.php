@@ -20,20 +20,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <table class="table table-hover table-striped">
                                     <thead>
                                        <!-- <th></th> -->
-                                        <th></th>
-                                        <th></th>
+                                        <th>View</th>
+                                        <th>Edit</th>
 
-                                        <th>Lead ID</th>
+                                        <th>SN</th>
                                         <th>Lead Name</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Address</th>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <th>Zip</th>
-                                        <th>Cell Phone</th>
-                                        <th>Home Phone</th>
-                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Contract</th>
+                                        
+                                       
                                      <!--   <th>Status</th>-->
                                       
                                         
@@ -41,24 +39,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tbody id="myTable">
 
                                     <?php if( !empty( $leads ) ) : ?>
-              <?php foreach( $leads as $lead ) : ?>  
+              <?php $i=1; foreach( $leads as $lead ) : ?>  
                 <tr> <!--<td style="width: 30px"><i class="del-doc pe-7s-trash" id=""></i></td>-->
-                <td style="width: 30px"><a href="<?php echo base_url('lead/'.$lead->id);?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
+                <td style="width: 30px"><a href="<?php echo base_url('lead/'.$lead->id);?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
               <td><a href="<?php echo base_url('lead/'.$lead->id.'/edit');?>"><span class=""><i class="del-edit pe-7s-note" style="font-size: 30px;" /></span></a></td>
               
-                  <td><?php echo $lead->job_number ?></td>
+                  <td><?php echo $i; ?></td>
                   <td><?php echo $lead->job_name ?></td>
                   <td><?php echo $lead->firstname ?></td>
                   <td><?php echo $lead->lastname ?></td>
                   <td><?php echo $lead->address ?></td>
-                  <td><?php echo $lead->city ?></td>
-                  <td><?php echo $lead->state ?></td>
-                  <td><?php echo $lead->zip ?></td>
-                  <td><?php echo $lead->phone1 ?></td>
-                  <td><?php echo $lead->phone2 ?></td>
-                  <td><?php echo $lead->email ?></td>
+                
+                   <td><?php echo $lead->lead_status ?></td>
+                  <td><?php echo $lead->contract_status ?></td>
+                 
+              
                  </tr>
-                  <?php endforeach; ?>
+                  <?php $i++; endforeach; ?>
             <?php else : ?>
                   <tr>
                       <td colspan="13" class="text-center">No Record Found!</td>

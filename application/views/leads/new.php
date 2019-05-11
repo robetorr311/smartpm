@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">Add Job</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
+                                <h4 class="title" style="float: left;">Add Lead</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
 
                                
 
@@ -24,8 +24,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Job Name</label>
-                                                <input class="form-control" placeholder="Job Name" name="jobname" value="<?= set_value('jobname') ?>" type="text">
+                                                <label>Lead Name</label>
+                                                <input class="form-control" placeholder="Lead Name" name="jobname" value="<?= set_value('jobname') ?>" type="text">
                                             </div>
                                         </div>
                                     </div>

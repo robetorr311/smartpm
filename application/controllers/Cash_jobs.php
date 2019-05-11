@@ -6,16 +6,15 @@ class Cash_jobs extends CI_Controller {
 	    {
 	        parent::__construct();
 	        authAdminAccess();
-	        $this->load->model(['Cash_jobModel']);
+	        $this->load->model(['LeadModel','LeadStatusModel']);
 	        $this->load->library(['pagination', 'form_validation']);
-        	$this->cash = new Cash_jobModel();
+        	$this->lead = new LeadModel();
+        	$this->status = new LeadStatusModel();
 	    }
 
 	    public function index(){
-	    	$params = array();
-			$params['is_active'] = 1;
-			$params['status'] ='cash';
-			$query['jobs'] = $this->cash->get_all_where( 'jobs', $params );
+	    	$job_type='cash';
+			$query['jobs'] = $this->lead->getJob($job_type);
 			$this->load->view('header',['title' => 'Cash Job']);
 			$this->load->view('cash_job/index',$query);
 			$this->load->view('footer');
@@ -26,9 +25,9 @@ class Cash_jobs extends CI_Controller {
 			$query = array('jobid' => $this->uri->segment(2));
 			$params = array();
 			$params['id'] =$this->uri->segment(2);
-			$query['jobs'] = $this->cash->get_all_where( 'jobs', $params );
-			$query['add_info'] = $this->cash->get_all_where( 'job_add_party', array('job_id' => $this->uri->segment(2)) );
-
+			$query['jobs'] = $this->lead->get_all_where( 'jobs', $params );
+			$query['add_info'] = $this->lead->get_all_where( 'job_add_party', array('job_id' => $this->uri->segment(2)) );
+			$query['status'] = $this->status->get_all_where(['jobid'=>$this->uri->segment(2)]);
 			$this->load->view('header',['title' => 'Cash Job']);
 			$this->load->view('cash_job/view',$query);
 			$this->load->view('footer');

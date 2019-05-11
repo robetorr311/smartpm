@@ -354,24 +354,26 @@ $(document).on('click', '.doc_list span',  function () {
 				});	
 				
 			
-			$('#leadstatus').change(function(){
+			$('.lead-status').change(function(){
 				
-				$('.status').html($(this).val());
+				/*$('.status').html($(this).val());
 				if($(this).val()=='closed'){
 					$('.status').addClass('closed');
 				}else{
 					$('.status').removeClass('closed');
 					$('.status').addClass('open');
-				}
+				}*/
 				var value=$(this).val();
 				var id=$('.hidden_id').val();
+				var status=$(this).attr('id');
 				$.ajax({
 						url: baseUrl+'lead/updatestatus',
-						data: {status: value, id: id},        
+						data: {value: value, id: id, status:status},        
 						type: 'post',
 						success: function(php_script_response){
-							
 						
+							$('.'+status).html(value);
+					
 						}
 					 });
 				});
@@ -395,6 +397,11 @@ $(document).on('click', '.doc_list span',  function () {
 				});
 
 
+			$('.add_more_tag').click(function(){
+
+				$(this).siblings('.addmore').toggle();
+
+			});
 
     	});
 	</script>

@@ -6,10 +6,12 @@ class Leads extends CI_Controller {
 	    {
 	        parent::__construct();
 	        authAdminAccess();
-	        $this->load->model('LeadModel');
+	        $this->load->model(['LeadModel','StatusTagModel','LeadStatusModel']);
        		$this->load->library(['pagination', 'form_validation']);
 
         	$this->lead = new LeadModel();
+        	$this->status_tags = new StatusTagModel();
+        	$this->status = new LeadStatusModel();
 	    }
  
 	    public function index(){
@@ -21,36 +23,41 @@ class Leads extends CI_Controller {
         	];
         	$this->pagination->initialize($pagiConfig);
 
-			$leads = $this->lead->get_all_where('jobs',['status'=>'lead']);
+			$leads = $this->lead->getAllJob();
 			$this->load->view('header',['title' => 'Leads']);
 			$this->load->view('leads/index',['leads' => $leads,'pagiLinks' => $this->pagination->create_links()]);
 			$this->load->view('footer');
 	    }
 
 	    public function new(){
-        	
         	$this->load->view('header',['title' => 'Add New Leads']);
 			$this->load->view('leads/new');
 			$this->load->view('footer');
 	    }
 
 	    public function view(){
-			$leads = $this->lead->get_all_where('jobs',['status'=>'lead','id' => $this->uri->segment(2)]);
-			$add_info = $this->lead->get_all_where( 'job_add_party', ['job_id' => $this->uri->segment(2)] );
-			
+	    	$jobid = $this->uri->segment(2);
+			$leads = $this->lead->get_all_where('jobs',['id' => $jobid]);
+			$add_info = $this->lead->get_all_where( 'job_add_party', ['job_id' => $jobid] );
+
+			$leadstatus = $this->status->get_all_where(['jobid' => $jobid]);
 			$this->load->view('header',['title' => 'Lead Detail']);
-			$this->load->view('leads/view',['leads' => $leads,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
+			$this->load->view('leads/view',['leadstatus' => $leadstatus,'leads' => $leads,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
 			$this->load->view('footer');
 	    }
 
 
 	    public function edit(){
-			$leads = $this->lead->get_all_where('jobs',['status'=>'lead','id' => $this->uri->segment(2)]);
+			$leads = $this->lead->get_all_where('jobs',['id' => $this->uri->segment(2)]);
 			$add_info = $this->lead->get_all_where( 'job_add_party', ['job_id' => $this->uri->segment(2)] );
-			
+			$job_type_tags = $this->status_tags->getall('job_type');
+			$lead_status_tags = $this->status_tags->getall('lead_status');
+			$contract_status_tags = $this->status_tags->getall('contract_status');
+
+			$leadstatus = $this->status->get_all_where(['jobid' => $this->uri->segment(2)]);
 			
 			$this->load->view('header',['title' => 'Lead Update']);
-			$this->load->view('leads/edit',['leads' => $leads,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
+			$this->load->view('leads/edit',['job_type_tags' => $job_type_tags,'lead_status_tags' => $lead_status_tags,'contract_status_tags' => $contract_status_tags,'leads' => $leads,'leadstatus'=>$leadstatus,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
 			$this->load->view('footer');
 	    }
 
@@ -79,7 +86,7 @@ class Leads extends CI_Controller {
 
 				$posts = $this->input->post();
 				$params['job_name'] 		= $posts['jobname'];
-				$params['status'] 		='lead';
+				$params['status'] 		='open';
 				$params['firstname'] 		= $posts['firstname'];
 				$params['lastname'] 		= $posts['lastname'];
 				$params['address'] 		= $posts['address'];
@@ -95,7 +102,11 @@ class Leads extends CI_Controller {
 				
 
 				$query = $this->lead->add_record( $params );
-
+				$this->status->add_record([
+                    'jobid' => $query,
+                    'lead' => 'open',
+                    'contract' => 'unsigned'
+                ]);
 			 
 				if( $query ) {
 					$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
@@ -185,7 +196,7 @@ class Leads extends CI_Controller {
 	    public function updatestatus(){
 	   
 			$posts = $this->input->post();
-			$this->db->query("UPDATE jobs SET status='".$posts['status']."' WHERE id='".$posts['id']."'");
+			$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' WHERE jobid='".$posts['id']."'");
 			return true;
 		}
 
