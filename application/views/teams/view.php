@@ -114,7 +114,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">Task Assigned</h4> 
+                                <h4 class="title" style="float: left;">Jobs Assigned</h4> 
                                 <div class="clearfix"></div>
                               
                                                            

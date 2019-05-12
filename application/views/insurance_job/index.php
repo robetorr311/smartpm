@@ -9,8 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                          <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                   
-                                 </div>
+                                   </div>
                             </div>
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>

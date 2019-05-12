@@ -6,15 +6,17 @@ class Cash_jobs extends CI_Controller {
 	    {
 	        parent::__construct();
 	        authAdminAccess();
-	        $this->load->model(['LeadModel','LeadStatusModel']);
+	        $this->load->model(['LeadModel','LeadStatusModel','TeamModel','TeamJobTrackModel']);
 	        $this->load->library(['pagination', 'form_validation']);
         	$this->lead = new LeadModel();
         	$this->status = new LeadStatusModel();
-	    }
+        	$this->team = new TeamModel();
+        	$this->team_job_track = new TeamJobTrackModel();
+	    } 
 
 	    public function index(){
 	    	$job_type='cash';
-			$query['jobs'] = $this->lead->getJob($job_type);
+			$query['jobs'] = $this->lead->getJobType($job_type);
 			$this->load->view('header',['title' => 'Cash Job']);
 			$this->load->view('cash_job/index',$query);
 			$this->load->view('footer');
@@ -23,13 +25,33 @@ class Cash_jobs extends CI_Controller {
 	    public function view()
 		{	
 			$query = array('jobid' => $this->uri->segment(2));
-			$params = array();
-			$params['id'] =$this->uri->segment(2);
-			$query['jobs'] = $this->lead->get_all_where( 'jobs', $params );
+			$query['jobs'] = $this->lead->get_all_where( 'jobs', ['id'=>$this->uri->segment(2)] );
 			$query['add_info'] = $this->lead->get_all_where( 'job_add_party', array('job_id' => $this->uri->segment(2)) );
 			$query['status'] = $this->status->get_all_where(['jobid'=>$this->uri->segment(2)]);
-			$this->load->view('header',['title' => 'Cash Job']);
+			$query['teams_detail'] = $this->team_job_track->getTeamName($this->uri->segment(2));
+
+			$query['teams'] = $this->team->get_all_where(['is_active'=>1]);
+			$this->load->view('header',['title' => 'Cash Job Detail']);
 			$this->load->view('cash_job/view',$query);
 			$this->load->view('footer');
 		}
+
+
+		public function addTeam(){
+	    	$posts = $this->input->post();
+	    	$params = array();
+			$params['team_id'] 		= $posts['team_id'];
+			$params['job_id'] 		= $this->uri->segment(2);
+			$params['assign_date'] 		=date('Y-m-d h:i:s');
+			$params['is_deleted'] 		= false;
+	  		$this->team_job_track->add_record($params);
+	  		redirect('cash_job/'.$this->uri->segment(2));
+	    }
+
+	    public function delete(){
+	    	$this->team_job_track->remove_team($this->uri->segment(2));
+	    	redirect('cash_job/'.$this->uri->segment(2));
+	    }
+ 	 	 	
+
 }

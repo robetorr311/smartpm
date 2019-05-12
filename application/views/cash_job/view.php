@@ -127,35 +127,38 @@ echo '</div>';
 
  <div class="col-md-4">
      <div class="card">
- <div class="header">
-                                    <h4 class="title" style="float: left;">Assign Group</h4> 
-                                    <div class="clearfix"></div>
-                                         <div class="content">
-                                             <select class="form-control"><option>Group 1</option>
-                                             <option>Group 1</option>
-                                         <option>Group 1</option></select>
+        <div class="header"> 
+            <h4 class="title" style="float: left;">Team Detail:</h4>
+                <?php if( !empty( $teams_detail ) ) : ?>
+                <?php foreach( $teams_detail as $data ) : ?>  
+                             <div style="float: right;text-align: right;"><p><?php echo $data->name ?></p>
+                            <p><?php echo $data->assign_date ?></p>
+                            <a href="<?php echo base_url('cash_job/'.$jobid.'/delete')?>">Remove</a>
+                         </div>
+                <?php endforeach; ?>
+                <?php else : ?>
+                   <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
+                     <div class="content team-block">
+        <?php echo form_open('cash_job/'.$jobid.'/addTeam',array('method'=>'post'));?>
+        <select name="team_id" class="form-control team_assign">
+                <option>Select Team</option>
+                <?php foreach( $teams as $team ) : ?>  
+                                 <option value="<?php echo $team->id ?>"><?php echo $team->team_name ?></option>
+                <?php endforeach; ?>
+        </select>
+        <input type="submit" value="Add Team" >
+        <?php echo form_close(); ?>  
+        </div> 
+                <?php endif; ?>
+        </div>
 
-                                         </div>     
-     </div> </div>
-            <!--<div class="card">
-                <div class="header">
-                                    <h4 class="title" style="float: left;">Job Status</h4>
-
-                                    <span class="status open"><?php echo $status; ?></span> 
-                                    <div class="clearfix"></div>
-                                         <div class="content"></div>         
-                                </div>
-             </div>-->
-        <div class="card">
-                           
-                           
-                
-                            <div class="header">
-                                <h4 class="title" style="float: left;">Additional Party Detail</h4> 
-                                <div class="clearfix"></div>
-                              
-                                                           
-                            </div>
+         
+     </div>
+     <div class="card">
+         <div class="header">
+            <h4 class="title" style="float: left;">Additional Party Detail</h4> 
+            <div class="clearfix"></div>
+        </div>
                             <div class="content">
                             <?php if( !empty( $add_info ) ) : ?>
                             <?php foreach( $add_info as $info ) : ?>  

@@ -78,9 +78,13 @@ $route['party/(:num)/update'] = 'party/update';
 
 $route['cash_jobs'] = 'cash_jobs/index';
 $route['cash_job/(:num)'] = 'cash_jobs/view';
+$route['cash_job/(:num)/addTeam'] = 'cash_jobs/addTeam';
+$route['cash_job/(:num)/delete'] = 'cash_jobs/delete';
 
 $route['insurance_jobs'] = 'insurance_jobs/index';
 $route['insurance_job/(:num)'] = 'insurance_jobs/view';
+$route['insurance_job/(:num)/addTeam'] = 'insurance_job/addTeam';
+$route['insurance_job/(:num)/delete'] = 'insurance_job/delete';
 
 $route['teams'] = 'teams/index';
 $route['team/(:num)'] = 'teams/view';

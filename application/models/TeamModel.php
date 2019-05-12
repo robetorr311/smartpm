@@ -34,6 +34,8 @@ class TeamModel extends CI_Model
         }
     }
     
+
+   
     public function getCount()
     {     
         $this->db->where(['is_active' => 1]);

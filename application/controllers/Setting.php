@@ -69,7 +69,7 @@ class Setting extends CI_Controller {
 	    	$posts = $this->input->post();
 	    	$params = array();
 			$params['status_tag_id'] 		= $posts['id'];
-			$params['value'] 		= $posts['type'];
+			$params['value'] 		= strtolower($posts['type']);
 			$params['is_active'] 		= 1;
 	  		$this->status->addTag($params);
 	  		redirect('setting/status');
