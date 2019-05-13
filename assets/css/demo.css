@@ -463,3 +463,6 @@ right: 15px;}
 .card .pe-7s-note {
     color: black;
 }
+.red-mark{
+	color: red;margin-top: -3px;display: block;float: right;margin-left: 2px;
+}

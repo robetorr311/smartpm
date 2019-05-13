@@ -31,7 +31,7 @@ echo '</div>';
                                        
                                         <div class="col-md-12">
                                             <div class="form-group"> <input type="hidden" name="id" class="hidden_id" value="<?php echo $lead->id ?>"/>
-                                                <label>Lead Name</label>
+                                                <label>Lead Name<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Lead Name" name="jobname" value="<?php echo $lead->job_name ?>" type="text">
                                             </div>
                                         </div>
@@ -40,13 +40,13 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
+                                                <label>First Name<span class="red-mark">*</span></label>
                                                 <input class="form-control" name="firstname" value="<?php echo $lead->firstname ?>" placeholder="" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
+                                                <label>Last Name<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Last Name" name="lastname" value="<?php echo $lead->lastname ?>" type="text">
                                             </div>
                                         </div>
@@ -55,7 +55,7 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Address</label>
+                                                <label>Address<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Address" name="address" value="<?php echo $lead->address ?>" type="text">
                                             </div>
                                         </div>
@@ -64,19 +64,19 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>City</label>
+                                                <label>City<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="City" value="<?php echo $lead->city ?>" name="city" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>State</label>
+                                                <label>State<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Country" Name="country" value="<?php echo $lead->state ?>" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Postal Code</label>
+                                                <label>Postal Code<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="ZIP Code" value="<?php echo $lead->zip ?>" name="zip" type="text">
                                             </div>
                                         </div>
@@ -85,7 +85,7 @@ echo '</div>';
                                  <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Cell Phone</label>
+                                                <label>Cell Phone<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Phone 1" name="phone1" value="<?php echo $lead->phone1 ?>" type="text">
                                             </div>
                                         </div>

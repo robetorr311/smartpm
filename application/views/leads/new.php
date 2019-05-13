@@ -24,8 +24,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Lead Name</label>
-                                                <input class="form-control" placeholder="Lead Name" name="jobname" value="<?= set_value('jobname') ?>" type="text">
+                                                <label>Lead Name<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="Lead Name" name="jobname" value="<?= set_value('jobname') ?>" type="text" required>
                                             </div>
                                         </div>
                                     </div>
@@ -33,14 +33,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
-                                                <input class="form-control" name="firstname" value="<?= set_value('firstname') ?>" placeholder="" type="text">
+                                                <label>First Name<span class="red-mark">*</span></label>
+                                                <input class="form-control" name="firstname" value="<?= set_value('firstname') ?>" placeholder="First Name" type="text" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input class="form-control" placeholder="Last Name" name="lastname" value="<?= set_value('lastname') ?>" type="text">
+                                                <label>Last Name<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="Last Name" name="lastname" value="<?= set_value('lastname') ?>" type="text" required>
                                             </div>
                                         </div>
                                     </div>
@@ -48,8 +48,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Street Address</label>
-                                                <input class="form-control" placeholder="Address" name="address" value="<?= set_value('address') ?>" type="text">
+                                                <label>Street Address<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="Address" name="address" value="<?= set_value('address') ?>" type="text" required>
                                             </div>
                                         </div>
                                     </div>
@@ -57,20 +57,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>City</label>
-                                                <input class="form-control" placeholder="City" value="<?= set_value('city') ?>" name="city" type="text">
+                                                <label>City<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="City" value="<?= set_value('city') ?>" name="city" type="text" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>State</label>
-                                                <input class="form-control" placeholder="Country" Name="country" value="<?= set_value('country') ?>" type="text">
+                                                <label>State<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="Country" Name="country" value="<?= set_value('country') ?>" type="text" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Postal Code</label>
-                                                <input class="form-control" placeholder="ZIP Code" value="<?= set_value('zip') ?>" name="zip" type="text">
+                                                <label>Postal Code<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="ZIP Code" value="<?= set_value('zip') ?>" name="zip" type="text" required>
                                             </div>
                                         </div>
                                     </div>
@@ -78,8 +78,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                  <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Cell Phone</label>
-                                                <input class="form-control" placeholder="Phone 1" name="phone1" value="<?= set_value('phone1') ?>" type="text">
+                                                <label>Cell Phone<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="Phone 1" name="phone1" value="<?= set_value('phone1') ?>" type="text" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">

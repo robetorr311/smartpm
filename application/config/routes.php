@@ -86,6 +86,11 @@ $route['insurance_job/(:num)'] = 'insurance_jobs/view';
 $route['insurance_job/(:num)/addTeam'] = 'insurance_job/addTeam';
 $route['insurance_job/(:num)/delete'] = 'insurance_job/delete';
 
+
+$route['productions'] = 'productions/index';
+$route['production/(:num)'] = 'productions/view';
+
+
 $route['teams'] = 'teams/index';
 $route['team/(:num)'] = 'teams/view';
 $route['team/(:num)/edit'] = 'teams/edit';

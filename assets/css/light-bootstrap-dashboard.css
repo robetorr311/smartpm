@@ -2268,7 +2268,7 @@ width: 100%;
 .card label {
     font-size: 14px;
     font-weight: 400;
-    color: #9A9A9A;
+    color: #000;
     margin-bottom: 0px;
 }
 
@@ -2278,7 +2278,7 @@ width: 100%;
 }
 
 .card label {
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 5px;
     text-transform: uppercase;
 }

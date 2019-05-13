@@ -31,10 +31,7 @@ class LeadModel extends CI_Model
         $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
         $this->db->from($this->table);
         $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        $this->db->where(['status.job'=>$condition,
-                          'status.contract'=>'signed',
-                          'status.lead'=>'open'
-                        ]);
+        $this->db->where($condition);
         $query = $this->db->get();
         return $query->result();     
     }

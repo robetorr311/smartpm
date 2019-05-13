@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cash_jobs extends CI_Controller {
+class Productions extends CI_Controller {
 	 public function __construct()
 	    {
 	        parent::__construct();
@@ -12,16 +12,15 @@ class Cash_jobs extends CI_Controller {
         	$this->status = new LeadStatusModel();
         	$this->team = new TeamModel();
         	$this->team_job_track = new TeamJobTrackModel();
-	    } 
+	    }
 
 	    public function index(){
 			$query['jobs'] = $this->lead->getJobType([
-													 'status.job'=>'cash',
                           							 'status.contract'=>'signed',
-                          							 'status.lead'=>'pre-production'
+                          							 'status.lead'=>'production'
                         							]);
-			$this->load->view('header',['title' => 'Cash Job']);
-			$this->load->view('cash_job/index',$query);
+			$this->load->view('header',['title' => 'All Production Jobs']);
+			$this->load->view('productions/index',$query);
 			$this->load->view('footer');
 	    }
 
@@ -34,28 +33,11 @@ class Cash_jobs extends CI_Controller {
 			$query['teams_detail'] = $this->team_job_track->getTeamName($this->uri->segment(2));
 
 			$query['teams'] = $this->team->get_all_where(['is_active'=>1]);
-			$this->load->view('header',['title' => 'Cash Job Detail']);
-			$this->load->view('cash_job/view',$query);
+			$this->load->view('header',['title' => 'Production Jobs Detail']);
+			$this->load->view('productions/view',$query);
 			$this->load->view('footer');
 		}
 
-
-		public function addTeam(){
-	    	$posts = $this->input->post();
-	    	$params = array();
-			$params['team_id'] 		= $posts['team_id'];
-			$params['job_id'] 		= $this->uri->segment(2);
-			$params['assign_date'] 		=date('Y-m-d h:i:s');
-			$params['is_deleted'] 		= false;
-	  		$this->team_job_track->add_record($params);
-	  		$this->status->update_record(['lead'=>'production'],['jobid'=>$this->uri->segment(2)]);
-	  		redirect('cash_job/'.$this->uri->segment(2));
-	    }
-
-	    public function delete(){
-	    	$this->team_job_track->remove_team($this->uri->segment(2));
-	    	redirect('cash_job/'.$this->uri->segment(2));
-	    }
- 	 	 	
-
+	    
+	
 }

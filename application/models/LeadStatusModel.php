@@ -12,9 +12,6 @@ class LeadStatusModel extends CI_Model
 		return $result->result();	
 	}
     
-   
-
-
     public function add_record( $array ){
     
         $this->db->insert($this->table, $array);
@@ -25,7 +22,6 @@ class LeadStatusModel extends CI_Model
             return false; 
         }
     }
-    
 
     public function update_record($updatedArray, $condition){
         $this->db->where($condition);
