@@ -46,8 +46,8 @@ class Migration_Update_users_table extends CI_Migration
             'verification_token' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => FALSE,
-                'after' => 'type'
+                'after' => 'type',
+                'null' => TRUE
             ],
             'address' => [
                 'type' => 'TEXT',
