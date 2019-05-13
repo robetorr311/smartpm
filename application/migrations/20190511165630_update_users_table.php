@@ -34,7 +34,6 @@ class Migration_Update_users_table extends CI_Migration
             'username' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'default' => FALSE,
                 'after' => 'last_name',
                 'unique' => TRUE
             ],
