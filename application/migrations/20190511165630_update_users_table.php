@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Migration_Update_tasks_related_table extends CI_Migration
+class Migration_Update_users_table extends CI_Migration
 {
     public function __construct()
     {
