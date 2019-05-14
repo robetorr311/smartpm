@@ -90,6 +90,9 @@ $route['insurance_job/(:num)/delete'] = 'insurance_job/delete';
 $route['productions'] = 'productions/index';
 $route['production/(:num)'] = 'productions/view';
 
+$route['work_complete'] = 'work_complete/index';
+$route['work_complete/(:num)'] = 'work_complete/view';
+
 
 $route['teams'] = 'teams/index';
 $route['team/(:num)'] = 'teams/view';

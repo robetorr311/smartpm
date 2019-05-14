@@ -23,7 +23,7 @@ class Leads extends CI_Controller {
         	];
         	$this->pagination->initialize($pagiConfig);
 
-			$leads = $this->lead->getAllJob();
+			$leads = $this->lead->getAllJob('open');
 			$this->load->view('header',['title' => 'Leads']);
 			$this->load->view('leads/index',['leads' => $leads,'pagiLinks' => $this->pagination->create_links()]);
 			$this->load->view('footer');
@@ -196,8 +196,14 @@ class Leads extends CI_Controller {
 	    public function updatestatus(){
 	   
 			$posts = $this->input->post();
-			$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' WHERE jobid='".$posts['id']."'");
-			return true;
+			if($posts['status']=='job'){
+				$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' ,lead='pre-production' WHERE jobid='".$posts['id']."'");
+				return true;
+			}else{
+				$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' WHERE jobid='".$posts['id']."'");
+				return true;
+			}
+			
 		}
 
 

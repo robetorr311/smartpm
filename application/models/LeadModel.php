@@ -6,11 +6,14 @@ class LeadModel extends CI_Model
     private $table = 'jobs';
 
       /* get All jobs */
-    public function getAllJob(){
+    public function getAllJob($condition){
 
         $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
         $this->db->from($this->table);
-        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left'); 
+        $this->db->where([
+            'lead' => $condition
+        ]);
         $query = $this->db->get();
         return $query->result(); 
             

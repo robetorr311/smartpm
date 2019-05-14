@@ -138,26 +138,28 @@ echo '</div>';
 endforeach; ?>
             <div class="card">
                 <div class="header">
-                                    <h4 class="title" style="float: left;">Lead Status</h4><span class="status lead <?php if($lstatus=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php if($lstatus!=''){echo $lstatus; }else{ echo "None"; } ?></span> 
-                                    <div class="clearfix"></div>
-                                    <div class="content">
-                                            <select class="form-control lead-status" id="lead">
-                                                <option value="">Change Status</option>
+                    <h4 class="title" style="float: left;">Lead Status</h4>
+                    <span class="status lead <?php if($lstatus=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php if($lstatus!=''){echo $lstatus; }else{ echo "None"; } ?>
+                    </span> 
+                    <div class="clearfix"></div>
+                    <div class="content">
+                    <select class="form-control" id="lead">
                         <?php foreach( $lead_status_tags as $s_tags ) : ?>     
-                            <option value="<?php echo $s_tags->status_value ?>"><?php echo $s_tags->status_value ?></option>
+                        <option value="<?php echo $s_tags->status_value ?>" <?php if($s_tags->status_value == $lstatus){ echo 'selected'; } ?> >
+                            <?php echo $s_tags->status_value ?></option>
                         <?php endforeach; ?>
-                        </select>
-                                    </div>                       
-                                </div>
+                    </select>
+                    </div>                       
+                </div>
            
                 <div class="header">
                                     <h4 class="title" style="float: left;">Contract Status</h4><span class="status contract <?php if($cstatus=='unsigned'){ echo 'closed';}else{ echo 'open';} ?>"><?php if($cstatus!=''){echo $cstatus; }else{ echo "None"; } ?></span> 
                                     <div class="clearfix"></div>
                                     <div class="content">
                                             <select class="form-control lead-status" id="contract">
-                                                <option value="">Change Status</option>
+                                               
                              <?php foreach( $contract_status_tags as $contract ) : ?>     
-                            <option value="<?php echo $contract->status_value ?>"><?php echo $contract->status_value ?></option>
+                            <option value="<?php echo $contract->status_value ?>" <?php if($contract->status_value == $cstatus){ echo 'selected'; } ?> ><?php echo $contract->status_value ?></option>
                         <?php endforeach; ?>
                         </select>
                                     </div>                       

@@ -352,30 +352,63 @@ $(document).on('click', '.doc_list span',  function () {
 						}
 					 });
 				});	
-				
-			
-			$('.lead-status').change(function(){
-				
-				/*$('.status').html($(this).val());
-				if($(this).val()=='closed'){
-					$('.status').addClass('closed');
-				}else{
-					$('.status').removeClass('closed');
-					$('.status').addClass('open');
-				}*/
+/*  Lead Status Update */				 
+			$('#lead').change(function(){
 				var value=$(this).val();
 				var id=$('.hidden_id').val();
 				var status=$(this).attr('id');
-				$.ajax({
+				var contract_status=$('#contract').val();
+				if(value=='open'){
+					$('#contract').removeAttr('disabled');
+					$('#job').removeAttr('disabled');
+					$.ajax({
 						url: baseUrl+'lead/updatestatus',
 						data: {value: value, id: id, status:status},        
 						type: 'post',
 						success: function(php_script_response){
-						
 							$('.'+status).html(value);
-					
-						}
-					 });
+							}
+					});
+				}else if(value!=open && contract_status!='signed'){
+					$('#contract').prop('disabled', 'disabled');	
+					$('#job').prop('disabled', 'disabled');
+					$.ajax({
+						url: baseUrl+'lead/updatestatus',
+						data: {value: value, id: id, status:status},        
+						type: 'post',
+						success: function(php_script_response){
+							$('.'+status).html(value);
+							}
+					});
+				}else{
+					alert('Contract Already Signed. First Unsigned Contract than update lead Status!');
+				}
+			});
+
+			$('.lead-status').change(function(){
+				var value=$(this).val();
+				var id=$('.hidden_id').val();
+				var status=$(this).attr('id');
+
+				var lead_status=$('#lead').val();
+				var contract_status=$('#contract').val();
+			
+					if(lead_status=='open'){
+						$.ajax({
+								url: baseUrl+'lead/updatestatus',
+								data: {value: value, id: id, status:status},        
+								type: 'post',
+								success: function(php_script_response){
+								
+									$('.'+status).html(value);
+							
+								}
+							 });
+					}else{
+
+						alert('Job Status Must be Open Before Sign a Contract!');
+					}
+				
 				});
 
 /*  add user to team */
