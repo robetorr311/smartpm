@@ -24,7 +24,7 @@ class Migration_Update_users_table extends CI_Migration
             'first_name' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'first' => TRUE
+                'after' => 'id'
             ],
             'last_name' => [
                 'type' => 'VARCHAR',
@@ -37,11 +37,23 @@ class Migration_Update_users_table extends CI_Migration
                 'after' => 'last_name',
                 'unique' => TRUE
             ],
+            'alt_email' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'after' => 'password',
+                'null' => TRUE
+            ],
+            'level' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'default' => 1,
+                'after' => 'alt_email'
+            ],
             'type' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'default' => 1,
-                'after' => 'password'
+                'after' => 'level'
             ],
             'verification_token' => [
                 'type' => 'VARCHAR',
@@ -49,21 +61,69 @@ class Migration_Update_users_table extends CI_Migration
                 'after' => 'type',
                 'null' => TRUE
             ],
-            'address' => [
-                'type' => 'TEXT',
+            'company' => [
+                'type' => 'VARCHAR',
+                'constraint' => 200,
                 'after' => 'verification_token',
                 'null' => TRUE
             ],
-            'phone_number' => [
+            'address' => [
+                'type' => 'TEXT',
+                'after' => 'company',
+                'null' => TRUE
+            ],
+            'city' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
                 'after' => 'address',
                 'null' => TRUE
             ],
+            'state' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'after' => 'city',
+                'null' => TRUE
+            ],
+            'zip' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'after' => 'state',
+                'null' => TRUE
+            ],
+            'office_phone' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'after' => 'zip',
+                'null' => TRUE
+            ],
+            'home_phone' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'after' => 'office_phone',
+                'null' => TRUE
+            ],
+            'cell_1' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'after' => 'home_phone',
+                'null' => TRUE
+            ],
+            'cell_2' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'after' => 'cell_1',
+                'null' => TRUE
+            ],
+            'notifications' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'default' => 1,
+                'after' => 'cell_2'
+            ],
             'is_active' => [
                 'type' => 'BOOLEAN',
                 'default' => FALSE,
-                'after' => 'phone_number'
+                'after' => 'notifications'
             ],
             'is_deleted' => [
                 'type' => 'BOOLEAN',
@@ -85,17 +145,30 @@ class Migration_Update_users_table extends CI_Migration
                 'name' => 'username',
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'unique' => FALSE
+                'unique' => TRUE
             ]
         ];
 
-        $fields = [];
+        $fields = [
+            'usertype' => [
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+                'null' => TRUE
+            ],
+            'fullname' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => TRUE
+            ]
+        ];
 
         $this->dbforge->drop_column('users', 'first_name');
         $this->dbforge->drop_column('users', 'last_name');
         $this->dbforge->drop_column('users', 'username');
         $this->dbforge->drop_column('users', 'type');
         $this->dbforge->drop_column('users', 'verification_token');
+        $this->dbforge->drop_column('users', 'address');
+        $this->dbforge->drop_column('users', 'phone_number');
         $this->dbforge->drop_column('users', 'is_active');
         $this->dbforge->drop_column('users', 'is_deleted');
         $this->dbforge->modify_column('users', $modifyFields);
