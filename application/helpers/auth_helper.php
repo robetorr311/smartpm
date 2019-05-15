@@ -27,8 +27,9 @@ if (!function_exists('authAccess')) {
             'USER' => '5',
             'NON_USER' => '6'
         ];
+        // $CI->session->level == $userLevels[$level]    <<<<    LEVEL CHECK CONDITION
 
-        if (!$CI->session->logged_in && $CI->session->level == $userLevels[$level]) {
+        if (!$CI->session->logged_in) {
             delete_cookie('tokenCookie');
             $CI->session->sess_destroy();
             redirect('/');
