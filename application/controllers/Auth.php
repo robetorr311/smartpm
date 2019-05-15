@@ -13,16 +13,31 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
+		if ($this->session->logged_in) {
+			redirect('dashboard');
+			die();
+		}
+
 		redirect('login');
 	}
 
 	public function login()
 	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+
 		$this->load->view('auth/index');
 	}
 
 	public function auth()
 	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+
 		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
@@ -67,11 +82,21 @@ class Auth extends CI_Controller
 
 	public function signup()
 	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+
 		$this->load->view('auth/register');
 	}
 
 	public function register()
 	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+		
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
