@@ -33,6 +33,14 @@ class UserModel extends CI_Model
 		}
 	}
 
+    public function getUserList($select = "id, CONCAT(first_name, ' ', last_name, ' (@', username, ')') AS fullname")
+    {
+        $this->db->select($select);
+        $this->db->from($this->table);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 
 	function get_crm_data($table, $cols, $condition)
 	{

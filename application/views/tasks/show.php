@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         foreach ($notes as $note) {
                             echo '<div class="row note-item">';
                             echo '<div class="col-md-12">';
-                            echo '<label>' . $note->created_username . '</label>';
+                            echo '<label>' . $note->created_user_fullname . '</label>';
                             echo '<a href="' . base_url('task/' . $task->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';
                             echo '</div>';
@@ -91,7 +91,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <label>Assigned To</label>
-                            <p><?= $task->assigned_username ?></p>
+                            <p><?= $task->assigned_user_fullname ?></p>
                         </div>
                     </div>
                     <div class="row">
@@ -117,7 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             if ($users) {
                                 echo '<p>';
                                 foreach ($users as $user) {
-                                    echo '<span class="info-tag">' . $user->username . '</span>';
+                                    echo '<span class="info-tag">' . $user->fullname . '</span>';
                                 }
                                 echo '</p>';
                             } else {
@@ -151,7 +151,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <label>Created By</label>
-                            <p><?= $task->created_username ?></p>
+                            <p><?= $task->created_user_fullname ?></p>
                         </div>
                     </div>
                     <div class="row">

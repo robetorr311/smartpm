@@ -12,11 +12,11 @@ class Tasks extends CI_Controller
         authAdminAccess();
         // sessionTimeout();
 
-        $this->load->model(['TaskModel', 'Login', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
+        $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->task = new TaskModel();
-        $this->login = new Login();
+        $this->user = new UserModel();
         $this->task_notes = new TaskNotesModel();
         $this->task_user_tags = new TaskUserTagsModel();
         $this->task_predecessor = new TaskPredecessorModel();
@@ -48,7 +48,7 @@ class Tasks extends CI_Controller
         $types = TaskModel::getTypes();
         $levels = TaskModel::getLevels();
         $tasks = $this->task->getTaskList();
-        $users = $this->login->getUserList();
+        $users = $this->user->getUserList();
 
         $this->load->view('header', [
             'title' => $this->title
@@ -166,7 +166,7 @@ class Tasks extends CI_Controller
             $levels = TaskModel::getLevels();
             $status = TaskModel::getStatus();
             $tasks = $this->task->getTaskListExcept($id);
-            $users = $this->login->getUserList();
+            $users = $this->user->getUserList();
             // $jobs = false;
             $tag_users = $this->task_user_tags->getUsersByTaskId($id);
             $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);

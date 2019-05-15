@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled selected>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '">' . $user->fullname . ' (' . $user->username . ')</option>';
+                                            echo '<option value="' . $user->id . '">' . $user->fullname . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tag Clients</label>
-                                    <input class="form-control" placeholder="Tag Clients" name="tag_clients" id="tag_clients" type="text">
+                                    <input class="form-control" placeholder="Tag Clients" name="tag_clients" id="tag_clients" type="text" disabled>
                                 </div>
                             </div>
                         </div>
@@ -146,9 +146,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         });
         $('input#tag_users').tagsinput({
             itemValue: 'id',
-            itemText: function(item) {
-                return item.fullname + ' (' + item.username + ')';
-            },
+            itemText: 'fullname',
             typeahead: {
                 source: <?= json_encode($users) ?>,
                 afterSelect: function() {
@@ -166,7 +164,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }
             }
         });
-        
+
         var u = ['Peter', 'Tom', 'Anne', 'Jonas', 'Jimmy', 'Jenny'];
         $('#note-input').atwho({
             at: '@',

@@ -33,7 +33,7 @@ class TaskNotesModel extends CI_Model
 
     public function getNotesByTaskId($id)
     {
-        $this->db->select('task_notes.*, users_created_by.username as created_username');
+        $this->db->select("task_notes.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'task_notes.created_by=users_created_by.id', 'left');
         $this->db->where([
