@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('connection.php');
-$baseUrl="https://smartpm.app";
 if($_GET['id']!=''){	
 ?>
 <html>
@@ -36,7 +35,7 @@ if($_GET['id']!=''){
 			</div>
 			<input type="hidden" name="id" placeholder="" value="<?php echo $_GET['id']; ?>">
 			<div class="form-element">
-				<input type="file" name="image" id="image" />
+				<input type="file" name="image[]" id="image" multiple="" />
 				<div class="upload-area"  id="uploadfile">
 					<h1>Drag and Drop file here<br/>Or<br/>Click to select file</h1>
 				</div>

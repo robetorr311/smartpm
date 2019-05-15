@@ -37,7 +37,7 @@
                 
                  
                   <td><!--<a href="http://developeradda.tech/project/roofing_latest/pdffile.php?id=33" target="_blank">View</a>-->
-                  <a href="<?php echo base_url();?>report/pdffile_single.php?id2=<?php echo $jobs->job_id ?>&id1=<?php echo $jobs->id ?>" target="_blank" class="btn btn-danger btn-right btn-fill">view</a>
+                  <a href="<?php echo base_url();?>report/report.php?id2=<?php echo $jobs->job_id ?>&id1=<?php echo $jobs->id ?>" target="_blank" class="btn btn-danger btn-right btn-fill">view</a>
 
                 </tr>
 
