@@ -70,7 +70,7 @@ class Server extends CI_Controller {
 	}
 	
 	
-	public function ajaxsave_jobphoto(){
+	public function ajaxsave_jobphoto(){ 
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
 		//print_r($data);
@@ -137,7 +137,7 @@ class Server extends CI_Controller {
 	
 	public function imagerotate(){
 		$posts = $this->input->post();
-	  	$filename   =   $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$posts['name'];//base_url()."assets/job_photo/".$posts['name'];
+	  	$filename   =   $_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/".$posts['name'];//base_url()."assets/job_photo/".$posts['name'];
 		$savename     = $filename;
 		$angle=90;
 		
