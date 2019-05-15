@@ -10,7 +10,7 @@ $sql = "INSERT INTO roofing_project (job_id, firstname, lastname, address, phone
 VALUES ('".$_POST['id']."',' ',' ',' ',1,'".json_encode($_POST['imageboxdata'])."','".json_encode($_POST['imagebox'])."','".date('Y-m-d h:i:s')."',1)";
 
 if ($conn->query($sql) === TRUE) {
-   header('Location: https://smartpm.app/report/pdffile.php?id='.$_POST['id']);
+   header('Location: '.$baseUrl.'report/pdffile.php?id='.$_POST['id']);
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
