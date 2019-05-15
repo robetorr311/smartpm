@@ -7,10 +7,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 if (!function_exists('authAdminAccess')) {
     function authAdminAccess()
     {
+        authAccess('SUPER_ADMIN');
+    }
+}
+
+/**
+ * Authenticate if current user has access
+ */
+if (!function_exists('authAccess')) {
+    function authAccess($level)
+    {
         $CI = &get_instance();
-        if (!$CI->session->userdata('admininfo')) {
-            $CI->session->sess_destroy();
+
+        $userLevels = [
+            'SUPER_ADMIN' => '1',
+            'ADMIN' => '2',
+            'MANAGER' => '3',
+            'TEAM_LEADER' => '4',
+            'USER' => '5',
+            'NON_USER' => '6'
+        ];
+
+        if (!$CI->session->logged_in && $CI->session->level == $userLevels[$level]) {
             delete_cookie('tokenCookie');
+            $CI->session->sess_destroy();
             redirect('/');
             die();
         }

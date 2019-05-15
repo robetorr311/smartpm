@@ -53,7 +53,7 @@
 
     <div class="wrapper">
 
-        <?php 
+        <?php
         ?>
         <div class="sidebar" <?php if ($this->session->userdata("color") != '') {
                                     echo "data-color=" . $this->session->userdata("color");
@@ -150,11 +150,11 @@
                         <ul class="nav navbar-nav navbar-right">
 
                             <li>
-                                <a href="">Welcome <strong><?php echo $admin['admininfo']['fullname']; ?></strong></a>
+                                <a href="">Welcome <strong><?php echo $admin['first_name'] . ' ' . $admin['last_name']; ?></strong></a>
                             </li>
                             <li>
 
-                                <a href="<?php echo base_url('logout'); ?>" style="color: red;">
+                                <a href="<?php echo base_url('logout'); ?>" data-method="POST" style="color: red;">
                                     <p>Log out</p>
                                 </a>
                             </li>
