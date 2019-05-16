@@ -15,7 +15,7 @@ if (!function_exists('authAdminAccess')) {
  * Authenticate if current user has access
  */
 if (!function_exists('authAccess')) {
-    function authAccess($levels)
+    function authAccess($levels = [])
     {
         $CI = &get_instance();
 
@@ -24,7 +24,7 @@ if (!function_exists('authAccess')) {
             $CI->session->sess_destroy();
             redirect('/');
             die();
-        } else if (!in_array($CI->session->level, $levels)) {
+        } else if (count($levels) > 0 && !in_array($CI->session->level, $levels)) {
             redirect('/404');
             die();
         }
