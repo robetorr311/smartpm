@@ -17,6 +17,9 @@ if($_GET['id']!=''){
 		<div class="logo">
 			<img src="<?php echo $baseUrl; ?>/assets/img/<?php echo $logo; ?>" />
 		</div>
+		<div style="width: 60%;margin-left: 20%;">
+			<button class="gallery_photo btn btn-info" style="margin-bottom: 20px;background-color: #f44336;">Add Photo From Gallery</button>
+		</div>	
 		<form id="myform"  method="post" action="savedata.php">
 			<!--<div class="form-element in">
 			<input type="text" name="firstname" placeholder="First Name" required>
@@ -41,7 +44,7 @@ if($_GET['id']!=''){
 				</div>
 			</div>
 			<div class="form-element">
-			<input type="button" value="Save" id="save" style="width:200px;float:left;"/><input type="submit" value="Genrate PDF" id="gen_pdf" style="width:200px;float:left;display:none"  />
+			<input type="button" value="Save" id="save" class="btn btn-info" style="width:200px;float:left;"/><input type="submit" value="Genrate PDF" id="gen_pdf" style="width:200px;float:left;display:none"  />
 			</div>
 		</form>
 		
@@ -96,39 +99,10 @@ if($_GET['id']!=''){
 					<td><a style="color: yellow;"   href="#text-box" class="various1">Aa</a></td>
 			</tr>
 		</table>
-		<!--<p class="fontdiv" style="float: left;width: 100%;"><label style="float: left;width: 100%;font-weight: bold;margin-bottom: 8px;">Choose Color:</label>
-				<span class="red"></span>
-				<span class="yellow"></span>
-				<span class="white"></span>
-				<span class="green"></span>
-			</p>
-			<label class="popup-label">Choose Text  /Arrow:</label>
-			<img src="image/left.png" id="long-arrow-left" class="closeFancybox"  />
-			<img src="image/right.png" id="long-arrow-right" class="closeFancybox"/>
-			<img src="image/top.png" id="long-arrow-up" class="closeFancybox"/>
-			<img src="image/bottom.png" id="long-arrow-down" class="closeFancybox"/>
-			<img src="image/line.png" id="minus" class="closeFancybox"/>
-			<img src="image/darrow.png" id="darrow" class="closeFancybox"/>
-			<img src="image/circle.png" id="circle" class="closeFancybox"/>
-			<img src="image/circle-white.png" id="circle-white" class="closeFancybox"/>
-			<img src="image/circle-green.png" id="circle-green" class="closeFancybox"/>
-			<img src="image/circle-red.png" id="circle-red" class="closeFancybox"/>
-			
-			<img src="image/highlight.png" id="highlight" class="closeFancybox"/>
-			<img src="image/rect.png" id="rect" class="closeFancybox"/>
-			<a style="border: 1px solid gray;float: left;text-decoration: navajowhite;padding: 2px 4px;color: black;margin-right:10px"  href="#text-box" id="various3">Aa</a>-->
-	<!--		<button type="button" id="marker">Marker</button>
-<button type="button" id="highlight">Highlight</button>
-<button type="button" id="clear">Clear</button>-->
+	
 		</div>
 		<div id="text-box" style="display:none">
-				<!--	<p class="fontdiv">
-	<label class="popup-label">Choose Text Color:</label>
-				<span class="red"></span>
-				<span class="yellow"></span>
-				<span class="white"></span>
-				<span class="green"></span>
-			</p>-->
+				
 			<input style="width: 100%;margin-bottom: 10px;height: 30px;" type="text" class="ptext"  placeholder="Enter Note" />
 			<input style="background: green;color: white;border: navajowhite;padding: 7px 30px;" type="button" value="Submit" id="submit-text"/>
 		</div>
@@ -149,6 +123,34 @@ if($_GET['id']!=''){
 			<li class="red"></li>
 			<li class="yellow"></li>
 		</ul>	
+	</div>
+
+
+	<div class="job_photo_block"  ><span class="close" >X</span>
+		<?php
+				$sql = "SELECT * FROM jobs_photo where job_id=".$_GET['id'];
+				$result = $conn->query($sql);
+				$i=1;
+				if ($result->num_rows > 0) {?>
+		
+	
+	<?php
+    while($row = $result->fetch_assoc()) {
+      ?>
+		<div class="image-div">
+
+			<input type="checkbox" name="img" value="<?php echo $row['image_name']; ?>">
+		<img src="<?php echo $baseUrl; ?>assets/job_photo/<?php echo $row['image_name']; ?>" />
+		</div>
+<?php 
+	  }
+	   ?>
+	   <p style="width: 100%;float: left;magin-top:40px"><input type="button" name="Upload" value="Upload" class="btn btn-info upload" ></p>
+	   <?php 
+	   }else{
+
+	   	echo "No Images!";
+	   }?>
 	</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
