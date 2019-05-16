@@ -52,7 +52,7 @@ class Auth extends CI_Controller
 							'username' => $user->username,
 							'id' => $user->id,
 							'email_id' => $user->email_id,
-							'type' => $user->type,
+							'level' => $user->level,
 							'logged_in' => TRUE
 						]);
 						$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['user_id' => $user->id]);

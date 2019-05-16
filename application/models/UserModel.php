@@ -5,6 +5,13 @@ class UserModel extends CI_Model
 {
 	private $table = 'users';
 
+	public static $role_super_admin = 1;
+	public static $role_admin = 2;
+	public static $role_manager = 3;
+	public static $role_team_leader = 4;
+	public static $role_user = 5;
+	public static $role_non_user = 6;
+
 	public function signup($account)
 	{
 		$this->db->insert($this->table, $account);

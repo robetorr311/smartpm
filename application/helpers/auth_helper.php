@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 if (!function_exists('authAdminAccess')) {
     function authAdminAccess()
     {
-        authAccess('SUPER_ADMIN');
+        authAccess([1]);
     }
 }
 
@@ -15,24 +15,17 @@ if (!function_exists('authAdminAccess')) {
  * Authenticate if current user has access
  */
 if (!function_exists('authAccess')) {
-    function authAccess($level)
+    function authAccess($levels)
     {
         $CI = &get_instance();
-
-        $userLevels = [
-            'SUPER_ADMIN' => '1',
-            'ADMIN' => '2',
-            'MANAGER' => '3',
-            'TEAM_LEADER' => '4',
-            'USER' => '5',
-            'NON_USER' => '6'
-        ];
-        // $CI->session->level == $userLevels[$level]    <<<<    LEVEL CHECK CONDITION
 
         if (!$CI->session->logged_in) {
             delete_cookie('tokenCookie');
             $CI->session->sess_destroy();
             redirect('/');
+            die();
+        } else if (!in_array($CI->session->level, $levels)) {
+            redirect('/404');
             die();
         }
     }
