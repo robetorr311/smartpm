@@ -1,6 +1,7 @@
 $(document).ready(function() {
 			
-	var timg=0; 		
+	var timg=0;
+	var imgbox = []; 		
 	$("html").on("dragover", function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -54,7 +55,8 @@ $(document).ready(function() {
 					var str=$.parseJSON(php_script_response);
 					var i;
 					for(i=0;i<str.length;i++){
-						$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="uploads/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close"  style="display:block"></i></div>');
+						 imgbox.push('#box'+timg);
+						$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="../assets/job_photo/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose"  style="display:block"></i></div>');
 						timg++;
 					}
 				}
@@ -85,13 +87,39 @@ $(document).ready(function() {
 					var str=$.parseJSON(php_script_response);
 					var i;
 					for(i=0;i<str.length;i++){
-						$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="uploads/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close"  style="display:block"></i></div>');
+						 imgbox.push('#box'+timg);
+						$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="../assets/job_photo/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose"  style="display:block"></i></div>');
 						timg++;
 					}
 				}
 		});
 	});
-			  
+
+
+		
+
+	$(".gallery_photo").click(function(){
+        $('.job_photo_block').show();
+    });
+    $(".close").click(function(){
+        $('.job_photo_block').toggle();
+    });	 
+
+    $(".upload").click(function(){
+    	 	var img = [];
+    	 	$('.job_photo_block').hide();
+           $.each($("input[name='img']:checked"), function(){            
+             img.push($(this).val());
+              imgbox.push('#box'+timg);
+                $('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="../assets/job_photo/'+$(this).val()+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose"  style="display:block"></i></div>');
+		timg++;
+            });
+		if(img.length==''){
+    	 	alert('No image is Selected!');
+    	 	alert( imgbox);
+    	 }
+         //  alert(img[0]);
+    });	  
 			  
 	var uid; 
 	var color;
@@ -196,7 +224,12 @@ handles: 'e, w'
 			
 	$(document).on('click','.fa-window-close',function(){
 		if($(this).attr('id')=='boxclose'){
-		    timg--;
+		 
+			var id = $(this).parent().attr('id');
+		    var index = imgbox.indexOf('#'+id);
+		    if (index > -1) {
+		       imgbox.splice(index, 1);
+		    }
 		}
 		$(this).parent().remove();
 		$("."+$(this).attr('id')).remove();
@@ -250,19 +283,20 @@ handles: 'e, w'
 				
 	$('#save').click(function(event) {
 		$("#wait").css("display", "block");
-		var divcount=$('.img-container > div').length;
-		//alert(divcount);
+		//var divcount=$('.img-container > div').length;
+		var divcount=imgbox.length;
 		var j=1;
+		var k=0;
 		for(var i=0;i<divcount;i++){
-		div_content = document.querySelector("#box"+i);
-		div_content1 = $("#box"+i).html();
-		$('#myform').append("<input type='hidden' name='imageboxdata[]' value='"+div_content1+"' />");
-     	html2canvas(div_content).then(function(canvas) {
-			data = canvas.toDataURL('image/jpeg');
-			save_img(data, divcount, j);
-			j++;
-	
-		});
+			div_content = document.querySelector(imgbox[i]);
+			div_content1 = $(imgbox[i]).html();
+			$('#myform').append("<input type='hidden' name='imageboxdata[]' value='"+div_content1+"' />");
+	     	html2canvas(div_content).then(function(canvas) {
+				data = canvas.toDataURL('image/jpeg');
+				save_img(data, divcount, j);
+				j++;
+		
+			});
 		}
 	});
 					
