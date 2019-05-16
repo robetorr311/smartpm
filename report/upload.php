@@ -22,13 +22,13 @@
 	                {	
 	                	$new_name = rand() . '.'. $file_name[1];  
 		                $sourcePath = $_FILES["image"]["tmp_name"][$key];  
-		                $targetPath = "uploads/".$new_name;  
+		                $targetPath = "../assets/job_photo/".$new_name;  
 		                move_uploaded_file($sourcePath, $targetPath);  
 						$img[$i]=$new_name;
 						$i++;
 	                }else{
 
-	                	$targetPath = 'uploads/';  
+	                	$targetPath = '../assets/job_photo/';  
                			$location = $targetPath . $filename; 
                			if(move_uploaded_file($_FILES['image']['tmp_name'][$key], $location))  
 		                {  
