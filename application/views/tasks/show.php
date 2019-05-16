@@ -114,10 +114,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <label>Tag Users</label>
                             <?php
-                            if ($users) {
+                            if ($tag_users) {
                                 echo '<p>';
-                                foreach ($users as $user) {
-                                    echo '<span class="info-tag">' . $user->fullname . '</span>';
+                                foreach ($tag_users as $tag_user) {
+                                    echo '<span class="info-tag">' . $tag_user->name . ' (@' . $tag_user->username . ')' . '</span>';
                                 }
                                 echo '</p>';
                             } else {
@@ -177,8 +177,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
     $(document).ready(function () {
         $('#note-input').atwho({
             at: '@',
-            data: ['Peter', 'Tom', 'Anne', 'Jonas', 'Jimmy'],
+            data: <?= json_encode($users) ?>,
             headerTpl: '<div class="atwho-header">User List:</div>',
+            displayTpl: '<li>${name} (@${username})</li>',
+            insertTpl: '${atwho-at}${username}',
+            searchKey: 'username',
+            limit: 100
         });
     });
 </script>

@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled<?= empty($task->created_by) ? ' selected' : '' ?>>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '"' . ($user->id == $task->created_by ? ' selected' : '') . '>' . $user->fullname . '</option>';
+                                            echo '<option value="' . $user->id . '"' . ($user->id == $task->created_by ? ' selected' : '') . '>' . $user->name . ' (@' . $user->username . ')' . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -149,7 +149,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         });
         $('input#tag_users').tagsinput({
             itemValue: 'id',
-            itemText: 'fullname',
+            itemText: function (item) {
+                return item.name + ' (@' + item.username + ')';
+            },
             typeahead: {
                 source: <?= json_encode($users) ?>,
                 afterSelect: function() {

@@ -40,7 +40,7 @@ class UserModel extends CI_Model
 		}
 	}
 
-    public function getUserList($select = "id, CONCAT(first_name, ' ', last_name, ' (@', username, ')') AS fullname")
+    public function getUserList($select = "id, username, CONCAT(first_name, ' ', last_name) AS name")
     {
         $this->db->select($select);
         $this->db->from($this->table);

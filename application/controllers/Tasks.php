@@ -292,7 +292,8 @@ class Tasks extends CI_Controller
         if ($task) {
             $notes = $this->task_notes->getNotesByTaskId($id);
             $jobs = false;
-            $users = $this->task_user_tags->getUsersByTaskId($id);
+            $users = $this->user->getUserList();
+            $tag_users = $this->task_user_tags->getUsersByTaskId($id);
             $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
             $this->load->view('header', [
                 'title' => $this->title
@@ -302,6 +303,7 @@ class Tasks extends CI_Controller
                 'notes' => $notes,
                 'jobs' => $jobs,
                 'users' => $users,
+                'tag_users' => $tag_users,
                 'predec_tasks' => $predec_tasks
             ]);
             $this->load->view('footer');

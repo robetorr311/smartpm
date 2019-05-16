@@ -32,7 +32,7 @@ class TaskUserTagsModel extends CI_Model
 
     public function getUsersByTaskId($id)
     {
-        $this->db->select("users.id as id, CONCAT(users.first_name, ' ', users.last_name, ' (@', users.username, ')') AS fullname");
+        $this->db->select("users.id as id, users.username as username, CONCAT(users.first_name, ' ', users.last_name) AS name");
         $this->db->from($this->table);
         $this->db->join('users', 'task_user_tags.user_id=users.id');
         $this->db->where([

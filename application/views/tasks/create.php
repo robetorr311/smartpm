@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled selected>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '">' . $user->fullname . '</option>';
+                                            echo '<option value="' . $user->id . '">' . $user->name . ' (@' . $user->username . ')' . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -146,7 +146,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         });
         $('input#tag_users').tagsinput({
             itemValue: 'id',
-            itemText: 'fullname',
+            itemText: function (item) {
+                return item.name + ' (@' + item.username + ')';
+            },
             typeahead: {
                 source: <?= json_encode($users) ?>,
                 afterSelect: function() {
@@ -165,12 +167,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
         });
 
-        var u = ['Peter', 'Tom', 'Anne', 'Jonas', 'Jimmy', 'Jenny'];
         $('#note-input').atwho({
             at: '@',
-            data: u,
+            data: <?= json_encode($users) ?>,
             headerTpl: '<div class="atwho-header">User List:</div>',
-            limit: 200
+            displayTpl: '<li>${name} (@${username})</li>',
+            insertTpl: '${atwho-at}${username}',
+            searchKey: 'username',
+            limit: 100
         });
     });
 </script>
