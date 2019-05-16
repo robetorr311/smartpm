@@ -108,7 +108,8 @@ while($row1 = $result1->fetch_assoc()) {
 //print_r($a);
 //die;
 $imageLocation = 'image/logo.png';
-$ext = end(explode(".", $imageLocation));
+$tmp=explode(".", $imageLocation);
+$ext = end($tmp);
 $image = base64_encode(file_get_contents($imageLocation));
 $img="<img src='data:image/$ext;base64,$image'>";
 

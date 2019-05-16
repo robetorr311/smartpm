@@ -4,7 +4,7 @@
                
                 <p class="copyright pull-right">
                     &copy; <script>document.write(new Date().getFullYear())</script> Roofing
-                </p>
+                </p> 
             </div>
         </footer>
     </div>
@@ -439,7 +439,7 @@ $(document).on('click', '.doc_list span',  function () {
     	});
 	</script>
 	<script>
-	  $(function() {
+	 	$(document).ready(function(){
 	  	var imgclass;
 	  	 var baseUrl = '<?= base_url(); ?>';
 	          $(document).on('click', '.pop', function() {
@@ -457,19 +457,21 @@ $(document).on('click', '.doc_list span',  function () {
                 $("#wait").css("display", "none");
               });
 			  
-		  $('#rotate').click(function(){
+			$('#rotate').click(function(){
 			var angle = ($('.imagepreview').data('angle') - 90) || -90;
 			    $('.imagepreview').css({'transform': 'rotate(' + angle + 'deg)'});
-			   // $('.imagepreview').data('angle', angle);
 			    var name=$(this).attr('name');
 			    $.ajax({
 						url: baseUrl+'index.php/server/imagerotate',
 						data: {name: name},        
 						type: 'post',
 						success: function(php_script_response){
-							//alert(php_script_response);
-							 $('.imagepreview').data('angle', angle);
-						
+							
+					 imgclass=imgclass.replace(/#/g, "");
+					 $('.imagepreview').data('angle', angle);
+					 $('.image_div .img'+imgclass).css({'transform': 'rotate(' + angle + 'deg)'});
+							
+					
 						}
 					 });
 			});

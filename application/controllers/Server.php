@@ -70,7 +70,7 @@ class Server extends CI_Controller {
 	}
 	
 	
-	public function ajaxsave_jobphoto(){
+	public function ajaxsave_jobphoto(){ 
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
 		//print_r($data);
