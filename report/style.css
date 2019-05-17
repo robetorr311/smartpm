@@ -377,7 +377,7 @@ input[type="checkbox"]{
 }
 
 .job_photo_block{
-    display:none;width: 80%; height: auto; margin-left: 10%; top: 100px; background: white none repeat scroll 0% 0%; position: fixed;padding: 20px;min-height: 300px;
+    z-index: 999;display:none;width: 80%; height: auto; margin-left: 10%; top: 100px; background: white none repeat scroll 0% 0%; position: fixed;padding: 20px;min-height: 300px;
 }
 input[type="button"]{
 padding: 6px;
