@@ -15,7 +15,7 @@
 	     {  	
 			  	
 	           $file_name = explode(".", $filename);  
-	           $allowed_extension = array("jpg", "jpeg", "png", "gif", "JPG","zip");  
+	           $allowed_extension = array("jpg", "jpeg", "png", "gif", "JPG", "PNG","zip");  
 	           if(in_array($file_name[1], $allowed_extension))  
 	           {  
 	                if($file_name[1]!='zip')

@@ -398,7 +398,7 @@ $(document).on('click', '.doc_list span',  function () {
               });
 			  
 			$('#rotate').click(function(){
-			var angle = ($('.imagepreview').data('angle') - 90) || -90;
+				var angle = ($('.imagepreview').data('angle') - 90) || -90;
 			    $('.imagepreview').css({'transform': 'rotate(' + angle + 'deg)'});
 			    var name=$(this).attr('name');
 			    $.ajax({
