@@ -67,32 +67,38 @@ $(document).ready(function() {
 	
 	
 	 $("#image").change(function () {
-		var id= "image";
-		var form_data = new FormData();                   
-		len_files = $("#image").prop("files").length;
-		for (var i = 0; i < len_files; i++) {
-			var file_data = $("#image").prop("files")[i];
-			form_data.append("image[]", file_data);
-		}                           
-		  $.ajax({
-				url: 'upload.php', 
-				dataType: 'text',
-				cache: false,
-				contentType: false,
-				processData: false,
-				data: form_data,                         
-				type: 'post',
-				success: function(php_script_response){
-					//alert(php_script_response);
-					var str=$.parseJSON(php_script_response);
-					var i;
-					for(i=0;i<str.length;i++){
-						 imgbox.push('#box'+timg);
-						$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="../assets/job_photo/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose"  style="display:block"></i></div>');
-						timg++;
+	 	
+	 	if(this.files[0].size > 51720000){
+	       alert("File Size must be less than or equal to 50MB!");
+	       this.value = "";
+	    }else{
+			var id= "image";
+			var form_data = new FormData();                   
+			len_files = $("#image").prop("files").length;
+			for (var i = 0; i < len_files; i++) {
+				var file_data = $("#image").prop("files")[i];
+				form_data.append("image[]", file_data);
+			}                           
+			  $.ajax({
+					url: 'upload.php', 
+					dataType: 'text',
+					cache: false,
+					contentType: false,
+					processData: false,
+					data: form_data,                         
+					type: 'post',
+					success: function(php_script_response){
+						//alert(php_script_response);
+						var str=$.parseJSON(php_script_response);
+						var i;
+						for(i=0;i<str.length;i++){
+							 imgbox.push('#box'+timg);
+							$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="../assets/job_photo/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose"  style="display:block"></i></div>');
+							timg++;
+						}
 					}
-				}
-		});
+			});
+		}
 	});
 
 
@@ -236,7 +242,7 @@ handles: 'e, w'
 	});
 			
     $('.various1').click(function(){
-       	color=$(this).css('color'); 
+       	color=$(this).css('color');  
     });
 
 	$(".various1").fancybox({
@@ -282,21 +288,25 @@ handles: 'e, w'
 	})
 				
 	$('#save').click(function(event) {
-		$("#wait").css("display", "block");
-		//var divcount=$('.img-container > div').length;
 		var divcount=imgbox.length;
 		var j=1;
 		var k=0;
-		for(var i=0;i<divcount;i++){
-			div_content = document.querySelector(imgbox[i]);
-			div_content1 = $(imgbox[i]).html();
-			$('#myform').append("<input type='hidden' name='imageboxdata[]' value='"+div_content1+"' />");
-	     	html2canvas(div_content).then(function(canvas) {
-				data = canvas.toDataURL('image/jpeg');
-				save_img(data, divcount, j);
-				j++;
-		
-			});
+		if(divcount > 0){
+			$("#wait").css("display", "block");
+			$(this).attr('disabled',true);
+			for(var i=0;i<divcount;i++){
+				div_content = document.querySelector(imgbox[i]);
+				div_content1 = $(imgbox[i]).html();
+				$('#myform').append("<input type='hidden' name='imageboxdata[]' value='"+div_content1+"' />");
+		     	html2canvas(div_content).then(function(canvas) {
+					data = canvas.toDataURL('image/jpeg');
+					save_img(data, divcount, j);
+					j++;
+			
+				});
+			}
+		}else{
+			alert('Please add Images before genrating a Report File');
 		}
 	});
 					

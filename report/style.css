@@ -408,6 +408,7 @@ filter: alpha(opacity=80);
 padding: 8px 16px;
 border-color: #888888;
 color: #888888;
+width:200px !important;
 }
 .btn-info {
     border-color: #1DC7EA;

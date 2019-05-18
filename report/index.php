@@ -44,7 +44,8 @@ if($_GET['id']!=''){
 				</div>
 			</div>
 			<div class="form-element">
-			<input type="button" value="Save" id="save" class="btn btn-info" style="width:200px;float:left;"/><input type="submit" value="Genrate PDF" id="gen_pdf" style="width:200px;float:left;display:none"  />
+			<input type="button" value="Save" id="save" class="btn btn-info" />
+			<input type="submit" value="Genrate PDF" class="btn btn-info" id="gen_pdf" style="display:none;background-color: #f44336;margin-left:20px" />
 			</div>
 		</form>
 		
