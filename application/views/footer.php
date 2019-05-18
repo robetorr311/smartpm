@@ -174,7 +174,7 @@
 					 });
 				});
 				
-				
+		
 	// Code for Doc upload
 
 		// Drag enter
