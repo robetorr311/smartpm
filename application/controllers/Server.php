@@ -7,7 +7,7 @@ class Server extends CI_Controller {
 		authAdminAccess();
 	
 		$this->load->helper(['form','security','cookie']);
-		$this->load->library(['form_validation','email','user_agent','session']);
+		$this->load->library(['form_validation','email','user_agent','session','image_lib']);
 		$this->datetime = date("Y-m-d H:i:s");
 	}
 
@@ -137,48 +137,16 @@ class Server extends CI_Controller {
 	
 	public function imagerotate(){
 		$posts = $this->input->post();
-	  	$filename   =   $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$posts['name'];//base_url()."assets/job_photo/".$posts['name'];
-		$savename     = $filename;
-		$angle=90;
-		
-		$original_extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-		if($original_extension == "jpg" or $original_extension == "jpeg"){
-                    $original = imagecreatefromjpeg($filename);
-                }
-		if($original_extension == "gif"){
-			$original = imagecreatefromgif($filename);
-		}
-		if($original_extension == "png"){
-			$original = imagecreatefrompng($filename);
-		}
-		
-	    // Your original file
-       // $original   =   imagecreatefromjpeg($filename);
-        // Rotate
-        $rotated    =   imagerotate($original, $angle, 0);
-        // If you have no destination, save to browser
-        if($savename == false) {
-                header('Content-Type: image/jpeg');
-                imagejpeg($rotated);
-            }
-        else{
-            if($original_extension == "jpg" or $original_extension=="jpeg"){
-                    imagejpeg($rotated, $savename);
-                }
-			if($original_extension == "gif"){
-				imagegif($rotated, $savename);
-			}
-			if($original_extension == "png"){
-				imagepng($rotated, $savename);
-			}
-			
-			// Save to a directory with a new filename
-           // imagejpeg($rotated,$savename);
-		}
-        // Standard destroy command
-        imagedestroy($rotated);
 
-	   //echo $_SERVER['DOCUMENT_ROOT'];
+		$this->image_lib->clear();
+		$config=array();
+		$config['image_library']   = 'gd2';
+		$config['source_image'] = $_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/".$posts['name'];
+		$config['rotation_angle'] = '90';
+		$this->image_lib->initialize($config); // reinitialize it instead of reloading
+		$this->image_lib->rotate();
+		echo $posts['name'];
+
 	}
 
 	public function updatedocname(){
