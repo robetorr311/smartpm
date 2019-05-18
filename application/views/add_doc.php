@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                    <div class="col-md-12">
                         <div class="card">
                            
-                           
+                             
                 
                             <div class="header">
                                 <h4 class="title" style="float: left;">Docs</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>

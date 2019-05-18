@@ -1,9 +1,9 @@
  <?php
 $servername = "localhost";
 $username = "root";
-$password = "P@ssw0rd";
-$dbname = "roofingcrm";
-
+$password ="P@ssw0rd";
+$dbname = "roofingcrm"; //'roofing'; //
+$baseUrl="https://smartpm.app/";//"http://localhost/smartpm/"; 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
