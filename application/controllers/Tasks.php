@@ -9,7 +9,7 @@ class Tasks extends CI_Controller
     {
         parent::__construct();
 
-        authAdminAccess();
+        // authAdminAccess();
         // sessionTimeout();
 
         $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
@@ -25,6 +25,8 @@ class Tasks extends CI_Controller
 
     public function index($start = 0)
     {
+        authAccess();
+
         $limit = 10;
         $pagiConfig = [
             'base_url' => base_url('tasks'),
@@ -45,6 +47,8 @@ class Tasks extends CI_Controller
 
     public function create()
     {
+        authAccess();
+
         $types = TaskModel::getTypes();
         $levels = TaskModel::getLevels();
         $tasks = $this->task->getTaskList();
@@ -64,6 +68,8 @@ class Tasks extends CI_Controller
 
     public function store()
     {
+        authAccess();
+
         $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
         $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
         $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
@@ -142,9 +148,12 @@ class Tasks extends CI_Controller
 
     public function complete($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
-            if ($this->task->isAllowedToDelete($id)) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task for completion
+            if ($this->task->predecessorCheck($id)) {
                 $completed = $this->task->complete($id);
                 if (!$completed) {
                     $this->session->set_flashdata('errors', '<p>Unable to mark Task as Completed.</p>');
@@ -160,8 +169,11 @@ class Tasks extends CI_Controller
 
     public function edit($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
             $types = TaskModel::getTypes();
             $levels = TaskModel::getLevels();
             $status = TaskModel::getStatus();
@@ -192,8 +204,11 @@ class Tasks extends CI_Controller
 
     public function update($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
             $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
             $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
@@ -288,6 +303,8 @@ class Tasks extends CI_Controller
 
     public function show($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
             $notes = $this->task_notes->getNotesByTaskId($id);
@@ -315,6 +332,8 @@ class Tasks extends CI_Controller
 
     public function addNote($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
             $this->form_validation->set_rules('note', 'Note', 'trim|required');
@@ -340,8 +359,11 @@ class Tasks extends CI_Controller
 
     public function deleteNote($id, $note_id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this taskNote
             $delete = $this->task_notes->delete($note_id, $id);
             if (!$delete) {
                 $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
@@ -355,8 +377,11 @@ class Tasks extends CI_Controller
 
     public function delete($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
             $this->task_notes->deleteRelated($id);
             $this->task_job_tags->deleteRelated($id);
             $this->task_user_tags->deleteRelated($id);

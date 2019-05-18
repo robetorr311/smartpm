@@ -98,7 +98,7 @@ class TaskModel extends CI_Model
         ]);
     }
 
-    public function isAllowedToDelete($task_id)
+    public function predecessorCheck($task_id)
     {
         $this->db->where('id IN (SELECT predecessor_task_id FROM task_predecessor WHERE task_id=' . $task_id . ' AND is_deleted=FALSE)');
         $this->db->where('status !=', 4);
