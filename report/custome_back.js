@@ -15,7 +15,7 @@ $(document).ready(function() {
 			 
 			*/  
 			
-			    $("html").on("dragover", function(e) {
+	$("html").on("dragover", function(e) {
         e.preventDefault();
         e.stopPropagation();
         $("h1").text("Drag here");
@@ -64,7 +64,7 @@ $(document).ready(function() {
 							//alert(php_script_response); // display response from the PHP script, if any
 							timg++;
                        // var img = $('<img>').attr('src', e.target.result);
-                        $('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="uploads/'+php_script_response+'" /><span class="marker">Add Marker</span></div>');
+                        $('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="uploads/'+php_script_response+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close"  style="display:block"></i></div>');
 						}
 					 });
 					 
@@ -84,7 +84,7 @@ $(document).ready(function() {
 					form_data.append('file', file_data);
 					//alert(form_data);                             
 					$.ajax({
-						url: 'upload.php', // point to server-side PHP script     
+						url: 'upload.php', // point to server-side PHP script    
 						dataType: 'text',  // what to expect back from the PHP script, if anything
 						cache: false,
 						contentType: false,
@@ -96,7 +96,7 @@ $(document).ready(function() {
 							timg++;
 						//	alert();
                        // var img = $('<img>').attr('src', e.target.result);
-                  $('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="uploads/'+php_script_response+'" /><span class="marker">Add Marker</span></div>');
+                  $('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="uploads/'+php_script_response+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose" style="display:block" ></i></div>');
 				 // alert();
 						}
 					 });
@@ -113,6 +113,9 @@ $(document).ready(function() {
 			 var color;
 			 var el;
 			 var ctx; 
+			 var count;
+			 var isDrawing;
+			 var _highlight = false;
 			$(".fontdiv span").click( function(){
 						color =$(this).attr('class');
 						
@@ -135,9 +138,14 @@ $(document).ready(function() {
 					 }).trigger('click');
 				});
 				
-			 $(".arrow-div img").click(function() {
+		/*	 $(".arrow-div img").click(function() {
 					  //var pid = $(this).parent('div').attr("id");
-					  var count=$('#'+uid+" > span").length;
+					  var arrow_count=$('#'+uid+" > span").length;
+					  var circle_count=$('#'+uid+" > .circle").length;
+					  var darrow_count=$('#'+uid+" > .darrow").length;
+					  var rect_count=$('#'+uid+" > .rect").length;
+					  count = arrow_count + circle_count + darrow_count + rect_count;
+					  
 					  var cl=$(this).attr("id");
 					 
 					  //var img = $('<img>').attr({src:'image/'+cl+'.png' , id:'icon'});
@@ -151,26 +159,66 @@ $(document).ready(function() {
 								$('#img'+count).resizable();
 								
 					  }else if(cl=="circle"){
-						   var circle=$('<div>').attr('class','circle circle'+count).html('<img src="image/circle.png" id="circle'+count+'" style="wifht:50px" /><i class="fa fa-window-close" aria-hidden="true"></i>');
+						  
+						 
+							  var circle=$('<div>').attr('class','circle circle'+count).html('<span>#'+count+'</span><img src="image/circle.png" id="circle'+count+'"  /><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+						 
 						  
 						    circle.appendTo('#'+uid).draggable();
 							$('#circle'+count).resizable();
 							 var txt=$('#'+uid+" > .circle").length;
-							 $('#'+uid).append('<textarea maxlength="200" placeholder="Add Note" name="'+uid+'circlenote">#Circle'+txt+'</textarea>');
+							 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
+							
+					  }else if(cl=="circle-green"){
+						  
+						 
+							  var circle=$('<div>').attr('class','circle circle'+count).html('<span>#'+count+'</span><img src="image/circle-green.png" id="circle'+count+'"  /><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+						 
+						  
+						    circle.appendTo('#'+uid).draggable();
+							$('#circle'+count).resizable();
+							 var txt=$('#'+uid+" > .circle").length;
+								 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
+							
+					  }else if(cl=="circle-red"){
+						  
+						 
+							  var circle=$('<div>').attr('class','circle circle'+count).html('<span>#'+count+'</span><img src="image/circle-red.png" id="circle'+count+'"  /><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+						 
+						  
+						    circle.appendTo('#'+uid).draggable();
+							$('#circle'+count).resizable();
+							 var txt=$('#'+uid+" > .circle").length;
+							 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
+							
+					  }else if(cl=="circle-white"){
+						  
+						 
+							  var circle=$('<div>').attr('class','circle circle'+count).html('<span>#'+count+'</span><img src="image/circle-white.png" id="circle'+count+'"  /><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+						 
+						  
+						    circle.appendTo('#'+uid).draggable();
+							$('#circle'+count).resizable();
+							 var txt=$('#'+uid+" > .circle").length;
+								 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
 							
 					  }else if(cl=="darrow"){
-						   var darrow=$('<div>').attr('class','darrow darrow'+count).html('<img src="image/darrow.png" id="darrow'+count+'" style="wifht:50px" /><i class="fa fa-window-close" aria-hidden="true"></i>');
+						   var darrow=$('<div>').attr('class','darrow darrow'+count).html('<span>#'+count+'</span><img src="image/darrow.png" id="darrow'+count+'" style="wifht:50px" /><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
 						  
 						    darrow.appendTo('#'+uid).draggable().rotatable();;
-							$('#darrow'+count).resizable();
+							$('#darrow'+count).resizable({
+    handles: 'e, w'
+});
 							 var txt=$('#'+uid+" > .darrow").length;
-							 $('#'+uid).append('<textarea maxlength="200" placeholder="Add Note" name="'+uid+'linenote">#Line'+txt+'</textarea>');
+							 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
 							
 					  }else if(cl=="rect"){
-						   var circle=$('<div>').attr('class','rect rect'+count).html('<div style="background:rgba(255,255,0,.4);height:60px;width:100px"  id="rect'+count+'" ></div><i class="fa fa-window-close" aria-hidden="true"></i>');
+						  
+						   var circle=$('<div>').attr('class','rect rect'+count).html('<span>#'+count+'</span><div style="background:rgba(255,255,0,.4);height:60px;width:100px"  id="rect'+count+'" ></div><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
 						  
 						    circle.appendTo('#'+uid).draggable();
 							$('#rect'+count).resizable();
+								 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
 							
 					  }else if(cl=="highlight"){
 						  
@@ -183,14 +231,15 @@ $(document).ready(function() {
 							
 							ctx = el.getContext('2d');
 							//alert(ctx);
+						$('#'+uid).append('<div class="textarea-box"><span>Highlight Note</span><textarea maxlength="200"  name="'+uid+'note"></textarea></div>');
 					  }else {
 					 
-					 var img=$('<span>').attr('class','fa-stack').html('<span style="color:'+color+'" class="fa fa-'+cl+' fa-stack-2x"></span><strong class="fa-stack-1x '+cl+'">'+count+'</strong><i class="fa fa-window-close" aria-hidden="true"></i>');
+					 var img=$('<span>').attr('class','fa-stack').html('<span style="color:'+color+'" class="fa fa-'+cl+' fa-stack-2x"></span><strong class="fa-stack-1x '+cl+'">#'+count+'</strong><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
 					 
 					 
 					 
 					  img.appendTo('#'+uid).draggable();//.rotatable();
-					  $('#'+uid).append('<textarea maxlength="200" placeholder="Add Note" name="'+uid+'note">#'+count+'</textarea>');
+					 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
 					  }
 					 // img.appendTo('#'+uid).draggable();//.rotatable();
 					 // $('.arrow-div').toggle();
@@ -200,14 +249,92 @@ $(document).ready(function() {
 					}
 				 $.fancybox.close(true);
 				});
+		*/	
+		
+		
+$('td i').click(function(){
+				//alert($(this).attr('alt'));
+				var arrow=$(this).attr('alt');
+				color=$(this).css('color');
+				var arrow_count=$('#'+uid+" > span").length;
+				var circle_count=$('#'+uid+" > .circle").length;
+				var darrow_count=$('#'+uid+" > .darrow").length;
+				var rect_count=$('#'+uid+" > .rect").length;
+				var count = arrow_count + circle_count + darrow_count + rect_count;
+										  
+				var img=$('<span>').attr('class','fa-stack').html('<span style="color:'+color+'" class="fa fa-'+arrow+' fa-stack-2x"></span><strong class="fa-stack-1x '+arrow+'">#'+count+'</strong><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+					 	 
+				img.appendTo('#'+uid).draggable();//.rotatable();
+				$('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200"  name="'+uid+'note"></textarea></div>');					
+			});
+			$('td img').click(function(){
+				//alert($(this).attr('alt'));
+				var item=$(this).attr('alt');
+				color=$(this).css('color');
+				var res = item.substr(0, 6); 
+				//alert(res);
+				var arrow_count=$('#'+uid+" > span").length;
+				var circle_count=$('#'+uid+" > .circle").length;
+				var darrow_count=$('#'+uid+" > .darrow").length;
+				var rect_count=$('#'+uid+" > .rect").length;
+				var count = arrow_count + circle_count + darrow_count + rect_count;
+										  
+				if(res=='darrow')
+				{
+					//var darrow=$('<div>').attr('class','darrow darrow'+count).html('<span>#'+count+'</span><img src="image/'+item+'.png" id="darrow'+count+'" style="wifht:50px" /><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+					var darrow=$('<div>').attr('class','darrow darrow'+count).html('<span>#'+count+'</span><div id="darrow'+count+'" class="drag connector_box" style="background:'+color+';"><span></span></div><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+				$('#'+uid).append('<style>#darrow'+count+':before{border-right-color:'+color+'}#darrow'+count+':after{border-left-color:'+color+'}<style>');	  
+					darrow.appendTo('#'+uid).draggable().rotatable();;
+					$('#darrow'+count).resizable({
+    handles: 'e, w'
+});
+					$('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"   name="'+uid+'note"></textarea></div>');
+				}
+				else if(res=='circle'){
+					var circle=$('<div>').attr('class','circle circle'+count).html('<span>#'+count+'</span><img src="image/'+item+'.png" id="circle'+count+'"  /><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+						  
+					circle.appendTo('#'+uid).draggable();
+					$('#circle'+count).resizable();
+					 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200" rows="3"  name="'+uid+'note"></textarea></div>');
+				}else if(res=="highli"){
+					//	  alert(color);
+						  var canvas_count=$('#'+uid+" > .canv").length;
+						  
+						   var canvas=$('<canvas>').attr({'class':'canv canv'+count, 'id':uid+'can'+canvas_count}).css({'width':$('#'+uid).width()+'px','height':$('#'+uid).height()+'px'});
+						  
+						    canvas.appendTo('#'+uid);
+							el = document.getElementById(uid+'can'+canvas_count);
+							
+							ctx = el.getContext('2d');
+							_highlight = true;
+							ctx.strokeStyle = color;
+							//alert(ctx);
+						$('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Highlight Note</span><textarea maxlength="200"  name="'+uid+'note"></textarea></div>');
+				}else{
+					 var rect=$('<div>').attr('class','rect rect'+count).html('<span>#'+count+'</span><div style="background:'+color+';opacity:0.4; height:60px; width:100px"  id="rect'+count+'" ></div><i class="fa fa-window-close" id="textarea-'+count+'" aria-hidden="true"></i>');
+						  
+						    rect.appendTo('#'+uid).draggable();
+							$('#rect'+count).resizable();
+							 $('#'+uid).append('<div class="textarea-box textarea-'+count+'"><span>Note '+count+'</span><textarea maxlength="200"  name="'+uid+'note"></textarea></div>');
+				}
+									
+			});
+			
 			
 				$(document).on('click','.fa-window-close',function(){
 				
-					$(this).parent().css('display','none');
-					
+					//$(this).parent().css('display','none');
+					if($(this).attr('id')=='boxclose'){
+					    timg--;
+					}
+    				$(this).parent().remove();
+    				$("."+$(this).attr('id')).remove();
 				});
 			
-				$("#various3").fancybox({
+			    $('.various1').click(function(){
+			       	color=$(this).css('color'); 
+			    });
+				$(".various1").fancybox({
 						ajax : {
 							type	: "POST",
 							data	: 'mydata=test'
@@ -218,9 +345,9 @@ $(document).ready(function() {
 				
 				$("#submit-text").click( function(){
 					//alert(uid);
-					 var count=$('#'+uid+" > .para").length;
+					 var counttext=$('#'+uid+" > .para").length;
 					// alert(count);
-	var p=$('<div>').attr('class','para').html('<a href="#text-box-update" class="various3" id="para'+count+'" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><p style="color:'+color+'" class="para'+count+'">'+$('.ptext').val()+'</p>');
+	var p=$('<div>').attr('class','para').html('<a href="#text-box-update" class="various3" id="para'+counttext+'" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><p style="color:'+color+'" class="para'+counttext+'">'+$('.ptext').val()+'</p>');
 					p.appendTo('#'+uid).draggable();
 					$.fancybox.close();
 					$.fancybox.close();
@@ -275,7 +402,7 @@ $(document).ready(function() {
 					}
 
 				//	$('#gen_pdf').toggle();
-					// $(this).unbind('submit').submit(); // continue the submit unbind preventDefault
+					// $(this).unbind('submit').submit(); // continue the submit sdgf unbind preventDefault
 					});
 					
 					function save_img(data, divcount, j){
@@ -358,8 +485,8 @@ $(document).ready(function() {
 
 //var el = document.getElementById('can2');
 //var ctx = el.getContext('2d');
-var isDrawing;
-var _highlight = false;
+//var isDrawing;
+//var _highlight = false;
 
 
 function marker(){
@@ -369,7 +496,7 @@ function marker(){
 
 function highlight(){
   ctx.lineWidth = 15;
-  ctx.strokeStyle = 'rgba(255,255,0,0.4)';
+ // ctx.strokeStyle = 'rgba(255,255,0,0.4)';
   ctx.globalCompositeOperation = 'destination-atop';
 }
 
@@ -384,11 +511,11 @@ document.getElementById("clear").addEventListener("click", function(){
   ctx.beginPath();
 });
 
-*/
+
 document.getElementById("highlight").addEventListener("click", function(){
   _highlight = true;
 });
-
+*/
 $(document).on('mousedown','.canv',function(e) {
 	
   isDrawing = true;
