@@ -141,7 +141,7 @@ class Server extends CI_Controller {
 		$this->image_lib->clear();
 		$config=array();
 		$config['image_library']   = 'gd2';
-		$config['source_image'] = $_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/".$posts['name'];
+		$config['source_image'] = $_SERVER['DOCUMENT_ROOT']."assets/job_photo/".$posts['name'];
 		$config['rotation_angle'] = '90';
 		$this->image_lib->initialize($config); // reinitialize it instead of reloading
 		$this->image_lib->rotate();
