@@ -143,7 +143,6 @@ class Server extends CI_Controller {
 		$config['image_library']   = 'gd2';
 		$config['source_image'] = $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$posts['name'];
 		$config['rotation_angle'] = '90';
-		$config['file_permissions'] = '777';
 		$this->image_lib->initialize($config); // reinitialize it instead of reloading
 		if (!$this->image_lib->rotate()) {
 			echo $this->image_lib->display_errors();
