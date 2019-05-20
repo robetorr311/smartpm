@@ -156,6 +156,35 @@ echo '</div>';
             }
            });
         });
+
+
+          var imgclass;
+      
+          $(document).on('click', '.pop', function() {
+              $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+              $('#imagemodal').modal('show');  
+              $('#rotate').attr('name',$(this).attr('alt'));
+              imgclass = $(this).attr('href');
+          // $('.imagepreview').css({'transform': 'rotate(0deg)'});        
+          });    
+            
+        
+          $('#rotate').click(function(){
+              var angle = ($('.imagepreview').data('angle') - 90) || -90;
+              $('.imagepreview').css({'transform': 'rotate(' + angle + 'deg)'});
+              var name=$(this).attr('name');
+              $.ajax({
+                url: baseUrl+'index.php/server/imagerotate',
+                data: {name: name},        
+                type: 'post',
+                success: function(php_script_response)
+                {  
+                  imgclass=imgclass.replace(/#/g, "");
+                  $('.imagepreview').data('angle', angle);
+                  $('.image_div .img'+imgclass).css({'transform': 'rotate(' + angle + 'deg)'});              
+                }
+               });
+          });
     });
 </script>
   

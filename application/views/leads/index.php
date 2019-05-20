@@ -75,4 +75,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 					   </div>
                         </div>
-  
+<script>
+  $(document).ready(function(){
+      $(".del-job").click(function () {
+          var id = $(this).attr('id');
+                                    
+          $.ajax({
+            url: baseUrl+'index.php/server/deletejobreport',
+            data: {id: id},        
+            type: 'post',
+            success: function(php_script_response){
+              $('.tr'+id).remove();
+            }
+           });
+        });
+  });
+</script>

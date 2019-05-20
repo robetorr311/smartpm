@@ -134,4 +134,12 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('.add_more_tag').click(function(){
+          $(this).siblings('.addmore').toggle();
+        });
+    });
+
+</script>
   

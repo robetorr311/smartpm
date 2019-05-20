@@ -87,7 +87,7 @@ echo '</div>';
            var form_data = new FormData(); 
           //alert(id);          
           //len_files = $(".jobphoto").prop("files").length;
-          var len_files=file_data.length;
+          var len_files=file_data.length;    
           for (var i = 0; i < len_files; i++) {
             //var file_data = $(".jobphoto").prop("files")[i];
             form_data.append("doc[]", file_data[i]);
