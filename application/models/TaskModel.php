@@ -56,8 +56,8 @@ class TaskModel extends CI_Model
             'tasks.is_deleted' => FALSE
         ]);
         $query = $this->db->get();
-        $result = $query->result();
-        return (count($result) > 0) ? $result[0] : false;
+        $result = $query->first_row();
+        return $result ? $result : false;
     }
 
     public function getTaskList($select = 'id, name')
