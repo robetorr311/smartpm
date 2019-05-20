@@ -31,7 +31,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <h4 class="title" style="float: left;">Team Members</h4>
                     </div>
                 </div>
-                <div class="content table-responsive">
+                <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
@@ -65,7 +65,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <h4 class="title" style="float: left;">Task Assigned</h4>
                     <div class="clearfix"></div>
                 </div>
-                <div class="content">
+                <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
