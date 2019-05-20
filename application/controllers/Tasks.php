@@ -136,10 +136,10 @@ class Tasks extends CI_Controller
                 }
 
                 redirect('task/' . $insert);
+            } else {
+                $this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
+                redirect('task/create');
             }
-
-            $this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
-            redirect('task/create');
         } else {
             $this->session->set_flashdata('errors', validation_errors());
             redirect('task/create');
@@ -287,10 +287,10 @@ class Tasks extends CI_Controller
                     }
 
                     redirect('task/' . $id);
+                } else {
+                    $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
+                    redirect('task/' . $id . '/edit');
                 }
-
-                $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-                redirect('task/' . $id . '/edit');
             } else {
                 $this->session->set_flashdata('errors', validation_errors());
                 redirect('task/' . $id . '/edit');
