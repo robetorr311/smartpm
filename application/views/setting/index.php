@@ -68,4 +68,57 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
             <?php endif; ?>
 	</div> 
 </div>
+<script>
+    $(document).ready(function(){
+        var baseUrl = '<?= base_url(); ?>';
+        $(".admin input[type=file]").change(function () {
+          var id= $(this).attr('id');
+          //alert(id);          
+          var file_data = $('#'+id).prop('files')[0];   
+          var form_data = new FormData();               
+          form_data.append('file', file_data);
+          $.ajax({
+            url: baseUrl+'setting/ajaxupload', // point to server-side PHP script     
+            dataType: 'text',  // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,                         
+            type: 'post',
+            success: function(php_script_response){
+              //alert(php_script_response); 
+              $.ajax({
+                type: 'POST',
+                url: baseUrl+'setting/ajaxsave', // point to server-side PHP script     
+                data: {id: id, name:php_script_response},                         
+                success: function(php_script_response){
+                  $('.'+id+'img').attr('src',baseUrl+'assets/img/'+php_script_response ); // 
+              
+                }
+              });
+            }
+           });
+        });
+        
+        
+      
+        
+    
+  
+        
+        $(".color-ul li").click(function () {
+          var color = $(this).attr('class');
+                                    
+          $.ajax({
+            url: baseUrl+'setting/ajaxcolor',
+            data: {color: color},        
+            type: 'post',
+            success: function(php_script_response){
+              $('.sidebar').attr('data-color',php_script_response);
+            }
+           });
+        });
+        
+    });
+</script>
   

@@ -42,7 +42,7 @@ echo '</div>';
 <script>
     $(document).ready(function() {
           var baseUrl = '<?= base_url(); ?>';
-          
+
           $("html").on("dragover", function(e) {
               e.preventDefault();
               e.stopPropagation();
@@ -142,6 +142,19 @@ echo '</div>';
                 });
                 }   
               });
+        });
+
+          $(document).on('click', '.del-photo', function () {
+          var id = $(this).attr('id');
+                                    
+          $.ajax({
+            url: baseUrl+'index.php/server/deletephoto',
+            data: {id: id},        
+            type: 'post',
+            success: function(php_script_response){
+              $('#ph'+id).remove();
+            }
+           });
         });
     });
 </script>

@@ -57,4 +57,142 @@ echo '</div>';
             </div>
 					   </div>
                         </div>
+
+<script>
+  $(document).ready(function(){
+    var baseUrl = '<?= base_url(); ?>';
+          // Drag enter
+    $('.upload-doc-area').on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $("h1").text("Drop");
+    });
+
+    // Drag over
+    $('.upload-doc-area').on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $("h1").text("Drop");
+    });
+
+    // Drop
+    $('.upload-doc-area').on('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+       // alert($(this).attr('id'));
+        $("h1").text("Upload");
+      var id =$(this).attr('id');
+          var file_data =  e.originalEvent.dataTransfer.files;
+        
+           var form_data = new FormData(); 
+          //alert(id);          
+          //len_files = $(".jobphoto").prop("files").length;
+          var len_files=file_data.length;
+          for (var i = 0; i < len_files; i++) {
+            //var file_data = $(".jobphoto").prop("files")[i];
+            form_data.append("doc[]", file_data[i]);
+          }
+
+        $.ajax({
+            url: baseUrl+'index.php/server/ajaxupload_jobdoc', // point to server-side PHP script     
+            dataType: 'text',  // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,                         
+            type: 'post',
+            success: function(php_script_response){
+              //alert(php_script_response); 
+              $.ajax({
+                type: 'POST',
+                url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
+                data: {id: id, name:php_script_response},                         
+                success: function(photoid){
+                  //alert(photoid);
+                  $('.image_div table').append(photoid);
+                }
+              });
+            }
+           });
+    });
+  
+  
+      
+       $(".upload-doc-area").click(function(){
+        $(".jobdoc").click();
+    });
+        
+        
+    
+            $(".jobdoc").change(function () {
+          var id= $(this).attr('id');
+           var form_data = new FormData(); 
+          //alert(id);          
+          len_files = $(".jobdoc").prop("files").length;
+          for (var i = 0; i < len_files; i++) {
+            var file_data = $(".jobdoc").prop("files")[i];
+            form_data.append("doc[]", file_data);
+          }
+          
+          $.ajax({
+            url: baseUrl+'index.php/server/ajaxupload_jobdoc', // point to server-side PHP script     
+            dataType: 'text',  // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,                         
+            type: 'post',
+            success: function(php_script_response){
+              //alert(php_script_response); 
+              $.ajax({
+                type: 'POST',
+                url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
+                data: {id: id, name:php_script_response},                         
+                success: function(photoid){
+                  //alert(photoid);
+                  $('.image_div table').append(photoid);
+                }
+              });
+            }
+           });
+        });
+
+            $(document).on('click', '.del-doc', function () {
+          var id = $(this).attr('id');
+                                    
+          $.ajax({
+            url: baseUrl+'index.php/server/deletedoc',
+            data: {id: id},        
+            type: 'post',
+            success: function(php_script_response){
+              $('#doc'+id).remove();
+            }
+           });
+        });
+
+             $(document).on('change', '.docname',  function () {
+          var data = $(this).val();
+          var id = $(this).attr('name');
+          $.ajax({
+            url: baseUrl+'index.php/server/updatedocname',
+            data: {na: data, id: id},        
+            type: 'post',
+            success: function(php_script_response){
+
+            $('#doctext'+id).toggle();
+            $('#docp'+id).toggle();
+            $('#docp'+id).html(data);
+            }
+           });
+        });
+
+             $(document).on('click', '.doc_list span',  function () {
+          var id = $(this).attr('class');
+          $('#doctext'+id).toggle();
+          $('#docp'+id).toggle();
+        });
+
+  });
+</script>
+
   
