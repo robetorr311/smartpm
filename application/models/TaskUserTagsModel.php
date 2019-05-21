@@ -34,7 +34,7 @@ class TaskUserTagsModel extends CI_Model
     {
         $this->db->select("users.id as id, users.username as username, CONCAT(users.first_name, ' ', users.last_name) AS name");
         $this->db->from($this->table);
-        $this->db->join('users', 'task_user_tags.user_id=users.id');
+        $this->db->join('users', 'task_user_tags.user_id=users.id', 'join');
         $this->db->where([
             'task_user_tags.task_id' => $id,
             'task_user_tags.is_deleted' => FALSE,
