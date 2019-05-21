@@ -31,7 +31,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?php echo base_url();?>assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.fancybox.min.css">
     <!-- JS FILES -->
     <!--   Core JS Files   -->
     <script src="<?php echo base_url();?>assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
@@ -41,6 +41,7 @@
     <!-- bootstrap tagsinput JS -->
 	<script src="<?= base_url('assets/js/bootstrap-tagsinput.min.js') ?>"></script>
 	<script src="<?= base_url('assets/js/bootstrap3-typeahead.min.js') ?>"></script>
+
 </head>
 <body>
 
