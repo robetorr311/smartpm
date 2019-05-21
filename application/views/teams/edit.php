@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="manager" class="form-control">
                                         <option value="" disabled<?= empty($team->manager) ? ' selected' : '' ?>>Select Manager</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '"' . ($user->id == $team->manager ? ' selected' : '') . '>' . $user->name . ' (' . $user->username . ')</option>';
+                                            echo '<option value="' . $user->id . '"' . ($user->id == $team->manager ? ' selected' : '') . '>' . $user->name . ' (@' . $user->username . ')</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -54,7 +54,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="team_leader" class="form-control">
                                         <option value="" disabled<?= empty($team->team_leader) ? ' selected' : '' ?>>Select Team Leader</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '"' . ($user->id == $team->team_leader ? ' selected' : '') . '>' . $user->name . ' (' . $user->username . ')</option>';
+                                            echo '<option value="' . $user->id . '"' . ($user->id == $team->team_leader ? ' selected' : '') . '>' . $user->name . ' (@' . $user->username . ')</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -89,7 +89,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $('input#team_members').tagsinput({
             itemValue: 'id',
             itemText: function(item) {
-                return item.name + ' (' + item.username + ')';
+                return item.name + ' (@' + item.username + ')';
             },
             typeahead: {
                 source: <?= json_encode($users) ?>,
