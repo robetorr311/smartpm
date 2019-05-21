@@ -62,7 +62,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Task Assigned</h4>
+                    <h4 class="title" style="float: left;">Task Assigned <small>(Unconfirmed Section)</small></h4>
                     <div class="clearfix"></div>
                 </div>
                 <div class="content table-responsive table-full-width">
@@ -77,12 +77,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>Dakota Rice</td>
+                                <td>Temporary Data</td>
                                 <td>06 May 2019</td>
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>Minerva Hooper</td>
+                                <td>Temporary Data</td>
                                 <td>06 May 2019</td>
                             </tr>
                         </tbody>
