@@ -71,6 +71,8 @@
     // Buttons will be created using templates from `btnTpl` option
     // and they will be placed into toolbar (class="fancybox-toolbar"` element)
     buttons: [
+   "rotate1",
+   
       "zoom",
       //"share",
       "slideShow",
@@ -203,6 +205,22 @@
 
       zoom: '<button data-fancybox-zoom class="fancybox-button fancybox-button--zoom" title="{{ZOOM}}">' +
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.7 17.3l-3-3a5.9 5.9 0 0 0-.6-7.6 5.9 5.9 0 0 0-8.4 0 5.9 5.9 0 0 0 0 8.4 5.9 5.9 0 0 0 7.7.7l3 3a1 1 0 0 0 1.3 0c.4-.5.4-1 0-1.5zM8.1 13.8a4 4 0 0 1 0-5.7 4 4 0 0 1 5.7 0 4 4 0 0 1 0 5.7 4 4 0 0 1-5.7 0z"/></svg>' +
+        "</button>",
+
+      rotate1: '<button data-fancybox-rotate class="fancybox-button fancybox-button--rotate" title="{{ROTATE}}">' +
+        'Rotate' +
+        "</button>",
+
+      rotate2: '<button data-fancybox-rotate class="fancybox-button fancybox-button--rotate" title="{{ROTATE}}">' +
+        '-90' +
+        "</button>",
+
+      rotate3: '<button data-fancybox-rotate class="fancybox-button fancybox-button--rotate" title="{{ROTATE}}">' +
+        '180' +
+        "</button>",
+
+      rotate4: '<button data-fancybox-rotate class="fancybox-button fancybox-button--rotate" title="{{ROTATE}}">' +
+        '360' +
         "</button>",
 
       close: '<button data-fancybox-close class="fancybox-button fancybox-button--close" title="{{CLOSE}}">' +
@@ -382,7 +400,8 @@
         THUMBS: "Thumbnails",
         DOWNLOAD: "Download",
         SHARE: "Share",
-        ZOOM: "Zoom"
+        ZOOM: "Zoom",
+        ROTATE: "Rotate"
       },
       de: {
         CLOSE: "Schlie&szlig;en",

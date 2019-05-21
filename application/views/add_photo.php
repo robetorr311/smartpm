@@ -159,19 +159,18 @@ echo '</div>';
         });
 
           $('[data-fancybox="photo"]').fancybox({
+              buttons : ['rotate1','zoom','slideShow','exif','thumbs','close'],
               caption : function( instance, item ) {
               var caption = $(this).data('caption') || '';
-
-              if ( item.type === 'image' ) {
+             /* if ( item.type === 'image' ) {
                 var caption =  '<button name="'+caption+'" href="' + item.src + '" id="rotate"  class="btn btn-success btn-fill rotate">Rotate image</button>' ;
-              }
-            
+              }*/
               return caption;
-              }
+              },
           });
 
 
-          $(document).on('click','#rotate', function(){
+         /* $(document).on('click','#rotate', function(){
               var name=$(this).attr('name');
               $.ajax({
                 url: baseUrl+'index.php/server/imagerotate',
@@ -180,15 +179,62 @@ echo '</div>';
                 success: function(php_script_response)
                 {  
                     location.reload();
+
+                  //  $('body .fancybox-slide--current .fancybox-content img').remove();
+                   // $('body .fancybox-slide--current .fancybox-content').html('<img src="'+baseUrl+'/assets/job_photo/'+php_script_response+'" class="fancybox-image" />');
+
+               // 
+          //  $.fancybox.close();
+          //  $('[data-fancybox="photo"]').trigger('click');
+          //      $(parent.document)[0].location.reload();
                 }
                });
           });
+*/
+
+          $(document).on('click','.fancybox-button--rotate', function(){
+
+            var name=$('.fancybox-caption__body').html();
+            var angle=90;
+              $.ajax({
+                url: baseUrl+'index.php/server/imagerotate',
+                data: {name: name, angle: angle},        
+                type: 'post',
+                success: function(php_script_response)
+                {  
+                   // location.reload();
+
+                  //  $('body .fancybox-slide--current .fancybox-content img').remove();
+                   // $('body .fancybox-slide--current .fancybox-content').html('<img src="'+baseUrl+'/assets/job_photo/'+php_script_response+'" class="fancybox-image" />');
+
+               // 
+          //  $.fancybox.close();
+          //  $('[data-fancybox="photo"]').trigger('click');
+          //      $(parent.document)[0].location.reload();
+//alert($('.fancybox-slide--current .fancybox-content img').data('angle'));
+    
+          var cur_angle = parseInt($('.fancybox-slide--current .fancybox-content img').attr('alt'));
+          if(isNaN(cur_angle)!=true && cur_angle < 360 && cur_angle > -360){
+            angle = cur_angle + angle;
+           }
+
+        $('.fancybox-slide--current .fancybox-content img').attr('alt', angle); 
+        $('.fancybox-slide--current .fancybox-content img').css({'transform': 'rotate(-' + angle + 'deg)'});
+    
+                }
+
+               });
+          });
+
+     
 
 
-          
 
 
     });
+
+
+
 </script>
 
 
