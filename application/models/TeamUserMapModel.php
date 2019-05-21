@@ -16,6 +16,20 @@ class TeamUserMapModel extends CI_Model
         }
     }
 
+    public function deleteByUserArr($users, $team_id)
+    {
+        $this->db->where_in('user_id', $users);
+        return $this->deleteRelated($team_id);
+    }
+
+    public function deleteRelated($team_id)
+    {
+        $this->db->where('team_id', $team_id);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
+    }
+
     public function getUsersByTeamId($id)
     {
         $this->db->select("users.id as id, users.username as username, CONCAT(users.first_name, ' ', users.last_name) AS name");

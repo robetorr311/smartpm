@@ -97,10 +97,10 @@ $route['insurance_job/(:num)'] = 'insurance_jobs/view';
 $route['teams'] = 'teams/index';
 $route['tasks/(:num)'] = 'tasks/index/$1';
 $route['team/create'] = 'teams/create';
-$route['team/store'] = 'teams/store';
+$route['team/store']['post'] = 'teams/store';
 $route['team/(:num)'] = 'teams/show/$1';
-$route['team/(:num)/edit'] = 'teams/edit';
-$route['team/(:num)/update'] = 'teams/update';
-$route['team/(:num)/delete'] = 'teams/delete';
+$route['team/(:num)/edit'] = 'teams/edit/$1';
+$route['team/(:num)/update']['post'] = 'teams/update/$1';
+$route['team/(:num)/delete']['post'] = 'teams/delete/$1';
 
 $route['(.+)'] = 'errors/page_missing';

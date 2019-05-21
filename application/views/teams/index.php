@@ -26,8 +26,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <thead>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Remark</th>
-                            <th>Members</th>
+                            <th>Team Leader</th>
+                            <th>Manager</th>
+                            <th class="text-center">Members</th>
                             <th class="text-center">View</th>
                             <th class="text-center">Edit</th>
                             <th class="text-center">Delete</th>
@@ -38,8 +39,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tr>
                                         <td><?= $team->id ?></td>
                                         <td><?= $team->team_name ?></td>
-                                        <td><?= $team->remark ?></td>
-                                        <td><?= $team->total_members ?></td>
+                                        <td><?= $team->manager_fullname ?></td>
+                                        <td><?= $team->team_leader_fullname ?></td>
+                                        <td class="text-center"><?= $team->total_members ?></td>
                                         <td class="text-center"><a href="<?= base_url('team/' . $team->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('team/' . $team->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('team/' . $team->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>

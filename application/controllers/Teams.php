@@ -56,13 +56,17 @@ class Teams extends CI_Controller
 	{
 		$this->form_validation->set_rules('name', 'Team Name', 'trim|required');
 		$this->form_validation->set_rules('remark', 'Remark', 'trim');
+		$this->form_validation->set_rules('manager', 'Manager', 'trim|required');
+		$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required');
 		$this->form_validation->set_rules('team_members', 'Team Members', 'is_own_ids[users, Users]');
 
 		if ($this->form_validation->run() == TRUE) {
 			$teamData = $this->input->post();
 			$insert = $this->team->insert([
 				'team_name' => $teamData['name'],
-				'remark' => $teamData['remark']
+				'remark' => $teamData['remark'],
+				'manager' => $teamData['manager'],
+				'team_leader' => $teamData['team_leader']
 			]);
 			if ($insert) {
 				$errors = '';
@@ -91,6 +95,83 @@ class Teams extends CI_Controller
 		}
 	}
 
+	public function edit($id)
+	{
+		$team = $this->team->getTeamById($id);
+		if ($team) {
+			$members = $this->team_user_map->getUsersByTeamId($id);
+			$users = $this->user->getUserList();
+
+			$this->load->view('header', [
+				'title' => $this->title
+			]);
+			$this->load->view('teams/edit', [
+				'team' => $team,
+				'members' => $members,
+				'users' => $users
+			]);
+			$this->load->view('footer');
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('teams');
+		}
+	}
+
+	public function update($id)
+	{
+		$team = $this->team->getTeamById($id);
+		if ($team) {
+			$this->form_validation->set_rules('name', 'Team Name', 'trim|required');
+			$this->form_validation->set_rules('remark', 'Remark', 'trim');
+			$this->form_validation->set_rules('manager', 'Manager', 'trim|required');
+			$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required');
+			$this->form_validation->set_rules('team_members', 'Team Members', 'is_own_ids[users, Users]');
+			if ($this->form_validation->run() == TRUE) {
+				$teamData = $this->input->post();
+				$update = $this->team->update($id, [
+					'team_name' => $teamData['name'],
+					'remark' => $teamData['remark'],
+					'manager' => $teamData['manager'],
+					'team_leader' => $teamData['team_leader']
+				]);
+				if ($update) {
+					$errors = '';
+
+					$old_members = $this->team_user_map->getUsersByTeamId($id);
+					$old_members = ($old_members) ? array_column($old_members, 'id') : [];
+					$members = $teamData['team_members'];
+					$members = (!empty($members)) ? explode(',', $members) : [];
+					$members_insert = array_diff($members, $old_members);
+					if (count($members_insert)) {
+						$membersInsert = $this->team_user_map->insertByUserArr($members_insert, $id);
+						if (!$membersInsert) {
+							$errors .= '<p>Unable to add new Members.</p>';
+						}
+					}
+					$members_remove = array_diff($old_members, $members);
+					if (count($members_remove)) {
+						$membersRemove = $this->team_user_map->deleteByUserArr($members_remove, $id);
+						if (!$membersRemove) {
+							$errors .= '<p>Unable to remove added Members.</p>';
+						}
+					}
+
+					if (!empty($errors)) {
+						$this->session->set_flashdata('errors', $errors);
+					}
+
+					redirect('team/' . $id);
+				}
+			} else {
+				$this->session->set_flashdata('errors', validation_errors());
+				redirect('team/' . $id . '/edit');
+			}
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('teams');
+		}
+	}
+
 	public function show($id)
 	{
 		$team = $this->team->getTeamById($id);
@@ -104,56 +185,24 @@ class Teams extends CI_Controller
 				'members' => $members
 			]);
 			$this->load->view('footer');
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('teams');
 		}
 	}
 
-
-	public function update()
+	public function delete($id)
 	{
-		if (isset($_POST) && count($_POST) > 0) {
-			$posts = $this->input->post();
-			$this->form_validation->set_rules('teamname', 'Team Name', 'trim|required');
-			$this->form_validation->set_rules('remark', 'Remark', 'trim');
-			if ($this->form_validation->run() == FALSE) {
-
-
-				$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
-				$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>' . validation_errors() . ' for Additional Party</strong>';
-				$errors .= '</div>';
-				$this->session->set_flashdata('message', $errors);
-				redirect('team/' . $posts['id'] . '/edit');
-			} else {
-
-				$params = array();
-				$params['team_name'] 		= $posts['teamname'];
-				$params['remark'] 		= $posts['remark'];
-				$params['is_active'] 		= True;
-				$this->team->update_record($params, ['id' => $posts['id']]);
-				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
-				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Added Successfully!</strong>';
-				$message .= '</div>';
-				$this->session->set_flashdata('message', $message);
-				redirect('teams/');
+		$team = $this->team->getTeamById($id);
+		if ($team) {
+			$this->team_user_map->deleteRelated($id);
+			$delete = $this->team->delete($id);
+			if (!$delete) {
+				$this->session->set_flashdata('errors', '<p>Unable to delete Team.</p>');
 			}
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
 		}
-	}
-
-
-	public function edit()
-	{
-		$teams = $this->team->get_all_where(['id' => $this->uri->segment(2)]);
-
-		$this->load->view('header', [
-			'title' => $this->title
-		]);
-		$this->load->view('teams/edit', ['teams' => $teams, 'jobid' => $this->uri->segment(2)]);
-		$this->load->view('footer');
-	}
-
-
-	public function delete()
-	{
-		$teams = $this->team->delete(['id' => $this->uri->segment(2)]);
 		redirect('teams');
 	}
 }

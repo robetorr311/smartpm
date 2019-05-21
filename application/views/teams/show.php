@@ -17,6 +17,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label>Manager</label>
+                                <p><?= $team->manager_fullname ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Team Leader</label>
+                                <p><?= $team->team_leader_fullname ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label>Reamrk :</label>
                                 <p><?= nl2br($team->remark) ?></p>
                             </div>

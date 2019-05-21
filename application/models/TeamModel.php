@@ -7,9 +7,11 @@ class TeamModel extends CI_Model
 
     public function allTeams($start, $limit)
     {
-        $this->db->select('teams.*, (SELECT count(id) FROM team_user_map WHERE team_user_map.team_id = teams.id AND is_deleted = FALSE) as total_members');
+        $this->db->select("teams.*, (SELECT count(id) FROM team_user_map WHERE team_user_map.team_id = teams.id AND is_deleted = FALSE) as total_members, CONCAT(users_manager.first_name, ' ', users_manager.last_name, ' (@', users_manager.username, ')') as manager_fullname, CONCAT(users_team_leader.first_name, ' ', users_team_leader.last_name, ' (@', users_team_leader.username, ')') as team_leader_fullname");
         $this->db->from($this->table);
-        $this->db->where('is_deleted', FALSE);
+        $this->db->join('users as users_manager', 'teams.manager=users_manager.id', 'left');
+        $this->db->join('users as users_team_leader', 'teams.team_leader=users_team_leader.id', 'left');
+        $this->db->where('teams.is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -24,10 +26,13 @@ class TeamModel extends CI_Model
 
     public function getTeamById($id)
     {
+        $this->db->select("teams.*, CONCAT(users_manager.first_name, ' ', users_manager.last_name, ' (@', users_manager.username, ')') as manager_fullname, CONCAT(users_team_leader.first_name, ' ', users_team_leader.last_name, ' (@', users_team_leader.username, ')') as team_leader_fullname");
         $this->db->from($this->table);
+        $this->db->join('users as users_manager', 'teams.manager=users_manager.id', 'left');
+        $this->db->join('users as users_team_leader', 'teams.team_leader=users_team_leader.id', 'left');
         $this->db->where([
-            'id' => $id,
-            'is_deleted' => FALSE
+            'teams.id' => $id,
+            'teams.is_deleted' => FALSE
         ]);
         $query = $this->db->get();
         $result = $query->first_row();
@@ -40,20 +45,18 @@ class TeamModel extends CI_Model
         return $insert ? $this->db->insert_id() : $insert;
     }
 
-    public function update_record($updatedArray, $condition)
+    public function update($id, $data)
     {
-        $this->db->where($condition);
-        $this->db->update($this->table, $updatedArray);
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        $this->db->where('id', $id);
+        $update = $this->db->update($this->table, $data);
+        return $update;
     }
 
-    public function delete($condition)
+    public function delete($id)
     {
-        $this->db->where($condition);
-        return  $this->db->update($this->table, ['is_active' => 0]);
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
     }
 }

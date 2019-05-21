@@ -37,6 +37,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Manager</label>
+                                    <select name="manager" class="form-control">
+                                        <option value="" disabled selected>Select Manager</option>
+                                        <?php foreach ($users as $user) {
+                                            echo '<option value="' . $user->id . '">' . $user->name . ' (' . $user->username . ')</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Team Leader</label>
+                                    <select name="team_leader" class="form-control">
+                                        <option value="" disabled selected>Select Team Leader</option>
+                                        <?php foreach ($users as $user) {
+                                            echo '<option value="' . $user->id . '">' . $user->name . ' (' . $user->username . ')</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Team Members</label>
