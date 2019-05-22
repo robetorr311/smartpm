@@ -29,13 +29,15 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="<?php echo base_url(); ?>assets/css/demo.css" rel="stylesheet" />
 
-
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?php echo base_url(); ?>assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <!-- Others -->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.fancybox.min.css">
 
     <!-- JS FILES -->
+
     <!--   Core JS Files   -->
     <script src="<?php echo base_url(); ?>assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
@@ -47,6 +49,10 @@
     <!-- At.js JS -->
     <script src="<?= base_url('assets/js/jquery.caret.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery.atwho.js') ?>"></script>
+    <!-- Others -->
+	<script src="<?php echo base_url();?>assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+    <script src="<?php echo base_url();?>assets/js/demo.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jquery.fancybox.js"></script>
 </head>
 
 <body>
