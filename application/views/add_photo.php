@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?> <div class="container-fluid">
                 <div class="row">
                    <div class="col-md-12">
+                  
                         <div class="card">
                             <div class="header">
                                 <h4 class="title" style="float: left;">Photos</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
@@ -21,7 +22,7 @@ echo '</div>';
                   <?php foreach( $imgs as $img ) : ?>  
             <div class="col-md-2" id="ph<?php echo $img->id; ?>">   <i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i>
            <a  href="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" alt="<?php echo $img->id; ?>" data-fancybox="photo" data-caption="<?php echo $img->image_name ?>">
-                <img class="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>"  />
+                <img id="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>"  />
             </a>
      </div>
 
@@ -43,6 +44,8 @@ echo '</div>';
 <script>
     $(document).ready(function() {
           var baseUrl = '<?= base_url(); ?>';
+
+
 
           $("html").on("dragover", function(e) {
               e.preventDefault();
@@ -168,6 +171,7 @@ echo '</div>';
            });
         });
 
+
           $('[data-fancybox="photo"]').fancybox({
               buttons : ['rotate1','zoom','slideShow','exif','thumbs','close'],
               caption : function( instance, item ) {
@@ -175,37 +179,18 @@ echo '</div>';
              /* if ( item.type === 'image' ) {
                 var caption =  '<button name="'+caption+'" href="' + item.src + '" id="rotate"  class="btn btn-success btn-fill rotate">Rotate image</button>' ;
               }*/
-
+          
               return caption;
               },
-           //   afterLoad: function( instance, current ) {
-             //  alert( current.opts.$orig.attr("alt") );
+            /*  afterShow: function( instance, current ) {
+             img_array[k]=current.opts.$orig.attr("alt");
+             k++;
             //  alert(this.a);
-             // },
+              },*/
           });
 
 
-         /* $(document).on('click','#rotate', function(){
-              var name=$(this).attr('name');
-              $.ajax({
-                url: baseUrl+'index.php/server/imagerotate',
-                data: {name: name},        
-                type: 'post',
-                success: function(php_script_response)
-                {  
-                    location.reload();
 
-                  //  $('body .fancybox-slide--current .fancybox-content img').remove();
-                   // $('body .fancybox-slide--current .fancybox-content').html('<img src="'+baseUrl+'/assets/job_photo/'+php_script_response+'" class="fancybox-image" />');
-
-               // 
-          //  $.fancybox.close();
-          //  $('[data-fancybox="photo"]').trigger('click');
-          //      $(parent.document)[0].location.reload();
-                }
-               });
-          });
-*/
 
           $(document).on('click','.fancybox-button--rotate', function(){
 
@@ -218,29 +203,20 @@ echo '</div>';
                 success: function(php_script_response)
                 {  
                    // location.reload();
-
-                  //  $('body .fancybox-slide--current .fancybox-content img').remove();
-                   // $('body .fancybox-slide--current .fancybox-content').html('<img src="'+baseUrl+'/assets/job_photo/'+php_script_response+'" class="fancybox-image" />');
-
-               // 
-          //  $.fancybox.close();
-          //  $('[data-fancybox="photo"]').trigger('click');
-          //      $(parent.document)[0].location.reload();
-//alert($('.fancybox-slide--current .fancybox-content img').data('angle'));
-    
-          var cur_angle = parseInt($('.fancybox-slide--current .fancybox-content img').attr('alt'));
-          if(isNaN(cur_angle)!=true && cur_angle < 360 && cur_angle > -360){
-            angle = cur_angle + angle;
-           }
-       
-       // document.getElementsByClassName('img255').src =php_script_response;
-        $('.fancybox-slide--current .fancybox-content img').attr('alt', angle); 
-        $('.fancybox-slide--current .fancybox-content img').css({'transform': 'rotate(-' + angle + 'deg)'});
-    
+                    var tStamp = +new Date();
+                  
+                    $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src','http://localhost/smartpm/assets/job_photo/'+php_script_response+'?t='+ tStamp);
+                    src='http://localhost/smartpm/assets/job_photo/'+php_script_response;
+                    var idx = $('.image_div a[href="'+src+'"]').attr('alt');
+                    $('.image_div #img'+idx).attr('src','http://localhost/smartpm/assets/job_photo/'+php_script_response+'?t='+ tStamp);
+         
                 }
 
                });
           });
+
+
+         
 
      
 
