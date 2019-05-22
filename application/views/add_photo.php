@@ -233,9 +233,9 @@ echo '</div>';
             angle = cur_angle + angle;
            }
        
-        document.getElementsByClassName('img255').src =php_script_response;
-       // $('.fancybox-slide--current .fancybox-content img').attr('alt', angle); 
-        // /$('.fancybox-slide--current .fancybox-content img').css({'transform': 'rotate(-' + angle + 'deg)'});
+       // document.getElementsByClassName('img255').src =php_script_response;
+        $('.fancybox-slide--current .fancybox-content img').attr('alt', angle); 
+        $('.fancybox-slide--current .fancybox-content img').css({'transform': 'rotate(-' + angle + 'deg)'});
     
                 }
 
