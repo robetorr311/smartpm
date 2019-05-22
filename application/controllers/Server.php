@@ -21,15 +21,54 @@ class Server extends CI_Controller {
      {  	
 		  	
            $file_name = explode(".", $filename);  
-           $allowed_extension = array("jpg", "jpeg", "png", "gif", "JPG");  
+           $allowed_extension = array("jpg", "jpeg", "png", "PNG", "gif", "JPG", "zip");  
            if(in_array($file_name[1], $allowed_extension))  
            {  
-                $new_name = rand() . '.'. $file_name[1];  
-                $sourcePath = $_FILES["photo"]["tmp_name"][$key];  
-                $targetPath = "assets/job_photo/".$new_name;  
-                move_uploaded_file($sourcePath, $targetPath);  
-				$img[$i]=$new_name;
-				$i++;
+                if($file_name[1]!='zip')
+	            {
+	                $new_name = rand() . '.'. $file_name[1];  
+	                $sourcePath = $_FILES["photo"]["tmp_name"][$key];  
+	                $targetPath = "assets/job_photo/".$new_name;  
+	                move_uploaded_file($sourcePath, $targetPath);  
+					$img[$i]=$new_name;
+					$i++;
+				}else{
+
+					$targetPath = 'assets/job_photo/';  
+               			$location = $targetPath . $filename; 
+               			if(move_uploaded_file($_FILES['photo']['tmp_name'][$key], $location))  
+		                {  
+		                     $zip = new ZipArchive;  
+		                     if($zip->open($location))  
+		                     {  
+		                          $zip->extractTo($targetPath);  
+		                          $zip->close();  
+		                     }  
+		                     $files = scandir($targetPath . $file_name[0]);  
+		                      
+		                     foreach($files as $file)  
+		                     {  
+		                          $tmp=explode(".", $file);
+								  $file_ext = end($tmp);  
+		                          $allowed_ext = array("jpg", "jpeg", "png", "PNG", "gif", "JPG"); 
+		                          $new_name='';
+		                          if(in_array($file_ext, $allowed_ext))  
+		                          {  
+		                               $new_name = md5(rand()).'.' . $file_ext; 
+		                             
+		                               copy($targetPath.$file_name[0].'/'.$file, $targetPath . $new_name);  
+		                               unlink($targetPath.$file_name[0].'/'.$file);  
+		                          }
+		                          if($new_name!=''){
+		                          	$img[$i]=$new_name;  
+		                          $i++; 
+		                          }
+		                               
+		                     }  
+		                     unlink($location);  
+		                     rmdir($targetPath . $file_name[0]);  
+		                } 
+				}
            } 
       }
 
@@ -42,32 +81,72 @@ class Server extends CI_Controller {
 	
 	public function ajaxupload_jobdoc(){
 		       
- if(is_array($_FILES) && !empty($_FILES['doc']))  
- {  
-	  $doc=array();
-	  $doc_name=array();$i=0;
-      foreach($_FILES['doc']['name'] as $key => $filename)  
-     {  	
-		  	
-           $file_name = explode(".", $filename);  
-           $allowed_extension = array("jpg","pdf","jpeg","gif","png","doc","docx","xls","xlsx","ppt","pptx","txt","zip","rar","gzip");  
-           if(in_array($file_name[1], $allowed_extension))  
-           {  
-                $new_name = $_FILES["doc"]["name"][$key];  
-                $sourcePath = $_FILES["doc"]["tmp_name"][$key];  
-                $targetPath = "assets/job_doc/".$new_name;  
-                move_uploaded_file($sourcePath, $targetPath);  
-				$doc[$i]=$_FILES["doc"]["name"][$key];
-				$i++;
-           } 
-      }
+	 if(is_array($_FILES) && !empty($_FILES['doc']))  
+	 {  
+		  $doc=array();
+		  $doc_name=array();$i=0;
+	      foreach($_FILES['doc']['name'] as $key => $filename)  
+	     {  	
+			  	
+	           $file_name = explode(".", $filename);  
+	           $allowed_extension = array("pdf", "doc","docx","xls","xlsx","ppt","pptx","txt","zip");  
+	           if(in_array($file_name[1], $allowed_extension))  
+	           {  
+	                if($file_name[1]!='zip')
+	            	{
+		            	$new_name = $_FILES["doc"]["name"][$key];  
+		                $sourcePath = $_FILES["doc"]["tmp_name"][$key];  
+		                $targetPath = "assets/job_doc/".$new_name;  
+		                move_uploaded_file($sourcePath, $targetPath);  
+						$doc[$i]=$_FILES["doc"]["name"][$key];
+						$i++;
+	        		}else{
 
-		echo json_encode($doc);
-      
-      
- }
+	        			$targetPath = 'assets/job_doc/';  
+               			$location = $targetPath . $filename; 
+               			if(move_uploaded_file($_FILES['doc']['tmp_name'][$key], $location))  
+		                {  
+		                     $zip = new ZipArchive;  
+		                     if($zip->open($location))  
+		                     {  
+		                          $zip->extractTo($targetPath);  
+		                          $zip->close();  
+		                     }  
+		                     $files = scandir($targetPath . $file_name[0]);  
+		                      
+		                     foreach($files as $file)  
+		                     {  
+		                          $tmp=explode(".", $file);
+								  $file_ext = end($tmp);  
+		                          $allowed_ext = array("pdf", "doc","docx","xls","xlsx","ppt","pptx","txt"); 
+		                          $new_name='';
+		                          if(in_array($file_ext, $allowed_ext))  
+		                          {  
+		                               $new_name = md5(rand()).'.' . $file_ext; 
+		                             
+		                               copy($targetPath.$file_name[0].'/'.$file, $targetPath . $new_name);  
+		                               unlink($targetPath.$file_name[0].'/'.$file);  
+		                          }
+		                          if($new_name!=''){
+		                          	$doc[$i]=$new_name;  
+		                          $i++; 
+		                          }
+		                               
+		                     }  
+		                     unlink($location);  
+		                     rmdir($targetPath . $file_name[0]);  
+		                }
+	        		}
+	           } 
+	      }
+
+			echo json_encode($doc);
+	      
+	      
+	 }
 		
 	}
+	
 	
 	
 	public function ajaxsave_jobphoto(){ 
@@ -83,7 +162,10 @@ class Server extends CI_Controller {
 			$params['is_active'] 		= TRUE;
 			$this->db->insert('jobs_photo', $params);
 			$insertId = $this->db->insert_id();
-			echo '<div id="ph'.$insertId.'" class="col-md-2"><i class="del-photo pe-7s-close" id="'.$insertId.'"></i><a href="#" class="pop"><img src="'.base_url().'assets/job_photo/'.$data[$i].'" /></a></div>';
+			echo '<div id="ph'.$insertId.'" class="col-md-2"><i class="del-photo pe-7s-close" id="'.$insertId.'"></i><a  href="'.base_url().'assets/job_photo/'.$data[$i].'" data-fancybox="photo" data-caption="'.$data[$i].'"><img class="img'.$insertId.'" src="'.base_url().'assets/job_photo/'.$data[$i].'"  /></a></div>';
+
+			  
+
 		}
 	}
 	
