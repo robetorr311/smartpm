@@ -221,4 +221,66 @@ echo '</div>';
 </div>
 					   </div>
                         </div>
+<script>
+  $(document).ready(function(){
+        $('#lead').change(function(){
+                var value=$(this).val();
+                var id=$('.hidden_id').val();
+                var status=$(this).attr('id');
+                var contract_status=$('#contract').val();
+                if(value=='open'){
+                    $('#contract').removeAttr('disabled');
+                    $('#job').removeAttr('disabled');
+                    $.ajax({
+                        url: baseUrl+'lead/updatestatus',
+                        data: {value: value, id: id, status:status},        
+                        type: 'post',
+                        success: function(php_script_response){
+                            $('.'+status).html(value);
+                            }
+                    });
+                }else if(value!=open && contract_status!='signed'){
+                    $('#contract').prop('disabled', 'disabled');    
+                    $('#job').prop('disabled', 'disabled');
+                    $.ajax({
+                        url: baseUrl+'lead/updatestatus',
+                        data: {value: value, id: id, status:status},        
+                        type: 'post',
+                        success: function(php_script_response){
+                            $('.'+status).html(value);
+                            }
+                    });
+                }else{
+                    alert('Contract Already Signed. First Unsigned Contract than update lead Status!');
+                }
+            });
+
+            $('.lead-status').change(function(){
+                var value=$(this).val();
+                var id=$('.hidden_id').val();
+                var status=$(this).attr('id');
+
+                var lead_status=$('#lead').val();
+                var contract_status=$('#contract').val();
+            
+                    if(lead_status=='open'){
+                        $.ajax({
+                                url: baseUrl+'lead/updatestatus',
+                                data: {value: value, id: id, status:status},        
+                                type: 'post',
+                                success: function(php_script_response){
+                                
+                                    $('.'+status).html(value);
+                            
+                                }
+                             });
+                    }else{
+
+                        alert('Job Status Must be Open Before Sign a Contract!');
+                    }
+                
+                });
+
+  });
+</script>
   

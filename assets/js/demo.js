@@ -320,4 +320,22 @@ $(document).ready(function () {
       return false;
     }
   });
-});
+
+
+         $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+       });
+
+
+         
+          $(document).ajaxStart(function(){
+                $("#wait").css("display", "block");
+              });
+              $(document).ajaxComplete(function(){
+                $("#wait").css("display", "none");
+              });
+    
+  });
