@@ -7,7 +7,7 @@ class TaskNotesModel extends CI_Model
 
     public function insert($data)
     {
-        $data['created_by'] = $this->session->userdata('admininfo')->id;
+        $data['created_by'] = $this->session->id;
         $insert = $this->db->insert($this->table, $data);
         return $insert ? $this->db->insert_id() : $insert;
     }

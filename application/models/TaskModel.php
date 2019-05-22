@@ -78,7 +78,7 @@ class TaskModel extends CI_Model
     public function insert($data)
     {
         $data['status'] = '0';
-        $data['created_by'] = $this->session->userdata('admininfo')->id;
+        $data['created_by'] = $this->session->id;
         $insert = $this->db->insert($this->table, $data);
         return $insert ? $this->db->insert_id() : $insert;
     }
