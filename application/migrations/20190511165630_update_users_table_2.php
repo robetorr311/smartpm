@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Migration_Update_users_table extends CI_Migration
+class Migration_Update_users_table_2 extends CI_Migration
 {
     public function __construct()
     {
@@ -165,10 +165,20 @@ class Migration_Update_users_table extends CI_Migration
         $this->dbforge->drop_column('users', 'first_name');
         $this->dbforge->drop_column('users', 'last_name');
         $this->dbforge->drop_column('users', 'username');
+        $this->dbforge->drop_column('users', 'alt_email');
+        $this->dbforge->drop_column('users', 'level');
         $this->dbforge->drop_column('users', 'type');
         $this->dbforge->drop_column('users', 'verification_token');
+        $this->dbforge->drop_column('users', 'company');
         $this->dbforge->drop_column('users', 'address');
-        $this->dbforge->drop_column('users', 'phone_number');
+        $this->dbforge->drop_column('users', 'city');
+        $this->dbforge->drop_column('users', 'state');
+        $this->dbforge->drop_column('users', 'zip');
+        $this->dbforge->drop_column('users', 'office_phone');
+        $this->dbforge->drop_column('users', 'home_phone');
+        $this->dbforge->drop_column('users', 'cell_1');
+        $this->dbforge->drop_column('users', 'cell_2');
+        $this->dbforge->drop_column('users', 'notifications');
         $this->dbforge->drop_column('users', 'is_active');
         $this->dbforge->drop_column('users', 'is_deleted');
         $this->dbforge->modify_column('users', $modifyFields);
