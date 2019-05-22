@@ -419,3 +419,6 @@ span.info-tag {
 .card.add-note-card .content.view .add-note-form {
 	border-top: solid 1px rgba(63, 63, 68, 0.15);
 }
+.fancybox-caption__body {
+    visibility: hidden;
+}
