@@ -28,11 +28,11 @@ class TaskModel extends CI_Model
 
     public function allTasks($start = 0, $limit = 10)
     {
-        $this->db->select('tasks.*, users_created_by.username as created_username, users_assigned_to.username as assigned_username');
+        $this->db->select("tasks.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname, CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
         $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
-        $this->db->where('is_deleted', FALSE);
+        $this->db->where('tasks.is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -47,17 +47,17 @@ class TaskModel extends CI_Model
 
     public function getTaskById($id)
     {
-        $this->db->select('tasks.*, users_created_by.username as created_username, users_assigned_to.username as assigned_username');
+        $this->db->select("tasks.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname, CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
         $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
         $this->db->where([
             'tasks.id' => $id,
-            'is_deleted' => FALSE
+            'tasks.is_deleted' => FALSE
         ]);
         $query = $this->db->get();
-        $result = $query->result();
-        return (count($result) > 0) ? $result[0] : false;
+        $result = $query->first_row();
+        return $result ? $result : false;
     }
 
     public function getTaskList($select = 'id, name')
@@ -71,17 +71,14 @@ class TaskModel extends CI_Model
 
     public function getTaskListExcept($id, $select = 'id, name')
     {
-        $this->db->where([
-            'id !=' => $id,
-            'is_deleted' => FALSE
-        ]);
+        $this->db->where('id !=', $id);
         return $this->getTaskList($select);
     }
 
     public function insert($data)
     {
         $data['status'] = '0';
-        $data['created_by'] = $this->session->userdata('admininfo')->id;
+        $data['created_by'] = $this->session->id;
         $insert = $this->db->insert($this->table, $data);
         return $insert ? $this->db->insert_id() : $insert;
     }
@@ -101,7 +98,7 @@ class TaskModel extends CI_Model
         ]);
     }
 
-    public function isAllowedToDelete($task_id)
+    public function predecessorCheck($task_id)
     {
         $this->db->where('id IN (SELECT predecessor_task_id FROM task_predecessor WHERE task_id=' . $task_id . ' AND is_deleted=FALSE)');
         $this->db->where('status !=', 4);
