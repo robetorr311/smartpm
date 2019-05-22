@@ -21,6 +21,11 @@ class Migration_Update_teams_table extends CI_Migration
                 'type' => 'INT',
                 'constraint' => 11,
                 'after' => 'manager'
+            ],
+            'created_by' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'after' => 'team_leader'
             ]
         ];
 
@@ -31,5 +36,6 @@ class Migration_Update_teams_table extends CI_Migration
     {
         $this->dbforge->drop_column('teams', 'manager');
         $this->dbforge->drop_column('teams', 'team_leader');
+        $this->dbforge->drop_column('teams', 'created_by');
     }
 }
