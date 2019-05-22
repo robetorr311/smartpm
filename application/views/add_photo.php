@@ -20,7 +20,7 @@ echo '</div>';
              <div class="image_div">
                   <?php foreach( $imgs as $img ) : ?>  
             <div class="col-md-2" id="ph<?php echo $img->id; ?>">   <i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i>
-           <a  href="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" data-fancybox="photo" data-caption="<?php echo $img->image_name ?>">
+           <a  href="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" alt="<?php echo $img->id; ?>" data-fancybox="photo" data-caption="<?php echo $img->image_name ?>">
                 <img class="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>"  />
             </a>
      </div>
@@ -90,16 +90,21 @@ echo '</div>';
                   data: form_data,                         
                   type: 'post',
                   success: function(php_script_response){
-                    //alert(php_script_response); 
-                    $.ajax({
-                      type: 'POST',
-                      url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
-                      data: {id: id, name:php_script_response},                         
-                      success: function(photoid){
-                        //alert(photoid);
-                        $('.image_div').append(photoid);
-                      }
-                    });
+                    var obj = JSON.parse(php_script_response)
+                    if(obj.length!=0){
+                          $.ajax({ 
+                          type: 'POST',
+                          url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
+                          data: {id: id, name:php_script_response},                         
+                          success: function(photoid){
+                            //alert(photoid);
+                            $('.image_div').append(photoid);
+                          }
+                        });
+                        }else{
+
+                           alert('Something went wrong!. File type not ok');
+                        }
                   }
                  });       
           });
@@ -131,16 +136,21 @@ echo '</div>';
                 data: form_data,                         
                 type: 'post',
                 success: function(php_script_response){
-                  //alert(php_script_response); 
-                $.ajax({
-                type: 'POST',
-                url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
-                data: {id: id, name:php_script_response},                         
-                  success: function(photoid){
-                    //alert(photoid);
-                    $('.image_div').append(photoid);
-                  }
-                });
+                   var obj = JSON.parse(php_script_response)
+                     //alert(obj.length);
+                 if(obj.length!=0){
+                      $.ajax({
+                      type: 'POST',
+                      url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
+                      data: {id: id, name:php_script_response},                         
+                        success: function(photoid){
+                          //alert(photoid);
+                          $('.image_div').append(photoid);
+                        }
+                      });
+                    }else{
+                       alert('Something went wrong!. File type not ok');
+                    }
                 }   
               });
         });
@@ -165,8 +175,13 @@ echo '</div>';
              /* if ( item.type === 'image' ) {
                 var caption =  '<button name="'+caption+'" href="' + item.src + '" id="rotate"  class="btn btn-success btn-fill rotate">Rotate image</button>' ;
               }*/
+
               return caption;
               },
+           //   afterLoad: function( instance, current ) {
+             //  alert( current.opts.$orig.attr("alt") );
+            //  alert(this.a);
+             // },
           });
 
 
@@ -217,9 +232,10 @@ echo '</div>';
           if(isNaN(cur_angle)!=true && cur_angle < 360 && cur_angle > -360){
             angle = cur_angle + angle;
            }
-
-        $('.fancybox-slide--current .fancybox-content img').attr('alt', angle); 
-        $('.fancybox-slide--current .fancybox-content img').css({'transform': 'rotate(-' + angle + 'deg)'});
+       
+        document.getElementsByClassName('img255').src =php_script_response;
+       // $('.fancybox-slide--current .fancybox-content img').attr('alt', angle); 
+        // /$('.fancybox-slide--current .fancybox-content img').css({'transform': 'rotate(-' + angle + 'deg)'});
     
                 }
 
