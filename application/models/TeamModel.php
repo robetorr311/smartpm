@@ -41,6 +41,7 @@ class TeamModel extends CI_Model
 
     public function insert($data)
     {
+        $data['created_by'] = $this->session->id;
         $insert = $this->db->insert($this->table, $data);
         return $insert ? $this->db->insert_id() : $insert;
     }
