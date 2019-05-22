@@ -41,7 +41,9 @@
     <!-- bootstrap tagsinput JS -->
 	<script src="<?= base_url('assets/js/bootstrap-tagsinput.min.js') ?>"></script>
 	<script src="<?= base_url('assets/js/bootstrap3-typeahead.min.js') ?>"></script>
-
+    <script src="<?php echo base_url();?>assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+    <script src="<?php echo base_url();?>assets/js/demo.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jquery.fancybox.js"></script>
 </head>
 <body>
 
