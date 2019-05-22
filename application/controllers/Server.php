@@ -8,6 +8,8 @@ class Server extends CI_Controller {
 	
 		$this->load->helper(['form','security','cookie']);
 		$this->load->library(['form_validation','email','user_agent','session','image_lib']);
+		$this->load->model('JobsDocModel');
+		$this->doc = new JobsDocModel();
 		$this->datetime = date("Y-m-d H:i:s");
 	}
 
@@ -42,10 +44,12 @@ class Server extends CI_Controller {
 		                     if($zip->open($location))  
 		                     {  
 		                          $zip->extractTo($targetPath);  
+		                      $dir = trim($zip->getNameIndex(0), '/');
 		                          $zip->close();  
 		                     }  
-		                     $files = scandir($targetPath . $file_name[0]);  
-		                      
+
+		                     $files = scandir($targetPath . $dir);  
+		                   
 		                     foreach($files as $file)  
 		                     {  
 		                          $tmp=explode(".", $file);
@@ -56,8 +60,8 @@ class Server extends CI_Controller {
 		                          {  
 		                               $new_name = md5(rand()).'.' . $file_ext; 
 		                             
-		                               copy($targetPath.$file_name[0].'/'.$file, $targetPath . $new_name);  
-		                               unlink($targetPath.$file_name[0].'/'.$file);  
+		                               copy($targetPath.$dir.'/'.$file, $targetPath . $new_name);  
+		                               unlink($targetPath.$dir.'/'.$file);  
 		                          }
 		                          if($new_name!=''){
 		                          	$img[$i]=$new_name;  
@@ -66,7 +70,7 @@ class Server extends CI_Controller {
 		                               
 		                     }  
 		                     unlink($location);  
-		                     rmdir($targetPath . $file_name[0]);  
+		                     rmdir($targetPath . $dir);  
 		                } 
 				}
            } 
@@ -109,10 +113,11 @@ class Server extends CI_Controller {
 		                     $zip = new ZipArchive;  
 		                     if($zip->open($location))  
 		                     {  
-		                          $zip->extractTo($targetPath);  
+		                          $zip->extractTo($targetPath); 
+		                           $dir = trim($zip->getNameIndex(0), '/'); 
 		                          $zip->close();  
 		                     }  
-		                     $files = scandir($targetPath . $file_name[0]);  
+		                     $files = scandir($targetPath . $dir);  
 		                      
 		                     foreach($files as $file)  
 		                     {  
@@ -124,8 +129,8 @@ class Server extends CI_Controller {
 		                          {  
 		                               $new_name = md5(rand()).'.' . $file_ext; 
 		                             
-		                               copy($targetPath.$file_name[0].'/'.$file, $targetPath . $new_name);  
-		                               unlink($targetPath.$file_name[0].'/'.$file);  
+		                               copy($targetPath.$dir.'/'.$file, $targetPath . $new_name);  
+		                               unlink($targetPath.$dir.'/'.$file);  
 		                          }
 		                          if($new_name!=''){
 		                          	$doc[$i]=$new_name;  
@@ -134,7 +139,7 @@ class Server extends CI_Controller {
 		                               
 		                     }  
 		                     unlink($location);  
-		                     rmdir($targetPath . $file_name[0]);  
+		                     rmdir($targetPath . $dir);  
 		                }
 	        		}
 	           } 
@@ -186,7 +191,8 @@ class Server extends CI_Controller {
 			$params['is_active'] 		= TRUE;
 			$this->db->insert('jobs_doc', $params);
 			$insertId = $this->db->insert_id();
-			echo '<tr id="doc'.$insertId.'"><td style="width: 30px"></td><td style="width: 30px"><i class="del-doc pe-7s-trash" id="'.$insertId.'"></i></td><td style="width: 30px"><a href="'.base_url().'assets/job_doc/'.$data[$i].'"  target="_blank"><i class="pe-7s-news-paper" style="font-size: 30px"></i></a></td><td><span class="'.$insertId.'"><i class="del-edit pe-7s-note"></i></span></td><td><p id="docp'.$insertId.'">'.$trimmed.'</p><input style="width: 100%;display:none" name="'.$insertId.'" type="text"  class="docname" id="doctext'.$insertId.'" /></td><td >'.$data[$i].'</td></tr>';
+			$total=$this->doc->getCount(['is_active'=>1,'job_id'=>$posts['id']]);
+			echo '<tr id="doc'.$insertId.'"><td style="width: 30px">'.$total.'</td><td style="width: 30px"><i class="del-doc pe-7s-trash" id="'.$insertId.'"></i></td><td style="width: 30px"><a href="'.base_url().'assets/job_doc/'.$data[$i].'"  target="_blank"><i class="pe-7s-news-paper" style="font-size: 30px"></i></a></td><td><span class="'.$insertId.'"><i class="del-edit pe-7s-note"></i></span></td><td><p id="docp'.$insertId.'">'.$trimmed.'</p><input style="width: 100%;display:none" name="'.$insertId.'" type="text"  class="docname" id="doctext'.$insertId.'" /></td><td >'.$data[$i].'</td></tr>';
 			
 
 			 

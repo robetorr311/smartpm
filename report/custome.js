@@ -54,11 +54,15 @@ $(document).ready(function() {
 				success: function(php_script_response){
 					var str=$.parseJSON(php_script_response);
 					var i;
+					if(str.length!=0){
 					for(i=0;i<str.length;i++){
 						 imgbox.push('#box'+timg);
 						$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="../assets/job_photo/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose"  style="display:block"></i></div>');
 						timg++;
 					}
+					}else{
+                       alert('Something went wrong!. File type not ok');
+                    }
 				}
 		});
 					 
@@ -91,11 +95,15 @@ $(document).ready(function() {
 						//alert(php_script_response);
 						var str=$.parseJSON(php_script_response);
 						var i;
+						if(str.length!=0){
 						for(i=0;i<str.length;i++){
 							 imgbox.push('#box'+timg);
 							$('.img-container').append('<div class="image-box" id="box'+timg+'"><img class="img'+timg+'" src="../assets/job_photo/'+str[i]+'" /><span class="marker">Add Marker</span><i class="fa fa-window-close" id="boxclose"  style="display:block"></i></div>');
 							timg++;
 						}
+						}else{
+                       alert('Something went wrong!. File type not ok');
+                    }
 					}
 			});
 		}

@@ -36,9 +36,10 @@
 		                     if($zip->open($location))  
 		                     {  
 		                          $zip->extractTo($targetPath);  
+		                          $dir = trim($zip->getNameIndex(0), '/');
 		                          $zip->close();  
 		                     }  
-		                     $files = scandir($targetPath . $file_name[0]);  
+		                     $files = scandir($targetPath . $dir);  
 		                      
 		                     foreach($files as $file)  
 		                     {  
@@ -50,8 +51,8 @@
 		                          {  
 		                               $new_name = md5(rand()).'.' . $file_ext; 
 		                             
-		                               copy($targetPath.$file_name[0].'/'.$file, $targetPath . $new_name);  
-		                               unlink($targetPath.$file_name[0].'/'.$file);  
+		                               copy($targetPath.$dir.'/'.$file, $targetPath . $new_name);  
+		                               unlink($targetPath.$dir.'/'.$file);  
 		                          }
 		                          if($new_name!=''){
 		                          	$img[$i]=$new_name;  
@@ -60,7 +61,7 @@
 		                               
 		                     }  
 		                     unlink($location);  
-		                     rmdir($targetPath . $file_name[0]);  
+		                     rmdir($targetPath . $dir);  
 		                }  
 	                }
 	                
