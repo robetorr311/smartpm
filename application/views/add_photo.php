@@ -205,10 +205,11 @@ echo '</div>';
                    // location.reload();
                     var tStamp = +new Date();
                   
-                    $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src','http://localhost/smartpm/assets/job_photo/'+php_script_response+'?t='+ tStamp);
-                    src='http://localhost/smartpm/assets/job_photo/'+php_script_response;
+                    $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
+                    src=baseUrl+'assets/job_photo/'+php_script_response;
+                    alert(src);
                     var idx = $('.image_div a[href="'+src+'"]').attr('alt');
-                    $('.image_div #img'+idx).attr('src','http://localhost/smartpm/assets/job_photo/'+php_script_response+'?t='+ tStamp);
+                    $('.image_div #img'+idx).attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
          
                 }
 
