@@ -22,12 +22,12 @@ class Migration_Create_companies_table extends CI_Migration
                 'constraint' => 200,
                 'null' => TRUE
             ],
-            'email' => [
+            'email_id' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
                 'null' => TRUE
             ],
-            'alt_email' => [
+            'alt_email_id' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
                 'null' => TRUE
@@ -54,6 +54,10 @@ class Migration_Create_companies_table extends CI_Migration
                 'constraint' => 11,
                 'after' => 'state',
                 'null' => TRUE
+            ],
+            'is_deleted' => [
+                'type' => 'BOOLEAN',
+                'default' => FALSE
             ],
             'created_at TIMESTAMP default CURRENT_TIMESTAMP',
             'updated_at TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
