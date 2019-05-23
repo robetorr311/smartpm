@@ -61,6 +61,7 @@ $route['logout']['post'] = 'auth/logout';
 
 $route['migrate/do_migration'] = 'migrate/do_migration';
 $route['migrate/undo_migration'] = 'migrate/undo_migration';
+$route['migrate/undo_migration/(:num)'] = 'migrate/undo_migration/$1';
 $route['migrate/reset_migration'] = 'migrate/reset_migration';
 
 $route['dashboard'] = 'dashboard/index';
