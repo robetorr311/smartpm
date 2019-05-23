@@ -37,17 +37,11 @@ class Migration_Update_users_table_2 extends CI_Migration
                 'after' => 'last_name',
                 'unique' => TRUE
             ],
-            'alt_email' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'after' => 'password',
-                'null' => TRUE
-            ],
             'level' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'default' => 1,
-                'after' => 'alt_email'
+                'after' => 'email_id'
             ],
             'type' => [
                 'type' => 'INT',
@@ -61,39 +55,10 @@ class Migration_Update_users_table_2 extends CI_Migration
                 'after' => 'type',
                 'null' => TRUE
             ],
-            'company' => [
-                'type' => 'VARCHAR',
-                'constraint' => 200,
-                'after' => 'verification_token',
-                'null' => TRUE
-            ],
-            'address' => [
-                'type' => 'TEXT',
-                'after' => 'company',
-                'null' => TRUE
-            ],
-            'city' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'after' => 'address',
-                'null' => TRUE
-            ],
-            'state' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'after' => 'city',
-                'null' => TRUE
-            ],
-            'zip' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'after' => 'state',
-                'null' => TRUE
-            ],
             'office_phone' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'after' => 'zip',
+                'after' => 'verification_token',
                 'null' => TRUE
             ],
             'home_phone' => [
@@ -120,10 +85,15 @@ class Migration_Update_users_table_2 extends CI_Migration
                 'default' => 1,
                 'after' => 'cell_2'
             ],
+            'company_id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'after' => 'notifications'
+            ],
             'is_active' => [
                 'type' => 'BOOLEAN',
                 'default' => FALSE,
-                'after' => 'notifications'
+                'after' => 'company_id'
             ],
             'is_deleted' => [
                 'type' => 'BOOLEAN',
