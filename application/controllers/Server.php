@@ -12,9 +12,22 @@ class Server extends CI_Controller {
 		$this->doc = new JobsDocModel();
 		$this->datetime = date("Y-m-d H:i:s");
 	}
-
+function rrmdir($dir) {
+	  if (is_dir($dir)) {
+	    $objects = scandir($dir);
+	    foreach ($objects as $object) {
+	      if ($object != "." && $object != "..") {
+	        if (filetype($dir."/".$object) == "dir") 
+	           $this->rrmdir($dir."/".$object); 
+	        else unlink   ($dir."/".$object);
+	      }
+	    }
+	    reset($objects);
+	    rmdir($dir);
+	  }
+ }
 	
-	public function ajaxupload_jobphoto(){
+public function ajaxupload_jobphoto(){
 		       
  if(is_array($_FILES) && !empty($_FILES['photo']))  
  {  
@@ -37,51 +50,81 @@ class Server extends CI_Controller {
 				}else{
 
 					$targetPath = 'assets/job_photo/';  
-               			$location = $targetPath . $filename; 
-               			if(move_uploaded_file($_FILES['photo']['tmp_name'][$key], $location))  
-		                {  
-		                     $zip = new ZipArchive;  
-		                     if($zip->open($location))  
-		                     {  
-		                          $zip->extractTo($targetPath);  
-		                      $dir = trim($zip->getNameIndex(0), '/');
-		                          $zip->close();  
-		                     }  
-
-		                     $files = scandir($targetPath . $dir);  
+               		$location = $targetPath . $filename; 
+               		if(move_uploaded_file($_FILES['photo']['tmp_name'][$key], $location))  
+		               {  
+		                   $zip = new ZipArchive;
+  	                       if($zip->open($location))  
+ 		                     {    $zip->extractTo($targetPath); 
+		                     	  $dir = trim($zip->getNameIndex(0), '/');
+								  $destinationFolder = $targetPath."/$dir";
 		                   
-		                     foreach($files as $file)  
-		                     {  
-		                          $tmp=explode(".", $file);
-								  $file_ext = end($tmp);  
-		                          $allowed_ext = array("jpg", "jpeg", "png", "PNG", "gif", "JPG"); 
-		                          $new_name='';
-		                          if(in_array($file_ext, $allowed_ext))  
-		                          {  
-		                               $new_name = md5(rand()).'.' . $file_ext; 
-		                             
-		                               copy($targetPath.$dir.'/'.$file, $targetPath . $new_name);  
-		                               unlink($targetPath.$dir.'/'.$file);  
-		                          }
-		                          if($new_name!=''){
-		                          	$img[$i]=$new_name;  
-		                          $i++; 
-		                          }
-		                               
-		                     }  
-		                     unlink($location);  
-		                     rmdir($targetPath . $dir);  
+		                         if(!is_dir($destinationFolder)) {
+								    mkdir( $targetPath."/$file_name[0]");				  
+								    $zip->extractTo( $targetPath."/$file_name[0]");
+								    $zip->close();
+								    $files = scandir( $targetPath."/$file_name[0]");  
+		                    
+				                     foreach($files as $file)  
+				                     {  
+				                          $tmp=explode(".", $file);
+										  $file_ext = end($tmp);  
+				                          $allowed_ext = array("jpg", "jpeg", "png", "PNG", "gif", "JPG"); 
+				                          $new_name='';
+				                          if(in_array($file_ext, $allowed_ext))  
+				                          {  
+				                               $new_name = md5(rand()).'.' . $file_ext; 
+				                             
+				                               copy( $targetPath."/$file_name[0]".'/'.$file, $targetPath . $new_name);  
+				                               unlink( $targetPath."/$file_name[0]".'/'.$file);  
+				                          }
+				                          if($new_name!=''){
+				                          	$img[$i]=$new_name;  
+				                          $i++; 
+				                          }
+				                               
+				                     }  
+		                     		 unlink($location);  
+		                      		 $this->rrmdir( $targetPath."/$file_name[0]");
+								  }else{
+								  	  
+								  	  $dir = trim($zip->getNameIndex(0), '/');
+		                        	  $zip->close(); 
+		                        	  $files = scandir($targetPath . $dir);    
+		                   
+				                      foreach($files as $file)  
+				                      {  
+				                          $tmp=explode(".", $file);
+										  $file_ext = end($tmp);  
+				                          $allowed_ext = array("jpg", "jpeg", "png", "PNG", "gif", "JPG"); 
+				                          $new_name='';
+				                          if(in_array($file_ext, $allowed_ext))  
+				                          {  
+				                               $new_name = md5(rand()).'.' . $file_ext; 
+				                             
+				                               copy($targetPath . $dir.'/'.$file, $targetPath . $new_name);  
+				                               unlink($targetPath . $dir.'/'.$file);  
+				                          }
+				                          if($new_name!=''){
+				                          	$img[$i]=$new_name;  
+				                          $i++; 
+				                          }
+				                               
+				                      }  
+					                    unlink($location);  
+					                    $this->rrmdir($targetPath . $dir); 
+								  }
+		                     }   
 		                } 
 				}
            } 
       }
-
-		echo json_encode($img);
-      
-      
- }
+		echo json_encode($img);  
+ 	}
 		
-	}
+}
+
+	
 	
 	public function ajaxupload_jobdoc(){
 		       
@@ -110,36 +153,72 @@ class Server extends CI_Controller {
                			$location = $targetPath . $filename; 
                			if(move_uploaded_file($_FILES['doc']['tmp_name'][$key], $location))  
 		                {  
-		                     $zip = new ZipArchive;  
-		                     if($zip->open($location))  
-		                     {  
-		                          $zip->extractTo($targetPath); 
-		                           $dir = trim($zip->getNameIndex(0), '/'); 
-		                          $zip->close();  
-		                     }  
-		                     $files = scandir($targetPath . $dir);  
-		                      
-		                     foreach($files as $file)  
-		                     {  
-		                          $tmp=explode(".", $file);
-								  $file_ext = end($tmp);  
-		                          $allowed_ext = array("pdf", "doc","docx","xls","xlsx","ppt","pptx","txt"); 
-		                          $new_name='';
-		                          if(in_array($file_ext, $allowed_ext))  
-		                          {  
-		                               $new_name = md5(rand()).'.' . $file_ext; 
-		                             
-		                               copy($targetPath.$dir.'/'.$file, $targetPath . $new_name);  
-		                               unlink($targetPath.$dir.'/'.$file);  
-		                          }
-		                          if($new_name!=''){
-		                          	$doc[$i]=$new_name;  
-		                          $i++; 
-		                          }
-		                               
-		                     }  
-		                     unlink($location);  
-		                     rmdir($targetPath . $dir);  
+		                       
+		                     $zip = new ZipArchive;
+  	                       if($zip->open($location))  
+ 		                     {    $zip->extractTo($targetPath); 
+		                     	  $dir = trim($zip->getNameIndex(0), '/');
+								  $destinationFolder = $targetPath."$dir";
+		              
+		                
+		                         if(!is_dir($destinationFolder)) {
+								    mkdir( $targetPath."/$file_name[0]");  			  
+								    $zip->extractTo( $targetPath."/$file_name[0]");
+								    $zip->close();
+								    $files = scandir( $targetPath."/$file_name[0]");  
+		                   
+				                     foreach($files as $file)  
+				                     {  
+				                          $tmp=explode(".", $file);
+										  $file_ext = end($tmp);  
+				                          $allowed_ext = array("pdf", "doc","docx","xls","xlsx","ppt","pptx","txt"); 
+				                          $new_name='';
+				                          if(in_array($file_ext, $allowed_ext))  
+				                          {  
+				                               $new_name = md5(rand()).'.' . $file_ext; 
+				                             
+				                               copy( $targetPath."/$file_name[0]".'/'.$file, $targetPath . $new_name);  
+				                               unlink( $targetPath."/$file_name[0]".'/'.$file);  
+				                          }
+				                          if($new_name!=''){
+				                          	$doc[$i]=$new_name;  
+				                          $i++; 
+				                          }
+				                               
+				                     }  
+		                     		 unlink($location);  
+		                      		 $this->rrmdir( $targetPath."/$file_name[0]");
+								  }else{
+								  	  
+								  	  $dir = trim($zip->getNameIndex(0), '/');
+		                        	  $zip->close(); 
+		                        	  $files = scandir($targetPath . $dir);    
+		                    
+				                      foreach($files as $file)  
+				                      {  
+				                          $tmp=explode(".", $file);
+										  $file_ext = end($tmp);  
+				                          $allowed_ext = array("pdf", "doc","docx","xls","xlsx","ppt","pptx","txt");  
+				                          $new_name='';
+				                          if(in_array($file_ext, $allowed_ext))  
+				                          {  
+				                               $new_name = md5(rand()).'.' . $file_ext; 
+				                             
+				                               copy($targetPath . $dir.'/'.$file, $targetPath . $new_name);  
+				                               unlink($targetPath . $dir.'/'.$file);  
+				                          }
+				                          if($new_name!=''){
+				                          	$doc[$i]=$new_name;  
+				                          $i++; 
+				                          }
+				                               
+				                      }  
+					                    unlink($location);  
+					                    $this->rrmdir($targetPath . $dir); 
+								  }
+		                     } 
+		                         
+		                           
 		                }
 	        		}
 	           } 
