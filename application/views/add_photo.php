@@ -205,7 +205,11 @@ echo '</div>';
                    // location.reload();
                     var tStamp = +new Date();
                   
+                
+
                     $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
+
+          // $('body .fancybox-slide--current .fancybox-content').css({'height':height+'px', 'width':width+'px'});
                     src=baseUrl+'assets/job_photo/'+php_script_response;
                    
                     var idx = $('.image_div a[href="'+src+'"]').attr('alt');
