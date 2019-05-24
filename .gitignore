@@ -38,3 +38,4 @@ assets/job_doc
 assets/job_photo
 report/output
 report/uploads
+!assets/job_photo/.htaccess
