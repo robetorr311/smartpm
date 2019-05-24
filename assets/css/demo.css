@@ -70,6 +70,8 @@ img {
 }
 .image_div img {
 	height: 140px;
+border: 2px solid black;
+margin-bottom: 30px;
 }
 .image_div {
 	float: left;
