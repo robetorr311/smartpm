@@ -246,7 +246,7 @@ public function ajaxupload_jobphoto(){
 			$params['is_active'] 		= TRUE;
 			$this->db->insert('jobs_photo', $params);
 			$insertId = $this->db->insert_id();
-			echo '<div id="ph'.$insertId.'" class="col-md-2"><i class="del-photo pe-7s-close" id="'.$insertId.'"></i><a  href="'.base_url().'assets/job_photo/'.$data[$i].'" data-fancybox="photo" data-caption="'.$data[$i].'"><img class="img'.$insertId.'" src="'.base_url().'assets/job_photo/'.$data[$i].'"  /></a></div>';
+			echo '<div id="ph'.$insertId.'" class="col-md-2"><i class="del-photo pe-7s-close" id="'.$insertId.'"></i><a alt="'.$insertId.'"  href="'.base_url().'assets/job_photo/'.$data[$i].'" data-fancybox="photo" data-caption="'.$data[$i].'"><img id="img'.$insertId.'" src="'.base_url().'assets/job_photo/'.$data[$i].'"  /></a></div>';
 
 			  
 
