@@ -102,16 +102,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
             data: form_data,                         
             type: 'post',
             success: function(php_script_response){
-              //alert(php_script_response); 
-              $.ajax({
-                type: 'POST',
-                url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
-                data: {id: id, name:php_script_response},                         
-                success: function(photoid){
-                  //alert(photoid);
-                  $('.image_div table').append(photoid);
-                }
-              });
+            var obj = JSON.parse(php_script_response)
+              if(obj.length!=0){
+                   $.ajax({
+                            type: 'POST',
+                            url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
+                            data: {id: id, name:php_script_response},                         
+                            success: function(photoid){
+                              //alert(photoid);
+                              $('.image_div table').append(photoid);
+                            }
+                          });
+               }else{
+
+                       alert('Something went wrong!. File type not ok');
+               }
             }
            });
     });
@@ -143,16 +148,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
             data: form_data,                         
             type: 'post',
             success: function(php_script_response){
-              //alert(php_script_response); 
-              $.ajax({
-                type: 'POST',
-                url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
-                data: {id: id, name:php_script_response},                         
-                success: function(photoid){
-                  //alert(photoid);
-                  $('.image_div table').append(photoid);
-                }
-              });
+              var obj = JSON.parse(php_script_response)
+              if(obj.length!=0){ 
+                      $.ajax({
+                        type: 'POST',
+                        url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
+                        data: {id: id, name:php_script_response},                         
+                        success: function(photoid){
+                          //alert(photoid);
+                          $('.image_div table').append(photoid);
+                        }
+                      });
+                }else{
+
+                           alert('Something went wrong!. File type not ok');
+                        }
             }
            });
         });
@@ -191,6 +201,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
           $('#doctext'+id).toggle();
           $('#docp'+id).toggle();
         });
+
+
+
 
   });
 </script>
