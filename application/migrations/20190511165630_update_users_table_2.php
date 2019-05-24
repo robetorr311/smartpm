@@ -37,17 +37,11 @@ class Migration_Update_users_table_2 extends CI_Migration
                 'after' => 'last_name',
                 'unique' => TRUE
             ],
-            'alt_email' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'after' => 'password',
-                'null' => TRUE
-            ],
             'level' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'default' => 1,
-                'after' => 'alt_email'
+                'after' => 'password'
             ],
             'type' => [
                 'type' => 'INT',
@@ -61,39 +55,10 @@ class Migration_Update_users_table_2 extends CI_Migration
                 'after' => 'type',
                 'null' => TRUE
             ],
-            'company' => [
-                'type' => 'VARCHAR',
-                'constraint' => 200,
-                'after' => 'verification_token',
-                'null' => TRUE
-            ],
-            'address' => [
-                'type' => 'TEXT',
-                'after' => 'company',
-                'null' => TRUE
-            ],
-            'city' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'after' => 'address',
-                'null' => TRUE
-            ],
-            'state' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'after' => 'city',
-                'null' => TRUE
-            ],
-            'zip' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'after' => 'state',
-                'null' => TRUE
-            ],
             'office_phone' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'after' => 'zip',
+                'after' => 'verification_token',
                 'null' => TRUE
             ],
             'home_phone' => [
@@ -120,10 +85,15 @@ class Migration_Update_users_table_2 extends CI_Migration
                 'default' => 1,
                 'after' => 'cell_2'
             ],
+            'company_id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'after' => 'notifications'
+            ],
             'is_active' => [
                 'type' => 'BOOLEAN',
                 'default' => FALSE,
-                'after' => 'notifications'
+                'after' => 'company_id'
             ],
             'is_deleted' => [
                 'type' => 'BOOLEAN',
@@ -165,20 +135,15 @@ class Migration_Update_users_table_2 extends CI_Migration
         $this->dbforge->drop_column('users', 'first_name');
         $this->dbforge->drop_column('users', 'last_name');
         $this->dbforge->drop_column('users', 'username');
-        $this->dbforge->drop_column('users', 'alt_email');
         $this->dbforge->drop_column('users', 'level');
         $this->dbforge->drop_column('users', 'type');
         $this->dbforge->drop_column('users', 'verification_token');
-        $this->dbforge->drop_column('users', 'company');
-        $this->dbforge->drop_column('users', 'address');
-        $this->dbforge->drop_column('users', 'city');
-        $this->dbforge->drop_column('users', 'state');
-        $this->dbforge->drop_column('users', 'zip');
         $this->dbforge->drop_column('users', 'office_phone');
         $this->dbforge->drop_column('users', 'home_phone');
         $this->dbforge->drop_column('users', 'cell_1');
         $this->dbforge->drop_column('users', 'cell_2');
         $this->dbforge->drop_column('users', 'notifications');
+        $this->dbforge->drop_column('users', 'company_id');
         $this->dbforge->drop_column('users', 'is_active');
         $this->dbforge->drop_column('users', 'is_deleted');
         $this->dbforge->modify_column('users', $modifyFields);
