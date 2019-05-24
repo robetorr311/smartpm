@@ -173,7 +173,7 @@ echo '</div>';
 
 
           $('[data-fancybox="photo"]').fancybox({
-              buttons : ['rotate1','zoom','slideShow','exif','thumbs','close'],
+              buttons : ['rotate1','zoom','slideShow','close'],
               caption : function( instance, item ) {
               var caption = $(this).data('caption') || '';
              /* if ( item.type === 'image' ) {
@@ -205,13 +205,12 @@ echo '</div>';
                    // location.reload();
                     var tStamp = +new Date();
                   
-                
-
                     $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
 
-          // $('body .fancybox-slide--current .fancybox-content').css({'height':height+'px', 'width':width+'px'});
+
                     src=baseUrl+'assets/job_photo/'+php_script_response;
-                   
+                  
+     
                     var idx = $('.image_div a[href="'+src+'"]').attr('alt');
                     $('.image_div #img'+idx).attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
          
@@ -224,7 +223,6 @@ echo '</div>';
          
 
      
-
 
 
 
