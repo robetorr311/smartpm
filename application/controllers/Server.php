@@ -36,7 +36,7 @@ function rrmdir($dir) {
     $img_cfg['create_thumb'] = TRUE;
     $img_cfg['new_image'] = $target_path;
     $img_cfg['thumb_marker'] ='';
-    $img_cfg['width'] = 150;
+    $img_cfg['width'] = 150; 
     $img_cfg['quality'] = 100;
     $img_cfg['height'] = 150;
     $this->image_lib->initialize($img_cfg);
