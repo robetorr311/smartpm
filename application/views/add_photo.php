@@ -22,7 +22,7 @@ echo '</div>';
                   <?php foreach( $imgs as $img ) : ?>  
             <div class="col-md-2" id="ph<?php echo $img->id; ?>">   <i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i>
            <a  href="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" alt="<?php echo $img->id; ?>" data-fancybox="photo" data-caption="<?php echo $img->image_name ?>">
-                <img id="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>"  />
+                <img class="lazy" id="img<?php echo $img->id; ?>" data-src="<?php echo base_url('assets/job_photo/thumbnail'); ?>/<?php echo $img->image_name ?>"  />
             </a>
      </div>
 
@@ -44,8 +44,6 @@ echo '</div>';
 <script>
     $(document).ready(function() {
           var baseUrl = '<?= base_url(); ?>';
-
-
 
           $("html").on("dragover", function(e) {
               e.preventDefault();
@@ -85,7 +83,7 @@ echo '</div>';
                 }
 
                   $.ajax({
-                  url: baseUrl+'index.php/server/ajaxupload_jobphoto', // point to server-side PHP script     
+                  url: baseUrl+'server/photo_upload', // point to server-side PHP script     
                   dataType: 'text',  // what to expect back from the PHP script, if anything
                   cache: false,
                   contentType: false,
@@ -97,7 +95,7 @@ echo '</div>';
                     if(obj.length!=0){
                           $.ajax({ 
                           type: 'POST',
-                          url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
+                          url: baseUrl+'server/photo_save', // point to server-side PHP script     
                           data: {id: id, name:php_script_response},                         
                           success: function(photoid){
                             //alert(photoid);
@@ -131,7 +129,7 @@ echo '</div>';
               }
           
               $.ajax({
-                url: baseUrl+'index.php/server/ajaxupload_jobphoto', // point to server-side PHP script     
+                url: baseUrl+'server/photo_upload', // point to server-side PHP script     
                 dataType: 'text',  // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,
@@ -144,7 +142,7 @@ echo '</div>';
                  if(obj.length!=0){
                       $.ajax({
                       type: 'POST',
-                      url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
+                      url: baseUrl+'server/photo_save', // point to server-side PHP script     
                       data: {id: id, name:php_script_response},                         
                         success: function(photoid){
                           //alert(photoid);
@@ -162,7 +160,7 @@ echo '</div>';
           var id = $(this).attr('id');
                                     
           $.ajax({
-            url: baseUrl+'index.php/server/deletephoto',
+            url: baseUrl+'server/photo_delete',
             data: {id: id},        
             type: 'post',
             success: function(php_script_response){
@@ -171,65 +169,39 @@ echo '</div>';
            });
         });
 
+        $('.lazy').Lazy();
 
-          $('[data-fancybox="photo"]').fancybox({
-              buttons : ['rotate1','zoom','slideShow','close'],
-              caption : function( instance, item ) {
-              var caption = $(this).data('caption') || '';
-             /* if ( item.type === 'image' ) {
-                var caption =  '<button name="'+caption+'" href="' + item.src + '" id="rotate"  class="btn btn-success btn-fill rotate">Rotate image</button>' ;
-              }*/
-          
-              return caption;
-              },
-            /*  afterShow: function( instance, current ) {
-             img_array[k]=current.opts.$orig.attr("alt");
-             k++;
-            //  alert(this.a);
-              },*/
-          });
+        $('[data-fancybox="photo"]').fancybox({
+            buttons : ['rotate1','zoom','slideShow','close'],
+            caption : function( instance, item ) {
+            var caption = $(this).data('caption') || '';
+           /* if ( item.type === 'image' ) {
+              var caption =  '<button name="'+caption+'" href="' + item.src + '" id="rotate"  class="btn btn-success btn-fill rotate">Rotate image</button>' ;
+            }*/
+            return caption;
+            },
+        });
 
+        $(document).on('click','.fancybox-button--rotate', function(){
 
+          var name=$('.fancybox-caption__body').html();
+          var angle=90;
+            $.ajax({
+              url: baseUrl+'server/photo_rotate',
+              data: {name: name, angle: angle},        
+              type: 'post',
+              success: function(php_script_response)
+              {  
+                  var tStamp = +new Date();
+                  $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
+                  var src=baseUrl+'assets/job_photo/'+php_script_response;
+                  var idx = $('.image_div a[href="'+src+'"]').attr('alt');
+                  $('.image_div #img'+idx).attr('src',baseUrl+'assets/job_photo/thumbnail/'+php_script_response+'?t='+ tStamp);
+              }
 
-
-          $(document).on('click','.fancybox-button--rotate', function(){
-
-            var name=$('.fancybox-caption__body').html();
-            var angle=90;
-              $.ajax({
-                url: baseUrl+'index.php/server/imagerotate',
-                data: {name: name, angle: angle},        
-                type: 'post',
-                success: function(php_script_response)
-                {  
-                   // location.reload();
-                    var tStamp = +new Date();
-                  
-                    $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
-
-
-                    src=baseUrl+'assets/job_photo/'+php_script_response;
-                  
-     
-                    var idx = $('.image_div a[href="'+src+'"]').attr('alt');
-                    $('.image_div #img'+idx).attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
-         
-                }
-
-               });
-          });
-
-
-         
-
-     
-
-
-
+             });
+        });
     });
-
-
-
 </script>
 
 

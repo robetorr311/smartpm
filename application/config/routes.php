@@ -90,4 +90,14 @@ $route['team/(:num)/delete'] = 'teams/delete';
 $route['team/new'] = 'teams/new';
 $route['team/store'] = 'teams/store';
 
+$route['server/photo_upload'] = 'server/ajaxupload_jobphoto';
+$route['server/photo_save'] = 'server/ajaxsave_jobphoto';
+$route['server/photo_delete'] = 'server/deletephoto';
+$route['server/photo_rotate'] = 'server/imagerotate';
+
+$route['server/doc_upload'] = 'server/ajaxupload_jobdoc';
+$route['server/doc_save'] = 'server/ajaxsave_jobdoc';
+$route['server/doc_delete'] = 'server/deletedoc';
+$route['server/doc_update'] = 'server/updatedocname';
+
 

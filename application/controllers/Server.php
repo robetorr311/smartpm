@@ -26,6 +26,22 @@ function rrmdir($dir) {
 	    rmdir($dir);
 	  }
  }
+ function thumbnail($src) {
+	$file_path = $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/" . $src;
+	$target_path = $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/thumbnail/".$src;
+    $this->load->library('image_lib');
+    $img_cfg['image_library'] = 'gd2';
+		$img_cfg['source_image'] = $file_path;
+    $img_cfg['maintain_ratio'] = TRUE;
+    $img_cfg['create_thumb'] = TRUE;
+    $img_cfg['new_image'] = $target_path;
+    $img_cfg['thumb_marker'] ='';
+    $img_cfg['width'] = 150;
+    $img_cfg['quality'] = 100;
+    $img_cfg['height'] = 150;
+    $this->image_lib->initialize($img_cfg);
+    $this->image_lib->resize();
+ }
 	
 public function ajaxupload_jobphoto(){
 		       
@@ -236,28 +252,25 @@ public function ajaxupload_jobphoto(){
 	public function ajaxsave_jobphoto(){ 
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
-		//print_r($data);
-		
+
 		for($i=0;$i<count($data);$i++){
 			$params = array();
 			$params['job_id'] 		= $posts['id'];
 			$params['image_name'] 		= $data[$i];
 			$params['entry_date'] 		= date('Y-m-d h:i:s');
 			$params['is_active'] 		= TRUE;
+
+			$this->thumbnail($data[$i]);
+
 			$this->db->insert('jobs_photo', $params);
 			$insertId = $this->db->insert_id();
-			echo '<div id="ph'.$insertId.'" class="col-md-2"><i class="del-photo pe-7s-close" id="'.$insertId.'"></i><a alt="'.$insertId.'"  href="'.base_url().'assets/job_photo/'.$data[$i].'" data-fancybox="photo" data-caption="'.$data[$i].'"><img id="img'.$insertId.'" src="'.base_url().'assets/job_photo/'.$data[$i].'"  /></a></div>';
-
-			  
-
+			echo '<div id="ph'.$insertId.'" class="col-md-2"><i class="del-photo pe-7s-close" id="'.$insertId.'"></i><a alt="'.$insertId.'"  href="'.base_url().'assets/job_photo/'.$data[$i].'" data-fancybox="photo" data-caption="'.$data[$i].'"><img id="img'.$insertId.'" src="'.base_url().'assets/job_photo/thumbnail/'.$data[$i].'"  /></a></div>';
 		}
 	}
 	
 	public function ajaxsave_jobdoc(){
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
-		//print_r($data);
-		
 		for($i=0;$i<count($data);$i++){
 			 $search = '.'.strtolower(pathinfo($data[$i], PATHINFO_EXTENSION));
              $trimmed = str_replace($search, '', $data[$i]) ;
@@ -314,6 +327,7 @@ public function ajaxupload_jobphoto(){
 		if (!$this->image_lib->rotate()) {
 			echo $this->image_lib->display_errors();
 		} else {
+			$this->thumbnail($posts['name']);
 			echo $posts['name'];
 		}
 

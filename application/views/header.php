@@ -44,6 +44,7 @@
     <script src="<?php echo base_url();?>assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
     <script src="<?php echo base_url();?>assets/js/demo.js"></script>
     <script src="<?php echo base_url();?>assets/js/jquery.fancybox.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/jquery-lazy@1.7.10/jquery.lazy.min.js" defer></script>
 </head>
 <body>
 
