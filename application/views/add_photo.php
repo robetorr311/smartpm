@@ -225,7 +225,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
           var idx = $('.image_div a[href="' + src + '"]').attr('alt');
+          if (!idx) {
+            idx = $('.image_div a[href^="' + src + '"]').attr('alt');
+          }
           $('.image_div #img' + idx).attr('src', baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp);
+          $('.image_div #img' + idx).parent().attr('href', baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp);
+          // $.fancybox.getInstance().setContent($.fancybox.getInstance().current, '<img src="' + baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp + '">');
+          var i = $.fancybox.getInstance();
+          i.current.src = baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp;
+          i.resolveImageSlideSize(i.current, i.current.height, i.current.width);
+          i.updateSlide(i.current);
+          // i.update();
+          // i.revealContent(i.current);
+          // i.updateControls(true);
+          // i.setImage(i.current);
 
         }
 
