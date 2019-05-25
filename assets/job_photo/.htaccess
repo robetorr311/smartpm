@@ -1,7 +1,6 @@
 <IfModule mod_expires.c>
-# disable caching forthis directory mod_expires for this directory
-ExpiresActive on
+    ExpiresActive on
+    <FilesMatch ".(jpg|jpeg|JPG|PNG|png|gif)$">
+        Header set Expires "Thu, 15 Apr 1905 20:00:00 GMT"
+    </FilesMatch>
 </IfModule>
-<FilesMatch ".(jpg|jpeg|JPG|PNG|png|gif)$">
-Header set Expires "Thu, 15 Apr 1905 20:00:00 GMT"
-</FilesMatch>
