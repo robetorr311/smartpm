@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <?php foreach( $imgs as $img ) : ?>  
             <div class="col-md-2" id="ph<?php echo $img->id; ?>">   <i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i>
            <a  href="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" alt="<?php echo $img->id; ?>" data-fancybox="photo" data-caption="<?php echo $img->image_name ?>">
-                <img  id="img<?php echo $img->id; ?>" data-src="<?php echo base_url('assets/job_photo/thumbnail'); ?>/<?php echo $img->image_name ?>"  />
+                <img  id="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo/thumbnail'); ?>/<?php echo $img->image_name ?>"  />
             </a>
      </div>
 
