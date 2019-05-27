@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Server extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
-		authAdminAccess();
+		authAdminAccess(); 
 	
 		$this->load->helper(['form','security','cookie']);
 		$this->load->library(['form_validation','email','user_agent','session','image_lib']);
@@ -31,7 +31,7 @@ function rrmdir($dir) {
 	$target_path = $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/thumbnail/".$src;
     $this->load->library('image_lib');
     $img_cfg['image_library'] = 'gd2';
-		$img_cfg['source_image'] = $file_path;
+	$img_cfg['source_image'] = $file_path;
     $img_cfg['maintain_ratio'] = TRUE;
     $img_cfg['create_thumb'] = TRUE;
     $img_cfg['new_image'] = $target_path;
@@ -41,7 +41,7 @@ function rrmdir($dir) {
     $img_cfg['height'] = 150;
     $this->image_lib->initialize($img_cfg);
     $this->image_lib->resize();
- }
+  }
 	
 public function ajaxupload_jobphoto(){
 		       

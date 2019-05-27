@@ -182,7 +182,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }*/
             return caption;
             },
-        });
+        }); 
 
         $(document).on('click','.fancybox-button--rotate', function(){
 
