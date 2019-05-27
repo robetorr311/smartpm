@@ -94,7 +94,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           }
 
         $.ajax({
-            url: baseUrl+'index.php/server/ajaxupload_jobdoc', // point to server-side PHP script     
+            url: baseUrl+'server/doc_upload', // point to server-side PHP script     
             dataType: 'text',  // what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,
@@ -117,7 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               if(obj.length!=0){
                    $.ajax({
                             type: 'POST',
-                            url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
+                            url: baseUrl+'server/doc_save', // point to server-side PHP script     
                             data: {id: id, name:php_script_response},                         
                             success: function(photoid){
                               //alert(photoid);
@@ -151,7 +151,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           }
           
           $.ajax({
-            url: baseUrl+'index.php/server/ajaxupload_jobdoc', // point to server-side PHP script     
+            url: baseUrl+'server/doc_upload', // point to server-side PHP script     
             dataType: 'text',  // what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,
@@ -173,7 +173,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               if(obj.length!=0){ 
                       $.ajax({
                         type: 'POST',
-                        url: baseUrl+'index.php/server/ajaxsave_jobdoc', // point to server-side PHP script     
+                        url: baseUrl+'server/doc_save', // point to server-side PHP script     
                         data: {id: id, name:php_script_response},                         
                         success: function(photoid){
                           //alert(photoid);
@@ -192,7 +192,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           var id = $(this).attr('id');
                                     
           $.ajax({
-            url: baseUrl+'index.php/server/deletedoc',
+            url: baseUrl+'server/doc_delete',
             data: {id: id},        
             type: 'post',
             success: function(php_script_response){
@@ -205,7 +205,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           var data = $(this).val();
           var id = $(this).attr('name');
           $.ajax({
-            url: baseUrl+'index.php/server/updatedocname',
+            url: baseUrl+'server/doc_update',
             data: {na: data, id: id},        
             type: 'post',
             success: function(php_script_response){

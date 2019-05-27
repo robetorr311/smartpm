@@ -1,47 +1,53 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?> <div class="container-fluid">
-                <div class="row">
-                   <div class="col-md-12">
-                  
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title" style="float: left;">Photos</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
-                                <div class="clearfix"></div>
-                              <?= $this->session->flashdata('message') ?>
-<?php if (validation_errors())
-{   
-echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
-echo validation_errors();
-echo '</div>';
-}
-?> 
-                            </div>
+  <div class="row">
+    <div class="col-md-12">
+       <?php
+            if (!empty($this->session->flashdata('message'))) {
+                echo '<div class="alert alert-success fade in alert-dismissable" title="Message:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+                echo $this->session->flashdata('message');
+                echo '</div>';
+            }
+            ?>
+   
+      <div class="card">
+        <div class="header">
+          <h4 class="title" style="float: left;">Photos</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
+          <div class="clearfix"></div>
+         
+      
+        </div>
         <div class="content">
+
              <div class="image_div">
                   <?php foreach( $imgs as $img ) : ?>  
             <div class="col-md-2" id="ph<?php echo $img->id; ?>">   <i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i>
            <a  href="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" alt="<?php echo $img->id; ?>" data-fancybox="photo" data-caption="<?php echo $img->image_name ?>">
-                <img id="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>"  />
+                <img  id="img<?php echo $img->id; ?>" src="<?php echo base_url('assets/job_photo/thumbnail'); ?>/<?php echo $img->image_name ?>"  />
             </a>
      </div>
 
                    <?php endforeach; ?>
              </div>
-          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">      
-                        <div class="form-element">
-                            <input type="file" class="jobphoto" name="photo[]" id="<?php echo $jobid; ?>" multiple />
-                            <div class="upload-area"  id="<?php echo $jobid; ?>">
-                                <h1>Drag and Drop file here<br/>Or<br/>Click to select file</h1>
-                            </div>
-                       </div>
-                    </div>
-             </div>
+
         </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-element">
+        <input type="file" class="jobphoto" name="photo[]" id="<?php echo $jobid; ?>" multiple />
+        <div class="upload-area" id="<?php echo $jobid; ?>">
+          <h1>Drag and Drop file here<br />Or<br />Click to select file</h1>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
 <script>
+
     $(document).ready(function() {
           var baseUrl = '<?= base_url(); ?>';
           $("html").on("dragover", function(e) {
@@ -77,7 +83,7 @@ echo '</div>';
                   form_data.append("photo[]", file_data[i]);
                 }
                   $.ajax({
-                  url: baseUrl+'index.php/server/ajaxupload_jobphoto', // point to server-side PHP script     
+                  url: baseUrl+'server/photo_upload', // point to server-side PHP script     
                   dataType: 'text',  // what to expect back from the PHP script, if anything
                   cache: false,
                   contentType: false,
@@ -89,7 +95,7 @@ echo '</div>';
                     if(obj.length!=0){
                           $.ajax({ 
                           type: 'POST',
-                          url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
+                          url: baseUrl+'server/photo_save', // point to server-side PHP script     
                           data: {id: id, name:php_script_response},                         
                           success: function(photoid){
                             //alert(photoid);
@@ -122,7 +128,7 @@ echo '</div>';
               }
           
               $.ajax({
-                url: baseUrl+'index.php/server/ajaxupload_jobphoto', // point to server-side PHP script     
+                url: baseUrl+'server/photo_upload', // point to server-side PHP script     
                 dataType: 'text',  // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,
@@ -135,7 +141,7 @@ echo '</div>';
                  if(obj.length!=0){
                       $.ajax({
                       type: 'POST',
-                      url: baseUrl+'index.php/server/ajaxsave_jobphoto', // point to server-side PHP script     
+                      url: baseUrl+'server/photo_save', // point to server-side PHP script     
                       data: {id: id, name:php_script_response},                         
                         success: function(photoid){
                           //alert(photoid);
@@ -152,7 +158,7 @@ echo '</div>';
           var id = $(this).attr('id');
                                     
           $.ajax({
-            url: baseUrl+'index.php/server/deletephoto',
+            url: baseUrl+'server/photo_delete',
             data: {id: id},        
             type: 'post',
             success: function(php_script_response){
@@ -160,6 +166,7 @@ echo '</div>';
             }
            });
         });
+
           $('[data-fancybox="photo"]').fancybox({
               buttons : ['rotate1','zoom','slideShow','exif','thumbs','close'],
               caption : function( instance, item ) {
@@ -201,5 +208,61 @@ echo '</div>';
           });
          
      
+   
+
+
+      
+
+        $('[data-fancybox="photo"]').fancybox({
+            buttons : ['rotate1','zoom','slideShow','close'],
+            image: {
+              preload: true
+            },
+            caption : function( instance, item ) {
+            var caption = $(this).data('caption') || '';
+           /* if ( item.type === 'image' ) {
+              var caption =  '<button name="'+caption+'" href="' + item.src + '" id="rotate"  class="btn btn-success btn-fill rotate">Rotate image</button>' ;
+            }*/
+            return caption;
+            },
+        }); 
+
+        $(document).on('click','.fancybox-button--rotate', function(){
+
+          var name=$('.fancybox-caption__body').html();
+          var angle=90;
+            $.ajax({
+              url: baseUrl+'server/photo_rotate',
+              data: {name: name, angle: angle},        
+              type: 'post',
+              success: function(php_script_response)
+              {  
+                  var tStamp = +new Date();
+                  $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
+                  var src=baseUrl+'assets/job_photo/'+php_script_response;
+                  var idx = $('.image_div a[href="'+src+'"]').attr('alt');
+                  if (!idx) {
+                    idx = $('.image_div a[href^="' + src + '"]').attr('alt');
+                  }
+                  $('.image_div #img'+idx).attr('src',baseUrl+'assets/job_photo/thumbnail/'+php_script_response+'?t='+ tStamp);
+                  $('.image_div #img' + idx).parent().attr('href', baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp);
+                  // $.fancybox.getInstance().setContent($.fancybox.getInstance().current, '<img src="' + baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp + '">');
+                  var i = $.fancybox.getInstance();
+                  i.current.src = baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp;
+                  i.resolveImageSlideSize(i.current, i.current.height, i.current.width);
+                  i.updateSlide(i.current);
+                  i.update();
+                  // i.revealContent(i.current);
+                  // i.updateControls(true);
+                  // i.setImage(i.current);
+              }
+
+             });
+        });
+
+
+        
+
+       
     });
 </script>

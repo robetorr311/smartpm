@@ -43,6 +43,7 @@ class Dashboard extends CI_Controller {
         $params = array();
 		$params['job_id'] =$job_id;
 		$params['is_active'] =1;
+		$data['count']=$this->Common_model->getCount( 'jobs_photo', $params );
 		$data['imgs'] = $this->Common_model->get_all_where( 'jobs_photo', $params );
 		$this->load->view('header',['title' => 'Add Photo']);
 		$this->load->view('add_photo', $data);
