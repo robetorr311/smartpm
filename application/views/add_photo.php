@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <?php foreach( $imgs as $img ) : ?>  
             <div class="col-md-2" id="ph<?php echo $img->id; ?>">   <i class="del-photo pe-7s-close" id="<?php echo $img->id; ?>"></i>
            <a  href="<?php echo base_url('assets/job_photo'); ?>/<?php echo $img->image_name ?>" alt="<?php echo $img->id; ?>" data-fancybox="photo" data-caption="<?php echo $img->image_name ?>">
-                <img class="lazy" id="img<?php echo $img->id; ?>" data-src="<?php echo base_url('assets/job_photo/thumbnail'); ?>/<?php echo $img->image_name ?>"  />
+                <img  id="img<?php echo $img->id; ?>" data-src="<?php echo base_url('assets/job_photo/thumbnail'); ?>/<?php echo $img->image_name ?>"  />
             </a>
      </div>
 
@@ -175,7 +175,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
            });
         });
 
-        $('.lazy').Lazy();
+      
 
         $('[data-fancybox="photo"]').fancybox({
             buttons : ['rotate1','zoom','slideShow','close'],
@@ -227,16 +227,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         
 
-         $(".image_div .col-md-2").slice(18).hide();
-           var mincount = 18;
-           var maxcount = 36;
-           $(window).scroll(function () {
-               if ($(window).scrollTop() + $(window).height() >= $(document).height() - 50) {
-                  $(".image_div .col-md-2").slice(mincount, maxcount).slideDown(1400);
-                   mincount = mincount + 18;
-                   maxcount = maxcount + 18;
-               }
-           });
+       
     });
 </script>
 
