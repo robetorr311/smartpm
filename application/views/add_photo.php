@@ -222,7 +222,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   // i.updateControls(true);
                   // i.setImage(i.current);
                   });
-                  $image.attr('src',baseUrl+'assets/job_photo/thumbnail/'+php_script_response+'?t='+ tStamp);
+                  $image.attr('src',baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp);
               }
 
              });
