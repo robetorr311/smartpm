@@ -114,11 +114,4 @@ $route['server/doc_save'] = 'server/ajaxsave_jobdoc';
 $route['server/doc_delete'] = 'server/deletedoc';
 $route['server/doc_update'] = 'server/updatedocname';
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> Team
-=======
->>>>>>> Tasks
 $route['(.+)'] = 'errors/page_missing';
