@@ -175,6 +175,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         $('[data-fancybox="photo"]').fancybox({
             buttons : ['rotate1','zoom','slideShow','close'],
+            image: {
+              preload: true
+            },
             caption : function( instance, item ) {
             var caption = $(this).data('caption') || '';
            /* if ( item.type === 'image' ) {
@@ -198,7 +201,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
                   var src=baseUrl+'assets/job_photo/'+php_script_response;
                   var idx = $('.image_div a[href="'+src+'"]').attr('alt');
+                  if (!idx) {
+                    idx = $('.image_div a[href^="' + src + '"]').attr('alt');
+                  }
                   $('.image_div #img'+idx).attr('src',baseUrl+'assets/job_photo/thumbnail/'+php_script_response+'?t='+ tStamp);
+                  $('.image_div #img' + idx).parent().attr('href', baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp);
+                  // $.fancybox.getInstance().setContent($.fancybox.getInstance().current, '<img src="' + baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp + '">');
+                  var i = $.fancybox.getInstance();
+                  i.current.src = baseUrl + 'assets/job_photo/' + php_script_response + '?t=' + tStamp;
+                  i.resolveImageSlideSize(i.current, i.current.height, i.current.width);
+                  i.updateSlide(i.current);
+                  i.update();
+                  // i.revealContent(i.current);
+                  // i.updateControls(true);
+                  // i.setImage(i.current);
               }
 
              });
