@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Migration_Create_job_status_table extends CI_Migration
+class Migration_Create_jobs_status_table extends CI_Migration
 {
     public function __construct()
     {
@@ -60,11 +60,11 @@ class Migration_Create_job_status_table extends CI_Migration
         ];
         $this->dbforge->add_field($field);
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('job_status', TRUE);
+        $this->dbforge->create_table('jobs_status', TRUE);
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('job_status', TRUE);
+        $this->dbforge->drop_table('jobs_status', TRUE);
     }
 }
