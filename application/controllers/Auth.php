@@ -6,10 +6,11 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['UserModel', 'CompanyModel']);
+		$this->load->model(['UserModel', 'CompanyModel', 'AdminSettingModel']);
 
 		$this->user = new UserModel();
 		$this->company = new CompanyModel();
+		$this->admin_setting = new AdminSettingModel();
 	}
 
 	public function index()
@@ -54,9 +55,10 @@ class Auth extends CI_Controller
 							'id' => $user->id,
 							'email_id' => $user->email_id,
 							'level' => $user->level,
+							'company_id' => $user->company_id,
 							'logged_in' => TRUE
 						]);
-						$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['user_id' => $user->id]);
+						$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);
 						$this->session->set_userdata('admindata', $result1);
 						redirect('dashboard');
 					} else {
@@ -118,6 +120,13 @@ class Auth extends CI_Controller
 		]);
 
 		if ($companyInsert) {
+			$message = '';
+			$admin_setting = $this->admin_setting->insert([
+				'company_id' => $companyInsert
+			]);
+			if (!$admin_setting) {
+				$message .= '<div class="error" title="Error:" >Setting options not created. Please inform Admin!</div>';
+			}
 			$signup = $this->user->signup([
 				'first_name' => $userData['first_name'],
 				'last_name' => $userData['last_name'],
@@ -130,11 +139,11 @@ class Auth extends CI_Controller
 				'company_id' => $companyInsert
 			]);
 			if ($signup) {
-				$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
+				$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
 				$this->session->set_flashdata('message', $message);
 				redirect('login');
 			} else {
-				$message = '<div class="error" title="Error:" >Account not created. Please try again!</div>';
+				$message .= '<div class="error" title="Error:" >User not created. Please try again!</div>';
 				$this->session->set_flashdata('message', $message);
 				redirect('signup');
 			}
