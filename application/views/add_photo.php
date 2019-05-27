@@ -3,18 +3,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?> <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-
+       <?php
+            if (!empty($this->session->flashdata('message'))) {
+                echo '<div class="alert alert-success fade in alert-dismissable" title="Message:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+                echo $this->session->flashdata('message');
+                echo '</div>';
+            }
+            ?>
+   
       <div class="card">
         <div class="header">
           <h4 class="title" style="float: left;">Photos</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
           <div class="clearfix"></div>
-          <?= $this->session->flashdata('message') ?>
-          <?php if (validation_errors()) {
-            echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
-            echo validation_errors();
-            echo '</div>';
-          }
-          ?>
+         
+      
         </div>
         <div class="content">
 
@@ -40,6 +42,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
       </div>
     </div>
+
+
   </div>
 </div>
 <script>
@@ -219,6 +223,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
              });
         });
+
+
+        
+
+         $(".image_div .col-md-2").slice(18).hide();
+           var mincount = 18;
+           var maxcount = 36;
+           $(window).scroll(function () {
+               if ($(window).scrollTop() + $(window).height() >= $(document).height() - 50) {
+                  $(".image_div .col-md-2").slice(mincount, maxcount).slideDown(1400);
+                   mincount = mincount + 18;
+                   maxcount = maxcount + 18;
+               }
+           });
     });
 </script>
 

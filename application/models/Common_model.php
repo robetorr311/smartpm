@@ -94,5 +94,11 @@ class Common_model extends CI_Model {
 		return $result->result();
 		
 	}
+
+	public function getCount($table, $condition)
+    {     
+        $this->db->where($condition);
+        return $this->db->count_all_results($table);
+    }  
 		
 }
