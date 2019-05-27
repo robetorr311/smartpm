@@ -40,7 +40,9 @@ function rrmdir($dir) {
     $img_cfg['quality'] = 100;
     $img_cfg['height'] = 150;
     $this->image_lib->initialize($img_cfg);
-    $this->image_lib->resize();
+     if (!$this->image_lib->resize()) {
+			echo "Image Not Exist";//$this->image_lib->display_errors();
+		} 
   }
 	
 public function ajaxupload_jobphoto(){
@@ -346,6 +348,23 @@ public function ajaxupload_jobphoto(){
 		echo $name;
 	}
 
+	public function thumbnail_all(){
+			$this->db->select('image_name');
+			$this->db->where(['is_active' => 1]);
+			$query = $this->db->get('jobs_photo');
+
+			
+			foreach ($query->result() as $row)
+			{
+			    //echo $row->image_name."<br>";
+			    if(is_file($_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$row->image_name)){
+			    	 $this->thumbnail($row->image_name);
+			    }
+			  
+			}
+		$this->session->set_flashdata('message', '<p>Thumbnail Created Sucessfully</p>');
+		redirect('/dashboard');
+	}
 
 
 }
