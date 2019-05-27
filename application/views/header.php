@@ -31,7 +31,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?php echo base_url();?>assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.fancybox.min.css">
     <!-- JS FILES -->
     <!--   Core JS Files   -->
     <script src="<?php echo base_url();?>assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
@@ -41,6 +41,9 @@
     <!-- bootstrap tagsinput JS -->
 	<script src="<?= base_url('assets/js/bootstrap-tagsinput.min.js') ?>"></script>
 	<script src="<?= base_url('assets/js/bootstrap3-typeahead.min.js') ?>"></script>
+    <script src="<?php echo base_url();?>assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+    <script src="<?php echo base_url();?>assets/js/demo.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jquery.fancybox.js"></script>
 </head>
 <body>
 
@@ -167,11 +170,11 @@
                     <ul class="nav navbar-nav navbar-right">
 					
                        <li>
-							 <a href="">Welcome <strong><?php echo $admin['admininfo']['fullname']; ?></strong></a>
+							 <a href="">Welcome <strong><?php echo $admin['first_name'] . ' ' . $admin['last_name']; ?></strong></a>
 					   </li>
                         <li>
                             
-<a href="<?php echo base_url('logout');?>" style="color: red;"><p>Log out</p></a>                         
+<a href="<?php echo base_url('logout');?>" data-method="POST" style="color: red;"><p>Log out</p></a>                         
                         </li>
 						<li class="separator hidden-lg"></li>
                     </ul>

@@ -7,11 +7,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 if (!function_exists('authAdminAccess')) {
     function authAdminAccess()
     {
+        authAccess([1]);
+    }
+}
+
+/**
+ * Authenticate if current user has access
+ */
+if (!function_exists('authAccess')) {
+    function authAccess($levels = [])
+    {
         $CI = &get_instance();
-        if (!$CI->session->userdata('admininfo')) {
-            $CI->session->sess_destroy();
+
+        if (!$CI->session->logged_in) {
             delete_cookie('tokenCookie');
+            $CI->session->sess_destroy();
             redirect('/');
+            die();
+        } else if (count($levels) > 0 && !in_array($CI->session->level, $levels)) {
+            redirect('/404');
             die();
         }
     }

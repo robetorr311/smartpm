@@ -70,6 +70,8 @@ img {
 }
 .image_div img {
 	height: 140px;
+border: 2px solid black;
+margin-bottom: 30px;
 }
 .image_div {
 	float: left;
@@ -465,4 +467,7 @@ right: 15px;}
 }
 .red-mark{
 	color: red;margin-top: -3px;display: block;float: right;margin-left: 2px;
+}
+.fancybox-caption__body {
+    visibility: hidden;
 }

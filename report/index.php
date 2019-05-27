@@ -129,7 +129,7 @@ if($_GET['id']!=''){
 
 	<div class="job_photo_block"  ><span class="close" >X</span>
 		<?php
-				$sql = "SELECT * FROM jobs_photo where job_id=".$_GET['id'];
+		$sql = "SELECT * FROM jobs_photo where job_id=".$_GET['id']." AND is_active=1";
 				$result = $conn->query($sql);
 				$i=1;
 				if ($result->num_rows > 0) {?>
