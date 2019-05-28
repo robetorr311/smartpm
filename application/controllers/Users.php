@@ -45,13 +45,5 @@ class Users extends CI_Controller {
 				$this->task_team_track->add_record($params);
 	    }
 
-	    public function gettask(){
-	    	
-	    	
-
-	    	 
-
-
-	        
-	    }
+	    
 }

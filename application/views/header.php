@@ -107,6 +107,12 @@
                         <p>Closed</p>
                     </a>
                 </li>
+                 <li>
+                    <a href="<?php echo base_url('users');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
                 <li class="">
                   <a class="nav-link" data-toggle="collapse" href="#componentsCollapse">
                     <i class="pe-7s-graph"></i>

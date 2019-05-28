@@ -46,6 +46,13 @@ class UserModel extends CI_Model
 			->get_where($table, $condition)
 			->row_array();
 	}
+	public function get_all_where(  $condition ){
+
+        $this->db->where($condition);
+        $this->db->order_by("id", "desc");
+        $result = $this->db->get($this->table);
+        return $result->result();   
+    }
 	/**
 	 * Private Methods
 	 */
