@@ -26,4 +26,10 @@ class MY_Form_validation extends CI_Form_validation
             return true;
         }
     }
+
+    public function in_list($value, $list)
+    {
+        $this->CI->form_validation->set_message('in_list', 'Invalid value of {field} field.');
+        return parent::in_list($value, $list);
+    }
 }
