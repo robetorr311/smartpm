@@ -70,10 +70,14 @@ class Tasks extends CI_Controller
     {
         authAccess();
 
+        $typeKeys = implode(',', array_keys(TaskModel::getTypes()));
+        $levelKeys = implode(',', array_keys(TaskModel::getLevels()));
+        $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+
         $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
-        $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
-        $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
-        $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric');
+        $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
+        $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
+        $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric|in_list[' . $userKeys . ']');
         $this->form_validation->set_rules('note', 'Note', 'trim|required');
         $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
         $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
@@ -209,11 +213,17 @@ class Tasks extends CI_Controller
         $task = $this->task->getTaskById($id);
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
+
+            $typeKeys = implode(',', array_keys(TaskModel::getTypes()));
+            $levelKeys = implode(',', array_keys(TaskModel::getLevels()));
+            $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+            $statusKeys = TaskModel::getStatus();
+
             $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
-            $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
-            $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
-            $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric');
-            $this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
+            $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
+            $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
+            $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric|in_list[' . $userKeys . ']');
+            $this->form_validation->set_rules('status', 'Status', 'trim|required|numeric|in_list[' . $statusKeys . ']');
             $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
             $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
             $this->form_validation->set_rules('predecessor_tasks', 'Predecessor Tasks', 'is_own_ids[tasks, Tasks]');
