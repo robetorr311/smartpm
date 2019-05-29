@@ -19,7 +19,7 @@ class Dashboard extends CI_Controller {
 
 
 	public function alljobreport($job_id = NULL)
-	{	
+	{	$job_id = $this->uri->segment(2);
 	$query = array(
          'jobid' => $job_id
          ); 
@@ -34,9 +34,10 @@ class Dashboard extends CI_Controller {
 	}
 
 
-
-	public function addphoto($job_id = NULL)
+ 
+	public function addphoto()
 	{	
+		$job_id = $this->uri->segment(2);
 	    $data = array(
          'jobid' => $job_id
          );
@@ -51,7 +52,7 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function adddoc($job_id = NULL)
-	{	
+	{	$job_id = $this->uri->segment(2);
 	    $data = array(
          'jobid' => $job_id
          );

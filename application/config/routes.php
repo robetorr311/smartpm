@@ -65,6 +65,9 @@ $route['migrate/undo_migration/(:num)'] = 'migrate/undo_migration/$1';
 $route['migrate/reset_migration'] = 'migrate/reset_migration';
 
 $route['dashboard'] = 'dashboard/index';
+$route['dashboard/(:num)/addphoto'] = 'dashboard/addphoto';
+$route['dashboard/(:num)/alljobreport'] = 'dashboard/alljobreport';
+$route['dashboard/(:num)/adddoc'] = 'dashboard/adddoc';
 
 $route['tasks'] = 'tasks/index';
 $route['tasks/(:num)'] = 'tasks/index/$1';
@@ -124,8 +127,6 @@ $route['server/doc_upload'] = 'server/ajaxupload_jobdoc';
 $route['server/doc_save'] = 'server/ajaxsave_jobdoc';
 $route['server/doc_delete'] = 'server/deletedoc';
 $route['server/doc_update'] = 'server/updatedocname';
-
-
 
 $route['users'] = 'users/index';
 $route['user/(:num)'] = 'users/view';

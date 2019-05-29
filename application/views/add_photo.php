@@ -167,45 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
            });
         });
 
-          $('[data-fancybox="photo"]').fancybox({
-              buttons : ['rotate1','zoom','slideShow','exif','thumbs','close'],
-              caption : function( instance, item ) {
-              var caption = $(this).data('caption') || '';
-             /* if ( item.type === 'image' ) {
-                var caption =  '<button name="'+caption+'" href="' + item.src + '" id="rotate"  class="btn btn-success btn-fill rotate">Rotate image</button>' ;
-              }*/
-          
-              return caption;
-              },
-            /*  afterShow: function( instance, current ) {
-             img_array[k]=current.opts.$orig.attr("alt");
-             k++;
-            //  alert(this.a);
-              },*/
-          });
-          $(document).on('click','.fancybox-button--rotate', function(){
-            var name=$('.fancybox-caption__body').html();
-            var angle=90;
-              $.ajax({
-                url: baseUrl+'index.php/server/imagerotate',
-                data: {name: name, angle: angle},        
-                type: 'post',
-                success: function(php_script_response)
-                {  
-                   // location.reload();
-                    var tStamp = +new Date();
-                  
-                
-                    $('body .fancybox-slide--current .fancybox-content .fancybox-image').attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
-          // $('body .fancybox-slide--current .fancybox-content').css({'height':height+'px', 'width':width+'px'});
-                    src=baseUrl+'assets/job_photo/'+php_script_response;
-                   
-                    var idx = $('.image_div a[href="'+src+'"]').attr('alt');
-                    $('.image_div #img'+idx).attr('src',baseUrl+'assets/job_photo/'+php_script_response+'?t='+ tStamp);
-         
-                }
-               });
-          });
+       
          
      
    
