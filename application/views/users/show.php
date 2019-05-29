@@ -21,6 +21,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <div>
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>UserName</label>
+                                    <p><?= $user->username ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name</label>
