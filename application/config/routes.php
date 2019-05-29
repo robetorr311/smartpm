@@ -66,6 +66,15 @@ $route['migrate/reset_migration'] = 'migrate/reset_migration';
 
 $route['dashboard'] = 'dashboard/index';
 
+$route['users'] = 'users/index';
+$route['users/(:num)'] = 'users/index/$1';
+$route['user/create'] = 'users/create';
+$route['user/store']['post'] = 'users/store';
+$route['user/(:num)'] = 'users/show/$1';
+$route['user/(:num)/edit'] = 'users/edit/$1';
+$route['user/(:num)/update']['post'] = 'users/update/$1';
+$route['user/(:num)/delete']['post'] = 'users/delete/$1';
+
 $route['tasks'] = 'tasks/index';
 $route['tasks/(:num)'] = 'tasks/index/$1';
 $route['task/create'] = 'tasks/create';
