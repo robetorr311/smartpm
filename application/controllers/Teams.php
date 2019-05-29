@@ -86,7 +86,7 @@ class Teams extends CI_Controller
 
 				redirect('team/' . $insert);
 			} else {
-				$this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
+				$this->session->set_flashdata('errors', '<p>Unable to Create Team.</p>');
 				redirect('team/create');
 			}
 		} else {
@@ -161,6 +161,9 @@ class Teams extends CI_Controller
 					}
 
 					redirect('team/' . $id);
+				} else {
+					$this->session->set_flashdata('errors', '<p>Unable to Update Team.</p>');
+					redirect('user/' . $id . '/edit');
 				}
 			} else {
 				$this->session->set_flashdata('errors', validation_errors());
