@@ -104,49 +104,61 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		$this->form_validation->set_rules('conf_password', 'Confirm Password', 'trim|required|matches[password]');
-		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]');
+		$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]', [
+			'is_unique' => 'The user with this Email ID is already exist.'
+		]);
+		$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
+		$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
+		$this->form_validation->set_rules('cell_1', 'Cell 1', 'trim|numeric');
+		$this->form_validation->set_rules('cell_2', 'Cell 2', 'trim|numeric');
 		$this->form_validation->set_rules('company_email', 'Company Email ID', 'trim|valid_email');
 		$this->form_validation->set_rules('company_alt_email', 'Company Alt Email ID', 'trim|valid_email');
 
-		$userData = $this->input->post();
-		$companyInsert = $this->company->insert([
-			'name' => $userData['company_name'],
-			'email_id' => $userData['company_email_id'],
-			'alt_email_id' => $userData['company_alt_email_id'],
-			'address' => $userData['company_address'],
-			'city' => $userData['company_city'],
-			'state' => $userData['company_state'],
-			'zip' => $userData['company_zip']
-		]);
+		if ($this->form_validation->run() == TRUE) {
+			$userData = $this->input->post();
+			$companyInsert = $this->company->insert([
+				'name' => $userData['company_name'],
+				'email_id' => $userData['company_email_id'],
+				'alt_email_id' => $userData['company_alt_email_id'],
+				'address' => $userData['company_address'],
+				'city' => $userData['company_city'],
+				'state' => $userData['company_state'],
+				'zip' => $userData['company_zip']
+			]);
 
-		if ($companyInsert) {
-			$message = '';
-			$admin_setting = $this->admin_setting->insert([
-				'company_id' => $companyInsert
-			]);
-			if (!$admin_setting) {
-				$message .= '<div class="error" title="Error:" >Setting options not created. Please inform Admin!</div>';
+			if ($companyInsert) {
+				$message = '';
+				$admin_setting = $this->admin_setting->insert([
+					'company_id' => $companyInsert
+				]);
+				if (!$admin_setting) {
+					$message .= '<div class="error" title="Error:" >Setting options not created. Please inform Admin!</div>';
+				}
+				$signup = $this->user->signup([
+					'first_name' => $userData['first_name'],
+					'last_name' => $userData['last_name'],
+					'password' => $userData['password'],
+					'email_id' => $userData['email_id'],
+					'office_phone' => $userData['office_phone'],
+					'home_phone' => $userData['home_phone'],
+					'cell_1' => $userData['cell_1'],
+					'cell_2' => $userData['cell_2'],
+					'company_id' => $companyInsert
+				]);
+				if ($signup) {
+					$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect('login');
+				} else {
+					$message .= '<div class="error" title="Error:" >User not created. Please try again!</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect('signup');
+				}
 			}
-			$signup = $this->user->signup([
-				'first_name' => $userData['first_name'],
-				'last_name' => $userData['last_name'],
-				'password' => $userData['password'],
-				'email_id' => $userData['email_id'],
-				'office_phone' => $userData['office_phone'],
-				'home_phone' => $userData['home_phone'],
-				'cell_1' => $userData['cell_1'],
-				'cell_2' => $userData['cell_2'],
-				'company_id' => $companyInsert
-			]);
-			if ($signup) {
-				$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
-				$this->session->set_flashdata('message', $message);
-				redirect('login');
-			} else {
-				$message .= '<div class="error" title="Error:" >User not created. Please try again!</div>';
-				$this->session->set_flashdata('message', $message);
-				redirect('signup');
-			}
+		} else {
+			$message = '<div class="error">' . validation_errors() . '</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect('login');
 		}
 	}
 
