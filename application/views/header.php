@@ -1,51 +1,61 @@
 <!doctype html>
 <html lang="en">
-<head> 
+
+<head>
     <?php $admin = json_decode(json_encode($this->session->userdata), true); ?>
-	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/<?php echo $admin['admindata']['favicon']; ?>">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/<?php echo $admin['admindata']['favicon']; ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title><?= $title ?> - SmartPM CRM</title>
+    <title><?= $title ?> - SmartPM CRM</title>
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
 
     <!-- Bootstrap core CSS     -->
-    <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
-    <link href="<?php echo base_url();?>assets/css/animate.min.css" rel="stylesheet"/>
+    <link href="<?php echo base_url(); ?>assets/css/animate.min.css" rel="stylesheet" />
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="<?php echo base_url();?>assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
-    
+    <link href="<?php echo base_url(); ?>assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet" />
+    <!-- bootstrap tagsinput CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap-tagsinput.css') ?>">
+    <!-- At.js CSS -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/jquery.atwho.css') ?>">
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="<?php echo base_url();?>assets/css/demo.css" rel="stylesheet" />
-
+    <link href="<?php echo base_url(); ?>assets/css/demo.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="<?php echo base_url();?>assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="<?php echo base_url(); ?>assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <!-- Others -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.fancybox.min.css">
+
     <!-- JS FILES -->
+
     <!--   Core JS Files   -->
-    <script src="<?php echo base_url();?>assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
     <!--  Notifications Plugin    -->
-    <script src="<?php echo base_url();?>assets/js/bootstrap-notify.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
     <!-- bootstrap tagsinput JS -->
-	<script src="<?= base_url('assets/js/bootstrap-tagsinput.min.js') ?>"></script>
-	<script src="<?= base_url('assets/js/bootstrap3-typeahead.min.js') ?>"></script>
-    <script src="<?php echo base_url();?>assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+    <script src="<?= base_url('assets/js/bootstrap-tagsinput.min.js') ?>"></script>
+    <script src="<?= base_url('assets/js/bootstrap3-typeahead.min.js') ?>"></script>
+    <!-- At.js JS -->
+    <script src="<?= base_url('assets/js/jquery.caret.js') ?>"></script>
+    <script src="<?= base_url('assets/js/jquery.atwho.js') ?>"></script>
+    <!-- Others -->
+	<script src="<?php echo base_url();?>assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
     <script src="<?php echo base_url();?>assets/js/demo.js"></script>
     <script src="<?php echo base_url();?>assets/js/jquery.fancybox.js"></script>
    
 </head>
+
 <body>
 
 <div class="wrapper">
@@ -185,9 +195,12 @@
                         </li>
 						<li class="separator hidden-lg"></li>
                     </ul>
-                </div>
+ </div>
             </div>
         </nav>
 
 
         <div class="content">
+
+
+        

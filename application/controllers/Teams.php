@@ -54,10 +54,12 @@ class Teams extends CI_Controller
 
 	public function store()
 	{
+		$userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+
 		$this->form_validation->set_rules('name', 'Team Name', 'trim|required');
 		$this->form_validation->set_rules('remark', 'Remark', 'trim');
-		$this->form_validation->set_rules('manager', 'Manager', 'trim|required');
-		$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required');
+		$this->form_validation->set_rules('manager', 'Manager', 'trim|required|numeric|in_list[' . $userKeys . ']');
+		$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required|numeric|in_list[' . $userKeys . ']');
 		$this->form_validation->set_rules('team_members', 'Team Members', 'is_own_ids[users, Users]');
 
 		if ($this->form_validation->run() == TRUE) {
@@ -86,7 +88,7 @@ class Teams extends CI_Controller
 
 				redirect('team/' . $insert);
 			} else {
-				$this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
+				$this->session->set_flashdata('errors', '<p>Unable to Create Team.</p>');
 				redirect('team/create');
 			}
 		} else {
@@ -121,10 +123,12 @@ class Teams extends CI_Controller
 	{
 		$team = $this->team->getTeamById($id);
 		if ($team) {
+			$userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+
 			$this->form_validation->set_rules('name', 'Team Name', 'trim|required');
 			$this->form_validation->set_rules('remark', 'Remark', 'trim');
-			$this->form_validation->set_rules('manager', 'Manager', 'trim|required');
-			$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required');
+			$this->form_validation->set_rules('manager', 'Manager', 'trim|required|numeric|in_list[' . $userKeys . ']');
+			$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required|numeric|in_list[' . $userKeys . ']');
 			$this->form_validation->set_rules('team_members', 'Team Members', 'is_own_ids[users, Users]');
 			if ($this->form_validation->run() == TRUE) {
 				$teamData = $this->input->post();
@@ -161,6 +165,9 @@ class Teams extends CI_Controller
 					}
 
 					redirect('team/' . $id);
+				} else {
+					$this->session->set_flashdata('errors', '<p>Unable to Update Team.</p>');
+					redirect('user/' . $id . '/edit');
 				}
 			} else {
 				$this->session->set_flashdata('errors', validation_errors());

@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12 max-1000-form-container">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Edit User</h4>
+                    <h4 class="title">Create User</h4>
                 </div>
                 <div class="content">
                     <div class="row">
@@ -19,18 +19,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             ?>
                         </div>
                     </div>
-                    <form action="<?= base_url('user/' . $user->id . '/update') ?>" method="post">
+                    <form action="<?= base_url('user/store') ?>" method="post">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input class="form-control" placeholder="First Name" name="first_name" type="text" value="<?= $user->first_name ?>">
+                                    <input class="form-control" placeholder="First Name" name="first_name" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input class="form-control" placeholder="Last Name" name="last_name" type="text" value="<?= $user->last_name ?>">
+                                    <input class="form-control" placeholder="Last Name" name="last_name" type="text">
                                 </div>
                             </div>
                         </div>
@@ -38,16 +38,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email ID</label>
-                                    <input class="form-control" placeholder="Email ID" name="email_id" type="email" value="<?= $user->email_id ?>" readonly>
+                                    <input class="form-control" placeholder="Email ID" name="email_id" type="email">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Level</label>
                                     <select name="level" class="form-control">
-                                        <option value="" disabled<?= empty($user->level) ? ' selected' : '' ?>>Select Level</option>
+                                        <option value="" disabled selected>Select Level</option>
                                         <?php foreach ($levels as $id => $level) {
-                                            echo '<option value="' . $id . '"' . ($id == $user->level ? ' selected' : '') . '>' . $level . '</option>';
+                                            echo '<option value="' . $id . '">' . $level . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -57,13 +57,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Office Phone</label>
-                                    <input class="form-control" placeholder="Office Phone" name="office_phone" type="text" value="<?= $user->office_phone ?>">
+                                    <input class="form-control" placeholder="Office Phone" name="office_phone" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Home Phone</label>
-                                    <input class="form-control" placeholder="Home Phone" name="home_phone" type="text" value="<?= $user->home_phone ?>">
+                                    <input class="form-control" placeholder="Home Phone" name="home_phone" type="text">
                                 </div>
                             </div>
                         </div>
@@ -71,13 +71,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Cell 1</label>
-                                    <input class="form-control" placeholder="Cell 1" name="cell_1" type="text" value="<?= $user->cell_1 ?>">
+                                    <input class="form-control" placeholder="Cell 1" name="cell_1" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Cell 2</label>
-                                    <input class="form-control" placeholder="Cell 2" name="cell_2" type="text" value="<?= $user->cell_2 ?>">
+                                    <input class="form-control" placeholder="Cell 2" name="cell_2" type="text">
                                 </div>
                             </div>
                         </div>
@@ -86,9 +86,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Notifications</label>
                                     <select name="notifications" class="form-control">
-                                        <option value="" disabled<?= empty($user->notifications) ? ' selected' : '' ?>>Select Notifications</option>
+                                        <option value="" disabled selected>Select Notifications</option>
                                         <?php foreach ($notifications as $id => $notification) {
-                                            echo '<option value="' . $id . '"' . ($id == $user->notifications ? ' selected' : '') . '>' . $notification . '</option>';
+                                            echo '<option value="' . $id . '">' . $notification . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -97,9 +97,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select name="is_active" class="form-control">
-                                        <option value="" disabled<?= empty($user->is_active) ? ' selected' : '' ?>>Select Status</option>
-                                        <option value="1"<?= $user->is_active == 1 ? ' selected' : '' ?>>Active</option>
-                                        <option value="0"<?= $user->is_active == 0 ? ' selected' : '' ?>>Inactive</option>
+                                        <option value="" disabled selected>Select Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <a href="<?= base_url('users') ?>" class="btn btn-info btn-fill">Back</a>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                                    <button type="submit" class="btn btn-info btn-fill pull-right">Create</button>
                                 </div>
                             </div>
                         </div>

@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled selected>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '">' . $user->fullname . ' (' . $user->username . ')</option>';
+                                            echo '<option value="' . $user->id . '">' . $user->name . ' (@' . $user->username . ')' . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Note</label>
-                                    <textarea class="form-control" name="note" placeholder="Note" rows="10"></textarea>
+                                    <textarea id="note-input" class="form-control" name="note" placeholder="Note" rows="10"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tag Clients</label>
-                                    <input class="form-control" placeholder="Tag Clients" name="tag_clients" id="tag_clients" type="text">
+                                    <input class="form-control" placeholder="Tag Clients" name="tag_clients" id="tag_clients" type="text" disabled>
                                 </div>
                             </div>
                         </div>
@@ -146,8 +146,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         });
         $('input#tag_users').tagsinput({
             itemValue: 'id',
-            itemText: function(item) {
-                return item.fullname + ' (' + item.username + ')';
+            itemText: function (item) {
+                return item.name + ' (@' + item.username + ')';
             },
             typeahead: {
                 source: <?= json_encode($users) ?>,
@@ -165,6 +165,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     this.$element[0].value = '';
                 }
             }
+        });
+
+        $('#note-input').atwho({
+            at: '@',
+            data: <?= json_encode($users) ?>,
+            headerTpl: '<div class="atwho-header">User List:</div>',
+            displayTpl: '<li>${name} (@${username})</li>',
+            insertTpl: '${atwho-at}${username}',
+            searchKey: 'username',
+            limit: 100
         });
     });
 </script>
