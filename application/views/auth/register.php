@@ -32,7 +32,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</div>
 	<div class="input-group">
 		<label>Email ID</label>
-		<input type="email" name="email" placeholder="Email ID" required>
+		<input type="email" name="email_id" placeholder="Email ID" required>
 	</div>
 	<div class="input-group">
 		<label>Password</label>
@@ -42,6 +42,57 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<label>Confirm Password</label>
 		<input type="password" name="conf_password" placeholder="Confirm Password" required>
 	</div>
+	<div class="input-group">
+		<label>Office Phone</label>
+		<input type="text" name="office_phone" placeholder="Office Phone">
+	</div>
+	<div class="input-group">
+		<label>Home Phone</label>
+		<input type="text" name="home_phone" placeholder="Home Phone">
+	</div>
+	<div class="input-group">
+		<label>Cell 1</label>
+		<input type="text" name="cell_1" placeholder="Cell 1">
+	</div>
+	<div class="input-group">
+		<label>Cell 2</label>
+		<input type="text" name="cell_2" placeholder="Cell 2">
+	</div>
+
+	<br>
+	
+	<h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Company Details</h2>
+	
+	<div class="input-group">
+		<label>Name</label>
+		<input type="text" name="company_name" placeholder="Name">
+	</div>
+	<div class="input-group">
+		<label>Email ID</label>
+		<input type="text" name="company_email_id" placeholder="Email ID">
+	</div>
+	<div class="input-group">
+		<label>Alternate Email ID</label>
+		<input type="text" name="company_alt_email_id" placeholder="Alternates Email ID">
+	</div>
+	<div class="input-group">
+		<label>Address</label>
+		<input type="text" name="company_address" placeholder="Address">
+	</div>
+	<div class="input-group">
+		<label>City</label>
+		<input type="text" name="company_city" placeholder="City">
+	</div>
+	<div class="input-group">
+		<label>State</label>
+		<input type="text" name="company_state" placeholder="State">
+	</div>
+	<div class="input-group">
+		<label>Zip</label>
+		<input type="text" name="company_zip" placeholder="Zip">
+	</div>
+
+	<br>
 
 	<div class="input-group">
 		<button type="submit" id="submit" class="btn">Register</button>

@@ -6,9 +6,11 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('UserModel');
+		$this->load->model(['UserModel', 'CompanyModel', 'AdminSettingModel']);
 
 		$this->user = new UserModel();
+		$this->company = new CompanyModel();
+		$this->admin_setting = new AdminSettingModel();
 	}
 
 	public function index()
@@ -53,9 +55,10 @@ class Auth extends CI_Controller
 							'id' => $user->id,
 							'email_id' => $user->email_id,
 							'level' => $user->level,
+							'company_id' => $user->company_id,
 							'logged_in' => TRUE
 						]);
-						$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['user_id' => $user->id]);
+						$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);
 						$this->session->set_userdata('admindata', $result1);
 						redirect('dashboard');
 					} else {
@@ -96,30 +99,53 @@ class Auth extends CI_Controller
 			redirect();
 			die();
 		}
-		
+
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		$this->form_validation->set_rules('conf_password', 'Confirm Password', 'trim|required|matches[password]');
 		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]');
+		$this->form_validation->set_rules('company_email', 'Company Email ID', 'trim|valid_email');
+		$this->form_validation->set_rules('company_alt_email', 'Company Alt Email ID', 'trim|valid_email');
 
-		if ($this->user->mail_exists($_POST['username']) == TRUE) {
-			$message = '<div class="error" title="Error:" >Email Already Registered!</div>';
-			$this->session->set_flashdata('message', $message);
-			$this->load->view('auth/register');
-		} else {
-			$_POST['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
-			$_POST['usertype'] = 'user';
-			$query = $this->user->signup($_POST);
-			if ($query) {
+		$userData = $this->input->post();
+		$companyInsert = $this->company->insert([
+			'name' => $userData['company_name'],
+			'email_id' => $userData['company_email_id'],
+			'alt_email_id' => $userData['company_alt_email_id'],
+			'address' => $userData['company_address'],
+			'city' => $userData['company_city'],
+			'state' => $userData['company_state'],
+			'zip' => $userData['company_zip']
+		]);
 
-				$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
+		if ($companyInsert) {
+			$message = '';
+			$admin_setting = $this->admin_setting->insert([
+				'company_id' => $companyInsert
+			]);
+			if (!$admin_setting) {
+				$message .= '<div class="error" title="Error:" >Setting options not created. Please inform Admin!</div>';
+			}
+			$signup = $this->user->signup([
+				'first_name' => $userData['first_name'],
+				'last_name' => $userData['last_name'],
+				'password' => $userData['password'],
+				'email_id' => $userData['email_id'],
+				'office_phone' => $userData['office_phone'],
+				'home_phone' => $userData['home_phone'],
+				'cell_1' => $userData['cell_1'],
+				'cell_2' => $userData['cell_2'],
+				'company_id' => $companyInsert
+			]);
+			if ($signup) {
+				$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
 				$this->session->set_flashdata('message', $message);
-				redirect('account/index');
+				redirect('login');
 			} else {
-				$message = '<div class="error" title="Error:" >Account not created. Please try again!</div>';
+				$message .= '<div class="error" title="Error:" >User not created. Please try again!</div>';
 				$this->session->set_flashdata('message', $message);
-				redirect('account/index');
+				redirect('signup');
 			}
 		}
 	}
