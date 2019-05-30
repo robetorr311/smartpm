@@ -54,10 +54,12 @@ class Teams extends CI_Controller
 
 	public function store()
 	{
+		$userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+
 		$this->form_validation->set_rules('name', 'Team Name', 'trim|required');
 		$this->form_validation->set_rules('remark', 'Remark', 'trim');
-		$this->form_validation->set_rules('manager', 'Manager', 'trim|required');
-		$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required');
+		$this->form_validation->set_rules('manager', 'Manager', 'trim|required|numeric|in_list[' . $userKeys . ']');
+		$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required|numeric|in_list[' . $userKeys . ']');
 		$this->form_validation->set_rules('team_members', 'Team Members', 'is_own_ids[users, Users]');
 
 		if ($this->form_validation->run() == TRUE) {
@@ -121,10 +123,12 @@ class Teams extends CI_Controller
 	{
 		$team = $this->team->getTeamById($id);
 		if ($team) {
+			$userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+
 			$this->form_validation->set_rules('name', 'Team Name', 'trim|required');
 			$this->form_validation->set_rules('remark', 'Remark', 'trim');
-			$this->form_validation->set_rules('manager', 'Manager', 'trim|required');
-			$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required');
+			$this->form_validation->set_rules('manager', 'Manager', 'trim|required|numeric|in_list[' . $userKeys . ']');
+			$this->form_validation->set_rules('team_leader', 'Team Leader', 'trim|required|numeric|in_list[' . $userKeys . ']');
 			$this->form_validation->set_rules('team_members', 'Team Members', 'is_own_ids[users, Users]');
 			if ($this->form_validation->run() == TRUE) {
 				$teamData = $this->input->post();
