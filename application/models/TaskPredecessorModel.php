@@ -38,7 +38,7 @@ class TaskPredecessorModel extends CI_Model
     {
         $this->db->select('tasks.*');
         $this->db->from($this->table);
-        $this->db->join('tasks', 'task_predecessor.predecessor_task_id=tasks.id');
+        $this->db->join('tasks', 'task_predecessor.predecessor_task_id=tasks.id', 'left');
         $this->db->where([
             'task_predecessor.task_id' => $id,
             'task_predecessor.is_deleted' => FALSE,

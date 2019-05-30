@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Importance Level</label>
                                     <select name="level" class="form-control">
-                                        <option value="" disabled selected>Select Importance Level</option>
+                                        <option value="" disabled<?= empty($task->level) ? ' selected' : '' ?>>Select Importance Level</option>
                                         <?php foreach ($levels as $id => $level) {
                                             echo '<option value="' . $id . '"' . ($id == $task->level ? ' selected' : '') . '>' . $level . '</option>';
                                         } ?>
@@ -55,9 +55,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Assigned To</label>
                                     <select name="assigned_to" class="form-control">
-                                        <option value="" disabled selected>Select Assigned To</option>
+                                        <option value="" disabled<?= empty($task->created_by) ? ' selected' : '' ?>>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '"' . ($user->id == $task->created_by ? ' selected' : '') . '>' . $user->fullname . ' (' . $user->username . ')</option>';
+                                            echo '<option value="' . $user->id . '"' . ($user->id == $task->created_by ? ' selected' : '') . '>' . $user->name . ' (@' . $user->username . ')' . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -66,7 +66,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select name="status" class="form-control">
-                                        <option value="" disabled selected>Select Status</option>
+                                        <option value="" disabled<?= empty($task->status) ? ' selected' : '' ?>>Select Status</option>
                                         <?php foreach ($status as $key => $value) {
                                             echo '<option value="' . $key . '"' . ($key == $task->status ? ' selected' : '') . '>' . $value . '</option>';
                                         } ?>
@@ -78,7 +78,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tag Clients</label>
-                                    <input class="form-control" placeholder="Tag Clients" name="tag_clients" id="tag_clients" type="text">
+                                    <input class="form-control" placeholder="Tag Clients" name="tag_clients" id="tag_clients" type="text" disabled>
                                 </div>
                             </div>
                         </div>
@@ -149,8 +149,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         });
         $('input#tag_users').tagsinput({
             itemValue: 'id',
-            itemText: function(item) {
-                return item.fullname + ' (' + item.username + ')';
+            itemText: function (item) {
+                return item.name + ' (@' + item.username + ')';
             },
             typeahead: {
                 source: <?= json_encode($users) ?>,

@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         foreach ($notes as $note) {
                             echo '<div class="row note-item">';
                             echo '<div class="col-md-12">';
-                            echo '<label>' . $note->created_username . '</label>';
+                            echo '<label>' . $note->created_user_fullname . '</label>';
                             echo '<a href="' . base_url('task/' . $task->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';
                             echo '</div>';
@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Your Note</label>
-                                            <textarea class="form-control" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
+                                            <textarea id="note-input" class="form-control" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <label>Assigned To</label>
-                            <p><?= $task->assigned_username ?></p>
+                            <p><?= $task->assigned_user_fullname ?></p>
                         </div>
                     </div>
                     <div class="row">
@@ -114,10 +114,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <label>Tag Users</label>
                             <?php
-                            if ($users) {
+                            if ($tag_users) {
                                 echo '<p>';
-                                foreach ($users as $user) {
-                                    echo '<span class="info-tag">' . $user->username . '</span>';
+                                foreach ($tag_users as $tag_user) {
+                                    echo '<span class="info-tag">' . $tag_user->name . ' (@' . $tag_user->username . ')' . '</span>';
                                 }
                                 echo '</p>';
                             } else {
@@ -151,7 +151,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <label>Created By</label>
-                            <p><?= $task->created_username ?></p>
+                            <p><?= $task->created_user_fullname ?></p>
                         </div>
                     </div>
                     <div class="row">
@@ -173,3 +173,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#note-input').atwho({
+            at: '@',
+            data: <?= json_encode($users) ?>,
+            headerTpl: '<div class="atwho-header">User List:</div>',
+            displayTpl: '<li>${name} (@${username})</li>',
+            insertTpl: '${atwho-at}${username}',
+            searchKey: 'username',
+            limit: 100
+        });
+    });
+</script>

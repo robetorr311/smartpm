@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url('tasks/create') ?>" class="btn btn-info btn-fill pull-right">New Task</a>
+            <a href="<?= base_url('task/create') ?>" class="btn btn-info btn-fill pull-right">New Task</a>
         </div>
     </div>
     <div class="row">
@@ -44,8 +44,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= TaskModel::typetostr($task->type) ?></td>
                                         <td><?= TaskModel::leveltostr($task->level) ?></td>
                                         <td><?= TaskModel::statustostr($task->status) ?></td>
-                                        <td><?= $task->assigned_username ?></td>
-                                        <td><?= $task->created_username ?></td>
+                                        <td><?= $task->assigned_user_fullname ?></td>
+                                        <td><?= $task->created_user_fullname ?></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>

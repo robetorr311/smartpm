@@ -9,14 +9,14 @@ class Tasks extends CI_Controller
     {
         parent::__construct();
 
-        authAdminAccess();
+        // authAdminAccess();
         // sessionTimeout();
 
-        $this->load->model(['TaskModel', 'Login', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
+        $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->task = new TaskModel();
-        $this->login = new Login();
+        $this->user = new UserModel();
         $this->task_notes = new TaskNotesModel();
         $this->task_user_tags = new TaskUserTagsModel();
         $this->task_predecessor = new TaskPredecessorModel();
@@ -25,6 +25,8 @@ class Tasks extends CI_Controller
 
     public function index($start = 0)
     {
+        authAccess();
+
         $limit = 10;
         $pagiConfig = [
             'base_url' => base_url('tasks'),
@@ -45,10 +47,12 @@ class Tasks extends CI_Controller
 
     public function create()
     {
+        authAccess();
+
         $types = TaskModel::getTypes();
         $levels = TaskModel::getLevels();
         $tasks = $this->task->getTaskList();
-        $users = $this->login->getUserList();
+        $users = $this->user->getUserList();
 
         $this->load->view('header', [
             'title' => $this->title
@@ -64,6 +68,8 @@ class Tasks extends CI_Controller
 
     public function store()
     {
+        authAccess();
+
         $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
         $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
         $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
@@ -130,10 +136,10 @@ class Tasks extends CI_Controller
                 }
 
                 redirect('task/' . $insert);
+            } else {
+                $this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
+                redirect('task/create');
             }
-
-            $this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
-            redirect('task/create');
         } else {
             $this->session->set_flashdata('errors', validation_errors());
             redirect('task/create');
@@ -142,9 +148,12 @@ class Tasks extends CI_Controller
 
     public function complete($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
-            if ($this->task->isAllowedToDelete($id)) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task for completion
+            if ($this->task->predecessorCheck($id)) {
                 $completed = $this->task->complete($id);
                 if (!$completed) {
                     $this->session->set_flashdata('errors', '<p>Unable to mark Task as Completed.</p>');
@@ -160,13 +169,16 @@ class Tasks extends CI_Controller
 
     public function edit($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
             $types = TaskModel::getTypes();
             $levels = TaskModel::getLevels();
             $status = TaskModel::getStatus();
             $tasks = $this->task->getTaskListExcept($id);
-            $users = $this->login->getUserList();
+            $users = $this->user->getUserList();
             // $jobs = false;
             $tag_users = $this->task_user_tags->getUsersByTaskId($id);
             $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
@@ -192,8 +204,11 @@ class Tasks extends CI_Controller
 
     public function update($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
             $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
             $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric');
@@ -272,10 +287,10 @@ class Tasks extends CI_Controller
                     }
 
                     redirect('task/' . $id);
+                } else {
+                    $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
+                    redirect('task/' . $id . '/edit');
                 }
-
-                $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-                redirect('task/' . $id . '/edit');
             } else {
                 $this->session->set_flashdata('errors', validation_errors());
                 redirect('task/' . $id . '/edit');
@@ -288,11 +303,14 @@ class Tasks extends CI_Controller
 
     public function show($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
             $notes = $this->task_notes->getNotesByTaskId($id);
             $jobs = false;
-            $users = $this->task_user_tags->getUsersByTaskId($id);
+            $users = $this->user->getUserList();
+            $tag_users = $this->task_user_tags->getUsersByTaskId($id);
             $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
             $this->load->view('header', [
                 'title' => $this->title
@@ -302,6 +320,7 @@ class Tasks extends CI_Controller
                 'notes' => $notes,
                 'jobs' => $jobs,
                 'users' => $users,
+                'tag_users' => $tag_users,
                 'predec_tasks' => $predec_tasks
             ]);
             $this->load->view('footer');
@@ -313,6 +332,8 @@ class Tasks extends CI_Controller
 
     public function addNote($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
             $this->form_validation->set_rules('note', 'Note', 'trim|required');
@@ -338,8 +359,11 @@ class Tasks extends CI_Controller
 
     public function deleteNote($id, $note_id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this taskNote
             $delete = $this->task_notes->delete($note_id, $id);
             if (!$delete) {
                 $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
@@ -353,8 +377,11 @@ class Tasks extends CI_Controller
 
     public function delete($id)
     {
+        authAccess();
+
         $task = $this->task->getTaskById($id);
         if ($task) {
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
             $this->task_notes->deleteRelated($id);
             $this->task_job_tags->deleteRelated($id);
             $this->task_user_tags->deleteRelated($id);

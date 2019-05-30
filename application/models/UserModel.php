@@ -54,6 +54,7 @@ class UserModel extends CI_Model
 		return $query->result();
 	}
 
+
 	function get_crm_data($table, $cols, $condition)
 	{
 		return $this->db->select($cols)
