@@ -53,18 +53,21 @@ class Users extends CI_Controller
 
 	public function store()
 	{
+		$levelKeys = UserModel::getLevels();
+		$notificationKeys = UserModel::getNotifications();
+
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]', [
 			'is_unique' => 'The user with this Email ID is already exist.'
 		]);
-		$this->form_validation->set_rules('level', 'Level', 'trim|required|numeric');
+		$this->form_validation->set_rules('level', 'Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
 		$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
 		$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
 		$this->form_validation->set_rules('cell_1', 'Cell 1', 'trim|numeric');
 		$this->form_validation->set_rules('cell_2', 'Cell 2', 'trim|numeric');
-		$this->form_validation->set_rules('notifications', 'Notifications', 'trim|required|numeric');
-		$this->form_validation->set_rules('is_active', 'Status', 'trim|required|numeric');
+		$this->form_validation->set_rules('notifications', 'Notifications', 'trim|required|numeric|in_list[' . $notificationKeys . ']');
+		$this->form_validation->set_rules('is_active', 'Status', 'trim|required|numeric|in_list[0,1]');
 
 		if ($this->form_validation->run() == TRUE) {
 			$userData = $this->input->post();
@@ -121,15 +124,18 @@ class Users extends CI_Controller
 	{
 		$user = $this->user->getUserById($id);
 		if ($user) {
+			$levelKeys = UserModel::getLevels();
+			$notificationKeys = UserModel::getNotifications();
+
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-			$this->form_validation->set_rules('level', 'Level', 'trim|required|numeric');
+			$this->form_validation->set_rules('level', 'Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
 			$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
 			$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
 			$this->form_validation->set_rules('cell_1', 'Cell 1', 'trim|numeric');
 			$this->form_validation->set_rules('cell_2', 'Cell 2', 'trim|numeric');
-			$this->form_validation->set_rules('notifications', 'Notifications', 'trim|required|numeric');
-			$this->form_validation->set_rules('is_active', 'Status', 'trim|required|numeric');
+			$this->form_validation->set_rules('notifications', 'Notifications', 'trim|required|numeric|in_list[' . $notificationKeys . ']');
+			$this->form_validation->set_rules('is_active', 'Status', 'trim|required|numeric|in_list[0,1]');
 
 			if ($this->form_validation->run() == TRUE) {
 				$userData = $this->input->post();
