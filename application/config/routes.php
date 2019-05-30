@@ -96,12 +96,13 @@ $route['insurance_jobs'] = 'insurance_jobs/index';
 $route['insurance_job/(:num)'] = 'insurance_jobs/view';
 
 $route['teams'] = 'teams/index';
-$route['team/(:num)'] = 'teams/view';
-$route['team/(:num)/edit'] = 'teams/edit';
-$route['team/(:num)/update'] = 'teams/update';
-$route['team/(:num)/delete'] = 'teams/delete';
-$route['team/new'] = 'teams/new';
-$route['team/store'] = 'teams/store';
+$route['teams/(:num)'] = 'teams/index/$1';
+$route['team/create'] = 'teams/create';
+$route['team/store']['post'] = 'teams/store';
+$route['team/(:num)'] = 'teams/show/$1';
+$route['team/(:num)/edit'] = 'teams/edit/$1';
+$route['team/(:num)/update']['post'] = 'teams/update/$1';
+$route['team/(:num)/delete']['post'] = 'teams/delete/$1';
 
 $route['server/photo_upload'] = 'server/ajaxupload_jobphoto';
 $route['server/photo_save'] = 'server/ajaxsave_jobphoto';
