@@ -95,13 +95,13 @@ class UserModel extends CI_Model
 		return $update;
 	}
 
-    public function delete($id)
-    {
-        $this->db->where('id', $id);
-        return $this->db->update($this->table, [
-            'is_deleted' => TRUE
-        ]);
-    }
+	public function delete($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->update($this->table, [
+			'is_deleted' => TRUE
+		]);
+	}
 
 	public function getUserList($select = "id, username, CONCAT(first_name, ' ', last_name) AS name")
 	{
