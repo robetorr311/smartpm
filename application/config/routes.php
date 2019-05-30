@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -49,9 +49,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'account';
-$route['404_override'] = '';
+$route['default_controller'] = 'auth';
+$route['404_override'] = '404';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['login'] = 'auth/login';
+$route['auth']['post'] = 'auth/auth';
+$route['signup'] = 'auth/signup';
+$route['register']['post'] = 'auth/register';
+$route['logout']['post'] = 'auth/logout';
+
+$route['migrate/do_migration'] = 'migrate/do_migration';
+$route['migrate/undo_migration'] = 'migrate/undo_migration';
+$route['migrate/undo_migration/(:num)'] = 'migrate/undo_migration/$1';
+$route['migrate/reset_migration'] = 'migrate/reset_migration';
+
+$route['dashboard'] = 'dashboard/index';
 
 $route['tasks'] = 'tasks/index';
 $route['tasks/(:num)'] = 'tasks/index/$1';
@@ -100,4 +113,4 @@ $route['server/doc_save'] = 'server/ajaxsave_jobdoc';
 $route['server/doc_delete'] = 'server/deletedoc';
 $route['server/doc_update'] = 'server/updatedocname';
 
-
+$route['(.+)'] = 'errors/page_missing';

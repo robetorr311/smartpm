@@ -7,14 +7,14 @@ class Migrate extends CI_Controller
     {
         parent::__construct();
 
-        authAdminAccess();
+        // authAdminAccess();
 
         $this->load->library('migration');
     }
 
     public function index()
     {
-        echo 'Migration Controller';
+        echo 'Migration Module';
     }
 
     public function do_migration($version = null)
