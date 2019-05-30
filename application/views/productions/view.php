@@ -129,7 +129,7 @@ echo '</div>';
              <h4 class="title" style="float: left;">Current Status:</h4>
               <div style="float: right;text-align: right;"><p>Production</p></div>
                 <div class="clearfix"></div>
-              <a href="" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Complete</a>
+              <a href="<?php echo base_url('production/'.$jobid.'/complete')?>" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Complete</a>
               
         </div>
     </div>

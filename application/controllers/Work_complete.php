@@ -17,7 +17,8 @@ class Work_complete extends CI_Controller {
 	    public function index(){
 			$query['jobs'] = $this->lead->getJobType([
                           							 'status.contract'=>'signed',
-                          							 'status.lead'=>'production'
+                          							 'status.production'=>'complete',
+                          							 'status.closeout'=>'no'
                         							]);
 			$this->load->view('header',['title' => 'Work Complete']);
 			$this->load->view('work_complete/index',$query);
@@ -32,12 +33,18 @@ class Work_complete extends CI_Controller {
 			$query['status'] = $this->status->get_all_where(['jobid'=>$this->uri->segment(2)]);
 			$query['teams_detail'] = $this->team_job_track->getTeamName($this->uri->segment(2));
 
-			$query['teams'] = $this->team->get_all_where(['is_active'=>1]);
+		//	$query['teams'] = $this->team->get_all_where(['is_active'=>1]);
 			$this->load->view('header',['title' => 'Job Detail']);
 			$this->load->view('work_complete/view',$query);
 			$this->load->view('footer');
 		}
 
+		public function complete()
+		{	
+			$this->team_job_track->remove_team($this->uri->segment(2));
+	    	$this->status->update_record(['closeout'=>'yes'],['jobid'=>$this->uri->segment(2)]);
+			redirect('work_complete/'.$this->uri->segment(2));
+		}
 	    
 	
 }

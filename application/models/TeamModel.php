@@ -51,6 +51,17 @@ class TeamModel extends CI_Model
         return $result ? $result : false;
     }
 
+
+    public function getTeamOnly( $condition ){
+
+        $this->db->where($condition);
+        $this->db->order_by("id", "desc");
+        $result = $this->db->get($this->table);
+        return $result->result();   
+    }
+
+
+
     public function insert($data)
     {
         $data['created_by'] = $this->session->id;

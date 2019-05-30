@@ -16,11 +16,11 @@ class TeamJobTrackModel extends CI_Model
         $this->db->from($this->table);
         $this->db->join('teams as team', 'team_job_track.team_id=team.id', 'left');
          $this->db->where(['team_job_track.job_id'=>$condition,
-                          'is_deleted'=>FALSE
+                          'team_job_track.is_deleted'=>FALSE
                         ]);
         $query = $this->db->get();
         return $query->result(); 
-    }
+    } 
 
     public function update_record($updatedArray, $condition){
         $this->db->where($condition);
@@ -45,7 +45,7 @@ class TeamJobTrackModel extends CI_Model
     }
 
     public function remove_team($condition){
-        $this->db->where(['job_id'=>$condition,'is_deleted'=>FALSE]);
+        $this->db->where(['job_id'=>$condition,'is_deleted'=>False]);
         $this->db->update($this->table, ['end_date'=>date('Y-m-d h:i:s'),'is_deleted'=>TRUE]);
         if ( $this->db->affected_rows() > 0 ) {
             return TRUE;

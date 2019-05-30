@@ -57,6 +57,18 @@ class LeadModel extends CI_Model
         }
     }
     
+    public function getClosedJob(){
+
+        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
+        $this->db->from($this->table);
+        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left'); 
+        $this->db->where([
+            'status.closeout' => 'yes'
+        ]);
+        $query = $this->db->get();
+        return $query->result(); 
+            
+    }
 
     public function update_record($updatedArray, $condition){
         $this->db->where($condition);

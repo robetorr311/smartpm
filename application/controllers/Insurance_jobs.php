@@ -20,7 +20,7 @@ class Insurance_jobs extends CI_Controller {
 			$query['jobs'] = $this->lead->getJobType([
 													 'status.job'=>'insurance',
                           							 'status.contract'=>'signed',
-                          							 'status.lead'=>'pre-production'
+                          							 'status.production'=>'pre-production'
                         							]);
 			$this->load->view('header',['title' => 'Insurance Jobs']);
 			$this->load->view('insurance_job/index',$query);

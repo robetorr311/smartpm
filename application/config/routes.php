@@ -89,6 +89,7 @@ $route['lead/new'] = 'leads/new';
 $route['lead/store'] = 'leads/store';
 $route['lead/updatestatus'] = 'leads/updatestatus';
 
+
 $route['party/(:num)/add'] = 'party/index';
 $route['party/(:num)/update'] = 'party/update';
 
@@ -102,13 +103,21 @@ $route['insurance_job/(:num)'] = 'insurance_jobs/view';
 $route['insurance_job/(:num)/addTeam'] = 'insurance_job/addTeam';
 $route['insurance_job/(:num)/delete'] = 'insurance_job/delete';
 
+$route['labor_jobs'] = 'labor_jobs/index';
+$route['labor_job/(:num)'] = 'labor_jobs/view';
+$route['labor_job/(:num)/addTeam'] = 'labor_jobs/addTeam';
+$route['labor_job/(:num)/delete'] = 'labor_jobs/delete';
+
 
 $route['productions'] = 'productions/index';
 $route['production/(:num)'] = 'productions/view';
+$route['production/(:num)/complete'] = 'productions/complete';
 
 $route['work_complete'] = 'work_complete/index';
 $route['work_complete/(:num)'] = 'work_complete/view';
+$route['work_complete/(:num)/complete'] = 'work_complete/complete';
 
+$route['closed'] = 'closed/index';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';

@@ -20,7 +20,7 @@ class Labor_jobs extends CI_Controller {
 			$query['jobs'] = $this->lead->getJobType([
 													 'status.job'=>'labor only',
                           							 'status.contract'=>'signed',
-                          							 'status.lead'=>'pre-production'
+                          							 'status.production'=>'pre-production'
                         							]);
 			$this->load->view('header',['title' => 'Labor Only Jobs']);
 			$this->load->view('labor_jobs/index',$query);

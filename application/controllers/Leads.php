@@ -197,7 +197,7 @@ class Leads extends CI_Controller {
 	   
 			$posts = $this->input->post();
 			if($posts['status']=='job'){
-				$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' ,lead='pre-production' WHERE jobid='".$posts['id']."'");
+				$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' , lead='open', production='pre-production' WHERE jobid='".$posts['id']."'");
 				return true;
 			}else{
 				$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' WHERE jobid='".$posts['id']."'");
@@ -205,6 +205,26 @@ class Leads extends CI_Controller {
 			}
 			
 		}
+
+		public function closedJob(){
+			$limit = 10;
+	    	$pagiConfig = [
+            'base_url' => base_url('leads'),
+            'total_rows' => $this->lead->getCount(),
+            'per_page' => $limit
+        	];
+        	$this->pagination->initialize($pagiConfig);
+			$leads = $this->lead->getClosedJob();
+			$this->load->view('header',['title' => 'Lead Detail']);
+			$this->load->view('leads/index',['leads' => $leads,'pagiLinks' => $this->pagination->create_links()]);
+			$this->load->view('footer');
+	    }
+	    public function archiveJob(){
+			$leads = $this->lead->getArchiveJob();
+			$this->load->view('header',['title' => 'Lead Detail']);
+			$this->load->view('leads/view',['leadstatus' => $leadstatus,'leads' => $leads,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
+			$this->load->view('footer');
+	    }
 
 
 		

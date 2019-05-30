@@ -18,7 +18,7 @@ class Cash_jobs extends CI_Controller {
 			$query['jobs'] = $this->lead->getJobType([
 													 'status.job'=>'cash',
                           							 'status.contract'=>'signed',
-                          							 'status.lead'=>'pre-production'
+                          							 'status.production'=>'pre-production'
                         							]);
 			$this->load->view('header',['title' => 'Cash Job']);
 			$this->load->view('cash_job/index',$query);
@@ -33,7 +33,7 @@ class Cash_jobs extends CI_Controller {
 			$query['status'] = $this->status->get_all_where(['jobid'=>$this->uri->segment(2)]);
 			$query['teams_detail'] = $this->team_job_track->getTeamName($this->uri->segment(2));
 
-			$query['teams'] = $this->team->get_all_where(['is_active'=>1]);
+			$query['teams'] = $this->team->getTeamOnly(['is_deleted'=>0]);
 			$this->load->view('header',['title' => 'Cash Job Detail']);
 			$this->load->view('cash_job/view',$query);
 			$this->load->view('footer');
@@ -48,12 +48,13 @@ class Cash_jobs extends CI_Controller {
 			$params['assign_date'] 		=date('Y-m-d h:i:s');
 			$params['is_deleted'] 		= false;
 	  		$this->team_job_track->add_record($params);
-	  		$this->status->update_record(['lead'=>'production'],['jobid'=>$this->uri->segment(2)]);
+	  		$this->status->update_record(['production'=>'production'],['jobid'=>$this->uri->segment(2)]);
 	  		redirect('cash_job/'.$this->uri->segment(2));
 	    }
 
 	    public function delete(){
 	    	$this->team_job_track->remove_team($this->uri->segment(2));
+	    	$this->status->update_record(['production'=>'pre-production'],['jobid'=>$this->uri->segment(2)]);
 	    	redirect('cash_job/'.$this->uri->segment(2));
 	    }
  	 	 	
