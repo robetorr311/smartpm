@@ -20,7 +20,7 @@ class MY_Form_validation extends CI_Form_validation
         $this->CI->db->where_in('id', $ids);
         $count = $this->CI->db->count_all_results($table);
         if ($count != count($ids)) {
-            $this->CI->form_validation->set_message('is_own_ids', 'The {field} contains invalid ' . $item_label . '.');
+            $this->CI->form_validation->set_message('is_own_ids', 'The {field} field contains invalid ' . $item_label . '.');
             return false;
         } else {
             return true;
@@ -29,7 +29,7 @@ class MY_Form_validation extends CI_Form_validation
 
     public function in_list($value, $list)
     {
-        $this->CI->form_validation->set_message('in_list', 'Invalid value of {field} field.');
+        $this->CI->form_validation->set_message('in_list', 'The {field} field contains invalid value.');
         return parent::in_list($value, $list);
     }
 }
