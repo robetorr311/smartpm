@@ -41,8 +41,7 @@ class Work_complete extends CI_Controller {
 
 		public function complete()
 		{	
-			$this->team_job_track->remove_team($this->uri->segment(2));
-	    	$this->status->update_record(['closeout'=>'yes'],['jobid'=>$this->uri->segment(2)]);
+	    	$this->status->update_record(['closeout'=>'yes','lead'=>'complete'],['jobid'=>$this->uri->segment(2)]);
 			redirect('work_complete/'.$this->uri->segment(2));
 		}
 	    

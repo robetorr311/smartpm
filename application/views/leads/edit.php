@@ -167,10 +167,10 @@ endforeach; ?>
                                     <h4 class="title" style="float: left;">Job Type</h4><span class="status job <?php if($jtype==''){ echo 'closed';}else{ echo 'open';} ?>"><?php if($jtype!=''){echo $jtype; }else{ echo "None"; } ?></span> 
                                     <div class="clearfix"></div>
                                     <div class="content">
-                                            <select class="form-control lead-status" id="job">
-                                                <option value="">Change Status</option>
+                                            <select class="form-control lead-status" id="job" disabled="">
+                                                <option value="">Choose type</option>
                           <?php foreach( $job_type_tags as $job ) : ?>     
-                            <option value="<?php echo $job->status_value ?>"><?php echo $job->status_value ?></option>
+                            <option value="<?php echo $job->status_value ?>" <?php if($job->status_value == $jtype){ echo 'selected'; } ?> ><?php echo $job->status_value ?></option>
                         <?php endforeach; ?>
                         </select>
                                     </div>                       
@@ -297,6 +297,11 @@ endforeach; ?>
 
                 var lead_status=$('#lead').val();
                 var contract_status=$('#contract').val();
+                if(contract_status=="signed"){
+                    $('#job').removeAttr('disabled');
+                }else{
+                     $('#job').prop('disabled', 'disabled');
+                }
             
                     if(lead_status=='open'){
                         $.ajax({

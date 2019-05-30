@@ -127,6 +127,7 @@ $route['work_complete/(:num)'] = 'work_complete/view';
 $route['work_complete/(:num)/complete'] = 'work_complete/complete';
 
 $route['closed'] = 'closed/index';
+$route['closed/(:num)'] = 'closed/view';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';
@@ -153,6 +154,7 @@ $route['user/(:num)/delete'] = 'users/delete';
 $route['user/adduser'] = 'users/adduser';
 
 $route['setting/status'] = 'setting/status_tag';
+$route['setting/newtag'] = 'setting/newtag';
 $route['setting/(:num)/delete'] = 'setting/deltag';
 
 

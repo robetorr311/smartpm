@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <thead>
                                        <!-- <th></th> -->
                                         <th>View</th>
-                                        <th>Edit</th>
+                                       
                                         <th>SN</th>
                                         <th>Lead Name</th>
                                         <th>First Name</th>

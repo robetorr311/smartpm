@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <thead>
                                        <!-- <th></th> -->
                                         <th>View</th>
-                                        <th>Edit</th>
+                                      
                                         <th>SN</th>
                                         <th>Lead Name</th>
                                         <th>First Name</th>
@@ -41,8 +41,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php if( !empty( $leads ) ) : ?>
               <?php $i=1; foreach( $leads as $lead ) : ?>  
                 <tr> <!--<td style="width: 30px"><i class="del-doc pe-7s-trash" id=""></i></td>-->
-                <td style="width: 30px"><a href="<?php echo base_url('lead/'.$lead->id);?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
-              <td><a href="<?php echo base_url('lead/'.$lead->id.'/edit');?>"><span class=""><i class="del-edit pe-7s-note" style="font-size: 30px;" /></span></a></td>
+                <td style="width: 30px"><a href="<?php echo base_url('closed/'.$lead->id);?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
+              
               
                   <td><?php echo $i; ?></td>
                   <td><?php echo $lead->job_name ?></td>

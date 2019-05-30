@@ -15,7 +15,7 @@ class Leads extends CI_Controller {
 	    }
  
 	    public function index(){
-        	$limit = 10;
+        	$limit = 10; 
 	    	$pagiConfig = [
             'base_url' => base_url('leads'),
             'total_rows' => $this->lead->getCount(),
@@ -23,7 +23,7 @@ class Leads extends CI_Controller {
         	];
         	$this->pagination->initialize($pagiConfig);
 
-			$leads = $this->lead->getAllJob('open');
+			$leads = $this->lead->getAllJob();
 			$this->load->view('header',['title' => 'Leads']);
 			$this->load->view('leads/index',['leads' => $leads,'pagiLinks' => $this->pagination->create_links()]);
 			$this->load->view('footer');

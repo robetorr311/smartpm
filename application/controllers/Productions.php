@@ -40,7 +40,6 @@ class Productions extends CI_Controller {
 
 		public function complete()
 		{	
-			$this->team_job_track->remove_team($this->uri->segment(2));
 	    	$this->status->update_record(['production'=>'complete','closeout'=>'no'],['jobid'=>$this->uri->segment(2)]);
 			redirect('production/'.$this->uri->segment(2));
 		}

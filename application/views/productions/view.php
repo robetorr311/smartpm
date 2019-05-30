@@ -134,7 +134,7 @@ echo '</div>';
         </div>
     </div>
      <div class="card">
-        <div class="header"> 
+        <div class="header">
             <h4 class="title" style="float: left;">Team Detail:</h4>
                 <?php if( !empty( $teams_detail ) ) : ?>
                 <?php foreach( $teams_detail as $data ) : ?>  

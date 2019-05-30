@@ -145,17 +145,7 @@ echo '</div>';
                 <?php endforeach; ?>
                 <?php else : ?>
                    <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
-                     <div class="content team-block">
-        <?php echo form_open('cash_job/'.$jobid.'/addTeam',array('method'=>'post'));?>
-        <select name="team_id" class="form-control team_assign">
-                <option>Select Team</option>
-                <?php foreach( $teams as $team ) : ?>  
-                                 <option value="<?php echo $team->id ?>"><?php echo $team->team_name ?></option>
-                <?php endforeach; ?>
-        </select>
-        <input type="submit" value="Add Team" >
-        <?php echo form_close(); ?>  
-        </div> 
+                     
                 <?php endif; ?>
         </div>
 
