@@ -53,8 +53,8 @@ class Users extends CI_Controller
 
 	public function store()
 	{
-		$levelKeys = UserModel::getLevels();
-		$notificationKeys = UserModel::getNotifications();
+		$levelKeys = implode(',', array_keys(UserModel::getLevels()));
+		$notificationKeys = implode(',', array_keys(UserModel::getNotifications()));
 
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
@@ -124,8 +124,8 @@ class Users extends CI_Controller
 	{
 		$user = $this->user->getUserById($id);
 		if ($user) {
-			$levelKeys = UserModel::getLevels();
-			$notificationKeys = UserModel::getNotifications();
+			$levelKeys = implode(',', array_keys(UserModel::getLevels()));
+			$notificationKeys = implode(',', array_keys(UserModel::getNotifications()));
 
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
