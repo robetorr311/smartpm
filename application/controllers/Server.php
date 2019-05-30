@@ -26,8 +26,8 @@ function rrmdir($dir) {
 	  }
  }
  function thumbnail($src) {
-	$file_path = $_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/" . $src;
-	$target_path = $_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/thumbnail/".$src;
+	$file_path = $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/" . $src;
+	$target_path = $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/thumbnail/".$src;
     $this->load->library('image_lib');
     $img_cfg['image_library'] = 'gd2';
 	$img_cfg['source_image'] = $file_path;
@@ -312,7 +312,7 @@ public function ajaxupload_jobphoto(){
 		$this->image_lib->clear();
 		$config=array();
 		$config['image_library']   = 'gd2';
-		$config['source_image'] = $_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/".$posts['name'];
+		$config['source_image'] = $_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$posts['name'];
 		$config['rotation_angle'] = '90';
 		$this->image_lib->initialize($config); // reinitialize it instead of reloading
 		if (!$this->image_lib->rotate()) {
@@ -346,7 +346,7 @@ public function ajaxupload_jobphoto(){
 			foreach ($query->result() as $row)
 			{
 			    //echo $row->image_name."<br>";
-			    if(is_file($_SERVER['DOCUMENT_ROOT']."/smartpm/assets/job_photo/".$row->image_name)){
+			    if(is_file($_SERVER['DOCUMENT_ROOT']."/assets/job_photo/".$row->image_name)){
 			    	 $this->thumbnail($row->image_name);
 			    }
 			  
