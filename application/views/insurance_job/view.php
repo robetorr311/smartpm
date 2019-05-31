@@ -131,13 +131,13 @@ echo '</div>';
                 <?php foreach( $teams_detail as $data ) : ?>  
                              <div style="float: right;text-align: right;"><p><?php echo $data->name ?></p>
                             <p><?php echo $data->assign_date ?></p>
-                            <a href="<?php echo base_url('cash_job/'.$jobid.'/delete')?>">Remove</a>
+                            <a href="<?php echo base_url('insurance-job/'.$jobid.'/delete')?>">Remove</a>
                          </div>
                 <?php endforeach; ?>
                 <?php else : ?>
                    <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
                      <div class="content team-block">
-        <?php echo form_open('cash_job/'.$jobid.'/addTeam',array('method'=>'post'));?>
+        <?php echo form_open('insurance-job/'.$jobid.'/addTeam',array('method'=>'post'));?>
         <select name="team_id" class="form-control team_assign">
                 <option>Select Team</option>
                 <?php foreach( $teams as $team ) : ?>  
@@ -160,12 +160,12 @@ echo '</div>';
                             <div class="content">
                             <?php if( !empty( $add_info ) ) : ?>
                             <?php foreach( $add_info as $info ) : ?>  
-                                <?php echo form_open('server/additional_party_update',array('id'=>"jobform",'autocomplete'=>"off"));?>
+                              
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input type="hidden"  name="id" value="<?php echo $jobid; ?>"></input>
+                                               
                                                 <label>First Name</label>
                                                <p><?php echo $info->fname ?></p>
                                             </div>
@@ -184,11 +184,11 @@ echo '</div>';
                                                 <label>Email</label>
                                                 <p><?php echo $info->email ?></p>
                                             </div>
-                                             <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                                           
                                         </div>
                                     </div>
 
-                                 <?php echo form_close(); ?>
+                               
                                  <?php endforeach; ?>
                                 <?php else : ?>
                                    

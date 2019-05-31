@@ -6,14 +6,14 @@ class Dashboard extends CI_Controller {
 		parent::__construct();
 		
 		authAdminAccess();
-		$this->load->model(['Login','Common_model']);
+		$this->load->model(['Common_model']);
 	}
 	public function index()
 	{
 		
-		$query['data'] = $this->db->query("select SUM(if(lead='open',1,NULL)) as OPEN, SUM(if(job='insurance',1,NULL)) as INSURANCE, SUM(if(job='cash',1,NULL)) as CASH , SUM(if(lead='closed',1,NULL)) as CLOSED from jobs_status");
+		$data = $this->db->query("select SUM(if(lead='open',1,NULL)) as OPEN, SUM(if(job='labor only' AND lead='open',1,NULL)) as LABOR, SUM(if(job='insurance' AND lead='open',1,NULL)) as INSURANCE, SUM(if(job='cash' AND lead='open',1,NULL)) as CASH , SUM(if(closeout='yes',1,NULL)) as CLOSED from jobs_status");
 		$this->load->view('header',['title' => 'Dashboard']);
-		$this->load->view('dashboard/index',$query);
+		$this->load->view('dashboard/index',['data' => $data]);
 		$this->load->view('footer'); 
 	}
 

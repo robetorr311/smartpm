@@ -19,7 +19,7 @@ class TeamModel extends CI_Model
     }
 
 
-    public function update_record($updatedArray, $condition){
+   /* public function update_record($updatedArray, $condition){
         $this->db->where($condition);
         $this->db->update($this->table, $updatedArray);
         if ( $this->db->affected_rows() > 0 ) {
@@ -28,7 +28,7 @@ class TeamModel extends CI_Model
             return FALSE;  
         }
     }
-    
+    */
 
     public function getCount()
     {

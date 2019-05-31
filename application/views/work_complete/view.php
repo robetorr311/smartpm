@@ -129,7 +129,7 @@ echo '</div>';
              <h4 class="title" style="float: left;">Current Status:</h4>
               <div style="float: right;text-align: right;"><p>Complete</p></div>
                 <div class="clearfix"></div>
-              <a href="<?php echo base_url('work_complete/'.$jobid.'/complete')?>" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Closed</a>
+              <a href="<?php echo base_url('work-complete/'.$jobid.'/complete')?>" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Closed</a>
               
         </div>
     </div>
@@ -140,7 +140,7 @@ echo '</div>';
                 <?php foreach( $teams_detail as $data ) : ?>  
                              <div style="float: right;text-align: right;"><p><?php echo $data->name ?></p>
                             <p><?php echo $data->assign_date ?></p>
-                            <!--<a href="<?php echo base_url('cash_job/'.$jobid.'/delete')?>">Remove</a>-->
+                           
                          </div>
                 <?php endforeach; ?>
                 <?php else : ?>

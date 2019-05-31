@@ -49,13 +49,13 @@ class Cash_jobs extends CI_Controller {
 			$params['is_deleted'] 		= false;
 	  		$this->team_job_track->add_record($params);
 	  		$this->status->update_record(['production'=>'production'],['jobid'=>$this->uri->segment(2)]);
-	  		redirect('cash_job/'.$this->uri->segment(2));
+	  		redirect('cash-job/'.$this->uri->segment(2));
 	    }
 
 	    public function delete(){
 	    	$this->team_job_track->remove_team($this->uri->segment(2));
 	    	$this->status->update_record(['production'=>'pre-production'],['jobid'=>$this->uri->segment(2)]);
-	    	redirect('cash_job/'.$this->uri->segment(2));
+	    	redirect('cash-job/'.$this->uri->segment(2));
 	    }
  	 	 	
 

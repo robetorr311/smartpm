@@ -36,7 +36,7 @@ class Insurance_jobs extends CI_Controller {
 			$query['status'] = $this->status->get_all_where(['jobid'=>$this->uri->segment(2)]);
 			$query['teams_detail'] = $this->team_job_track->getTeamName($this->uri->segment(2));
 
-			$query['teams'] = $this->team->get_all_where(['is_active'=>1]);
+			$query['teams'] = $this->team->getTeamOnly(['is_deleted'=>0]);
 			$this->load->view('header',['title' => 'Insurance Job']);
 			$this->load->view('insurance_job/view',$query);
 			$this->load->view('footer');
@@ -51,11 +51,12 @@ class Insurance_jobs extends CI_Controller {
 			$params['assign_date'] 		=date('Y-m-d h:i:s');
 			$params['is_deleted'] 		= false;
 	  		$this->team_job_track->add_record($params);
-	  		redirect('insurance_job/'.$this->uri->segment(2));
+	  		$this->status->update_record(['production'=>'production'],['jobid'=>$this->uri->segment(2)]);
+	  		redirect('insurance-job/'.$this->uri->segment(2));
 	    }
 
 	    public function delete(){
 	    	$this->team_job_track->remove_team($this->uri->segment(2));
-	    	redirect('insurance_job/'.$this->uri->segment(2));
+	    	redirect('insurance-job/'.$this->uri->segment(2));
 	    }
 }

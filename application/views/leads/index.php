@@ -10,7 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                  </div>
                                   <div class="col-md-6">
                                   
-                                    <a href="<?php echo base_url('lead/new');?>" class="btn btn-info btn-fill pull-right">Add New Lead</a>
+                                    <a href="<?php echo base_url('lead/new');?>" class="btn btn-info btn-fill pull-right">Add New Lead </a>
                                  </div>
                             </div>
                             <div class="header">      

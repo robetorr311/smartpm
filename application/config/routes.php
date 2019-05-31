@@ -102,29 +102,29 @@ $route['lead/updatestatus'] = 'leads/updatestatus';
 $route['party/(:num)/add'] = 'party/index';
 $route['party/(:num)/update'] = 'party/update';
 
-$route['cash_jobs'] = 'cash_jobs/index';
-$route['cash_job/(:num)'] = 'cash_jobs/view';
-$route['cash_job/(:num)/addTeam'] = 'cash_jobs/addTeam';
-$route['cash_job/(:num)/delete'] = 'cash_jobs/delete';
+$route['cash-jobs'] = 'cash_jobs/index';
+$route['cash-job/(:num)'] = 'cash_jobs/view';
+$route['cash-job/(:num)/addTeam'] = 'cash_jobs/addTeam';
+$route['cash-job/(:num)/delete'] = 'cash_jobs/delete';
 
-$route['insurance_jobs'] = 'insurance_jobs/index';
-$route['insurance_job/(:num)'] = 'insurance_jobs/view';
-$route['insurance_job/(:num)/addTeam'] = 'insurance_job/addTeam';
-$route['insurance_job/(:num)/delete'] = 'insurance_job/delete';
+$route['insurance-jobs'] = 'insurance_jobs/index';
+$route['insurance-job/(:num)'] = 'insurance_jobs/view';
+$route['insurance-job/(:num)/addTeam'] = 'insurance_job/addTeam';
+$route['insurance-job/(:num)/delete'] = 'insurance_job/delete';
 
-$route['labor_jobs'] = 'labor_jobs/index';
-$route['labor_job/(:num)'] = 'labor_jobs/view';
-$route['labor_job/(:num)/addTeam'] = 'labor_jobs/addTeam';
-$route['labor_job/(:num)/delete'] = 'labor_jobs/delete';
+$route['labor-jobs'] = 'labor_jobs/index';
+$route['labor-job/(:num)'] = 'labor_jobs/view';
+$route['labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam';
+$route['labor-job/(:num)/delete'] = 'labor_jobs/delete';
 
 
 $route['productions'] = 'productions/index';
 $route['production/(:num)'] = 'productions/view';
 $route['production/(:num)/complete'] = 'productions/complete';
 
-$route['work_complete'] = 'work_complete/index';
-$route['work_complete/(:num)'] = 'work_complete/view';
-$route['work_complete/(:num)/complete'] = 'work_complete/complete';
+$route['work-complete'] = 'work_complete/index';
+$route['work-complete/(:num)'] = 'work_complete/view';
+$route['work-complete/(:num)/complete'] = 'work_complete/complete';
 
 $route['closed'] = 'closed/index';
 $route['closed/(:num)'] = 'closed/view';
@@ -147,11 +147,6 @@ $route['server/doc_upload'] = 'server/ajaxupload_jobdoc';
 $route['server/doc_save'] = 'server/ajaxsave_jobdoc';
 $route['server/doc_delete'] = 'server/deletedoc';
 $route['server/doc_update'] = 'server/updatedocname';
-
-$route['users'] = 'users/index';
-$route['user/(:num)'] = 'users/view';
-$route['user/(:num)/delete'] = 'users/delete';
-$route['user/adduser'] = 'users/adduser';
 
 $route['setting/status'] = 'setting/status_tag';
 $route['setting/newtag'] = 'setting/newtag';

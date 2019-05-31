@@ -42,7 +42,7 @@ class Work_complete extends CI_Controller {
 		public function complete()
 		{	
 	    	$this->status->update_record(['closeout'=>'yes','lead'=>'complete'],['jobid'=>$this->uri->segment(2)]);
-			redirect('work_complete/'.$this->uri->segment(2));
+			redirect('work-complete/'.$this->uri->segment(2));
 		}
 	    
 	

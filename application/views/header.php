@@ -82,19 +82,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('cash_jobs');?>">
+                    <a href="<?php echo base_url('cash-jobs');?>">
                         <i class="pe-7s-user"></i>
                         <p>Cash Jobs</p>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('insurance_jobs');?>">
+                    <a href="<?php echo base_url('insurance-jobs');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Insurance Jobs</p>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('labor_jobs');?>">
+                    <a href="<?php echo base_url('labor-jobs');?>">
                         <i class="pe-7s-note"></i>
                         <p>Labor Only Jobs</p>
                     </a>
@@ -106,7 +106,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('work_complete');?>">
+                    <a href="<?php echo base_url('work-complete');?>">
                         <i class="pe-7s-note"></i>
                         <p>Work Complete</p>
                     </a>

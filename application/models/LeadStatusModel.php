@@ -11,7 +11,8 @@ class LeadStatusModel extends CI_Model
 		$result = $this->db->get($this->table);
 		return $result->result();	
 	}
-    
+
+ 
     public function add_record( $array ){
     
         $this->db->insert($this->table, $array);
