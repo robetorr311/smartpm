@@ -29,10 +29,7 @@ class UserModel extends CI_Model
 
 	public function signup($data)
 	{
-		$data['password'] = password_hash($data['password'], PASSWORD_BCRYPT, [
-			'cost' => 12,
-			'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM)
-		]);
+		$data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
 		$data['level'] = self::$level_super_admin;
 		return $this->insert($data);
 	}
@@ -51,6 +48,33 @@ class UserModel extends CI_Model
 				return false;
 			}
 		}
+	}
+
+	public function setVerificationToken($user)
+	{
+		$token = $user->username . '_' . rand() . '_' . $user->email_id . '_' . rand() . '_' . $user->notifications . '_' . rand() . '_' . time();
+		$this->update($user->id, [
+			'verification_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token)
+		]);
+	}
+
+	public function setPasswordToken($user)
+	{
+		$token = $user->username . '_' . rand() . '_' . $user->email_id . '_' . rand() . '_' . $user->notifications . '_' . rand() . '_' . time();
+		$this->db->set('token_expiry', 'DATE_ADD(NOW(), INTERVAL 1 HOUR)', FALSE);
+		$this->update($user->id, [
+			'password_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token)
+		]);
+	}
+
+	public function resetPassword($user, $password)
+	{
+		$password = password_hash($password, PASSWORD_BCRYPT);
+		$this->update($user->id, [
+			'password' => $password,
+			'password_token' => '',
+			'token_expiry' => ''
+		]);
 	}
 
 	public function allUsers($start = 0, $limit = 10)
@@ -74,6 +98,30 @@ class UserModel extends CI_Model
 		$this->db->from($this->table);
 		$this->db->where([
 			'id' => $id,
+			'is_deleted' => FALSE
+		]);
+		$query = $this->db->get();
+		$result = $query->first_row();
+		return $result ? $result : false;
+	}
+
+	public function getUserByEmailId($email_id)
+	{
+		$this->db->from($this->table);
+		$this->db->where([
+			'email_id' => $email_id,
+			'is_deleted' => FALSE
+		]);
+		$query = $this->db->get();
+		$result = $query->first_row();
+		return $result ? $result : false;
+	}
+
+	public function getUserByPasswordToken($token)
+	{
+		$this->db->from($this->table);
+		$this->db->where([
+			'password_token' => $token,
 			'is_deleted' => FALSE
 		]);
 		$query = $this->db->get();
