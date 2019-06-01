@@ -34,25 +34,21 @@ class Migration_Create_companies_table extends CI_Migration
             ],
             'address' => [
                 'type' => 'TEXT',
-                'after' => 'company',
                 'null' => TRUE
             ],
             'city' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'after' => 'address',
                 'null' => TRUE
             ],
             'state' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'after' => 'city',
                 'null' => TRUE
             ],
             'zip' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'after' => 'state',
                 'null' => TRUE
             ],
             'is_deleted' => [
