@@ -12,13 +12,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <h4 class="title" style="float: left;">View</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
 <div class="clearfix"></div>
                                 
-                                                             <?php if(validation_errors())
-{   
-echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
-echo validation_errors();
-echo '</div>';
-}
-?>
+        <?php if(validation_errors())
+        {   
+        echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+        echo validation_errors();
+        echo '</div>';
+        }
+        ?>
                             </div>
                             <div class="content view">
                                   <?php
@@ -129,8 +129,14 @@ echo '</div>';
              <h4 class="title" style="float: left;">Current Status:</h4>
               <div style="float: right;text-align: right;"><p>Production</p></div>
                 <div class="clearfix"></div>
-              <a href="<?php echo base_url('production/'.$jobid.'/complete')?>" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Complete</a>
-              
+              <?php if ($status) {  foreach ($status as $st) {
+                  if($st->production =="production"){
+               ?>
+              <a href="<?php echo base_url('production/'.$jobid.'/mark-complete')?>" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Complete</a>
+              <?php }else{ ?>
+                    <a href="<?php echo base_url('production/'.$jobid.'/mark-incomplete')?>" class="btn btn-success pull-right" disabled="" style="margin:20px 0;"> Already Marked</a>
+                <?php }}} ?>
+            
         </div>
     </div>
      <div class="card">
@@ -138,24 +144,12 @@ echo '</div>';
             <h4 class="title" style="float: left;">Team Detail:</h4>
                 <?php if( !empty( $teams_detail ) ) : ?>
                 <?php foreach( $teams_detail as $data ) : ?>  
-                             <div style="float: right;text-align: right;"><p><?php echo $data->name ?></p>
+                          <div style="float: right;text-align: right;"><p><?php echo $data->name ?></p>
                             <p><?php echo $data->assign_date ?></p>
-                            <!--<a href="<?php echo base_url('cash_job/'.$jobid.'/delete')?>">Remove</a>-->
                          </div>
                 <?php endforeach; ?>
                 <?php else : ?>
                    <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
-                     <div class="content team-block">
-        <?php echo form_open('cash_job/'.$jobid.'/addTeam',array('method'=>'post'));?>
-        <select name="team_id" class="form-control team_assign">
-                <option>Select Team</option>
-                <?php foreach( $teams as $team ) : ?>  
-                                 <option value="<?php echo $team->id ?>"><?php echo $team->team_name ?></option>
-                <?php endforeach; ?>
-        </select>
-        <input type="submit" value="Add Team" >
-        <?php echo form_close(); ?>  
-        </div> 
                 <?php endif; ?>
         </div>
 

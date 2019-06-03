@@ -20,7 +20,7 @@ class Dashboard extends CI_Controller {
 
 	public function alljobreport($job_id = NULL)
 	{	$job_id = $this->uri->segment(2);
-	$query = array(
+		$query = array(
          'jobid' => $job_id
          ); 
 		$params = array();

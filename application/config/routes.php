@@ -91,43 +91,52 @@ $route['task/(:num)/update']['post'] = 'tasks/update/$1';
 $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
-$route['lead/(:num)'] = 'leads/view';
-$route['lead/(:num)/edit'] = 'leads/edit';
-$route['lead/(:num)/update'] = 'leads/update';
+$route['leads/(:num)'] = 'leads/index/$1';
+$route['lead/(:num)'] = 'leads/view/$1';
+$route['lead/(:num)/edit'] = 'leads/edit/$1';
+$route['lead/(:num)/update'] = 'leads/update/$1';
 $route['lead/new'] = 'leads/new';
 $route['lead/store'] = 'leads/store';
 $route['lead/updatestatus'] = 'leads/updatestatus';
 
 
-$route['party/(:num)/add'] = 'party/index';
-$route['party/(:num)/update'] = 'party/update';
+$route['party/(:num)/add'] = 'party/index/$1';
+$route['party/(:num)/update'] = 'party/update/$1';
 
 $route['cash-jobs'] = 'cash_jobs/index';
-$route['cash-job/(:num)'] = 'cash_jobs/view';
-$route['cash-job/(:num)/addTeam'] = 'cash_jobs/addTeam';
-$route['cash-job/(:num)/delete'] = 'cash_jobs/delete';
+$route['cash-jobs/(:num)'] = 'cash_jobs/index/$1';
+$route['cash-job/(:num)'] = 'cash_jobs/view/$1';
+$route['cash-job/(:num)/addTeam'] = 'cash_jobs/addTeam/$1';
+$route['cash-job/(:num)/delete'] = 'cash_jobs/delete/$1';
 
 $route['insurance-jobs'] = 'insurance_jobs/index';
-$route['insurance-job/(:num)'] = 'insurance_jobs/view';
-$route['insurance-job/(:num)/addTeam'] = 'insurance_job/addTeam';
-$route['insurance-job/(:num)/delete'] = 'insurance_job/delete';
+$route['insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
+$route['insurance-job/(:num)'] = 'insurance_jobs/view/$1';
+$route['insurance-job/(:num)/addTeam'] = 'insurance_jobs/addTeam/$1';
+$route['insurance-job/(:num)/delete'] = 'insurance_jobs/delete/$1';
 
 $route['labor-jobs'] = 'labor_jobs/index';
-$route['labor-job/(:num)'] = 'labor_jobs/view';
-$route['labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam';
-$route['labor-job/(:num)/delete'] = 'labor_jobs/delete';
+$route['labor-jobs/(:num)'] = 'labor_jobs/index/$1';
+$route['labor-job/(:num)'] = 'labor_jobs/view/$1';
+$route['labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam/$1';
+$route['labor-job/(:num)/delete'] = 'labor_jobs/delete/$1';
 
 
 $route['productions'] = 'productions/index';
-$route['production/(:num)'] = 'productions/view';
-$route['production/(:num)/complete'] = 'productions/complete';
+$route['productions/(:num)'] = 'productions/index/$1';
+$route['production/(:num)'] = 'productions/view/$1';
+$route['production/(:num)/mark-complete'] = 'productions/complete/$1';
+$route['production/(:num)/mark-incomplete'] = 'productions/incomplete/$1';
 
-$route['work-complete'] = 'work_complete/index';
-$route['work-complete/(:num)'] = 'work_complete/view';
-$route['work-complete/(:num)/complete'] = 'work_complete/complete';
+$route['work-completed'] = 'work_complete/index';
+$route['work-completed'] = 'work_complete/index/$1';
+$route['work-complete/(:num)'] = 'work_complete/view/$1';
+$route['work-complete/(:num)/mark-complete'] = 'work_complete/complete/$1';
+$route['work-complete/(:num)/mark-incomplete'] = 'work_complete/incomplete/$1';
 
-$route['closed'] = 'closed/index';
-$route['closed/(:num)'] = 'closed/view';
+$route['closed'] = 'closed/index/';
+$route['closed/(:num)'] = 'closed/index/$1';
+$route['close/(:num)'] = 'closed/view/$1';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';

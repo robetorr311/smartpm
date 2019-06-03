@@ -106,7 +106,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('work-complete');?>">
+                    <a href="<?php echo base_url('work-completed');?>">
                         <i class="pe-7s-note"></i>
                         <p>Work Complete</p>
                     </a>

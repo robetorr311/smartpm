@@ -22,8 +22,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <thead>
                                        <!-- <th></th> -->
                                         <th>View</th>
-                                       
-                                        <th>SN</th>
+                                        <th>Edit</th>
+                                        <th>Job Number</th>
                                         <th>Lead Name</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <td style="width: 30px"><a href="<?php echo base_url('lead/'.$lead->id);?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
               <td><a href="<?php echo base_url('lead/'.$lead->id.'/edit');?>"><span class=""><i class="del-edit pe-7s-note" style="font-size: 30px;" /></span></a></td>
               
-                  <td><?php echo $i; ?></td>
+                  <td><?php echo $lead->job_number; ?></td>
                   <td><?php echo $lead->job_name ?></td>
                   <td><?php echo $lead->firstname ?></td>
                   <td><?php echo $lead->lastname ?></td>
@@ -68,7 +68,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </tbody>
                                 </table>
 <div class="pagination">
-                        <?= $pagiLinks ?>
+                          <?= $pagiLinks ?>
                     </div>
                             </div> 
                         </div>

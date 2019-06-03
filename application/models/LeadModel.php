@@ -6,7 +6,7 @@ class LeadModel extends CI_Model
     private $table = 'jobs';
 
       /* get All jobs */
-    public function getAllJob(){
+    public function getAllJob($start = 0, $limit = 10){
 
         $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
         $this->db->from($this->table);
@@ -14,6 +14,8 @@ class LeadModel extends CI_Model
         $this->db->where([
             'lead' => 'open', 'job'=>''
         ]);
+        $this->db->order_by('id', 'ASC');
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result(); 
             
@@ -29,20 +31,33 @@ class LeadModel extends CI_Model
 	}
   
     /* get job based on job type */
-    public function getJobType($condition ){
+    public function getJobType($start = 0, $limit = 10, $condition ){
 
         $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
         $this->db->from($this->table);
         $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
         $this->db->where($condition);
+         $this->db->order_by('id', 'ASC');
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();     
     }
     
     public function getCount()
     {     
-        $this->db->where(['status' => 'lead']);
-        return $this->db->count_all_results($this->table);
+        $this->db->where(['contract' => 'unsigned','lead' => 'open']);
+        return $this->db->count_all_results('jobs_status');
+    }
+
+     public function getCountBasedJobType($type)
+    {     
+        $this->db->where(['job' => $type, 'lead' => 'open']);
+        return $this->db->count_all_results('jobs_status');
+    }
+     public function getCountBasedJobStatus($status)
+    {     
+        $this->db->where(['production' => $status]);
+        return $this->db->count_all_results('jobs_status');
     }
 
 
@@ -57,7 +72,7 @@ class LeadModel extends CI_Model
         }
     }
     
-    public function getClosedJob(){
+    public function getClosedJob($start = 0, $limit = 10){
 
         $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
         $this->db->from($this->table);
@@ -65,9 +80,17 @@ class LeadModel extends CI_Model
         $this->db->where([
             'status.closeout' => 'yes'
         ]);
+        $this->db->order_by('id', 'ASC');
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result(); 
             
+    }
+
+    public function getCountClosedJob()
+    {     
+        $this->db->where(['closeout' => 'yes']);
+        return $this->db->count_all_results('jobs_status');
     }
 
     public function update_record($updatedArray, $condition){

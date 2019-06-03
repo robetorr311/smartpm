@@ -16,13 +16,13 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
         </div>
         <div class="col-md-2">
         	<div class="box alert-warning">
-        		<a href="<?php echo base_url('cash_jobs');?>"><span><?php if($dat->CASH!=''){echo $dat->CASH;}else{ echo '0';} ?></span>
+        		<a href="<?php echo base_url('cash-jobs');?>"><span><?php if($dat->CASH!=''){echo $dat->CASH;}else{ echo '0';} ?></span>
         		<p>Open Cash Jobs</p></a>
         	</div>
         </div>
         <div class="col-md-2">
         	<div class="box alert-danger">
-        		<a href="<?php echo base_url('insurance_jobs');?>"><span><?php if($dat->INSURANCE!=''){echo $dat->INSURANCE;}else{ echo '0';} ?></span>
+        		<a href="<?php echo base_url('insurance-jobs');?>"><span><?php if($dat->INSURANCE!=''){echo $dat->INSURANCE;}else{ echo '0';} ?></span>
         		<p>Open Insurance Jobs</p></a>
         	</div>
         </div>

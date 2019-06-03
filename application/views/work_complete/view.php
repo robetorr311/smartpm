@@ -12,13 +12,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <h4 class="title" style="float: left;">View</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
 <div class="clearfix"></div>
                                 
-                                                             <?php if(validation_errors())
-{   
-echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
-echo validation_errors();
-echo '</div>';
-}
-?>
+              <?php if(validation_errors())
+              {   
+              echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+              echo validation_errors();
+              echo '</div>';
+              }
+              ?>
                             </div>
                             <div class="content view">
                                   <?php
@@ -129,8 +129,15 @@ echo '</div>';
              <h4 class="title" style="float: left;">Current Status:</h4>
               <div style="float: right;text-align: right;"><p>Complete</p></div>
                 <div class="clearfix"></div>
-              <a href="<?php echo base_url('work-complete/'.$jobid.'/complete')?>" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Closed</a>
-              
+
+             
+              <?php if ($status) {  foreach ($status as $st) {
+                  if($st->closeout =="no"){
+               ?>
+              <a href="<?php echo base_url('work-complete/'.$jobid.'/mark-complete')?>" class="btn btn-danger pull-right" style="margin:20px 0;">Mark Closed</a>
+              <?php }else{ ?>
+               <a href="<?php echo base_url('work-complete/'.$jobid.'/mark-incomplete')?>" class="btn btn-sucess pull-right" style="margin:20px 0;">Mark incomplete</a>
+                <?php }}} ?>
         </div>
     </div>
      <div class="card">

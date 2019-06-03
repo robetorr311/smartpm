@@ -14,7 +14,7 @@ class Leads extends CI_Controller {
         	$this->status = new LeadStatusModel();
 	    }
  
-	    public function index(){
+	    public function index($start = 0){
         	$limit = 10; 
 	    	$pagiConfig = [
             'base_url' => base_url('leads'),
@@ -23,9 +23,12 @@ class Leads extends CI_Controller {
         	];
         	$this->pagination->initialize($pagiConfig);
 
-			$leads = $this->lead->getAllJob();
+			$leads = $this->lead->getAllJob($start, $limit);
 			$this->load->view('header',['title' => 'Leads']);
-			$this->load->view('leads/index',['leads' => $leads,'pagiLinks' => $this->pagination->create_links()]);
+			$this->load->view('leads/index',[
+				'leads' => $leads,
+				'pagiLinks' => $this->pagination->create_links()
+			]);
 			$this->load->view('footer');
 	    }
 
@@ -35,29 +38,28 @@ class Leads extends CI_Controller {
 			$this->load->view('footer');
 	    }
 
-	    public function view(){
-	    	$jobid = $this->uri->segment(2);
+	    public function view($jobid){
 			$leads = $this->lead->get_all_where('jobs',['id' => $jobid]);
 			$add_info = $this->lead->get_all_where( 'job_add_party', ['job_id' => $jobid] );
 
 			$leadstatus = $this->status->get_all_where(['jobid' => $jobid]);
 			$this->load->view('header',['title' => 'Lead Detail']);
-			$this->load->view('leads/view',['leadstatus' => $leadstatus,'leads' => $leads,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
+			$this->load->view('leads/view',['leadstatus' => $leadstatus,'leads' => $leads,'add_info' => $add_info,'jobid' => $jobid]);
 			$this->load->view('footer');
 	    }
 
 
-	    public function edit(){
-			$leads = $this->lead->get_all_where('jobs',['id' => $this->uri->segment(2)]);
-			$add_info = $this->lead->get_all_where( 'job_add_party', ['job_id' => $this->uri->segment(2)] );
+	    public function edit($jobid){
+			$leads = $this->lead->get_all_where('jobs',['id' => $jobid]);
+			$add_info = $this->lead->get_all_where( 'job_add_party', ['job_id' => $jobid] );
 			$job_type_tags = $this->status_tags->getall('job_type');
 			$lead_status_tags = $this->status_tags->getall('lead_status');
 			$contract_status_tags = $this->status_tags->getall('contract_status');
 
-			$leadstatus = $this->status->get_all_where(['jobid' => $this->uri->segment(2)]);
-			
+			$leadstatus = $this->status->get_all_where(['jobid' => $jobid]);
+
 			$this->load->view('header',['title' => 'Lead Update']);
-			$this->load->view('leads/edit',['job_type_tags' => $job_type_tags,'lead_status_tags' => $lead_status_tags,'contract_status_tags' => $contract_status_tags,'leads' => $leads,'leadstatus'=>$leadstatus,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
+			$this->load->view('leads/edit',['job_type_tags' => $job_type_tags,'lead_status_tags' => $lead_status_tags,'contract_status_tags' => $contract_status_tags,'leads' => $leads,'leadstatus'=>$leadstatus,'add_info' => $add_info,'jobid' => $jobid]);
 			$this->load->view('footer');
 	    }
 

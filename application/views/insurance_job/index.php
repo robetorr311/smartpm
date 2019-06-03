@@ -56,7 +56,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                   
                                     </tbody>
                                 </table>
-
+<div class="pagination">
+                          <?= $pagiLinks ?>
+                    </div>
                             </div>
                         </div>
                     </div>
