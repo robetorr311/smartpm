@@ -37,29 +37,38 @@ class Cash_jobs extends CI_Controller {
 
 	    public function view($jobid)
 		{	
-			$query = array('jobid' => $jobid);
-			$query['jobs'] = $this->lead->get_all_where( 'jobs', ['id'=>$jobid] );
-			$query['add_info'] = $this->lead->get_all_where( 'job_add_party', array('job_id' => $jobid) );
-			$query['status'] = $this->status->get_all_where(['jobid'=>$jobid]);
-			$query['teams_detail'] = $this->team_job_track->getTeamName($jobid);
+			$jobs = $this->lead->get_all_where( 'jobs', ['id'=>$jobid] );
+			$add_info = $this->lead->get_all_where( 'job_add_party', array('job_id' => $jobid) );
+			$status = $this->status->get_all_where(['jobid'=>$jobid]);
+			$teams_detail = $this->team_job_track->getTeamName($jobid);
+			$teams = $this->team->getTeamOnly(['is_deleted'=>0]);
 
-			$query['teams'] = $this->team->getTeamOnly(['is_deleted'=>0]);
 			$this->load->view('header',['title' => 'Cash Job Detail']);
-			$this->load->view('cash_job/view',$query);
+			$this->load->view('cash_job/view',['jobid' => $jobid,
+											   'jobs' => $jobs,
+											   'add_info' => $add_info,
+											   'status' => $status,
+											   'teams_detail' => $teams_detail,
+											   'teams' => $teams
+											  ]);
 			$this->load->view('footer');
 		}
 
 
 		public function addTeam($jobid){
-	    	$posts = $this->input->post();
-	    	$params = array();
-			$params['team_id'] 		= $posts['team_id'];
-			$params['job_id'] 		= $jobid;
-			$params['assign_date'] 		=date('Y-m-d h:i:s');
-			$params['is_deleted'] 		= false;
-	  		$this->team_job_track->add_record($params);
-	  		$this->status->update_record(['production'=>'production'],['jobid'=>$jobid]);
-	  		redirect('cash-job/'.$jobid);
+			if( isset($_POST) && count($_POST) > 0 ) {
+		    	$posts = $this->input->post();
+		    	$params = array();
+				$params['team_id'] 		= $posts['team_id'];
+				$params['job_id'] 		= $jobid;
+				$params['assign_date'] 		=date('Y-m-d h:i:s');
+				$params['is_deleted'] 		= false;
+		  		$this->team_job_track->add_record($params);
+		  		$this->status->update_record(['production'=>'production'],['jobid'=>$jobid]);
+		  		redirect('cash-job/'.$jobid);
+	  		}else{
+	  			redirect('cash-jobs');
+	  		}
 	    }
 
 	    public function delete($jobid){
