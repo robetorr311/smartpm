@@ -54,7 +54,7 @@ class UserModel extends CI_Model
 	{
 		$token = $user->username . '_' . rand() . '_' . $user->email_id . '_' . rand() . '_' . $user->notifications . '_' . rand() . '_' . time();
 		$this->update($user->id, [
-			'verification_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token)
+			'verification_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token) . md5('user_verification') . rand()
 		]);
 	}
 
@@ -63,7 +63,7 @@ class UserModel extends CI_Model
 		$token = $user->username . '_' . rand() . '_' . $user->email_id . '_' . rand() . '_' . $user->notifications . '_' . rand() . '_' . time();
 		$this->db->set('token_expiry', 'DATE_ADD(NOW(), INTERVAL 1 HOUR)', FALSE);
 		$this->update($user->id, [
-			'password_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token)
+			'password_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token) . md5('password_reset') . rand()
 		]);
 	}
 
