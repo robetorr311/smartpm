@@ -193,16 +193,19 @@ class Leads extends CI_Controller {
 			
 	    }
 
-
-
 	    public function updatestatus(){
 	   
 			$posts = $this->input->post();
 			if($posts['status']=='job'){
-				$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' , lead='open', production='pre-production' WHERE jobid='".$posts['id']."'");
+			$this->status->update_record(['job' => $posts['value'],
+										  'production'=>'pre-production'
+										 ],['jobid'=>$posts['id']]);
 				return true;
 			}else{
-				$this->db->query("UPDATE jobs_status SET ".$posts['status']."='".$posts['value']."' WHERE jobid='".$posts['id']."'");
+			$this->status->update_record([ $posts['status'] => $posts['value'],
+										   'production'=>'',
+										   'job'=>''
+											],['jobid'=>$posts['id']]);
 				return true;
 			}
 			
@@ -227,6 +230,24 @@ class Leads extends CI_Controller {
 			$this->load->view('leads/view',['leadstatus' => $leadstatus,'leads' => $leads,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
 			$this->load->view('footer');
 	    }
+
+	    public function alljobreport($job_id = NULL)
+		{	
+			
+			$params = array();
+			$params['active'] = 1;
+			$params['job_id'] = $job_id;
+			$allreport = $this->lead->get_all_where( 'roofing_project', $params );
+			
+			$this->load->view('header',['title' => 'Job Report']);
+			$this->load->view('leads/report',['allreport'=>$allreport, 'jobid'=> $job_id]);
+			$this->load->view('footer');
+		}
+
+	    public function deletejobreport($job_id){
+			$this->db->query("UPDATE roofing_project SET active=0 WHERE id='".$job_id."'");
+			return true;
+		}
 
 
 		

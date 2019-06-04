@@ -19,17 +19,6 @@ class TeamModel extends CI_Model
     }
 
 
-   /* public function update_record($updatedArray, $condition){
-        $this->db->where($condition);
-        $this->db->update($this->table, $updatedArray);
-        if ( $this->db->affected_rows() > 0 ) {
-            return TRUE;
-        } else {
-            return FALSE;  
-        }
-    }
-    */
-
     public function getCount()
     {
         $this->db->where('is_deleted', FALSE);

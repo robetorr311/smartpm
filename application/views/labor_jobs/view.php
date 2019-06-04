@@ -112,11 +112,11 @@ echo '</div>';
                      <div class="footer" style="margin-bottom: 10px;">
                                     
                                     <hr>
-                           <a href="<?php echo base_url('dashboard/'.$job->id.'/addphoto');?>" class="btn btn-success btn-fill">Photos</a>
-                           <a href="<?php echo base_url('dashboard/'.$job->id.'/alljobreport');?>" class="btn btn-danger btn-fill">All Report</a>
-                           <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-                           <a href="<?php echo base_url('dashboard/'.$job->id.'/adddoc');?>" class="btn btn-danger btn-fill">Docs</a>
-                        </div>
+   <a href="<?php echo base_url('photos/'.$job->id);?>" class="btn btn-success btn-fill">Photos</a>
+   <a href="<?php echo base_url('lead/'.$job->id.'/reports');?>" class="btn btn-danger btn-fill">All Report</a>
+   <a href="" class="btn btn-success btn-fill">Create Estimate</a>
+   <a href="<?php echo base_url('docs/'.$job->id);?>" class="btn btn-danger btn-fill">Docs</a>
+                                </div>
                                                                    <?php endforeach; ?>
                     </div>
                           

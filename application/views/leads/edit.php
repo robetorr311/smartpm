@@ -113,10 +113,10 @@ echo '</div>';
 					    <div class="footer" style="margin-bottom: 10px;">
                                     
                                     <hr>
-   <a href="<?php echo base_url('dashboard/'.$lead->id.'/addphoto');?>" class="btn btn-success btn-fill">Photos</a>
-   <a href="<?php echo base_url('dashboard/'.$lead->id.'/alljobreport');?>" class="btn btn-danger btn-fill">All Report</a>
+   <a href="<?php echo base_url('photos/'.$lead->id);?>" class="btn btn-success btn-fill">Photos</a>
+   <a href="<?php echo base_url('lead/'.$lead->id.'/reports');?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-   <a href="<?php echo base_url('dashboard/'.$lead->id.'/adddoc');?>" class="btn btn-danger btn-fill">Docs</a>
+   <a href="<?php echo base_url('docs/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
                                 </div>
 								                                   <?php endforeach; ?>
 					</div>
@@ -311,7 +311,9 @@ endforeach; ?>
                                 success: function(php_script_response){
                                 
                                     $('.'+status).html(value);
-                            
+                                    if(value=='unsigned'){
+                                        $("#job option:selected").prop("selected", false)
+                                    }
                                 }
                              });
                     }else{

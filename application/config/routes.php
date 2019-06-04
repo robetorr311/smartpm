@@ -65,9 +65,18 @@ $route['migrate/undo_migration/(:num)'] = 'migrate/undo_migration/$1';
 $route['migrate/reset_migration'] = 'migrate/reset_migration';
 
 $route['dashboard'] = 'dashboard/index';
-$route['dashboard/(:num)/addphoto'] = 'dashboard/addphoto';
-$route['dashboard/(:num)/alljobreport'] = 'dashboard/alljobreport';
-$route['dashboard/(:num)/adddoc'] = 'dashboard/adddoc';
+
+$route['photos/(:num)'] = 'photos/index/$1';
+$route['photo/upload'] = 'photos/ajaxupload_jobphoto';
+$route['photo/save'] = 'photos/ajaxsave_jobphoto';
+$route['photo/delete'] = 'photos/deletephoto';
+$route['photo/rotate'] = 'photos/imagerotate';
+
+$route['docs/(:num)'] = 'docs/index/$1';
+$route['doc/upload'] = 'docs/ajaxupload_jobdoc';
+$route['doc/save'] = 'docs/ajaxsave_jobdoc';
+$route['doc/delete'] = 'docs/deletedoc';
+$route['doc/update'] = 'docs/updatedocname';
 
 $route['users'] = 'users/index';
 $route['users/(:num)'] = 'users/index/$1';
@@ -98,7 +107,8 @@ $route['lead/(:num)/update'] = 'leads/update/$1';
 $route['lead/new'] = 'leads/new';
 $route['lead/store'] = 'leads/store';
 $route['lead/updatestatus'] = 'leads/updatestatus';
-
+$route['lead/(:num)/reports'] = 'leads/alljobreport/$1';
+$route['lead/(:num)/delete-report'] = 'leads/deletejobreport/$1';
 
 $route['party/(:num)/add'] = 'party/index/$1';
 $route['party/(:num)/update'] = 'party/update/$1';
@@ -147,15 +157,6 @@ $route['team/(:num)/edit'] = 'teams/edit/$1';
 $route['team/(:num)/update']['post'] = 'teams/update/$1';
 $route['team/(:num)/delete']['post'] = 'teams/delete/$1';
 
-$route['server/photo_upload'] = 'server/ajaxupload_jobphoto';
-$route['server/photo_save'] = 'server/ajaxsave_jobphoto';
-$route['server/photo_delete'] = 'server/deletephoto';
-$route['server/photo_rotate'] = 'server/imagerotate';
-
-$route['server/doc_upload'] = 'server/ajaxupload_jobdoc';
-$route['server/doc_save'] = 'server/ajaxsave_jobdoc';
-$route['server/doc_delete'] = 'server/deletedoc';
-$route['server/doc_update'] = 'server/updatedocname';
 
 $route['setting/status'] = 'setting/status_tag';
 $route['setting/newtag'] = 'setting/newtag';
