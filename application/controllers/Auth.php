@@ -67,7 +67,7 @@ class Auth extends CI_Controller
 						redirect('login');
 					}
 				} else {
-					$message = '<div class="error"><p>Verify your Email ID before login.</p></div>';
+					$message = '<div class="error"><p>Complete Email ID verification before login.</p></div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('login');
 				}
@@ -80,6 +80,104 @@ class Auth extends CI_Controller
 			$message = '<div class="error">' . validation_errors() . '</div>';
 			$this->session->set_flashdata('message', $message);
 			redirect('login');
+		}
+	}
+
+	public function forgotPassword()
+	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+
+		$this->load->view('auth/forgot-password');
+	}
+
+	public function sendPasswordToken()
+	{
+		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email');
+
+		if ($this->form_validation->run() == TRUE) {
+			$data = $this->input->post();
+			$user = $this->user->getUserByEmailId($data['email']);
+			if ($user) {
+				if ($user->is_active == 1) {
+					$this->user->setPasswordToken($user);
+					// send password token email to $user->email_id
+					$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Reset Password link successfully sent to your Email ID.</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect('forgot-password');
+				} else if (empty($user->verification_token)) {
+					$message = '<div class="error"><p>Your account is not activated.</p></div>';
+					$this->session->set_flashdata('message', $message);
+					redirect('forgot-password');
+				} else {
+					$message = '<div class="error"><p>Your Email ID is not verified.</p></div>';
+					$this->session->set_flashdata('message', $message);
+					redirect('forgot-password');
+				}
+			} else {
+				$message = '<div class="error"><p>Unable to find your email in our system.</p></div>';
+				$this->session->set_flashdata('message', $message);
+				redirect('forgot-password');
+			}
+		} else {
+			$message = '<div class="error">' . validation_errors() . '</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect('forgot-password');
+		}
+	}
+
+	public function resetPassword($token)
+	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+
+		$this->load->view('auth/reset-password', [
+			'token' => $token
+		]);
+	}
+
+	public function setPasswordToken($token)
+	{
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
+
+		if ($this->form_validation->run() == TRUE) {
+			$data = $this->input->post();
+			$user = $this->user->getUserByPasswordToken($token);
+			if ($user) {
+				if ($user->is_active == 1) {
+					if ($user->token_expiry > date('Y-m-d H:i:s')) {
+						if ($token === $user->password_token) {
+							$this->user->resetPassword($user, $data['password']);
+							redirect('login');
+						} else {
+							$message = '<div class="error"><p>Invalid Password Reset Token.</p></div>';
+							$this->session->set_flashdata('message', $message);
+							redirect('reset-password/' . $token);
+						}
+					} else {
+						$message = '<div class="error"><p>Your Password Reset token is expired.</p></div>';
+						$this->session->set_flashdata('message', $message);
+						redirect('reset-password/' . $token);
+					}
+				} else if (empty($user->password_token)) {
+					$message = '<div class="error"><p>Your account is not activated.</p></div>';
+					$this->session->set_flashdata('message', $message);
+					redirect('reset-password/' . $token);
+				}
+			} else {
+				$message = '<div class="error"><p>Unable to find your email in our system.</p></div>';
+				$this->session->set_flashdata('message', $message);
+				redirect('reset-password/' . $token);
+			}
+		} else {
+			$message = '<div class="error">' . validation_errors() . '</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect('reset-password/' . $token);
 		}
 	}
 
@@ -146,7 +244,10 @@ class Auth extends CI_Controller
 					'company_id' => $companyInsert
 				]);
 				if ($signup) {
-					$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully.Please login!</div>';
+					$user = $this->user->getUserById($signup);
+					$this->user->setVerificationToken($user);
+					// send verification token email to $user->email_id
+					$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully. Check your email for email verification!</div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('login');
 				} else {

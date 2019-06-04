@@ -17,25 +17,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<img src="<?= base_url('assets/img/logo.png') ?>" style="width:200px" />
 	</div>
 
-	<?= form_open('auth', ['method' => 'post']) ?>
-	<h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Sign in to continue</h2>
+	<?= form_open('set-password-token/' . $token, ['method' => 'post']) ?>
+	<h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Reset Password</h2>
 
 	<?= $this->session->flashdata('message') ?>
 
-	<div class="input-group">
-		<label>Email ID</label>
-		<input type="email" name="email" placeholder="Email ID">
-	</div>
 	<div class="input-group">
 		<label>Password</label>
 		<input type="password" name="password" placeholder="Password">
 	</div>
 
 	<div class="input-group">
-		<button type="submit" id="submit" class="btn" name="login_user">Login</button>
+		<label>Confirm Password</label>
+		<input type="password" name="confirm_password" placeholder="Confirm Password">
+	</div>
+
+	<div class="input-group">
+		<button type="submit" id="submit" class="btn" name="login_user">Submit</button>
 
 		<p style="float: right; margin-top: 7px;">
-			<a href="<?= base_url('forgot-password') ?>">forogot password</a>
+			<a href="<?= base_url('login') ?>">Looking for login?</a>
 		</p>
 	</div>
 
