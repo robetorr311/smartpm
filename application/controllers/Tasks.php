@@ -112,14 +112,18 @@ class Tasks extends CI_Controller
                 //     }
                 // }
 
-                // if (preg_match_all('~(@\w+)~', $note, $matches, PREG_PATTERN_ORDER)) {
-                //     $usernames = $matches[1];
-                //     array_merge($users, $usernames);
-                // }
-
                 $users = $taskData['tag_users'];
-                if (!empty($users)) {
-                    $users = explode(',', $users);
+                $userIds = [];
+                if (preg_match_all('~(@\w+)~', $note, $matches, PREG_PATTERN_ORDER)) {
+                    $usernames = array_map(function ($val) {
+                        return ltrim($val, '@');
+                    }, $matches[1]);
+                    $userIds = $this->user->getUserIdArrByUserNames($usernames);
+                }
+
+                if (!empty($users) || count($userIds)) {
+                    $users = empty($users) ? [] : explode(',', $users);
+                    $users = array_unique(array_merge($users, $userIds));
                     $usersInsert = $this->task_user_tags->insertByUserArr($users, $insert);
                     if (!$usersInsert) {
                         $errors .= '<p>Unable to tag Users.</p>';
@@ -217,7 +221,7 @@ class Tasks extends CI_Controller
             $typeKeys = implode(',', array_keys(TaskModel::getTypes()));
             $levelKeys = implode(',', array_keys(TaskModel::getLevels()));
             $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
-            $statusKeys = TaskModel::getStatus();
+            $statusKeys = implode(',', array_keys(TaskModel::getStatus()));
 
             $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
@@ -354,7 +358,26 @@ class Tasks extends CI_Controller
                     'note' => nl2br($noteData['note']),
                     'task_id' => $id
                 ]);
-                if (!$insert) {
+                if ($insert) {
+                    $userIds = [];
+                    if (preg_match_all('~(@\w+)~', $noteData['note'], $matches, PREG_PATTERN_ORDER)) {
+                        $usernames = array_map(function ($val) {
+                            return ltrim($val, '@');
+                        }, $matches[1]);
+                        $userIds = $this->user->getUserIdArrByUserNames($usernames);
+                    }
+
+                    $old_tag_users = $this->task_user_tags->getUsersByTaskId($id);
+                    $old_tag_users = ($old_tag_users) ? array_column($old_tag_users, 'id') : [];
+                    $users = array_unique(array_merge($old_tag_users, $userIds));
+                    $users_insert = array_diff($users, $old_tag_users);
+                    if (count($users_insert)) {
+                        $usersInsert = $this->task_user_tags->insertByUserArr($users_insert, $id);
+                        if (!$usersInsert) {
+                            $this->session->set_flashdata('errors', '<p>Unable to tag new Users.</p>');
+                        }
+                    }
+                } else {
                     $this->session->set_flashdata('errors', '<p>Unable to add Note.</p>');
                 }
             } else {
