@@ -69,11 +69,21 @@ class UserModel extends CI_Model
 
 	public function resetPassword($user, $password)
 	{
+		$this->db->where('is_deleted', FALSE);
 		$password = password_hash($password, PASSWORD_BCRYPT);
 		$this->update($user->id, [
 			'password' => $password,
 			'password_token' => '',
 			'token_expiry' => ''
+		]);
+	}
+
+	public function verifyUser($user)
+	{
+		$this->db->where('is_deleted', FALSE);
+		$this->update($user->id, [
+			'verification_token' => '',
+			'is_active' => TRUE
 		]);
 	}
 
@@ -122,6 +132,18 @@ class UserModel extends CI_Model
 		$this->db->from($this->table);
 		$this->db->where([
 			'password_token' => $token,
+			'is_deleted' => FALSE
+		]);
+		$query = $this->db->get();
+		$result = $query->first_row();
+		return $result ? $result : false;
+	}
+
+	public function getUserByVerificationToken($token)
+	{
+		$this->db->from($this->table);
+		$this->db->where([
+			'verification_token' => $token,
 			'is_deleted' => FALSE
 		]);
 		$query = $this->db->get();
