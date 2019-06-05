@@ -87,6 +87,10 @@ class Users extends CI_Controller
 			]);
 
 			if ($insert) {
+				$user = $this->user->getUserById($insert);
+				if ($user) {
+					$this->user->setVerificationToken($user);
+				}
 				redirect('user/' . $insert);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Create User.</p>');

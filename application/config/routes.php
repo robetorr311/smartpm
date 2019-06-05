@@ -55,6 +55,10 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'auth/login';
 $route['auth']['post'] = 'auth/auth';
+$route['forgot-password'] = 'auth/forgotPassword';
+$route['send-password-token']['post'] = 'auth/sendPasswordToken';
+$route['reset-password/(:any)'] = 'auth/resetPassword/$1';
+$route['set-password-token/(:any)']['post'] = 'auth/setPasswordToken/$1';
 $route['signup'] = 'auth/signup';
 $route['register']['post'] = 'auth/register';
 $route['logout']['post'] = 'auth/logout';
