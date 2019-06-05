@@ -143,7 +143,7 @@ $route['production/(:num)/mark-complete'] = 'productions/complete/$1';
 $route['production/(:num)/mark-incomplete'] = 'productions/incomplete/$1';
 
 $route['work-completed'] = 'work_complete/index';
-$route['work-completed'] = 'work_complete/index/$1';
+$route['work-completed/(:num)'] = 'work_complete/index/$1';
 $route['work-complete/(:num)'] = 'work_complete/view/$1';
 $route['work-complete/(:num)/mark-complete'] = 'work_complete/complete/$1';
 $route['work-complete/(:num)/mark-incomplete'] = 'work_complete/incomplete/$1';

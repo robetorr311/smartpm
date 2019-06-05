@@ -12,6 +12,12 @@ class LeadStatusModel extends CI_Model
 		return $result->result();	
 	}
 
+    public function allJobStatus(){
+        $this->db->select("SUM(if(lead='open',1,NULL)) as OPEN, SUM(if(job='labor only' AND lead='open',1,NULL)) as LABOR, SUM(if(job='insurance' AND lead='open',1,NULL)) as INSURANCE, SUM(if(job='cash' AND lead='open',1,NULL)) as CASH , SUM(if(closeout='yes',1,NULL)) as CLOSED");
+        $this->db->from($this->table);
+        $query = $this->db->get();
+        return $query->result(); 
+    }
  
     public function add_record( $array ){
     

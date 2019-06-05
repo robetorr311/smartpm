@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
 <div class="container-fluid">
     <div class="row dashbord-box">
       
-              <?php foreach( $data->result() as $dat ) : ?> 
+              <?php foreach( $data as $dat ) : ?> 
                           
                            
      
