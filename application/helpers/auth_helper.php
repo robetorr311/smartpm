@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 if (!function_exists('authAdminAccess')) {
     function authAdminAccess()
     {
-        authAccess([1]);
+        authAccess();
     }
 }
 
