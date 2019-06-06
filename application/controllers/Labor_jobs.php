@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cash_jobs extends CI_Controller {
+class Labor_jobs extends CI_Controller {
 	 public function __construct()
-	    { 
+	    {
 	        parent::__construct();
 	        authAdminAccess();
 	        $this->load->model(['LeadModel','LeadStatusModel','TeamModel','TeamJobTrackModel']);
@@ -12,30 +12,32 @@ class Cash_jobs extends CI_Controller {
         	$this->status = new LeadStatusModel();
         	$this->team = new TeamModel();
         	$this->team_job_track = new TeamJobTrackModel();
-	    } 
+	     
+	    }
 
 	    public function index($start = 0){
-			$limit = 10; 
+	    	$limit = 10; 
 	    	$pagiConfig = [
-            'base_url' => base_url('cash-jobs'),
-            'total_rows' => $this->lead->getCountBasedJobType('cash'),
+            'base_url' => base_url('labor-jobs'),
+            'total_rows' => $this->lead->getCountBasedJobType('insurance'),
             'per_page' => $limit
         	];
         	$this->pagination->initialize($pagiConfig);
 			$jobs = $this->lead->getJobType($start, $limit,[
-													 'status.job'=>'cash',
+													 'status.job'=>'labor only',
                           							 'status.contract'=>'signed',
                           							 'status.production'=>'pre-production'
                         							]);
-			$this->load->view('header',['title' => 'Cash Job']);
-			$this->load->view('cash_job/index',[
+			$this->load->view('header',['title' => 'Labor Only Jobs']);
+			$this->load->view('labor_jobs/index',[
 				'jobs' => $jobs,
 				'pagiLinks' => $this->pagination->create_links()
 			]);
 			$this->load->view('footer');
 	    }
 
-	    public function view($jobid)
+	    
+		public function view($jobid)
 		{	
 			$jobs = $this->lead->get_all_where( 'jobs', ['id'=>$jobid] );
 			$add_info = $this->lead->get_all_where( 'job_add_party', array('job_id' => $jobid) );
@@ -43,8 +45,8 @@ class Cash_jobs extends CI_Controller {
 			$teams_detail = $this->team_job_track->getTeamName($jobid);
 			$teams = $this->team->getTeamOnly(['is_deleted'=>0]);
 
-			$this->load->view('header',['title' => 'Cash Job Detail']);
-			$this->load->view('cash_job/view',['jobid' => $jobid,
+			$this->load->view('header',['title' => 'Labor Job Detail']);
+			$this->load->view('labor_jobs/view',['jobid' => $jobid,
 											   'jobs' => $jobs,
 											   'add_info' => $add_info,
 											   'status' => $status,
@@ -65,17 +67,15 @@ class Cash_jobs extends CI_Controller {
 				$params['is_deleted'] 		= false;
 		  		$this->team_job_track->add_record($params);
 		  		$this->status->update_record(['production'=>'production'],['jobid'=>$jobid]);
-		  		redirect('cash-job/'.$jobid);
-	  		}else{
-	  			redirect('cash-jobs');
-	  		}
+		  		redirect('labor-job/'.$jobid);
+		  	}else{
+		  		redirect('labor-jobs');
+		  	}
 	    }
 
 	    public function delete($jobid){
 	    	$this->team_job_track->remove_team($jobid);
 	    	$this->status->update_record(['production'=>'pre-production'],['jobid'=>$jobid]);
-	    	redirect('cash-job/'.$jobid);
+	    	redirect('labor-job/'.$jobid);
 	    }
- 	 	 	
-
 }

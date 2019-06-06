@@ -6,32 +6,76 @@ class Insurance_jobs extends CI_Controller {
 	    {
 	        parent::__construct();
 	        authAdminAccess();
-	         $this->load->model(['Insurance_jobModel']);
+	        $this->load->model(['LeadModel','LeadStatusModel','TeamModel','TeamJobTrackModel']);
 	        $this->load->library(['pagination', 'form_validation']);
-        	$this->insurance = new Insurance_jobModel();
+        	$this->lead = new LeadModel();
+        	$this->status = new LeadStatusModel();
+        	$this->team = new TeamModel();
+        	$this->team_job_track = new TeamJobTrackModel();
 	     
 	    }
 
-	    public function index(){
-	    	$params = array();
-			$params['is_active'] = 1;
-			$params['status'] ='insurance';
-			$query['job'] = $this->insurance->get_all_where( 'jobs', $params );
-			$this->load->view('header',['title' => 'Insurance Job']);
-			$this->load->view('insurance_job/index',$query);
+	    public function index($start = 0){
+	    	$limit = 10; 
+	    	$pagiConfig = [
+            'base_url' => base_url('insurance-jobs'),
+            'total_rows' => $this->lead->getCountBasedJobType('insurance'),
+            'per_page' => $limit
+        	];
+        	$this->pagination->initialize($pagiConfig);
+			$jobs = $this->lead->getJobType($start, $limit,[
+											  'status.job'=>'insurance',
+                          					  'status.contract'=>'signed',
+                          					  'status.production'=>'pre-production'
+                        					]);
+			$this->load->view('header',['title' => 'Insurance Jobs']);
+			$this->load->view('insurance_job/index',[
+				'jobs' => $jobs,
+				'pagiLinks' => $this->pagination->create_links()
+			]);
 			$this->load->view('footer');
 	    }
 
-	    public function view()
+	    
+		public function view($jobid)
 		{	
-			$query = array('jobid' => $this->uri->segment(2));
-			$params = array();
-			$params['id'] =$this->uri->segment(2);
-			$query['jobs'] = $this->insurance->get_all_where( 'jobs', $params );
-			$query['add_info'] = $this->insurance->get_all_where( 'job_add_party', array('job_id' => $this->uri->segment(2)) );
+			$jobs = $this->lead->get_all_where( 'jobs', ['id'=>$jobid] );
+			$add_info = $this->lead->get_all_where( 'job_add_party', array('job_id' => $jobid) );
+			$status = $this->status->get_all_where(['jobid'=>$jobid]);
+			$teams_detail = $this->team_job_track->getTeamName($jobid);
+			$teams = $this->team->getTeamOnly(['is_deleted'=>0]);
 
-			$this->load->view('header',['title' => 'Insurance Job']);
-			$this->load->view('insurance_job/view',$query);
+			$this->load->view('header',['title' => 'Insurance Job Detail']);
+			$this->load->view('insurance_job/view',['jobid' => $jobid,
+											   'jobs' => $jobs,
+											   'add_info' => $add_info,
+											   'status' => $status,
+											   'teams_detail' => $teams_detail,
+											   'teams' => $teams
+											  ]);
 			$this->load->view('footer');
 		}
+
+
+		public function addTeam($jobid){
+	    	if( isset($_POST) && count($_POST) > 0 ) {
+		    	$posts = $this->input->post();
+		    	$params = array();
+				$params['team_id'] 		= $posts['team_id'];
+				$params['job_id'] 		= $jobid;
+				$params['assign_date'] 		=date('Y-m-d h:i:s');
+				$params['is_deleted'] 		= false;
+		  		$this->team_job_track->add_record($params);
+		  		$this->status->update_record(['production'=>'production'],['jobid'=>$jobid]);
+		  		redirect('insurance-job/'.$jobid);
+	  		}else{
+	  			redirect('insurance-jobs');
+	  		}
+	    }
+
+	    public function delete($jobid){
+	    	$this->team_job_track->remove_team($jobid);
+	    	$this->status->update_record(['production'=>'pre-production'],['jobid'=>$jobid]);
+	    	redirect('insurance-job/'.$jobid);
+	    }
 }

@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                   echo '</div>';
                                 }
                                 ?>
-                            </div>
+                            </div> 
                             <div class="content">
                                <div class="image_div">
                                <table class="table table-hover table-striped doc_list">
@@ -34,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                       <td style="width: 30px"><i class="del-doc pe-7s-trash" id="<?php echo $doc->id; ?>"></i></td>
                                       <td style="width: 30px"><a target="_blank" href="<?php echo base_url('assets/job_doc'); ?>/<?php echo $doc->doc_name ?>" class="" ><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
                                       <td><span class="<?php echo $doc->id ?>"><i class="del-edit pe-7s-note" /></span></td>
-                                      <td><p id="docp<?php echo $doc->id ?>"><?php  echo $doc->name ?></p><input style="width: 100%;display:none" name="<?php echo $doc->id ?>" type="text"  class="docname" id="doctext<?php echo $doc->id ?>" /></td>
+                                      <td><p id="docp<?php echo $doc->id ?>"><?php  echo $doc->name ?></p><input style="width: 70%;display:none" name="<?php echo $doc->id ?>" type="text"  class="docname" placeholder="Enter new name" id="doctext<?php echo $doc->id ?>" /></td>
                                       <td><?php echo $doc->doc_name ?></td>
                                   </tr>
                                    <?php endforeach; ?>
@@ -94,7 +94,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           }
 
         $.ajax({
-            url: baseUrl+'server/doc_upload', // point to server-side PHP script     
+            url: baseUrl+'doc/upload', // point to server-side PHP script     
             dataType: 'text',  // what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,
@@ -102,11 +102,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
             data: form_data,                         
             type: 'post',
             success: function(php_script_response){
+              
             var obj = JSON.parse(php_script_response)
               if(obj.length!=0){
                    $.ajax({
                             type: 'POST',
-                            url: baseUrl+'server/doc_save', // point to server-side PHP script     
+                            url: baseUrl+'doc/save', // point to server-side PHP script     
                             data: {id: id, name:php_script_response},                         
                             success: function(photoid){
                               //alert(photoid);
@@ -140,7 +141,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           }
           
           $.ajax({
-            url: baseUrl+'server/doc_upload', // point to server-side PHP script     
+            url: baseUrl+'doc/upload', // point to server-side PHP script     
             dataType: 'text',  // what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,
@@ -152,7 +153,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               if(obj.length!=0){ 
                       $.ajax({
                         type: 'POST',
-                        url: baseUrl+'server/doc_save', // point to server-side PHP script     
+                        url: baseUrl+'doc/save', // point to server-side PHP script     
                         data: {id: id, name:php_script_response},                         
                         success: function(photoid){
                           //alert(photoid);
@@ -171,7 +172,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           var id = $(this).attr('id');
                                     
           $.ajax({
-            url: baseUrl+'server/doc_delete',
+            url: baseUrl+'doc/delete',
             data: {id: id},        
             type: 'post',
             success: function(php_script_response){
@@ -184,7 +185,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           var data = $(this).val();
           var id = $(this).attr('name');
           $.ajax({
-            url: baseUrl+'server/doc_update',
+            url: baseUrl+'doc/update',
             data: {na: data, id: id},        
             type: 'post',
             success: function(php_script_response){
@@ -201,9 +202,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
           $('#doctext'+id).toggle();
           $('#docp'+id).toggle();
         });
-
-
-
 
   });
 </script>

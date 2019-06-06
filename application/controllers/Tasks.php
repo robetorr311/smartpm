@@ -1,20 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Tasks extends CI_Controller
 {
     private $title = 'Tasks';
-
     public function __construct()
     {
         parent::__construct();
-
         // authAdminAccess();
         // sessionTimeout();
-
         $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
         $this->load->library(['pagination', 'form_validation']);
-
         $this->task = new TaskModel();
         $this->user = new UserModel();
         $this->task_notes = new TaskNotesModel();
@@ -22,11 +17,9 @@ class Tasks extends CI_Controller
         $this->task_predecessor = new TaskPredecessorModel();
         $this->task_job_tags = new TaskJobTagsModel();
     }
-
     public function index($start = 0)
     {
         authAccess();
-
         $limit = 10;
         $pagiConfig = [
             'base_url' => base_url('tasks'),
@@ -44,16 +37,13 @@ class Tasks extends CI_Controller
         ]);
         $this->load->view('footer');
     }
-
     public function create()
     {
         authAccess();
-
         $types = TaskModel::getTypes();
         $levels = TaskModel::getLevels();
         $tasks = $this->task->getTaskList();
         $users = $this->user->getUserList();
-
         $this->load->view('header', [
             'title' => $this->title
         ]);
@@ -65,15 +55,12 @@ class Tasks extends CI_Controller
         ]);
         $this->load->view('footer');
     }
-
     public function store()
     {
         authAccess();
-
         $typeKeys = implode(',', array_keys(TaskModel::getTypes()));
         $levelKeys = implode(',', array_keys(TaskModel::getLevels()));
         $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
-
         $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
         $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
         $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
@@ -82,7 +69,6 @@ class Tasks extends CI_Controller
         $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
         $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
         $this->form_validation->set_rules('predecessor_tasks', 'Predecessor Tasks', 'is_own_ids[tasks, Tasks]');
-
         if ($this->form_validation->run() == TRUE) {
             $taskData = $this->input->post();
             $insert = $this->task->insert([
@@ -94,7 +80,6 @@ class Tasks extends CI_Controller
             if ($insert) {
                 $errors = '';
                 $note = $taskData['note'];
-
                 $noteInsert = $this->task_notes->insert([
                     'note' => nl2br($note),
                     'task_id' => $insert
@@ -102,7 +87,6 @@ class Tasks extends CI_Controller
                 if (!$noteInsert) {
                     $errors .= '<p>Unable to add Note.</p>';
                 }
-
                 // $jobs = $taskData['tag_clients'];
                 // if (!empty($jobs)) {
                 //     $jobs = explode(',', $jobs);
@@ -111,7 +95,6 @@ class Tasks extends CI_Controller
                 //         $errors .= '<p>Unable to tag Jobs.</p>';
                 //     }
                 // }
-
                 $users = $taskData['tag_users'];
                 $userIds = [];
                 if (preg_match_all('~(@\w+)~', $note, $matches, PREG_PATTERN_ORDER)) {
@@ -120,7 +103,6 @@ class Tasks extends CI_Controller
                     }, $matches[1]);
                     $userIds = $this->user->getUserIdArrByUserNames($usernames);
                 }
-
                 if (!empty($users) || count($userIds)) {
                     $users = empty($users) ? [] : explode(',', $users);
                     $users = array_unique(array_merge($users, $userIds));
@@ -129,7 +111,6 @@ class Tasks extends CI_Controller
                         $errors .= '<p>Unable to tag Users.</p>';
                     }
                 }
-
                 $predec_tasks = $taskData['predecessor_tasks'];
                 if (!empty($predec_tasks)) {
                     $predec_tasks = explode(',', $predec_tasks);
@@ -138,11 +119,9 @@ class Tasks extends CI_Controller
                         $errors .= '<p>Unable to tag Predecessor Tasks.</p>';
                     }
                 }
-
                 if (!empty($errors)) {
                     $this->session->set_flashdata('errors', $errors);
                 }
-
                 redirect('task/' . $insert);
             } else {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Task.</p>');
@@ -153,11 +132,9 @@ class Tasks extends CI_Controller
             redirect('task/create');
         }
     }
-
     public function complete($id)
     {
         authAccess();
-
         $task = $this->task->getTaskById($id);
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this task for completion
@@ -174,11 +151,9 @@ class Tasks extends CI_Controller
         }
         redirect('tasks');
     }
-
     public function edit($id)
     {
         authAccess();
-
         $task = $this->task->getTaskById($id);
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
@@ -209,20 +184,16 @@ class Tasks extends CI_Controller
             redirect('tasks');
         }
     }
-
     public function update($id)
     {
         authAccess();
-
         $task = $this->task->getTaskById($id);
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
-
             $typeKeys = implode(',', array_keys(TaskModel::getTypes()));
             $levelKeys = implode(',', array_keys(TaskModel::getLevels()));
             $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
             $statusKeys = implode(',', array_keys(TaskModel::getStatus()));
-
             $this->form_validation->set_rules('name', 'Task Name', 'trim|required');
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
             $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
@@ -231,7 +202,6 @@ class Tasks extends CI_Controller
             $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
             $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
             $this->form_validation->set_rules('predecessor_tasks', 'Predecessor Tasks', 'is_own_ids[tasks, Tasks]');
-
             if ($this->form_validation->run() == TRUE) {
                 $taskData = $this->input->post();
                 $update = $this->task->update($id, [
@@ -243,7 +213,6 @@ class Tasks extends CI_Controller
                 ]);
                 if ($update) {
                     $errors = '';
-
                     // $jobs = $taskData['tag_clients'];
                     // if (!empty($jobs)) {
                     //     $jobs = explode(',', $jobs);
@@ -252,12 +221,10 @@ class Tasks extends CI_Controller
                     //         $errors .= '<p>Unable to tag new Jobs.</p>';
                     //     }
                     // }
-
                     // if (preg_match_all('~(@\w+)~', $note, $matches, PREG_PATTERN_ORDER)) {
                     //     $usernames = $matches[1];
                     //     array_merge($users, $usernames);
                     // }
-
                     $old_tag_users = $this->task_user_tags->getUsersByTaskId($id);
                     $old_tag_users = ($old_tag_users) ? array_column($old_tag_users, 'id') : [];
                     $users = $taskData['tag_users'];
@@ -276,7 +243,6 @@ class Tasks extends CI_Controller
                             $errors .= '<p>Unable to remove tagged Users.</p>';
                         }
                     }
-
                     $old_predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
                     $old_predec_tasks = ($old_predec_tasks) ? array_column($old_predec_tasks, 'id') : [];
                     $predec_tasks = $taskData['predecessor_tasks'];
@@ -295,11 +261,9 @@ class Tasks extends CI_Controller
                             $errors .= '<p>Unable to tag new Predecessor Tasks.</p>';
                         }
                     }
-
                     if (!empty($errors)) {
                         $this->session->set_flashdata('errors', $errors);
                     }
-
                     redirect('task/' . $id);
                 } else {
                     $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
@@ -314,11 +278,9 @@ class Tasks extends CI_Controller
             redirect('tasks');
         }
     }
-
     public function show($id)
     {
         authAccess();
-
         $task = $this->task->getTaskById($id);
         if ($task) {
             $notes = $this->task_notes->getNotesByTaskId($id);
@@ -343,15 +305,12 @@ class Tasks extends CI_Controller
             redirect('tasks');
         }
     }
-
     public function addNote($id)
     {
         authAccess();
-
         $task = $this->task->getTaskById($id);
         if ($task) {
             $this->form_validation->set_rules('note', 'Note', 'trim|required');
-
             if ($this->form_validation->run() == TRUE) {
                 $noteData = $this->input->post();
                 $insert = $this->task_notes->insert([
@@ -366,7 +325,6 @@ class Tasks extends CI_Controller
                         }, $matches[1]);
                         $userIds = $this->user->getUserIdArrByUserNames($usernames);
                     }
-
                     $old_tag_users = $this->task_user_tags->getUsersByTaskId($id);
                     $old_tag_users = ($old_tag_users) ? array_column($old_tag_users, 'id') : [];
                     $users = array_unique(array_merge($old_tag_users, $userIds));
@@ -389,11 +347,9 @@ class Tasks extends CI_Controller
             redirect('tasks');
         }
     }
-
     public function deleteNote($id, $note_id)
     {
         authAccess();
-
         $task = $this->task->getTaskById($id);
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this taskNote
@@ -407,11 +363,9 @@ class Tasks extends CI_Controller
             redirect('tasks');
         }
     }
-
     public function delete($id)
     {
         authAccess();
-
         $task = $this->task->getTaskById($id);
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
@@ -428,11 +382,9 @@ class Tasks extends CI_Controller
         }
         redirect('tasks');
     }
-
     /**
      * Private Methods
      */
-
     // private function extractTagsArray($string)
     // {
     //     $string = preg_replace('/ /', '', $string);

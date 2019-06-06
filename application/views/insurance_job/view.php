@@ -22,11 +22,11 @@ echo '</div>';
                             </div>
                             <div class="content view">
                                   <?php
-                                $status='';
+                              
                                    foreach( $jobs as $job ) : ?>  
 
                                 
-                                <?php  $status= $job->status; ?>
+                              
                                     <div class="row">
                                         <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>"></input>
                                         <div class="col-md-12">
@@ -109,60 +109,63 @@ echo '</div>';
                               
                             
                        
-					   <div class="footer" style="margin-bottom: 10px;">
+                   <div class="footer" style="margin-bottom: 10px;">
                                     
                                     <hr>
-                                    <a href="<?php echo base_url('index.php/dashboard/addphoto/'.$job->id);?>" class="btn btn-success btn-fill">Photo</a>
-									
-  <!-- <a href="http://developeradda.tech/project/roofing-crm/report/?id=<?php echo $job->id ?>" target="_blank" class="btn btn-danger btn-fill">Photo Report</a>-->
-   <a href="<?php echo base_url();?>index.php/dashboard/alljobreport/<?php echo $job->id ?>" class="btn btn-danger btn-fill">All Report</a>
+   <a href="<?php echo base_url('photos/'.$job->id);?>" class="btn btn-success btn-fill">Photos</a>
+   <a href="<?php echo base_url('lead/'.$job->id.'/reports');?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-   <a href="<?php echo base_url('index.php/dashboard/adddoc/'.$job->id);?>" class="btn btn-danger btn-fill">Docs</a>
+   <a href="<?php echo base_url('docs/'.$job->id);?>" class="btn btn-danger btn-fill">Docs</a>
                                 </div>
-								                                   <?php endforeach; ?>
-					</div>
+                                                                   <?php endforeach; ?>
+                    </div>
                           
                         </div>
                     </div>
 
  <div class="col-md-4">
      <div class="card">
- <div class="header">
-                                    <h4 class="title" style="float: left;">Assign Group</h4> 
-                                    <div class="clearfix"></div>
-                                         <div class="content">
-                                             <select class="form-control"><option>Group 1</option>
-                                             <option>Group 1</option>
-                                         <option>Group 1</option></select>
+        <div class="header"> 
+            <h4 class="title" style="float: left;">Team Detail:</h4>
+                <?php if( !empty( $teams_detail ) ) : ?>
+                <?php foreach( $teams_detail as $data ) : ?>  
+                             <div style="float: right;text-align: right;"><p><?php echo $data->name ?></p>
+                            <p><?php echo $data->assign_date ?></p>
+                            <a href="<?php echo base_url('insurance-job/'.$jobid.'/delete')?>">Remove</a>
+                         </div>
+                <?php endforeach; ?>
+                <?php else : ?>
+                   <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
+                     <div class="content team-block">
+        <?php echo form_open('insurance-job/'.$jobid.'/addTeam',array('method'=>'post'));?>
+        <select name="team_id" class="form-control team_assign">
+                <option>Select Team</option>
+                <?php foreach( $teams as $team ) : ?>  
+                                 <option value="<?php echo $team->id ?>"><?php echo $team->team_name ?></option>
+                <?php endforeach; ?>
+        </select>
+        <input type="submit" value="Add Team" >
+        <?php echo form_close(); ?>  
+        </div> 
+                <?php endif; ?>
+        </div>
 
-                                         </div>     
-     </div> </div>
-            <div class="card">
-                <div class="header">
-                                    <h4 class="title" style="float: left;">Job Status</h4><span class="status open"><?php echo $status; ?></span> 
-                                    <div class="clearfix"></div>
-                                         <div class="content"></div>         
-                                </div>
-             </div>
-        <div class="card">
-                           
-                           
-                
-                            <div class="header">
-                                <h4 class="title" style="float: left;">Additional Party Detail</h4> 
-                                <div class="clearfix"></div>
-                              
-                                                           
-                            </div>
+         
+     </div>
+     <div class="card">
+         <div class="header">
+            <h4 class="title" style="float: left;">Additional Party Detail</h4> 
+            <div class="clearfix"></div>
+        </div>
                             <div class="content">
                             <?php if( !empty( $add_info ) ) : ?>
                             <?php foreach( $add_info as $info ) : ?>  
-                                <?php echo form_open('server/additional_party_update',array('id'=>"jobform",'autocomplete'=>"off"));?>
+                              
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input type="hidden"  name="id" value="<?php echo $jobid; ?>"></input>
+                                               
                                                 <label>First Name</label>
                                                <p><?php echo $info->fname ?></p>
                                             </div>
@@ -181,11 +184,11 @@ echo '</div>';
                                                 <label>Email</label>
                                                 <p><?php echo $info->email ?></p>
                                             </div>
-                                             <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                                           
                                         </div>
                                     </div>
 
-                                 <?php echo form_close(); ?>
+                               
                                  <?php endforeach; ?>
                                 <?php else : ?>
                                    
@@ -203,6 +206,6 @@ echo '</div>';
                             </div>
                         </div>
 </div>
-					   </div>
+                       </div>
                         </div>
   

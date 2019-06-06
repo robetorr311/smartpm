@@ -58,118 +58,149 @@
 
 <body>
 
-    <div class="wrapper">
-
-        <?php
-        ?>
-        <div class="sidebar" <?php if ($this->session->userdata("color") != '') {
-                                    echo "data-color=" . $this->session->userdata("color");
-                                } else {
-                                    echo "data-color=" . $admin['admindata']['color'];
-                                } ?> data-image="assets/img/sidebar-5.jpg">
-
-            <!--
-
-        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
-        Tip 2: you can also add an image using data-image tag
-
-    -->
-
-            <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="#" class="simple-text">
-                        CRM
-
-                    </a>
-                </div>
-
-                <ul class="nav">
-                    <li>
-                        <a href="<?php echo base_url('dashboard'); ?>">
-                            <i class="pe-7s-graph"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('leads'); ?>">
-                            <i class="pe-7s-note2"></i>
-                            <p>Leads </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('cash_jobs'); ?>">
-                            <i class="pe-7s-user"></i>
-                            <p>Cash Jobs</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('tasks'); ?>">
-                            <i class="pe-7s-note"></i>
-                            <p>Tasks</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('insurance_jobs'); ?>">
-                            <i class="pe-7s-note2"></i>
-                            <p>Insurance Jobs</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('teams'); ?>">
-                            <i class="pe-7s-note2"></i>
-                            <p>Teams</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('users'); ?>">
-                            <i class="pe-7s-note2"></i>
-                            <p>Users</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('setting'); ?>">
-                            <i class="pe-7s-note2"></i>
-                            <p>Setting</p>
-                        </a>
-                    </li>
-
-
-
-                </ul>
+<div class="wrapper">
+   
+    <?php //print_r($array['admindata']) ?>
+    <div class="sidebar" <?php if($this->session->userdata("color")!=''){ echo "data-color=".$this->session->userdata("color"); }else{ echo "data-color=".$admin['admindata']['color']; }?> data-image="assets/img/sidebar-5.jpg">
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    CRM
+                </a>
             </div>
-        </div>
+            <ul class="nav">
+                <li  class="<?= !empty($dashboard) ? 'active' : '' ?>">
+                    <a href="<?php echo base_url('dashboard');?>">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('leads');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Leads </p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('cash-jobs');?>">
+                        <i class="pe-7s-user"></i>
+                        <p>Cash Jobs</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('insurance-jobs');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Insurance Jobs</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('labor-jobs');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Labor Only Jobs</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('productions');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Production</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('work-completed');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Work Complete</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('closed');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Closed</p>
+                    </a>
+                </li>
+                 <li>
+                    <a href="<?php echo base_url('users');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li class="">
+                  <a class="nav-link" data-toggle="collapse" href="#componentsCollapse">
+                    <i class="pe-7s-graph"></i>
+                        <p>Admin  <b class="caret"></b></p>   
+                  </a>
+                  <div class="collapse submenu" id="componentsCollapse">
+                    <ul class="nav">
+                      <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url('setting');?>">
+                          <span class="sidebar-normal"> Setting </span>
+                        </a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url('setting/status');?>">
+                          <span class="sidebar-normal">Status Tag</span>
+                        </a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url('teams');?>">
+                          <span class="sidebar-normal"> Teams</span>
+                        </a>
+                      </li>
+                       <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url('archive');?>">
+                          <span class="sidebar-normal"> Archive</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('tasks');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Tasks</p>
+                    </a>
+                </li>
+               <!-- <li>
+                    <a href="<?php echo base_url('users');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Users</p>
+                    </a>
+                </li>-->
+            </ul>
+    	</div>
+    </div>
 
-        <div class="main-panel">
-            <nav class="navbar navbar-default navbar-fixed">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#"><?= $title ?></a>
-                    </div>
-                    <div class="collapse navbar-collapse">
-
-
-                        <ul class="nav navbar-nav navbar-right">
-
-                            <li>
-                                <a href="">Welcome <strong><?php echo $admin['first_name'] . ' ' . $admin['last_name']; ?></strong></a>
-                            </li>
-                            <li>
-
-                                <a href="<?php echo base_url('logout'); ?>" data-method="POST" style="color: red;">
-                                    <p>Log out</p>
-                                </a>
-                            </li>
-                            <li class="separator hidden-lg"></li>
-                        </ul>
-                    </div>
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><?= $title ?></a>
                 </div>
-            </nav>
+                <div class="collapse navbar-collapse">
+                    
+
+                    <ul class="nav navbar-nav navbar-right">
+					
+                       <li>
+							 <a href="">Welcome <strong><?php echo $admin['first_name'] . ' ' . $admin['last_name']; ?></strong></a>
+					   </li>
+                        <li>
+                            
+<a href="<?php echo base_url('logout');?>" data-method="POST" style="color: red;"><p>Log out</p></a>                         
+                        </li>
+						<li class="separator hidden-lg"></li>
+                    </ul>
+ </div>
+            </div>
+        </nav>
 
 
-            <div class="content">
+        <div class="content">
+
+
+        

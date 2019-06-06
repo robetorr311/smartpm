@@ -12,8 +12,7 @@ class Party extends CI_Controller {
         	$this->party = new PartyModel();
 	    }
  
-	    public function index(){
-        	$id=$this->uri->segment(2);
+	    public function index($id){
 		if( isset($_POST) && count($_POST) > 0 ) {
 			$posts = $this->input->post();
 		    $this->form_validation->set_rules('firstname','First Name','trim|required');
@@ -50,8 +49,7 @@ class Party extends CI_Controller {
 	}
 
 
-	public function update(){
-		$id=$this->uri->segment(2);
+	public function update($id){
 		if( isset($_POST) && count($_POST) > 0 ) {
 			$posts = $this->input->post();
 		    $this->form_validation->set_rules('firstname','First Name','trim|required');

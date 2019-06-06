@@ -322,6 +322,8 @@ $(document).ready(function () {
   });
 
 
+   var baseUrl = '<?= base_url(); ?>';
+
          $("#myInput").on("keyup", function() {
           var value = $(this).val().toLowerCase();
           $("#myTable tr").filter(function() {
@@ -329,13 +331,28 @@ $(document).ready(function () {
           });
        });
 
+  
+      /*  add user to team */
 
-         
-          $(document).ajaxStart(function(){
-                $("#wait").css("display", "block");
-              });
-              $(document).ajaxComplete(function(){
-                $("#wait").css("display", "none");
-              });
-    
-  });
+      $('#add_team').change(function(){
+        
+        var teamid=$(this).val();
+        var id=$('.hidden_id').val();
+        $.ajax({
+            url: baseUrl+'user/adduser',
+            data: {teamid: teamid, userid: id},        
+            type: 'post',
+             success: function(php_script_response){  
+            }
+           });
+        });
+
+        $(document).ajaxStart(function(){
+          $("#wait").css("display", "block");
+        });
+        $(document).ajaxComplete(function(){
+          $("#wait").css("display", "none");
+        });
+
+
+});

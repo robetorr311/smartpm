@@ -18,6 +18,7 @@ class TeamModel extends CI_Model
         return $query->result();
     }
 
+
     public function getCount()
     {
         $this->db->where('is_deleted', FALSE);
@@ -38,6 +39,17 @@ class TeamModel extends CI_Model
         $result = $query->first_row();
         return $result ? $result : false;
     }
+
+
+    public function getTeamOnly( $condition ){
+
+        $this->db->where($condition);
+        $this->db->order_by("id", "desc");
+        $result = $this->db->get($this->table);
+        return $result->result();   
+    }
+
+
 
     public function insert($data)
     {
