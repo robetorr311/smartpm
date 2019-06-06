@@ -9,8 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                          <input class="form-control" id="myInput"  placeholder="Search Job" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                   
-                                 </div>
+                                   </div>
                             </div>
                             <div class="header">
                                  <?= $this->session->flashdata('message') ?>
@@ -32,16 +31,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </thead>
                                     <tbody id="myTable">
 
-                                    <?php if( !empty( $job ) ) : ?>
-              <?php foreach( $job as $jobs ) : ?>  
+                                    <?php if( !empty( $jobs ) ) : ?>
+              <?php foreach( $jobs as $job ) : ?>  
                 <tr>
-               <td style="width: 30px"><a href="<?php echo base_url('insurance_job/'.$jobs->id);?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
-                  <td><?php echo $jobs->id ?></td>
-                  <td><?php echo $jobs->job_name ?></td>
-                  <td><?php echo $jobs->firstname ?></td>
-                  <td><?php echo $jobs->lastname ?></td>
-                  <td><?php echo $jobs->address ?></td>
-                  <td><?php echo $jobs->email ?></td>
+               <td style="width: 30px"><a href="<?php echo base_url('insurance-job/'.$job->id);?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
+                  <td><?php echo $job->id ?></td>
+                  <td><?php echo $job->job_name ?></td>
+                  <td><?php echo $job->firstname ?></td>
+                  <td><?php echo $job->lastname ?></td>
+                  <td><?php echo $job->address ?></td>
+                  <td><?php echo $job->email ?></td>
                 </tr>
 
 
@@ -57,7 +56,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                   
                                     </tbody>
                                 </table>
-
+<div class="pagination">
+                          <?= $pagiLinks ?>
+                    </div>
                             </div>
                         </div>
                     </div>

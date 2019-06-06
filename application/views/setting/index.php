@@ -99,6 +99,14 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
             }
            });
         });
+        
+        
+      
+        
+    
+  
+        
+      
        $(".color-ul li").click(function () {
           var color = $(this).attr('class');
                                     

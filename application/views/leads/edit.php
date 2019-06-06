@@ -22,17 +22,17 @@ echo '</div>';
                             </div>
                             <div class="content">
                                   <?php
-                                $status='';
+                             
                                    foreach( $leads as $lead ) : ?>  
 
                                 <?php echo form_open('lead/'.$lead->id.'/update',array('method'=>'post'));?>
-                                <?php  $status= $lead->status; ?>
+                         
                                     <div class="row">
                                        
                                         <div class="col-md-12">
                                             <div class="form-group"> <input type="hidden" name="id" class="hidden_id" value="<?php echo $lead->id ?>"/>
-                                                <label>Job Name</label>
-                                                <input class="form-control" placeholder="Job Name" name="jobname" value="<?php echo $lead->job_name ?>" type="text">
+                                                <label>Lead Name<span class="red-mark">*</span></label>
+                                                <input class="form-control" placeholder="Lead Name" name="jobname" value="<?php echo $lead->job_name ?>" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -40,13 +40,13 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
+                                                <label>First Name<span class="red-mark">*</span></label>
                                                 <input class="form-control" name="firstname" value="<?php echo $lead->firstname ?>" placeholder="" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
+                                                <label>Last Name<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Last Name" name="lastname" value="<?php echo $lead->lastname ?>" type="text">
                                             </div>
                                         </div>
@@ -55,7 +55,7 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Address</label>
+                                                <label>Address<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Address" name="address" value="<?php echo $lead->address ?>" type="text">
                                             </div>
                                         </div>
@@ -64,19 +64,19 @@ echo '</div>';
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>City</label>
+                                                <label>City<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="City" value="<?php echo $lead->city ?>" name="city" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>State</label>
+                                                <label>State<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Country" Name="country" value="<?php echo $lead->state ?>" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Postal Code</label>
+                                                <label>Postal Code<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="ZIP Code" value="<?php echo $lead->zip ?>" name="zip" type="text">
                                             </div>
                                         </div>
@@ -85,7 +85,7 @@ echo '</div>';
                                  <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Cell Phone</label>
+                                                <label>Cell Phone<span class="red-mark">*</span></label>
                                                 <input class="form-control" placeholder="Phone 1" name="phone1" value="<?php echo $lead->phone1 ?>" type="text">
                                             </div>
                                         </div>
@@ -110,15 +110,13 @@ echo '</div>';
       
                             
                        
-					   <div class="footer" style="margin-bottom: 10px;">
+					    <div class="footer" style="margin-bottom: 10px;">
                                     
                                     <hr>
-                                    <a href="<?php echo base_url('index.php/dashboard/addphoto/'.$lead->id);?>" class="btn btn-success btn-fill">Photo</a>
-									
-  <!-- <a href="http://developeradda.tech/project/roofing-crm/report/?id=<?php echo $job->id ?>" target="_blank" class="btn btn-danger btn-fill">Photo Report</a>-->
-   <a href="<?php echo base_url();?>index.php/dashboard/alljobreport/<?php echo $lead->id ?>" class="btn btn-danger btn-fill">All Report</a>
+   <a href="<?php echo base_url('photos/'.$lead->id);?>" class="btn btn-success btn-fill">Photos</a>
+   <a href="<?php echo base_url('lead/'.$lead->id.'/reports');?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-   <a href="<?php echo base_url('index.php/dashboard/adddoc/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
+   <a href="<?php echo base_url('docs/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
                                 </div>
 								                                   <?php endforeach; ?>
 					</div>
@@ -127,17 +125,53 @@ echo '</div>';
                     </div>
 
  <div class="col-md-4">
+    <?php
+        $lstatus="";
+        $cstatus="";
+        $jtype=""; ?>
+<?php foreach( $leadstatus as $status ) : 
+    $lstatus = $status->lead;
+    $cstatus = $status->contract;
+    $jtype = $status->job;
+endforeach; ?>
             <div class="card">
                 <div class="header">
-                                    <h4 class="title" style="float: left;">Job Status</h4><span class="status <?php if($status=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo $status; ?></span> 
+                    <h4 class="title" style="float: left;">Lead Status</h4>
+                    <span class="status lead <?php if($lstatus=='closed'){ echo 'closed';}else{ echo 'open';} ?>"><?php if($lstatus!=''){echo $lstatus; }else{ echo "None"; } ?>
+                    </span> 
+                    <div class="clearfix"></div>
+                    <div class="content">
+                    <select class="form-control" id="lead">
+                        <?php foreach( $lead_status_tags as $s_tags ) : ?>     
+                        <option value="<?php echo $s_tags->status_value ?>" <?php if($s_tags->status_value == $lstatus){ echo 'selected'; } ?> >
+                            <?php echo $s_tags->status_value ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    </div>                       
+                </div>
+           
+                <div class="header">
+                                    <h4 class="title" style="float: left;">Contract Status</h4><span class="status contract <?php if($cstatus=='unsigned'){ echo 'closed';}else{ echo 'open';} ?>"><?php if($cstatus!=''){echo $cstatus; }else{ echo "None"; } ?></span> 
                                     <div class="clearfix"></div>
                                     <div class="content">
-                                            <select class="form-control" id="leadstatus">
-                                                <option value="">Change Status</option>
-                            <option value="lead">Lead</option>
-                            <option value="cash">Cash job</option>
-                            <option value="insurance">Insurance job</option>
-                            <option value="closed">Closed</option>
+                                            <select class="form-control lead-status" id="contract">
+                                               
+                             <?php foreach( $contract_status_tags as $contract ) : ?>     
+                            <option value="<?php echo $contract->status_value ?>" <?php if($contract->status_value == $cstatus){ echo 'selected'; } ?> ><?php echo $contract->status_value ?></option>
+                        <?php endforeach; ?>
+                        </select>
+                                    </div>                       
+                                </div>
+             
+                <div class="header">
+                                    <h4 class="title" style="float: left;">Job Type</h4><span class="status job <?php if($jtype==''){ echo 'closed';}else{ echo 'open';} ?>"><?php if($jtype!=''){echo $jtype; }else{ echo "None"; } ?></span> 
+                                    <div class="clearfix"></div>
+                                    <div class="content">
+                                            <select class="form-control lead-status" id="job" disabled="">
+                                                <option value="">Choose type</option>
+                          <?php foreach( $job_type_tags as $job ) : ?>     
+                            <option value="<?php echo $job->status_value ?>" <?php if($job->status_value == $jtype){ echo 'selected'; } ?> ><?php echo $job->status_value ?></option>
+                        <?php endforeach; ?>
                         </select>
                                     </div>                       
                                 </div>
@@ -223,6 +257,7 @@ echo '</div>';
                         </div>
 <script>
   $(document).ready(function(){
+    var baseUrl = '<?= base_url(); ?>';
         $('#lead').change(function(){
                 var value=$(this).val();
                 var id=$('.hidden_id').val();
@@ -262,6 +297,11 @@ echo '</div>';
 
                 var lead_status=$('#lead').val();
                 var contract_status=$('#contract').val();
+                if(contract_status=="signed"){
+                    $('#job').removeAttr('disabled');
+                }else{
+                     $('#job').prop('disabled', 'disabled');
+                }
             
                     if(lead_status=='open'){
                         $.ajax({
@@ -271,7 +311,9 @@ echo '</div>';
                                 success: function(php_script_response){
                                 
                                     $('.'+status).html(value);
-                            
+                                    if(value=='unsigned'){
+                                        $("#job option:selected").prop("selected", false)
+                                    }
                                 }
                              });
                     }else{

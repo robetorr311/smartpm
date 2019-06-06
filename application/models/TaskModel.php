@@ -106,6 +106,14 @@ class TaskModel extends CI_Model
         return ($count === 0);
     }
 
+
+     public function getTasksByAssignedTo($id)
+    {
+        $this->db->where('assigned_to', $id);
+        $query = $this->db->get($this->table);
+        return $result = $query->result();
+        
+}
     public function complete($id)
     {
         $this->db->where([

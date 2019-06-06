@@ -63,11 +63,13 @@
                         </div>
 <script>
   $(document).ready(function(){
+    var baseUrl = '<?= base_url(); ?>';
+    
     $(".del-job").click(function () {
             var id = $(this).attr('id');
                                       
             $.ajax({
-              url: baseUrl+'index.php/server/deletejobreport',
+              url: baseUrl+'lead/'+id+'/delete-report',
               data: {id: id},        
               type: 'post',
               success: function(php_script_response){

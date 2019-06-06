@@ -50,29 +50,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     $(document).ready(function() {
           var baseUrl = '<?= base_url(); ?>';
-
           $("html").on("dragover", function(e) {
               e.preventDefault();
               e.stopPropagation();
               $("h1").text("Drag here");
           });
-
           $("html").on("drop", function(e) { e.preventDefault(); e.stopPropagation(); });
-
           // Drag enter
           $('.upload-area').on('dragenter', function (e) {
               e.stopPropagation();
               e.preventDefault();
               $("h1").text("Drop");
           });
-
           // Drag over
           $('.upload-area').on('dragover', function (e) {
               e.stopPropagation();
               e.preventDefault();
               $("h1").text("Drop");
           });
-
           // Drop
           $('.upload-area').on('drop', function (e) {
               e.stopPropagation();
@@ -87,9 +82,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 for (var i = 0; i < len_files; i++) {
                   form_data.append("photo[]", file_data[i]);
                 }
-
                   $.ajax({
-                  url: baseUrl+'server/photo_upload', // point to server-side PHP script     
+                  url: baseUrl+'photo/upload', // point to server-side PHP script     
                   dataType: 'text',  // what to expect back from the PHP script, if anything
                   cache: false,
                   contentType: false,
@@ -101,7 +95,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     if(obj.length!=0){
                           $.ajax({ 
                           type: 'POST',
-                          url: baseUrl+'server/photo_save', // point to server-side PHP script     
+                          url: baseUrl+'photo/save', // point to server-side PHP script     
                           data: {id: id, name:php_script_response},                         
                           success: function(photoid){
                             //alert(photoid);
@@ -109,7 +103,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                           }
                         });
                         }else{
-
                            alert('Something went wrong!. File type not ok');
                         }
                   }
@@ -135,7 +128,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               }
           
               $.ajax({
-                url: baseUrl+'server/photo_upload', // point to server-side PHP script     
+                url: baseUrl+'photo/upload', // point to server-side PHP script     
                 dataType: 'text',  // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,
@@ -148,7 +141,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                  if(obj.length!=0){
                       $.ajax({
                       type: 'POST',
-                      url: baseUrl+'server/photo_save', // point to server-side PHP script     
+                      url: baseUrl+'photo/save', // point to server-side PHP script     
                       data: {id: id, name:php_script_response},                         
                         success: function(photoid){
                           //alert(photoid);
@@ -161,12 +154,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }   
               });
         });
-
           $(document).on('click', '.del-photo', function () {
           var id = $(this).attr('id');
                                     
           $.ajax({
-            url: baseUrl+'server/photo_delete',
+            url: baseUrl+'photo/delete',
             data: {id: id},        
             type: 'post',
             success: function(php_script_response){
@@ -174,6 +166,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
            });
         });
+
+       
+         
+     
+   
+
 
       
 
@@ -196,7 +194,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           var name=$('.fancybox-caption__body').html();
           var angle=90;
             $.ajax({
-              url: baseUrl+'server/photo_rotate',
+              url: baseUrl+'photo/rotate',
               data: {name: name, angle: angle},        
               type: 'post',
               success: function(php_script_response)
@@ -230,4 +228,3 @@ defined('BASEPATH') or exit('No direct script access allowed');
        
     });
 </script>
-

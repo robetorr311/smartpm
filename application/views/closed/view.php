@@ -109,7 +109,7 @@ echo '</div>';
                            
                             
                        
-                       <div class="footer" style="margin-bottom: 10px;">
+                      <div class="footer" style="margin-bottom: 10px;">
                                     
                                     <hr>
    <a href="<?php echo base_url('photos/'.$lead->id);?>" class="btn btn-success btn-fill">Photos</a>
@@ -127,13 +127,12 @@ echo '</div>';
             <div class="card">
                 <?php  foreach( $leadstatus as $status ) : ?>  
                 <div class="header">
-                    <h4 class="title" style="float: left;">Lead Status</h4><span class="status <?php if($status->lead!='open'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $status->lead; ?></span> 
+                    <h4 class="title" style="float: left;">Lead Status</h4><span class="status open"><?php echo  $status->lead; ?></span> 
                     <div class="clearfix" style="padding: 10px;" ></div>  
 
-                     <h4 class="title" style="float: left;">Contract Status</h4><span class="status <?php if($status=='signed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus = $status->contract; ?></span> 
-                    <div class="clearfix" style="padding: 10px;"></div>
+                   
 
-                     <h4 class="title" style="float: left;">Job Type</h4><span class="status <?php if($status==''){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus =  $status->job;  ?></span> 
+                     <h4 class="title" style="float: left;">Job Type</h4><span class="status open"><?php echo  $lstatus =  $status->job;  ?></span> 
                     <div class="clearfix" style="padding: 10px;"></div>         
                 </div>
                 <?php endforeach; ?>  

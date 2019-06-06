@@ -7,6 +7,12 @@ class Setting extends CI_Controller {
 	    {
 	        parent::__construct();
 	        authAdminAccess();
+
+
+	        
+	        $this->load->model('StatusTagModel');
+
+        	$this->status = new StatusTagModel();
 	    }
 
 	    public function index(){
@@ -45,6 +51,34 @@ class Setting extends CI_Controller {
 			 $this->session->set_userdata("color",$posts['color']);
 			echo $posts['color'];
 		}
+
+		public function status_tag(){
+	    	
+
+			$query['job_type'] = $this->status->getall('job_type');
+			$query['job_classification'] = $this->status->getall('job_classification');
+			$query['lead_status'] = $this->status->getall('lead_status');
+			$query['client_status'] = $this->status->getall('client_status');
+			$query['contract_status'] = $this->status->getall('contract_status');
+			$this->load->view('header',['title' => 'Status Tags']);
+			$this->load->view('setting/status',$query);
+			$this->load->view('footer');
+	    }
+
+	    public function newtag(){
+	    	$posts = $this->input->post();
+	    	$params = array();
+			$params['status_tag_id'] 		= $posts['id'];
+			$params['value'] 		= strtolower($posts['type']);
+			$params['is_active'] 		= 1;
+	  		$this->status->addTag($params);
+	  		redirect('setting/status');
+	    }
+
+	    public function deltag(){
+	    	$this->status->delete_record(['id' => $this->uri->segment(2)]);
+	    	redirect('setting/status');
+	    }
 
 
 }
