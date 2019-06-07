@@ -140,7 +140,7 @@ class Auth extends CI_Controller
 		]);
 	}
 
-	public function setPasswordToken($token)
+	public function setTokenVerifiedPassword($token)
 	{
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
@@ -170,7 +170,7 @@ class Auth extends CI_Controller
 					redirect('reset-password/' . $token);
 				}
 			} else {
-				$message = '<div class="error"><p>Unable to find your email in our system.</p></div>';
+				$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
 				$this->session->set_flashdata('message', $message);
 				redirect('reset-password/' . $token);
 			}
@@ -261,6 +261,27 @@ class Auth extends CI_Controller
 			$this->session->set_flashdata('message', $message);
 			redirect('login');
 		}
+	}
+
+	public function verification($token)
+	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+
+		$user = $this->user->getUserByVerificationToken($token);
+		$message = '';
+		if ($user) {
+			$this->user->verifyUser($user);
+			$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Your Email ID is successfully verified. <br /> <a href="' . base_url('login') . '" style="color: white;">You can Login now.</a></div>';
+		} else {
+			$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
+		}
+
+		$this->load->view('auth/verification', [
+			'message' => $message
+		]);
 	}
 
 	public function logout()

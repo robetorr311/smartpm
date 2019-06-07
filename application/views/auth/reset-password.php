@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<img src="<?= base_url('assets/img/logo.png') ?>" style="width:200px" />
 	</div>
 
-	<?= form_open('set-password-token/' . $token, ['method' => 'post']) ?>
+	<?= form_open('set-token-verified-password/' . $token, ['method' => 'post']) ?>
 	<h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Reset Password</h2>
 
 	<?= $this->session->flashdata('message') ?>
