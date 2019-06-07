@@ -24,7 +24,7 @@ class Migration_Create_status_tag_types_table extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 40,
             ],
-             'is_active ' => [
+             'is_active' => [
                 'type' => 'INT',
                 'constraint' => 11,
             ],

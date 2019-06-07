@@ -28,11 +28,11 @@ class Migration_Create_team_job_track_table extends CI_Migration
                 'type' => 'datetime',
                 'constraint' => 6,
             ],
-             'end_date ' => [
+             'end_date' => [
                 'type' => 'datetime',
                 'constraint' => 6,
             ],
-             'is_deleted ' => [
+             'is_deleted' => [
                 'type' => 'INT',
                 'constraint' => 11,
             ],
