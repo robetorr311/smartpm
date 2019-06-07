@@ -11,7 +11,7 @@ class Users extends CI_Controller
 		authAdminAccess();
 
 		$this->load->model(['UserModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['pagination', 'form_validation', 'notify']);
 
 		$this->user = new UserModel();
 	}
@@ -89,7 +89,8 @@ class Users extends CI_Controller
 			if ($insert) {
 				$user = $this->user->getUserById($insert);
 				if ($user) {
-					$this->user->setVerificationToken($user);
+					$token = $this->user->setPasswordToken($user);
+					$this->notify->resetPassword($user->email_id, $token);
 				}
 				redirect('user/' . $insert);
 			} else {

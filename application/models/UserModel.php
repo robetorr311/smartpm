@@ -53,18 +53,22 @@ class UserModel extends CI_Model
 	public function setVerificationToken($user)
 	{
 		$token = $user->username . '_' . rand() . '_' . $user->email_id . '_' . rand() . '_' . $user->notifications . '_' . rand() . '_' . time();
+		$final_token = md5($user->email_id) . time() . $user->id . hash('sha256', $token) . md5('user_verification') . rand();
 		$this->update($user->id, [
-			'verification_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token) . md5('user_verification') . rand()
+			'verification_token' => $final_token
 		]);
+		return $final_token;
 	}
 
 	public function setPasswordToken($user)
 	{
 		$token = $user->username . '_' . rand() . '_' . $user->email_id . '_' . rand() . '_' . $user->notifications . '_' . rand() . '_' . time();
+		$final_token = md5($user->email_id) . time() . $user->id . hash('sha256', $token) . md5('password_reset') . rand();
 		$this->db->set('token_expiry', 'DATE_ADD(NOW(), INTERVAL 1 HOUR)', FALSE);
 		$this->update($user->id, [
-			'password_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token) . md5('password_reset') . rand()
+			'password_token' => $final_token
 		]);
+		return $final_token;
 	}
 
 	public function resetPassword($user, $password)

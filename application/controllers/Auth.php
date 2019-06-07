@@ -102,8 +102,8 @@ class Auth extends CI_Controller
 			$user = $this->user->getUserByEmailId($data['email']);
 			if ($user) {
 				if ($user->is_active == 1) {
-					$this->user->setPasswordToken($user);
-					// send password token email to $user->email_id
+					$token = $this->user->setPasswordToken($user);
+					$this->notify->resetPassword($user->email_id, $token);
 					$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Reset Password link successfully sent to your Email ID.</div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('forgot-password');
@@ -245,8 +245,8 @@ class Auth extends CI_Controller
 				]);
 				if ($signup) {
 					$user = $this->user->getUserById($signup);
-					$this->user->setVerificationToken($user);
-					// send verification token email to $user->email_id
+					$token = $this->user->setVerificationToken($user);
+					// EMAIL >>> send verification token email to $user->email_id
 					$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully. Check your email for email verification!</div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('login');
