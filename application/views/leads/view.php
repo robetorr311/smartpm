@@ -130,10 +130,12 @@ echo '</div>';
                     <h4 class="title" style="float: left;">Lead Status</h4><span class="status <?php if($status->lead!='open'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $status->lead; ?></span> 
                     <div class="clearfix" style="padding: 10px;" ></div>  
 
-                     <h4 class="title" style="float: left;">Contract Status</h4><span class="status <?php if($status=='signed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus = $status->contract; ?></span> 
+                     <h4 class="title" style="float: left;">Contract Status</h4><span class="status <?php if($status->contract=='signed'){ echo 'open';}else{ echo 'closed';} ?>"><?php echo  $status->contract; ?></span> 
                     <div class="clearfix" style="padding: 10px;"></div>
 
-                     <h4 class="title" style="float: left;">Job Type</h4><span class="status <?php if($status==''){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus =  $status->job;  ?></span> 
+                     <h4 class="title" style="float: left;">Job Type</h4><span class="status <?php if($status->job==''){ echo 'closed';}else{ echo 'open';} ?>">
+<?= empty($status->job) ? ' None' : $status->job ?>
+                      </span> 
                     <div class="clearfix" style="padding: 10px;"></div>         
                 </div>
                 <?php endforeach; ?>  

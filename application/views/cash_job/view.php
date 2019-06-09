@@ -144,7 +144,8 @@ echo '</div>';
                                  <option value="<?php echo $team->id ?>"><?php echo $team->team_name ?></option>
                 <?php endforeach; ?>
         </select>
-        <input type="submit" value="Add Team" >
+        <div class="clearfix"></div>
+        <input class="btn btn-success btn-fill" type="submit" value="Add Team">
         <?php echo form_close(); ?>  
         </div> 
                 <?php endif; ?>

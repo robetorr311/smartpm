@@ -58,6 +58,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                                   <li class="black"></li>
                                   <li class="orange"></li>
                                   <li class="green"></li>
+                                   <li class="blue"></li>
                               </ul>
                             </div>
                         </div>
@@ -116,6 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
             type: 'post',
             success: function(php_script_response){
               $('.sidebar').attr('data-color',php_script_response);
+              $('#topnav').attr('data-color',php_script_response);
             }
            });
         });
