@@ -8,14 +8,14 @@ if($_GET['id']!=''){
 		<title>Roofing Project</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" type="image/png" href="<?php echo $baseUrl; ?>/assets/img/<?php echo $favicon; ?>"/>
+		<link rel="shortcut icon" type="image/png" href="<?php echo $baseUrl; ?>/assets/company_photo/<?php if($logo!=''){echo $favicon; }else{ echo "snow.png"; } ?>"/>
 		<link  rel="stylesheet" type="text/css" href="jquery-ui.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
 		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 	<body style="background: #12A5A5;text-align: center;">
 		<div class="logo">
-			<img src="<?php echo $baseUrl; ?>/assets/img/<?php echo $logo; ?>" />
+			<img src="<?php echo $baseUrl; ?>/assets/company_photo/<?php if($logo!=''){ echo $logo; }else{ echo "snow.png"; }  ?>" />
 		</div>
 		<div style="width: 60%;margin-left: 20%;">
 			<button class="gallery_photo btn btn-info" style="margin-bottom: 20px;background-color: #f44336;">Add Photo From Gallery</button>
@@ -153,6 +153,7 @@ if($_GET['id']!=''){
 	   	echo "No Images!";
 	   }?>
 	</div>
+		<script> var baseUrl='<?= $baseUrl ?>';</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
 		<link href="jquery.fancybox.css" rel="stylesheet"/>

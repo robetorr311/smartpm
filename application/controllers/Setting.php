@@ -27,7 +27,7 @@ class Setting extends CI_Controller {
 				echo 'Error: ' . $_FILES['file']['error'] . '<br>';
 			}
 			else {
-				move_uploaded_file($_FILES['file']['tmp_name'], 'assets/img/' . $_FILES['file']['name']);
+				move_uploaded_file($_FILES['file']['tmp_name'], 'assets/company_photo/' . $_FILES['file']['name']);
 				echo $_FILES['file']['name'];
 			}
 		}
@@ -47,7 +47,7 @@ class Setting extends CI_Controller {
 		   
 		    $array = json_decode(json_encode($this->session->userdata), true);
 			$posts = $this->input->post();
-			$this->db->query("UPDATE admin_setting SET color='".$posts['color']."' WHERE user_id='".$array['admininfo']['id']."'");
+			$this->db->query("UPDATE admin_setting SET color='".$posts['color']."' WHERE company_id='".$array['company_id']."'");
 			 $this->session->set_userdata("color",$posts['color']);
 			echo $posts['color'];
 		}

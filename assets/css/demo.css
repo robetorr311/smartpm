@@ -172,6 +172,9 @@ margin-bottom: 30px;
 .black {
 	background: #000000;
 }
+.blue{
+	background-color: #032D53;
+}
 .del-photo.pe-7s-close {
 	color: white;
 	font-size: 33px;
@@ -344,7 +347,7 @@ color: red;
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
-	color: darkolivegreen;
+	color: #333;
 }
 
 .user th {
@@ -374,10 +377,10 @@ letter-spacing: 1px;min-width: 100px;
 text-align: center;
 }
 .open {
-	background-color: green;
+	background-color: #049F0C;text-transform: capitalize;
 }
 .closed {
-	background-color: red !important;
+	background-color: #EE2D20 !important;text-transform: capitalize;
 }
 .view label {
 	line-height: 24px;
@@ -408,16 +411,15 @@ span.info-tag {
 	margin-top: 0;
 }
 .submenu{
-	background-color: gray;
+	background: rgba(255,255,255,.1);
 }
 .nav .nav{
 	margin-top: -4px;
 }
-.title{
- margin: 0;
-        margin-bottom: 0px;
-    margin-bottom: 5px;
+.title {
     font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 550 !important;
 }
 .status-box h4 {
     margin: 0;
@@ -470,4 +472,80 @@ right: 15px;}
 }
 .fancybox-caption__body {
     visibility: hidden;
+}
+
+.navbar-default {
+  
+}
+.navbar-default .navbar-brand {
+    color: #fff !important;
+}
+.navbar-default .navbar-nav > li > a:not(.btn) {
+    color: #fff;
+}
+.logout{
+	font-weight: bold;
+}
+.logout i{font-weight: bold}
+
+.sidebar[data-color="blue"]:after {
+    background: #032D53;
+    background: -moz-linear-gradient(top, #032D53 0%, #244055 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1F77D0), color-stop(100%, #533ce1));
+    background: -webkit-linear-gradient(top, #1F77D0 0%, #244055 100%);
+    background: -o-linear-gradient(top, #032D53 0%, #244055 100%);
+    background: -ms-linear-gradient(top, #032D53 0%, #244055 100%);
+    background: linear-gradient(to bottom, #032D53 0%, #244055 100%);
+    background-size: 150% 150%;
+}
+#topnav[data-color="blue"] {
+    background: #2F4D67;
+}
+
+#topnav[data-color="green"]{
+    background: #87CB16;
+}
+
+#topnav[data-color="orange"]{
+    background: #FFA534;
+}
+
+#topnav[data-color="red"]{
+    background: #E7565E;
+}
+#topnav[data-color="purple"]{
+    background: #9368E9;
+}
+#topnav[data-color="black"]{
+    background: #787878;
+}
+
+body {
+    background: white;
+}
+.card label {
+    font-size: 14px;
+    color: #333;
+}
+.navbar-brand {
+    text-transform: uppercase;
+}
+.form-control {  
+    border: 1px solid #999; 
+    color: #1d1c1c;
+}
+.form-control::-moz-placeholder {
+    color: #888;
+}
+.card {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.3);
+}
+.logo-update .col-md-4{
+    text-align: center;
+}
+.favicon-update .col-md-4{
+    text-align: center;
+}
+.team-block .btn{
+	margin-top: 15px;
 }

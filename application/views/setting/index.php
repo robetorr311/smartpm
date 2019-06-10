@@ -58,6 +58,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                                   <li class="black"></li>
                                   <li class="orange"></li>
                                   <li class="green"></li>
+                                   <li class="blue"></li>
                               </ul>
                             </div>
                         </div>
@@ -92,7 +93,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                 url: baseUrl+'setting/ajaxsave', // point to server-side PHP script     
                 data: {id: id, name:php_script_response},                         
                 success: function(php_script_response){
-                  $('.'+id+'img').attr('src',baseUrl+'assets/img/'+php_script_response ); // 
+                  $('.'+id+'img').attr('src',baseUrl+'assets/company_photo/'+php_script_response ); // 
               
                 }
               });
@@ -116,6 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
             type: 'post',
             success: function(php_script_response){
               $('.sidebar').attr('data-color',php_script_response);
+              $('#topnav').attr('data-color',php_script_response);
             }
            });
         });
