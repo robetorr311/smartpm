@@ -27,7 +27,7 @@ class Setting extends CI_Controller {
 				echo 'Error: ' . $_FILES['file']['error'] . '<br>';
 			}
 			else {
-				move_uploaded_file($_FILES['file']['tmp_name'], 'assets/img/' . $_FILES['file']['name']);
+				move_uploaded_file($_FILES['file']['tmp_name'], 'assets/company_photo/' . $_FILES['file']['name']);
 				echo $_FILES['file']['name'];
 			}
 		}

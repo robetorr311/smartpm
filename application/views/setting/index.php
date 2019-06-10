@@ -93,7 +93,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                 url: baseUrl+'setting/ajaxsave', // point to server-side PHP script     
                 data: {id: id, name:php_script_response},                         
                 success: function(php_script_response){
-                  $('.'+id+'img').attr('src',baseUrl+'assets/img/'+php_script_response ); // 
+                  $('.'+id+'img').attr('src',baseUrl+'assets/company_photo/'+php_script_response ); // 
               
                 }
               });
