@@ -18,6 +18,10 @@ class Migration_Create_companies_table_in_master extends CI_Migration
                 'constraint' => 11,
                 'auto_increment' => TRUE
             ],
+            'company_code' => [
+                'type' => 'INT',
+                'constraint' => 11,
+            ],
             'name' => [
                 'type' => 'VARCHAR',
                 'constraint' => 200,
