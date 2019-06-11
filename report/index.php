@@ -141,7 +141,7 @@ if($_GET['id']!=''){
 		<div class="image-div">
 
 			<input type="checkbox" name="img" value="<?php echo $row['image_name']; ?>">
-		<img src="<?php echo $baseUrl; ?>assets/job_photo/<?php echo $row['image_name']; ?>" />
+		<img src="<?php echo $baseUrl; ?>assets/job_photo/thumbnail/<?php echo $row['image_name']; ?>" />
 		</div>
 <?php 
 	  }
