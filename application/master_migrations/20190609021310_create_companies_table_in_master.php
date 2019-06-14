@@ -10,8 +10,6 @@ class Migration_Create_companies_table_in_master extends CI_Migration
 
     public function up()
     {
-        $this->db->query('use smartpm_master');
-        
         $field = [
             'id' => [
                 'type' => 'INT',
@@ -67,14 +65,10 @@ class Migration_Create_companies_table_in_master extends CI_Migration
         $this->dbforge->add_field($field);
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('companies', TRUE);
-
-        $this->db->query('use ' . $this->db->database);
     }
 
     public function down()
     {
-        $this->db->query('use smartpm_master');
         $this->dbforge->drop_table('companies', TRUE);
-        $this->db->query('use ' . $this->db->database);
     }
 }

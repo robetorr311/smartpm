@@ -65,9 +65,16 @@ $route['verification/(:any)'] = 'auth/verification/$1';
 $route['logout']['post'] = 'auth/logout';
 
 $route['migrate/do_migration'] = 'migrate/do_migration';
+$route['migrate/do_migration/(:num)'] = 'migrate/do_migration/$1';
 $route['migrate/undo_migration'] = 'migrate/undo_migration';
 $route['migrate/undo_migration/(:num)'] = 'migrate/undo_migration/$1';
 $route['migrate/reset_migration'] = 'migrate/reset_migration';
+
+$route['migrate/master/do_migration'] = 'master_migrate/do_migration';
+$route['migrate/master/do_migration/(:num)'] = 'master_migrate/do_migration/$1';
+$route['migrate/master/undo_migration'] = 'master_migrate/undo_migration';
+$route['migrate/master/undo_migration/(:num)'] = 'master_migrate/undo_migration/$1';
+$route['migrate/master/reset_migration'] = 'master_migrate/reset_migration';
 
 $route['dashboard'] = 'dashboard/index';
 
