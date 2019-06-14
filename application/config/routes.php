@@ -170,5 +170,14 @@ $route['setting/ajaxupload'] = 'setting/ajaxupload';
 $route['setting/ajaxsave'] = 'setting/ajaxsave';
 $route['setting/ajaxcolor'] = 'setting/ajaxcolor';
 
+$route['report/(:num)'] = 'reports/index/$1';
+$route['report/(:num)/create'] = 'reports/create/$1';
+$route['report/upload'] = 'reports/upload';
+$route['report/save-img'] = 'reports/save_img';
+$route['report/(:num)/save'] = 'reports/save/$1';
+$route['report/(:num)/pdf/(:num)'] = 'reports/pdf/$1/$2';
+
+$route['pdf/(:num)'] = 'pdf/pdf/$1';
+
 
 $route['(.+)'] = 'errors/page_missing';
