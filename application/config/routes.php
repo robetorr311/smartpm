@@ -177,7 +177,5 @@ $route['report/save-img'] = 'reports/save_img';
 $route['report/(:num)/save'] = 'reports/save/$1';
 $route['report/(:num)/pdf/(:num)'] = 'reports/pdf/$1/$2';
 
-$route['pdf/(:num)'] = 'pdf/pdf/$1';
-
 
 $route['(.+)'] = 'errors/page_missing';
