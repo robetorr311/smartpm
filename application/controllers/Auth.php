@@ -6,10 +6,13 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['UserModel', 'CompanyModel', 'AdminSettingModel']);
+		$this->load->library('new_company');
+		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_DatabaseModel', 'AdminSettingModel']);
 
-		$this->user = new UserModel();
 		$this->company = new CompanyModel();
+		$this->m_company = new M_CompanyModel();
+		$this->m_emailCred = new M_EmailCredModel();
+		$this->m_database = new M_DatabaseModel();
 		$this->admin_setting = new AdminSettingModel();
 	}
 
@@ -40,39 +43,51 @@ class Auth extends CI_Controller
 			die();
 		}
 
+		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
 		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
+
 		if ($this->form_validation->run() == TRUE) {
 			$authData = $this->input->post();
-			if ($user = $this->user->authenticate($authData['email'], $authData['password'])) {
-				if (empty($user->verification_token)) {
-					if ($user->is_active == 1) {
-						$this->session->set_userdata([
-							'first_name' => $user->first_name,
-							'last_name' => $user->last_name,
-							'username' => $user->username,
-							'id' => $user->id,
-							'email_id' => $user->email_id,
-							'level' => $user->level,
-							'company_id' => $user->company_id,
-							'logged_in' => TRUE
-						]);
-						$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);
-						$this->session->set_userdata('admindata', $result1);
-						redirect('dashboard');
+
+			$db = 'smartpm_' . $authData['company_code'];
+			if (verifyDB($db, TRUE)) {
+				$this->user = new UserModel($db);
+
+				if ($user = $this->user->authenticate($authData['email'], $authData['password'])) {
+					if (empty($user->verification_token)) {
+						if ($user->is_active == 1) {
+							$this->session->set_userdata([
+								'first_name' => $user->first_name,
+								'last_name' => $user->last_name,
+								'username' => $user->username,
+								'id' => $user->id,
+								'email_id' => $user->email_id,
+								'level' => $user->level,
+								'company_id' => $user->company_id,
+								'logged_in' => TRUE
+							]);
+							$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);
+							$this->session->set_userdata('admindata', $result1);
+							redirect('dashboard');
+						} else {
+							$message = '<div class="error"><p>Your account is not activated.</p></div>';
+							$this->session->set_flashdata('message', $message);
+							redirect('login');
+						}
 					} else {
-						$message = '<div class="error"><p>Your account is not activated.</p></div>';
+						$message = '<div class="error"><p>Complete Email ID verification before login.</p></div>';
 						$this->session->set_flashdata('message', $message);
 						redirect('login');
 					}
 				} else {
-					$message = '<div class="error"><p>Complete Email ID verification before login.</p></div>';
+					$message = '<div class="error"><p>Email ID or Password Invalid.</p></div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('login');
 				}
 			} else {
-				$message = '<div class="error"><p>Email ID or Password Invalid.</p></div>';
+				$message = '<div class="error"><p>Unable to find database for entered Company Code.</p></div>';
 				$this->session->set_flashdata('message', $message);
 				redirect('login');
 			}
@@ -202,9 +217,10 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		$this->form_validation->set_rules('conf_password', 'Confirm Password', 'trim|required|matches[password]');
-		$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]', [
-			'is_unique' => 'The user with this Email ID is already exist.'
-		]);
+		$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email');
+		// $this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]', [
+		// 	'is_unique' => 'The user with this Email ID is already exist.'
+		// ]);
 		$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
 		$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
 		$this->form_validation->set_rules('cell_1', 'Cell 1', 'trim|numeric');
@@ -214,7 +230,7 @@ class Auth extends CI_Controller
 
 		if ($this->form_validation->run() == TRUE) {
 			$userData = $this->input->post();
-			$companyInsert = $this->company->insert([
+			$m_companyInsert = $this->m_company->insert([
 				'name' => $userData['company_name'],
 				'email_id' => $userData['company_email_id'],
 				'alt_email_id' => $userData['company_alt_email_id'],
@@ -223,43 +239,83 @@ class Auth extends CI_Controller
 				'state' => $userData['company_state'],
 				'zip' => $userData['company_zip']
 			]);
+			if ($m_companyInsert) {
+				$this->m_company->updateCompanyCode($m_companyInsert);
+				$database = 'smartpm_' . (154236 + $m_companyInsert);
+				$this->m_emailCred->insert([
+					'smtp_host' => '',
+					'smtp_port' => '',
+					'smtp_user' => '',
+					'smtp_pass' => '',
+					'smtp_crypto' => '',
+					'company_id' => $m_companyInsert
+				]);
+				$this->m_database->insert([
+					'name' => $database,
+					'company_id' => $m_companyInsert
+				]);
+				if ($this->new_company->createDB($database)) {
+					$companyInsert = $this->company->insert([
+						'name' => $userData['company_name'],
+						'email_id' => $userData['company_email_id'],
+						'alt_email_id' => $userData['company_alt_email_id'],
+						'address' => $userData['company_address'],
+						'city' => $userData['company_city'],
+						'state' => $userData['company_state'],
+						'zip' => $userData['company_zip']
+					]);
 
-			if ($companyInsert) {
-				$message = '';
-				$admin_setting = $this->admin_setting->insert([
-					'company_id' => $companyInsert
-				]);
-				if (!$admin_setting) {
-					$message .= '<div class="error" title="Error:" >Setting options not created. Please inform Admin!</div>';
-				}
-				$signup = $this->user->signup([
-					'first_name' => $userData['first_name'],
-					'last_name' => $userData['last_name'],
-					'password' => $userData['password'],
-					'email_id' => $userData['email_id'],
-					'office_phone' => $userData['office_phone'],
-					'home_phone' => $userData['home_phone'],
-					'cell_1' => $userData['cell_1'],
-					'cell_2' => $userData['cell_2'],
-					'company_id' => $companyInsert
-				]);
-				if ($signup) {
-					$user = $this->user->getUserById($signup);
-					$this->user->setVerificationToken($user);
-					// send verification token email to $user->email_id
-					$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully. Check your email for email verification!</div>';
-					$this->session->set_flashdata('message', $message);
-					redirect('login');
+					if ($companyInsert) {
+						$message = '';
+						$admin_setting = $this->admin_setting->insert([
+							'company_id' => $companyInsert
+						]);
+						if (!$admin_setting) {
+							$message .= '<div class="error" title="Error:" >Setting options not created. Please inform Admin!</div>';
+						}
+						$signup = $this->user->signup([
+							'first_name' => $userData['first_name'],
+							'last_name' => $userData['last_name'],
+							'password' => $userData['password'],
+							'email_id' => $userData['email_id'],
+							'office_phone' => $userData['office_phone'],
+							'home_phone' => $userData['home_phone'],
+							'cell_1' => $userData['cell_1'],
+							'cell_2' => $userData['cell_2'],
+							'company_id' => $companyInsert
+						]);
+						if ($signup) {
+							$user = $this->user->getUserById($signup);
+							$this->user->setVerificationToken($user);
+							// send verification token email to $user->email_id
+							$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully. Check your email for email verification!</div>';
+							$this->session->set_flashdata('message', $message);
+							redirect('login');
+						} else {
+							$message .= '<div class="error" title="Error:" >User not created. Please try again!</div>';
+							$this->session->set_flashdata('message', $message);
+							redirect('signup');
+						}
+					} else {
+						$message .= '<div class="error" title="Error:" >Unable to create your company. Please try again!</div>';
+						$this->session->set_flashdata('message', $message);
+						redirect('signup');
+					}
 				} else {
-					$message .= '<div class="error" title="Error:" >User not created. Please try again!</div>';
+					$this->new_company->createDB($database);
+					$message .= '<div class="error" title="Error:" >Unable to create your company\'s database. Please try again!</div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('signup');
 				}
+			} else {
+				$message .= '<div class="error" title="Error:" >Unable to create your company. Please try again!</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect('signup');
 			}
 		} else {
 			$message = '<div class="error">' . validation_errors() . '</div>';
 			$this->session->set_flashdata('message', $message);
-			redirect('login');
+			redirect('signup');
 		}
 	}
 
