@@ -27,6 +27,32 @@ class UserModel extends CI_Model
 		4 => 'Both'
 	];
 
+	public function __construct($database = null)
+	{
+		parent::__construct();
+		$this->selected_db = $this->load->database([
+			'dsn'	=> '',
+			'hostname' => 'localhost',
+			'username' => 'root',
+			'password' => '',
+			'database' => ($database ?? $this->db->database),
+			'dbdriver' => 'mysqli',
+			'dbprefix' => '',
+			'pconnect' => FALSE,
+			'db_debug' => (ENVIRONMENT !== 'production'),
+			'cache_on' => FALSE,
+			'cachedir' => '',
+			'char_set' => 'utf8',
+			'dbcollat' => 'utf8_general_ci',
+			'swap_pre' => '',
+			'encrypt' => FALSE,
+			'compress' => FALSE,
+			'stricton' => FALSE,
+			'failover' => array(),
+			'save_queries' => TRUE
+		], TRUE);
+	}
+
 	public function signup($data)
 	{
 		$data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
@@ -36,11 +62,11 @@ class UserModel extends CI_Model
 
 	public function authenticate($email_id, $password)
 	{
-		$this->db->where([
+		$this->selected_db->where([
 			'email_id' => $email_id,
 			'is_deleted' => FALSE
 		]);
-		$user = $this->db->get($this->table)->row();
+		$user = $this->selected_db->get($this->table)->row();
 		if ($user != NULL) {
 			if (password_verify($password, $user->password)) {
 				return $user;
@@ -61,7 +87,7 @@ class UserModel extends CI_Model
 	public function setPasswordToken($user)
 	{
 		$token = $user->username . '_' . rand() . '_' . $user->email_id . '_' . rand() . '_' . $user->notifications . '_' . rand() . '_' . time();
-		$this->db->set('token_expiry', 'DATE_ADD(NOW(), INTERVAL 1 HOUR)', FALSE);
+		$this->selected_db->set('token_expiry', 'DATE_ADD(NOW(), INTERVAL 1 HOUR)', FALSE);
 		$this->update($user->id, [
 			'password_token' => md5($user->email_id) . time() . $user->id . hash('sha256', $token) . md5('password_reset') . rand()
 		]);
@@ -69,7 +95,7 @@ class UserModel extends CI_Model
 
 	public function resetPassword($user, $password)
 	{
-		$this->db->where('is_deleted', FALSE);
+		$this->selected_db->where('is_deleted', FALSE);
 		$password = password_hash($password, PASSWORD_BCRYPT);
 		$this->update($user->id, [
 			'password' => $password,
@@ -80,7 +106,7 @@ class UserModel extends CI_Model
 
 	public function verifyUser($user)
 	{
-		$this->db->where('is_deleted', FALSE);
+		$this->selected_db->where('is_deleted', FALSE);
 		$this->update($user->id, [
 			'verification_token' => '',
 			'is_active' => TRUE
@@ -89,64 +115,64 @@ class UserModel extends CI_Model
 
 	public function allUsers($start = 0, $limit = 10)
 	{
-		$this->db->from($this->table);
-		$this->db->where('is_deleted', FALSE);
-		$this->db->order_by('id', 'ASC');
-		$this->db->limit($limit, $start);
-		$query = $this->db->get();
+		$this->selected_db->from($this->table);
+		$this->selected_db->where('is_deleted', FALSE);
+		$this->selected_db->order_by('id', 'ASC');
+		$this->selected_db->limit($limit, $start);
+		$query = $this->selected_db->get();
 		return $query->result();
 	}
 
 	public function getCount()
 	{
-		$this->db->where('is_deleted', FALSE);
-		return $this->db->count_all_results($this->table);
+		$this->selected_db->where('is_deleted', FALSE);
+		return $this->selected_db->count_all_results($this->table);
 	}
 
 	public function getUserById($id)
 	{
-		$this->db->from($this->table);
-		$this->db->where([
+		$this->selected_db->from($this->table);
+		$this->selected_db->where([
 			'id' => $id,
 			'is_deleted' => FALSE
 		]);
-		$query = $this->db->get();
+		$query = $this->selected_db->get();
 		$result = $query->first_row();
 		return $result ? $result : false;
 	}
 
 	public function getUserByEmailId($email_id)
 	{
-		$this->db->from($this->table);
-		$this->db->where([
+		$this->selected_db->from($this->table);
+		$this->selected_db->where([
 			'email_id' => $email_id,
 			'is_deleted' => FALSE
 		]);
-		$query = $this->db->get();
+		$query = $this->selected_db->get();
 		$result = $query->first_row();
 		return $result ? $result : false;
 	}
 
 	public function getUserByPasswordToken($token)
 	{
-		$this->db->from($this->table);
-		$this->db->where([
+		$this->selected_db->from($this->table);
+		$this->selected_db->where([
 			'password_token' => $token,
 			'is_deleted' => FALSE
 		]);
-		$query = $this->db->get();
+		$query = $this->selected_db->get();
 		$result = $query->first_row();
 		return $result ? $result : false;
 	}
 
 	public function getUserByVerificationToken($token)
 	{
-		$this->db->from($this->table);
-		$this->db->where([
+		$this->selected_db->from($this->table);
+		$this->selected_db->where([
 			'verification_token' => $token,
 			'is_deleted' => FALSE
 		]);
-		$query = $this->db->get();
+		$query = $this->selected_db->get();
 		$result = $query->first_row();
 		return $result ? $result : false;
 	}
@@ -154,45 +180,45 @@ class UserModel extends CI_Model
 	public function insert($data)
 	{
 		$data['username'] = $this->genUserName($data['first_name'], $data['last_name']);
-		$insert = $this->db->insert($this->table, $data);
-		return $insert ? $this->db->insert_id() : $insert;
+		$insert = $this->selected_db->insert($this->table, $data);
+		return $insert ? $this->selected_db->insert_id() : $insert;
 	}
 
 	public function update($id, $data)
 	{
-		$this->db->where('id', $id);
-		$update = $this->db->update($this->table, $data);
+		$this->selected_db->where('id', $id);
+		$update = $this->selected_db->update($this->table, $data);
 		return $update;
 	}
 
 	public function delete($id)
 	{
-		$this->db->where('id', $id);
-		return $this->db->update($this->table, [
+		$this->selected_db->where('id', $id);
+		return $this->selected_db->update($this->table, [
 			'is_deleted' => TRUE
 		]);
 	}
 
 	public function getUserList($select = "id, username, CONCAT(first_name, ' ', last_name) AS name")
 	{
-		$this->db->select($select);
-		$this->db->from($this->table);
-		$query = $this->db->get();
+		$this->selected_db->select($select);
+		$this->selected_db->from($this->table);
+		$query = $this->selected_db->get();
 		return $query->result();
 	}
 
 	public function getUserIdArrByUserNames($usernames)
 	{
-		$this->db->select('id');
-		$this->db->where_in('username', $usernames);
-		$this->db->from($this->table);
-		$query = $this->db->get();
+		$this->selected_db->select('id');
+		$this->selected_db->where_in('username', $usernames);
+		$this->selected_db->from($this->table);
+		$query = $this->selected_db->get();
 		return array_column($query->result_array(), 'id');
 	}
 
 	public function get_crm_data($table, $cols, $condition)
 	{
-		return $this->db->select($cols)
+		return $this->selected_db->select($cols)
 			->get_where($table, $condition)
 			->row_array();
 	}
@@ -203,8 +229,8 @@ class UserModel extends CI_Model
 	private function genUserName($first_name, $last_name)
 	{
 		$userName = strtolower($first_name . '_' . $last_name);
-		$this->db->like('username', $userName);
-		$count = $this->db->count_all_results($this->table);
+		$this->selected_db->like('username', $userName);
+		$count = $this->selected_db->count_all_results($this->table);
 		return $userName . ($count > 0 ? ('_' . ($count + 1)) : '');
 	}
 

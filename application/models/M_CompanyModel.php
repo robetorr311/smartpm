@@ -8,7 +8,7 @@ class M_CompanyModel extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
-		$this->db = $this->load->database([
+		$this->selected_db = $this->load->database([
 			'dsn'	=> '',
 			'hostname' => 'localhost',
 			'username' => 'root',  
@@ -33,14 +33,14 @@ class M_CompanyModel extends CI_Model
 
 	public function insert($data)
 	{
-		$insert = $this->db->insert($this->table, $data);
-		return $insert ? $this->db->insert_id() : $insert;
+		$insert = $this->selected_db->insert($this->table, $data);
+		return $insert ? $this->selected_db->insert_id() : $insert;
 	}
 	
 	public function updateCompanyCode($id)
 	{
-		$this->db->set('company_code', 'id+154236', false);
-		$this->db->where('id', $id);
-		$this->db->update($this->table);
+		$this->selected_db->set('company_code', 'id+154236', false);
+		$this->selected_db->where('id', $id);
+		$this->selected_db->update($this->table);
 	}
 }

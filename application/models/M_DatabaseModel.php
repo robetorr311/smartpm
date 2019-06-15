@@ -8,7 +8,7 @@ class M_DatabaseModel extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
-		$this->db = $this->load->database([
+		$this->selected_db = $this->load->database([
 			'dsn'	=> '',
 			'hostname' => 'localhost',
 			'username' => 'root',  
@@ -33,7 +33,7 @@ class M_DatabaseModel extends CI_Model
 
 	public function insert($data)
 	{
-		$insert = $this->db->insert($this->table, $data);
-		return $insert ? $this->db->insert_id() : $insert;
+		$insert = $this->selected_db->insert($this->table, $data);
+		return $insert ? $this->selected_db->insert_id() : $insert;
 	}
 }
