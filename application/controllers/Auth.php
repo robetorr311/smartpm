@@ -108,29 +108,40 @@ class Auth extends CI_Controller
 
 	public function sendPasswordToken()
 	{
+		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
 		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email');
 
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->input->post();
-			$user = $this->user->getUserByEmailId($data['email']);
-			if ($user) {
-				if ($user->is_active == 1) {
-					$this->user->setPasswordToken($user);
-					// send password token email to $user->email_id
-					$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Reset Password link successfully sent to your Email ID.</div>';
-					$this->session->set_flashdata('message', $message);
-					redirect('forgot-password');
-				} else if (empty($user->verification_token)) {
-					$message = '<div class="error"><p>Your account is not activated.</p></div>';
-					$this->session->set_flashdata('message', $message);
-					redirect('forgot-password');
+
+			$db = 'smartpm_' . $data['company_code'];
+			if (verifyDB($db, TRUE)) {
+				$this->user = new UserModel($db);
+
+				$user = $this->user->getUserByEmailId($data['email']);
+				if ($user) {
+					if ($user->is_active == 1) {
+						$this->user->setPasswordToken($user);
+						// send password token email to $user->email_id
+						$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Reset Password link successfully sent to your Email ID.</div>';
+						$this->session->set_flashdata('message', $message);
+						redirect('forgot-password');
+					} else if (empty($user->verification_token)) {
+						$message = '<div class="error"><p>Your account is not activated.</p></div>';
+						$this->session->set_flashdata('message', $message);
+						redirect('forgot-password');
+					} else {
+						$message = '<div class="error"><p>Your Email ID is not verified.</p></div>';
+						$this->session->set_flashdata('message', $message);
+						redirect('forgot-password');
+					}
 				} else {
-					$message = '<div class="error"><p>Your Email ID is not verified.</p></div>';
+					$message = '<div class="error"><p>Unable to find your email in our system.</p></div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('forgot-password');
 				}
 			} else {
-				$message = '<div class="error"><p>Unable to find your email in our system.</p></div>';
+				$message = '<div class="error"><p>Unable to find database for entered Company Code.</p></div>';
 				$this->session->set_flashdata('message', $message);
 				redirect('forgot-password');
 			}
@@ -155,35 +166,46 @@ class Auth extends CI_Controller
 
 	public function setTokenVerifiedPassword($token)
 	{
+		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
 
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->input->post();
-			$user = $this->user->getUserByPasswordToken($token);
-			if ($user) {
-				if ($user->is_active == 1) {
-					if ($user->token_expiry > date('Y-m-d H:i:s')) {
-						if ($token === $user->password_token) {
-							$this->user->resetPassword($user, $data['password']);
-							redirect('login');
+
+			$db = 'smartpm_' . $data['company_code'];
+			if (verifyDB($db, TRUE)) {
+				$this->user = new UserModel($db);
+
+				$user = $this->user->getUserByPasswordToken($token);
+				if ($user) {
+					if ($user->is_active == 1) {
+						if ($user->token_expiry > date('Y-m-d H:i:s')) {
+							if ($token === $user->password_token) {
+								$this->user->resetPassword($user, $data['password']);
+								redirect('login');
+							} else {
+								$message = '<div class="error"><p>Invalid Password Reset Token.</p></div>';
+								$this->session->set_flashdata('message', $message);
+								redirect('reset-password/' . $token);
+							}
 						} else {
-							$message = '<div class="error"><p>Invalid Password Reset Token.</p></div>';
+							$message = '<div class="error"><p>Your Password Reset token is expired.</p></div>';
 							$this->session->set_flashdata('message', $message);
 							redirect('reset-password/' . $token);
 						}
-					} else {
-						$message = '<div class="error"><p>Your Password Reset token is expired.</p></div>';
+					} else if (empty($user->password_token)) {
+						$message = '<div class="error"><p>Your account is not activated.</p></div>';
 						$this->session->set_flashdata('message', $message);
 						redirect('reset-password/' . $token);
 					}
-				} else if (empty($user->password_token)) {
-					$message = '<div class="error"><p>Your account is not activated.</p></div>';
+				} else {
+					$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
 					$this->session->set_flashdata('message', $message);
 					redirect('reset-password/' . $token);
 				}
 			} else {
-				$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
+				$message = '<div class="error"><p>Unable to find database for entered Company Code.</p></div>';
 				$this->session->set_flashdata('message', $message);
 				redirect('reset-password/' . $token);
 			}
@@ -339,14 +361,17 @@ class Auth extends CI_Controller
 				$this->user->verifyUser($user);
 				$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Your Email ID is successfully verified. <br /> <a href="' . base_url('login') . '" style="color: white;">You can Login now.</a></div>';
 			} else {
+				$company_code = false;
 				$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
 			}
 		} else {
+			$company_code = false;
 			$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
 		}
 
 		$this->load->view('auth/verification', [
-			'message' => $message
+			'message' => $message,
+			'company_code' => $company_code
 		]);
 	}
 

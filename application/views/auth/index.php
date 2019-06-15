@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<?= form_close(); ?>
 
 	<script>
-		if(localStorage.company_code) {
+		if (localStorage.company_code) {
 			document.getElementsByName('company_code')[0].value = localStorage.company_code;
 		}
 
