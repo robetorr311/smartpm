@@ -9,11 +9,9 @@ class Auth extends CI_Controller
 		$this->load->library('new_company');
 		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_DatabaseModel', 'AdminSettingModel']);
 
-		$this->company = new CompanyModel();
 		$this->m_company = new M_CompanyModel();
 		$this->m_emailCred = new M_EmailCredModel();
 		$this->m_database = new M_DatabaseModel();
-		$this->admin_setting = new AdminSettingModel();
 	}
 
 	public function index()
@@ -255,6 +253,11 @@ class Auth extends CI_Controller
 					'company_id' => $m_companyInsert
 				]);
 				if ($this->new_company->createDB($database)) {
+
+					$this->user = new UserModel($database);
+					$this->company = new CompanyModel($database);
+					$this->admin_setting = new AdminSettingModel($database);
+
 					$companyInsert = $this->company->insert([
 						'name' => $userData['company_name'],
 						'email_id' => $userData['company_email_id'],
@@ -319,18 +322,25 @@ class Auth extends CI_Controller
 		}
 	}
 
-	public function verification($token)
+	public function verification($company_code, $token)
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
 
-		$user = $this->user->getUserByVerificationToken($token);
-		$message = '';
-		if ($user) {
-			$this->user->verifyUser($user);
-			$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Your Email ID is successfully verified. <br /> <a href="' . base_url('login') . '" style="color: white;">You can Login now.</a></div>';
+		$db = 'smartpm_' . $company_code;
+		if (verifyDB($db, TRUE)) {
+			$this->user = new UserModel($db);
+
+			$user = $this->user->getUserByVerificationToken($token);
+			$message = '';
+			if ($user) {
+				$this->user->verifyUser($user);
+				$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Your Email ID is successfully verified. <br /> <a href="' . base_url('login') . '" style="color: white;">You can Login now.</a></div>';
+			} else {
+				$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
+			}
 		} else {
 			$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
 		}

@@ -61,7 +61,7 @@ $route['reset-password/(:any)'] = 'auth/resetPassword/$1';
 $route['set-token-verified-password/(:any)']['post'] = 'auth/setTokenVerifiedPassword/$1';
 $route['signup'] = 'auth/signup';
 $route['register']['post'] = 'auth/register';
-$route['verification/(:any)'] = 'auth/verification/$1';
+$route['verification/(:any)/(:any)'] = 'auth/verification/$1/$2';
 $route['logout']['post'] = 'auth/logout';
 
 $route['migrate/do_migration'] = 'migrate/do_migration';
