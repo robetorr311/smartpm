@@ -170,5 +170,7 @@ $route['setting/ajaxupload'] = 'setting/ajaxupload';
 $route['setting/ajaxsave'] = 'setting/ajaxsave';
 $route['setting/ajaxcolor'] = 'setting/ajaxcolor';
 
+$route['email'] = 'email/index';
+
 
 $route['(.+)'] = 'errors/page_missing';
