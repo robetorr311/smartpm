@@ -8,15 +8,15 @@ class Photos extends CI_Controller {
 	
 		$this->load->helper(['form','security','cookie']);
 		$this->load->library(['form_validation','email','user_agent','session','image_lib']);
-		$this->load->model(['Common_model']);
+		$this->load->model(['JobsPhotoModel']);
 	}
 	public function index($job_id)
 	{
         $params = array();
 		$params['job_id'] =$job_id;
 		$params['is_active'] =1;
-		$count = $this->Common_model->getCount( 'jobs_photo', $params );
-		$imgs  = $this->Common_model->get_all_where( 'jobs_photo', $params );
+		$count = $this->JobsPhotoModel->getCount($params);
+		$imgs  = $this->JobsPhotoModel->allPhoto($params);
 		$this->load->view('header',['title' => 'Add Photo']);
 		$this->load->view('photo/index', ['count' => $count, 'imgs'=> $imgs, 'jobid'=>$job_id ]);
 		$this->load->view('footer');
@@ -77,7 +77,7 @@ class Photos extends CI_Controller {
 		                $targetPath = "assets/job_photo/".$new_name;  
 		                move_uploaded_file($sourcePath, $targetPath);  
 						$img[$i]=$new_name;
-						$i++;
+						$i++; 
 					}else{
 						$targetPath = 'assets/job_photo/';  
 	               		$location = $targetPath . $filename; 
