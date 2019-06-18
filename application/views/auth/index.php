@@ -23,6 +23,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<?= $this->session->flashdata('message') ?>
 
 	<div class="input-group">
+		<label>Company Code</label>
+		<input type="text" name="company_code" placeholder="Company Code">
+	</div>
+	<div class="input-group">
 		<label>Email ID</label>
 		<input type="email" name="email" placeholder="Email ID">
 	</div>
@@ -32,7 +36,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</div>
 
 	<div class="input-group">
-		<button type="submit" id="submit" class="btn" name="login_user">Login</button>
+		<button type="submit" id="submit" class="btn" name="login_user" onclick="setCompanyCode()">Login</button>
 
 		<p style="float: right; margin-top: 7px;">
 			<a href="<?= base_url('forgot-password') ?>">forogot password</a>
@@ -43,6 +47,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		Not yet a member? <a href="<?= base_url('signup'); ?>">Sign up</a>
 	</p>
 	<?= form_close(); ?>
+
+	<script>
+		if (localStorage.company_code) {
+			document.getElementsByName('company_code')[0].value = localStorage.company_code;
+		}
+
+		function setCompanyCode() {
+			localStorage.company_code = document.getElementsByName('company_code')[0].value;
+		}
+	</script>
 </body>
 
 </html>
