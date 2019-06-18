@@ -14,9 +14,9 @@ if (!function_exists('dbSelect')) {
             try {
                 $CI->db = $CI->load->database([
                     'dsn'	=> '',
-                    'hostname' => 'localhost',
-                    'username' => 'root',  
-                    'password' => '',
+                    'hostname' => $CI->db->hostname,
+                    'username' => $CI->db->username,  
+                    'password' => $CI->db->password,
                     'database' => $database,
                     'dbdriver' => 'mysqli',
                     'dbprefix' => '',
