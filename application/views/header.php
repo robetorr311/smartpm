@@ -112,9 +112,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('closed');?>">
+                    <a href="<?php echo base_url('lead/closed');?>">
                         <i class="pe-7s-note"></i>
                         <p>Closed</p>
+                    </a>
+                </li>
+                 <li>
+                    <a href="<?php echo base_url('lead/archive');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Archive</p>
                     </a>
                 </li>
                  <li>

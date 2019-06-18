@@ -114,6 +114,12 @@ $route['lead/store'] = 'leads/store';
 $route['lead/updatestatus'] = 'leads/updatestatus';
 $route['lead/(:num)/reports'] = 'leads/alljobreport/$1';
 $route['lead/(:num)/delete-report'] = 'leads/deletejobreport/$1';
+$route['lead/archive'] = 'leads/archive';
+$route['lead/archive/(:num)'] = 'leads/archive/$1';
+$route['lead/closed'] = 'leads/closed';
+$route['lead/closed/(:num)'] = 'leads/closed/$1';
+$route['lead/signed'] = 'leads/allAssignedLead';
+$route['lead/signed/(:num)'] = 'leads/allAssignedLead/$1';
 
 $route['party/(:num)/add'] = 'party/index/$1';
 $route['party/(:num)/update'] = 'party/update/$1';
@@ -148,10 +154,6 @@ $route['work-completed/(:num)'] = 'work_complete/index/$1';
 $route['work-complete/(:num)'] = 'work_complete/view/$1';
 $route['work-complete/(:num)/mark-complete'] = 'work_complete/complete/$1';
 $route['work-complete/(:num)/mark-incomplete'] = 'work_complete/incomplete/$1';
-
-$route['closed'] = 'closed/index/';
-$route['closed/(:num)'] = 'closed/index/$1';
-$route['close/(:num)'] = 'closed/view/$1';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';
