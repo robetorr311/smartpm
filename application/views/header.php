@@ -61,7 +61,7 @@
 <div class="wrapper">
    
     <?php //print_r($array['admindata']) ?>
-    <div class="sidebar" <?php if($this->session->userdata("color")!=''){ echo "data-color=".$this->session->userdata("color"); }else{ echo "data-color=".$admin['admindata']['color']; }?> data-image="assets/img/sidebar-5.jpg">
+    <div class="sidebar" <?php if($this->session->userdata("color")!=''){ echo "data-color=".$this->session->userdata("color"); }else if($admin['admindata']['color']!=''){ echo "data-color=".$admin['admindata']['color']; }else{echo "data-color=blue";}?> data-image="assets/img/sidebar-5.jpg">
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="#" class="simple-text">
@@ -170,7 +170,7 @@
     </div>
 
     <div class="main-panel">
-        <nav class="navbar navbar-default navbar-fixed">
+        <nav class="navbar navbar-default navbar-fixed" id="topnav" <?php if($this->session->userdata("color")!=''){ echo "data-color=".$this->session->userdata("color"); }else if($admin['admindata']['color']!=''){ echo "data-color=".$admin['admindata']['color']; }else{echo "data-color=blue";}?>>
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
@@ -191,7 +191,7 @@
 					   </li>
                         <li>
                             
-<a href="<?php echo base_url('logout');?>" data-method="POST" style="color: red;"><p>Log out</p></a>                         
+<a href="<?php echo base_url('logout');?>" data-method="POST" class="logout"><p><i class="pe-7s-power"></i> Log out</p></a>                         
                         </li>
 						<li class="separator hidden-lg"></li>
                     </ul>

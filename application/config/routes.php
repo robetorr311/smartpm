@@ -169,10 +169,20 @@ $route['team/(:num)/edit'] = 'teams/edit/$1';
 $route['team/(:num)/update']['post'] = 'teams/update/$1';
 $route['team/(:num)/delete']['post'] = 'teams/delete/$1';
 
-
+$route['setting'] = 'setting/index';
 $route['setting/status'] = 'setting/status_tag';
 $route['setting/newtag'] = 'setting/newtag';
 $route['setting/(:num)/delete'] = 'setting/deltag';
+$route['setting/ajaxupload'] = 'setting/ajaxupload';
+$route['setting/ajaxsave'] = 'setting/ajaxsave';
+$route['setting/ajaxcolor'] = 'setting/ajaxcolor';
+
+$route['report/(:num)'] = 'reports/index/$1';
+$route['report/(:num)/create'] = 'reports/create/$1';
+$route['report/upload'] = 'reports/upload';
+$route['report/save-img'] = 'reports/save_img';
+$route['report/(:num)/save'] = 'reports/save/$1';
+$route['report/(:num)/pdf/(:num)'] = 'reports/pdf/$1/$2';
 
 
 $route['(.+)'] = 'errors/page_missing';
