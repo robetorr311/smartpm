@@ -17,7 +17,7 @@ class Migration_Update_jobs_status_table extends CI_Migration
             ],
             'close_at' => [
                 'type' => 'DATETIME'
-            ],
+            ]
         ];
 
         $this->dbforge->add_column('jobs_status', $fields);
@@ -25,14 +25,7 @@ class Migration_Update_jobs_status_table extends CI_Migration
 
     public function down()
     {
-        $fields = [
-            'start_at' => [
-                'type' => 'DATETIME'
-            ],
-            'close_at' => [
-                'type' => 'DATETIME'
-            ],
-        ];
-        $this->dbforge->drop_column('jobs_status', $fields);
+        $this->dbforge->drop_column('jobs_status', 'start_at');
+        $this->dbforge->drop_column('jobs_status', 'close_at');
     }
 }
