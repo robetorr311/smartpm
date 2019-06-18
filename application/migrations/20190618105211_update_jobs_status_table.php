@@ -20,7 +20,7 @@ class Migration_Update_jobs_status_table extends CI_Migration
             ],
         ];
 
-        $this->dbforge->modify_column('jobs_status', $fields);
+        $this->dbforge->add_column('jobs_status', $fields);
     }
 
     public function down()
@@ -33,6 +33,6 @@ class Migration_Update_jobs_status_table extends CI_Migration
                 'type' => 'DATETIME'
             ],
         ];
-        $this->dbforge->modify_column('jobs_status', $fields);
+        $this->dbforge->drop_column('jobs_status', $fields);
     }
 }
