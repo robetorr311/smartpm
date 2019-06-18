@@ -10,9 +10,9 @@ class M_EmailCredModel extends CI_Model
 		parent::__construct();
 		$this->selected_db = $this->load->database([
 			'dsn'	=> '',
-			'hostname' => 'localhost',
-			'username' => 'root',  
-			'password' => '',
+            'hostname' => $this->db->hostname,
+            'username' => $this->db->username,  
+            'password' => $this->db->password,
 			'database' => 'smartpm_master',
 			'dbdriver' => 'mysqli',
 			'dbprefix' => '',

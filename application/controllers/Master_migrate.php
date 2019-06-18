@@ -11,9 +11,9 @@ class Master_migrate extends CI_Controller
 
         $this->db = $this->load->database([
             'dsn' => '',
-            'hostname' => 'localhost',
-            'username' => 'root',
-            'password' => '',
+            'hostname' => $this->db->hostname,
+            'username' => $this->db->username,  
+            'password' => $this->db->password,
             'database' => 'smartpm_master',
             'dbdriver' => 'mysqli',
             'dbprefix' => '',

@@ -27,9 +27,9 @@ class New_company
 
         $this->CI->db = $this->CI->load->database([
             'dsn'	=> '',
-            'hostname' => 'localhost',
-            'username' => 'root',  
-            'password' => '',
+            'hostname' => $this->CI->db->hostname,
+            'username' => $this->CI->db->username,  
+            'password' => $this->CI->db->password,
             'database' => $database,
             'dbdriver' => 'mysqli',
             'dbprefix' => '',
