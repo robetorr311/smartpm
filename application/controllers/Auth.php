@@ -51,7 +51,8 @@ class Auth extends CI_Controller
 
 			$db = 'smartpm_' . $authData['company_code'];
 			if (verifyDB($db, TRUE)) {
-				$this->user = new UserModel($db);
+				dbSelect($db);
+				$this->user = new UserModel();
 
 				if ($user = $this->user->authenticate($authData['email'], $authData['password'])) {
 					if (empty($user->verification_token)) {
@@ -64,6 +65,8 @@ class Auth extends CI_Controller
 								'email_id' => $user->email_id,
 								'level' => $user->level,
 								'company_id' => $user->company_id,
+								'company_code' => $authData['company_code'],
+								'database' => $db,
 								'logged_in' => TRUE
 							]);
 							$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);
@@ -116,7 +119,8 @@ class Auth extends CI_Controller
 
 			$db = 'smartpm_' . $data['company_code'];
 			if (verifyDB($db, TRUE)) {
-				$this->user = new UserModel($db);
+				dbSelect($db);
+				$this->user = new UserModel();
 
 				$user = $this->user->getUserByEmailId($data['email']);
 				if ($user) {
@@ -175,7 +179,8 @@ class Auth extends CI_Controller
 
 			$db = 'smartpm_' . $data['company_code'];
 			if (verifyDB($db, TRUE)) {
-				$this->user = new UserModel($db);
+				dbSelect($db);
+				$this->user = new UserModel();
 
 				$user = $this->user->getUserByPasswordToken($token);
 				if ($user) {
@@ -275,10 +280,10 @@ class Auth extends CI_Controller
 					'company_id' => $m_companyInsert
 				]);
 				if ($this->new_company->createDB($database)) {
-
-					$this->user = new UserModel($database);
-					$this->company = new CompanyModel($database);
-					$this->admin_setting = new AdminSettingModel($database);
+					dbSelect($database);
+					$this->user = new UserModel();
+					$this->company = new CompanyModel();
+					$this->admin_setting = new AdminSettingModel();
 
 					$companyInsert = $this->company->insert([
 						'name' => $userData['company_name'],
@@ -353,7 +358,8 @@ class Auth extends CI_Controller
 
 		$db = 'smartpm_' . $company_code;
 		if (verifyDB($db, TRUE)) {
-			$this->user = new UserModel($db);
+			dbSelect($db);
+			$this->user = new UserModel();
 
 			$user = $this->user->getUserByVerificationToken($token);
 			$message = '';
