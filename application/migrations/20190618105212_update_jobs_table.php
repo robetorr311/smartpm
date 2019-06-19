@@ -13,7 +13,7 @@ class Migration_Update_jobs_table extends CI_Migration
     {
         $fields = [
             'zip' => [
-                'type' => 'varchar',
+                'type' => 'VARCHAR',
                 'constraint' => 20
             ]
         ];
@@ -25,10 +25,11 @@ class Migration_Update_jobs_table extends CI_Migration
     {
         $fields = [
             'zip' => [
-                'type' => 'int',
+                'type' => 'INT',
                 'constraint' => 5
             ]
         ];
+        
         $this->dbforge->modify_column('jobs', $fields);
     }
 }
