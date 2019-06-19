@@ -9,8 +9,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                          <input class="form-control" id="myInput"  placeholder="Search Lead" type="text">
                                  </div>
                                   <div class="col-md-6">
-                                  
-                                    <a href="<?php echo base_url('');?>" class="btn btn-info btn-fill pull-right">Archive Job</a>
+                              
+                                   
                                  </div>
                             </div>
                             <div class="header">      
@@ -28,8 +28,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Address</th>
-                                        <th>Status</th>
                                         <th>Contract</th>
+                                         <th>Job Type</th>
+                                        <th>Status</th>
+                                        <th>Closed</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        
                                         
                                        
                                      <!--   <th>Status</th>-->
@@ -40,18 +45,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                     <?php if( !empty( $leads ) ) : ?>
               <?php $i=1; foreach( $leads as $lead ) : ?>  
-                <tr> 
-                <td style="width: 30px"><a href="<?php echo base_url('close/'.$lead->id);?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
+                <tr> <!--<td style="width: 30px"><i class="del-doc pe-7s-trash" id=""></i></td>-->
+                <td style="width: 30px"><a href="<?php echo base_url('lead/'.$lead->id);?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
+             
               
-              
-                   <td><?php echo $lead->job_number; ?></td>
+                  <td><?php echo $lead->job_number; ?></td>
                   <td><?php echo $lead->job_name ?></td>
                   <td><?php echo $lead->firstname ?></td>
                   <td><?php echo $lead->lastname ?></td>
                   <td><?php echo $lead->address ?></td>
-                
-                   <td><?php echo $lead->lead_status ?></td>
-                  <td><?php echo $lead->contract_status ?></td>
+                  <td><?php echo $lead->contract ?></td>
+                  <td><?php echo $lead->job ?></td>
+                    <td><?php echo $lead->production ?></td>
+                    <td><?php echo $lead->closeout ?></td>
+                     <td><?php echo $lead->start_at ?></td>
+                  
+                  <td><?php echo $lead->close_at ?></td>
                  
               
                  </tr>
@@ -68,7 +77,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </tbody>
                                 </table>
 <div class="pagination">
-                        <?= $pagiLinks ?>
+                          <?= $pagiLinks ?>
                     </div>
                             </div> 
                         </div>

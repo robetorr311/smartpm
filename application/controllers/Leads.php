@@ -48,6 +48,23 @@ class Leads extends CI_Controller {
 			$this->load->view('footer');
 	    }
 
+	    public function allAssignedLead($start = 0){
+        	$limit = 10; 
+	    	$pagiConfig = [
+            'base_url' => base_url('lead/signed'),
+            'total_rows' => $this->lead->getSignedJobCount(),
+            'per_page' => $limit
+        	];
+        	$this->pagination->initialize($pagiConfig);
+
+			$leads = $this->lead->getAllSignedJob($start, $limit);
+			$this->load->view('header',['title' => 'Leads']);
+			$this->load->view('leads/signed',[
+				'leads' => $leads,
+				'pagiLinks' => $this->pagination->create_links()
+			]);
+			$this->load->view('footer');
+	    }
 
 	    public function edit($jobid){
 			$leads = $this->lead->get_all_where('jobs',['id' => $jobid]);
@@ -198,37 +215,47 @@ class Leads extends CI_Controller {
 			$posts = $this->input->post();
 			if($posts['status']=='job'){
 			$this->status->update_record(['job' => $posts['value'],
-										  'production'=>'pre-production'
+										  'production'=>'pre-production',
+										  'start_at' => date("Y-m-d h:i:s"),
 										 ],['jobid'=>$posts['id']]);
 				return true;
 			}else{
 			$this->status->update_record([ $posts['status'] => $posts['value'],
 										   'production'=>'',
-										   'job'=>''
+										   'job'=>'',
+										   'start_at' =>  ''
 											],['jobid'=>$posts['id']]);
 				return true;
 			}
 			
 		}
 
-		public function closedJob(){
+		public function closed($start = 0){
 			$limit = 10;
 	    	$pagiConfig = [
             'base_url' => base_url('leads'),
-            'total_rows' => $this->lead->getCount(),
+            'total_rows' => $this->lead->getCountClosedJob(),
             'per_page' => $limit
         	];
         	$this->pagination->initialize($pagiConfig);
 			$leads = $this->lead->getClosedJob();
-			$this->load->view('header',['title' => 'Lead Detail']);
-			$this->load->view('leads/index',['leads' => $leads,'pagiLinks' => $this->pagination->create_links()]);
+			$this->load->view('header',['title' => 'Closed Jobs']);
+			$this->load->view('leads/closed',['leads' => $leads,'pagiLinks' => $this->pagination->create_links()]);
 			$this->load->view('footer');
 	    }
-	    public function archiveJob(){
-			$leads = $this->lead->getArchiveJob();
-			$this->load->view('header',['title' => 'Lead Detail']);
-			$this->load->view('leads/view',['leadstatus' => $leadstatus,'leads' => $leads,'add_info' => $add_info,'jobid' => $this->uri->segment(2)]);
+	    public function archive($start = 0){
+	    	$limit = 10; 
+	    	$pagiConfig = [
+            'base_url' => base_url('leads'),
+            'total_rows' => $this->lead->getCountClosedJob(),
+            'per_page' => $limit
+        	];
+        	$this->pagination->initialize($pagiConfig);
+			$leads = $this->lead->getClosedJob();
+			$this->load->view('header',['title' => 'Archive Jobs']);
+			$this->load->view('leads/archive',['leads' => $leads, 'pagiLinks' => $this->pagination->create_links()]);
 			$this->load->view('footer');
+
 	    }
 
 	    public function alljobreport($job_id = NULL)
