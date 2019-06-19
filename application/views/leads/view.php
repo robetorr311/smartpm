@@ -113,7 +113,7 @@ echo '</div>';
                                     
                                     <hr>
    <a href="<?php echo base_url('photos/'.$lead->id);?>" class="btn btn-success btn-fill">Photos</a>
-   <a href="<?php echo base_url('lead/'.$lead->id.'/reports');?>" class="btn btn-danger btn-fill">All Report</a>
+   <a href="<?php echo base_url('report/'.$lead->id);?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
    <a href="<?php echo base_url('docs/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
                                 </div>
@@ -130,10 +130,12 @@ echo '</div>';
                     <h4 class="title" style="float: left;">Lead Status</h4><span class="status <?php if($status->lead!='open'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $status->lead; ?></span> 
                     <div class="clearfix" style="padding: 10px;" ></div>  
 
-                     <h4 class="title" style="float: left;">Contract Status</h4><span class="status <?php if($status=='signed'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus = $status->contract; ?></span> 
+                     <h4 class="title" style="float: left;">Contract Status</h4><span class="status <?php if($status->contract=='signed'){ echo 'open';}else{ echo 'closed';} ?>"><?php echo  $status->contract; ?></span> 
                     <div class="clearfix" style="padding: 10px;"></div>
 
-                     <h4 class="title" style="float: left;">Job Type</h4><span class="status <?php if($status==''){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $lstatus =  $status->job;  ?></span> 
+                     <h4 class="title" style="float: left;">Job Type</h4><span class="status <?php if($status->job==''){ echo 'closed';}else{ echo 'open';} ?>">
+<?= empty($status->job) ? ' None' : $status->job ?>
+                      </span> 
                     <div class="clearfix" style="padding: 10px;"></div>         
                 </div>
                 <?php endforeach; ?>  

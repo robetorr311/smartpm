@@ -20,6 +20,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <?= form_open() ?>
     <?= $message ?>
     <?= form_close(); ?>
+
+    <?php if ($company_code) { ?>
+        <script>
+            localStorage.company_code = '<?= $company_code ?>';
+        </script>
+    <?php } ?>
 </body>
 
 </html>

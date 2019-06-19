@@ -21,6 +21,26 @@ class LeadModel extends CI_Model
             
     }
 
+    public function getAllSignedJob($start = 0, $limit = 10){
+
+        $this->db->select('jobs.*, jobs_status.*');
+        $this->db->from($this->table);
+        $this->db->join('jobs_status', 'jobs.id=jobs_status.jobid', 'left'); 
+        $this->db->where([
+            'jobs_status.lead' => 'open', 'jobs_status.contract'=>'signed'
+        ]);
+        $this->db->order_by('jobs.id', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result(); 
+            
+    }
+
+    public function getSignedJobCount()
+    {     
+        $this->db->where(['contract' => 'signed']);
+        return $this->db->count_all_results('jobs_status');
+    }
     
    	public function get_all_where( $tablename, $condition ){
 
@@ -74,7 +94,22 @@ class LeadModel extends CI_Model
     
     public function getClosedJob($start = 0, $limit = 10){
 
-        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
+        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
+        $this->db->from($this->table);
+        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left'); 
+        $this->db->where([
+            'status.closeout' => 'yes'
+        ]);
+        $this->db->order_by('id', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result(); 
+            
+    }
+
+    public function archiveJob($start = 0, $limit = 10){
+
+        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
         $this->db->from($this->table);
         $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left'); 
         $this->db->where([

@@ -13,7 +13,7 @@ class LeadStatusModel extends CI_Model
 	}
 
     public function allJobStatus(){
-        $this->db->select("SUM(if(lead='open',1,NULL)) as OPEN, SUM(if(job='labor only' AND lead='open',1,NULL)) as LABOR, SUM(if(job='insurance' AND lead='open',1,NULL)) as INSURANCE, SUM(if(job='cash' AND lead='open',1,NULL)) as CASH , SUM(if(closeout='yes',1,NULL)) as CLOSED");
+        $this->db->select("SUM(if(contract='unsigned',1,NULL)) as OPEN, SUM(if(job='labor only' AND lead='open',1,NULL)) as LABOR, SUM(if(job='insurance' AND lead='open',1,NULL)) as INSURANCE, SUM(if(job='cash' AND lead='open',1,NULL)) as CASH , SUM(if(production='complete' AND closeout='yes',1,NULL)) as CLOSED, SUM(if(production='complete' AND closeout='no',1,NULL)) as COMPLETE,"); 
         $this->db->from($this->table);
         $query = $this->db->get();
         return $query->result(); 

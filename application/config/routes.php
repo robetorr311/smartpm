@@ -61,13 +61,20 @@ $route['reset-password/(:any)'] = 'auth/resetPassword/$1';
 $route['set-token-verified-password/(:any)']['post'] = 'auth/setTokenVerifiedPassword/$1';
 $route['signup'] = 'auth/signup';
 $route['register']['post'] = 'auth/register';
-$route['verification/(:any)'] = 'auth/verification/$1';
+$route['verification/(:any)/(:any)'] = 'auth/verification/$1/$2';
 $route['logout']['post'] = 'auth/logout';
 
 $route['migrate/do_migration'] = 'migrate/do_migration';
+$route['migrate/do_migration/(:num)'] = 'migrate/do_migration/$1';
 $route['migrate/undo_migration'] = 'migrate/undo_migration';
 $route['migrate/undo_migration/(:num)'] = 'migrate/undo_migration/$1';
 $route['migrate/reset_migration'] = 'migrate/reset_migration';
+
+$route['migrate/master/do_migration'] = 'master_migrate/do_migration';
+$route['migrate/master/do_migration/(:num)'] = 'master_migrate/do_migration/$1';
+$route['migrate/master/undo_migration'] = 'master_migrate/undo_migration';
+$route['migrate/master/undo_migration/(:num)'] = 'master_migrate/undo_migration/$1';
+$route['migrate/master/reset_migration'] = 'master_migrate/reset_migration';
 
 $route['dashboard'] = 'dashboard/index';
 
@@ -114,6 +121,12 @@ $route['lead/store'] = 'leads/store';
 $route['lead/updatestatus'] = 'leads/updatestatus';
 $route['lead/(:num)/reports'] = 'leads/alljobreport/$1';
 $route['lead/(:num)/delete-report'] = 'leads/deletejobreport/$1';
+$route['lead/archive'] = 'leads/archive';
+$route['lead/archive/(:num)'] = 'leads/archive/$1';
+$route['lead/closed'] = 'leads/closed';
+$route['lead/closed/(:num)'] = 'leads/closed/$1';
+$route['lead/signed'] = 'leads/allAssignedLead';
+$route['lead/signed/(:num)'] = 'leads/allAssignedLead/$1';
 
 $route['party/(:num)/add'] = 'party/index/$1';
 $route['party/(:num)/update'] = 'party/update/$1';
@@ -149,10 +162,6 @@ $route['work-complete/(:num)'] = 'work_complete/view/$1';
 $route['work-complete/(:num)/mark-complete'] = 'work_complete/complete/$1';
 $route['work-complete/(:num)/mark-incomplete'] = 'work_complete/incomplete/$1';
 
-$route['closed'] = 'closed/index/';
-$route['closed/(:num)'] = 'closed/index/$1';
-$route['close/(:num)'] = 'closed/view/$1';
-
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';
 $route['team/create'] = 'teams/create';
@@ -162,10 +171,20 @@ $route['team/(:num)/edit'] = 'teams/edit/$1';
 $route['team/(:num)/update']['post'] = 'teams/update/$1';
 $route['team/(:num)/delete']['post'] = 'teams/delete/$1';
 
-
+$route['setting'] = 'setting/index';
 $route['setting/status'] = 'setting/status_tag';
 $route['setting/newtag'] = 'setting/newtag';
 $route['setting/(:num)/delete'] = 'setting/deltag';
+$route['setting/ajaxupload'] = 'setting/ajaxupload';
+$route['setting/ajaxsave'] = 'setting/ajaxsave';
+$route['setting/ajaxcolor'] = 'setting/ajaxcolor';
+
+$route['report/(:num)'] = 'reports/index/$1';
+$route['report/(:num)/create'] = 'reports/create/$1';
+$route['report/upload'] = 'reports/upload';
+$route['report/save-img'] = 'reports/save_img';
+$route['report/(:num)/save'] = 'reports/save/$1';
+$route['report/(:num)/pdf/(:num)'] = 'reports/pdf/$1/$2';
 
 
 $route['(.+)'] = 'errors/page_missing';

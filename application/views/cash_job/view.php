@@ -113,7 +113,7 @@ echo '</div>';
                                     
                                     <hr>
    <a href="<?php echo base_url('photos/'.$job->id);?>" class="btn btn-success btn-fill">Photos</a>
-   <a href="<?php echo base_url('lead/'.$job->id.'/reports');?>" class="btn btn-danger btn-fill">All Report</a>
+   <a href="<?php echo base_url('report/'.$job->id);?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
    <a href="<?php echo base_url('docs/'.$job->id);?>" class="btn btn-danger btn-fill">Docs</a>
                                 </div>
@@ -144,7 +144,8 @@ echo '</div>';
                                  <option value="<?php echo $team->id ?>"><?php echo $team->team_name ?></option>
                 <?php endforeach; ?>
         </select>
-        <input type="submit" value="Add Team" >
+        <div class="clearfix"></div>
+        <input class="btn btn-success btn-fill" type="submit" value="Add Team">
         <?php echo form_close(); ?>  
         </div> 
                 <?php endif; ?>

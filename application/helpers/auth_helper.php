@@ -69,3 +69,25 @@ if (!function_exists('sessionTimeout')) {
         $CI->session->set_userdata('last_action', time());
     }
 }
+
+/**
+ * Check if database exist or display error page
+ */
+if (!function_exists('verifyDB')) {
+    function verifyDB($database, $return = FALSE)
+    {
+        $CI = &get_instance();
+
+        $CI->db->select('SCHEMA_NAME');
+        $CI->db->where('SCHEMA_NAME', $database);
+        $CI->db->from('INFORMATION_SCHEMA.SCHEMATA');
+        $result = $CI->db->count_all_results();
+
+        if ($return) {
+            return ($result > 0);
+        } else if ($result <= 0) {
+            $CI->session->sess_destroy();
+            redirect('/');
+        }
+    }
+}

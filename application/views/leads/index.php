@@ -8,9 +8,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                  <div class="col-md-6">
                                          <input class="form-control" id="myInput"  placeholder="Search Lead" type="text">
                                  </div>
-                                  <div class="col-md-6">
+                                  <div class="col-md-4">
                               
                                     <a href="<?php echo base_url('lead/new');?>" class="btn btn-info btn-fill pull-right">Add New Lead </a>
+                                 </div>
+                                  <div class="col-md-2">
+                              
+                                    <a href="<?php echo base_url('lead/signed');?>" class="btn btn-info btn-fill pull-right">View Signed Job </a>
                                  </div>
                             </div>
                             <div class="header">      

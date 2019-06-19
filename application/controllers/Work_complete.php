@@ -48,12 +48,12 @@ class Work_complete extends CI_Controller {
 
 		public function complete($jobid)
 		{	
-	    	$this->status->update_record(['closeout'=>'yes','lead'=>'complete'],['jobid'=>$jobid]);
+	    	$this->status->update_record(['closeout'=>'yes','lead'=>'complete','close_at' => date("Y-m-d h:i:s")],['jobid'=>$jobid]);
 			redirect('work-complete/'.$jobid);
 		}
 		public function incomplete($jobid)
 		{	
-	    	$this->status->update_record(['closeout'=>'no','lead'=>'production'],['jobid'=>$jobid]);
+	    	$this->status->update_record(['closeout'=>'no','lead'=>'production','close_at' => ""],['jobid'=>$jobid]);
 			redirect('work-complete/'.$jobid);
 		}
 	    
