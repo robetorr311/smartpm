@@ -1,59 +1,47 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Auth extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('new_company');
+		$this->load->library(['new_company', 'notify']);
 		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_DatabaseModel', 'AdminSettingModel']);
-
 		$this->m_company = new M_CompanyModel();
 		$this->m_emailCred = new M_EmailCredModel();
 		$this->m_database = new M_DatabaseModel();
 	}
-
 	public function index()
 	{
 		if ($this->session->logged_in) {
 			redirect('dashboard');
 			die();
 		}
-
 		redirect('login');
 	}
-
 	public function login()
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
-
 		$this->load->view('auth/index');
 	}
-
 	public function auth()
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
-
 		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
 		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
-
-
 		if ($this->form_validation->run() == TRUE) {
 			$authData = $this->input->post();
-
 			$db = 'smartpm_' . $authData['company_code'];
 			if (verifyDB($db, TRUE)) {
 				dbSelect($db);
 				$this->user = new UserModel();
-
 				if ($user = $this->user->authenticate($authData['email'], $authData['password'])) {
 					if (empty($user->verification_token)) {
 						if ($user->is_active == 1) {
@@ -98,35 +86,29 @@ class Auth extends CI_Controller
 			redirect('login');
 		}
 	}
-
 	public function forgotPassword()
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
-
 		$this->load->view('auth/forgot-password');
 	}
-
 	public function sendPasswordToken()
 	{
 		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
 		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email');
-
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->input->post();
-
 			$db = 'smartpm_' . $data['company_code'];
 			if (verifyDB($db, TRUE)) {
 				dbSelect($db);
 				$this->user = new UserModel();
-
 				$user = $this->user->getUserByEmailId($data['email']);
 				if ($user) {
 					if ($user->is_active == 1) {
-						$this->user->setPasswordToken($user);
-						// send password token email to $user->email_id
+						$token = $this->user->setPasswordToken($user);
+						$this->notify->resetPassword($user->email_id, $token);
 						$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Reset Password link successfully sent to your Email ID.</div>';
 						$this->session->set_flashdata('message', $message);
 						redirect('forgot-password');
@@ -155,33 +137,27 @@ class Auth extends CI_Controller
 			redirect('forgot-password');
 		}
 	}
-
 	public function resetPassword($token)
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
-
 		$this->load->view('auth/reset-password', [
 			'token' => $token
 		]);
 	}
-
 	public function setTokenVerifiedPassword($token)
 	{
 		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
-
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->input->post();
-
 			$db = 'smartpm_' . $data['company_code'];
 			if (verifyDB($db, TRUE)) {
 				dbSelect($db);
 				$this->user = new UserModel();
-
 				$user = $this->user->getUserByPasswordToken($token);
 				if ($user) {
 					if ($user->is_active == 1) {
@@ -220,24 +196,20 @@ class Auth extends CI_Controller
 			redirect('reset-password/' . $token);
 		}
 	}
-
 	public function signup()
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
-
 		$this->load->view('auth/register');
 	}
-
 	public function register()
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
-
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -252,7 +224,6 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('cell_2', 'Cell 2', 'trim|numeric');
 		$this->form_validation->set_rules('company_email', 'Company Email ID', 'trim|valid_email');
 		$this->form_validation->set_rules('company_alt_email', 'Company Alt Email ID', 'trim|valid_email');
-
 		if ($this->form_validation->run() == TRUE) {
 			$userData = $this->input->post();
 			$m_companyInsert = $this->m_company->insert([
@@ -266,7 +237,8 @@ class Auth extends CI_Controller
 			]);
 			if ($m_companyInsert) {
 				$this->m_company->updateCompanyCode($m_companyInsert);
-				$database = 'smartpm_' . (154236 + $m_companyInsert);
+				$company_code = 154236 + $m_companyInsert;
+				$database = 'smartpm_' . $company_code;
 				$this->m_emailCred->insert([
 					'smtp_host' => '',
 					'smtp_port' => '',
@@ -284,7 +256,6 @@ class Auth extends CI_Controller
 					$this->user = new UserModel();
 					$this->company = new CompanyModel();
 					$this->admin_setting = new AdminSettingModel();
-
 					$companyInsert = $this->company->insert([
 						'name' => $userData['company_name'],
 						'email_id' => $userData['company_email_id'],
@@ -294,7 +265,6 @@ class Auth extends CI_Controller
 						'state' => $userData['company_state'],
 						'zip' => $userData['company_zip']
 					]);
-
 					if ($companyInsert) {
 						$message = '';
 						$admin_setting = $this->admin_setting->insert([
@@ -316,8 +286,8 @@ class Auth extends CI_Controller
 						]);
 						if ($signup) {
 							$user = $this->user->getUserById($signup);
-							$this->user->setVerificationToken($user);
-							// send verification token email to $user->email_id
+							$token = $this->user->setVerificationToken($user);
+							$this->notify->emailVerification($user->email_id, $company_code, $token);
 							$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully. Check your email for email verification!</div>';
 							$this->session->set_flashdata('message', $message);
 							redirect('login');
@@ -348,19 +318,16 @@ class Auth extends CI_Controller
 			redirect('signup');
 		}
 	}
-
 	public function verification($company_code, $token)
 	{
 		if ($this->session->logged_in) {
 			redirect();
 			die();
 		}
-
 		$db = 'smartpm_' . $company_code;
 		if (verifyDB($db, TRUE)) {
 			dbSelect($db);
 			$this->user = new UserModel();
-
 			$user = $this->user->getUserByVerificationToken($token);
 			$message = '';
 			if ($user) {
@@ -374,13 +341,11 @@ class Auth extends CI_Controller
 			$company_code = false;
 			$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
 		}
-
 		$this->load->view('auth/verification', [
 			'message' => $message,
 			'company_code' => $company_code
 		]);
 	}
-
 	public function logout()
 	{
 		$this->session->sess_destroy();
