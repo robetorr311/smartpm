@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                             <div class="content table-responsive table-full-width">
                               <div class="row logo-update">
 									<div class="col-md-4">
-										 <img style="width:100px" src="<?php echo base_url() ?>assets/img/<?php echo $datas->url ?>" class="logoimg"/>
+										 <img style="width:100px" src="<?php echo base_url() ?>assets/company_photo/<?php echo $datas->url ?>" class="logoimg"/>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
@@ -34,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                             <div class="content table-responsive table-full-width">
                                <div class="row favicon-update">
 									<div class="col-md-4">
-										<img style="width:100px" src="<?php echo base_url() ?>assets/img/<?php echo $datas->favicon ?>" class="favimg" />
+										<img style="width:100px" src="<?php echo base_url() ?>assets/company_photo/<?php echo $datas->favicon ?>" class="favimg" />
 									</div>
 									<div class="col-md-6">
 									<div class="form-group">
@@ -76,29 +76,31 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
           var id= $(this).attr('id');
           //alert(id);          
           var file_data = $('#'+id).prop('files')[0];   
-          var form_data = new FormData();               
-          form_data.append('file', file_data);
-          $.ajax({
-            url: baseUrl+'setting/ajaxupload', // point to server-side PHP script     
-            dataType: 'text',  // what to expect back from the PHP script, if anything
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,                         
-            type: 'post',
-            success: function(php_script_response){
-              //alert(php_script_response); 
-              $.ajax({
-                type: 'POST',
-                url: baseUrl+'setting/ajaxsave', // point to server-side PHP script     
-                data: {id: id, name:php_script_response},                         
-                success: function(php_script_response){
-                  $('.'+id+'img').attr('src',baseUrl+'assets/company_photo/'+php_script_response ); // 
-              
-                }
-              });
-            }
-           });
+          if (file_data) {
+            var form_data = new FormData();               
+            form_data.append('file', file_data);
+            $.ajax({
+              url: baseUrl+'setting/ajaxupload', // point to server-side PHP script     
+              dataType: 'text',  // what to expect back from the PHP script, if anything
+              cache: false,
+              contentType: false,
+              processData: false,
+              data: form_data,                         
+              type: 'post',
+              success: function(php_script_response){
+                //alert(php_script_response); 
+                $.ajax({
+                  type: 'POST',
+                  url: baseUrl+'setting/ajaxsave', // point to server-side PHP script     
+                  data: {id: id, name:php_script_response},                         
+                  success: function(php_script_response){
+                    $('.'+id+'img').attr('src',baseUrl+'assets/company_photo/'+php_script_response ); // 
+                
+                  }
+                });
+              }
+            });
+          }
         });
         
         
