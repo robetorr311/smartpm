@@ -185,6 +185,8 @@ class Reports extends CI_Controller {
  			$condition = array( 'id' => $id, "active" => true );  
 			$data = $this->roofing->get_all_where( $condition );
 
+			$qRes = ($this->db->query("SELECT * FROM admin_setting;"))->result();
+
 			$jobs = $this->lead->get_all_where('jobs',['id' => $jobid]);
 			foreach($jobs as $job){
 				 $name= $job-> job_name;
@@ -211,7 +213,7 @@ class Reports extends CI_Controller {
 				$w = 190;
 				$h = 200;
 	            $pdf->AddPage();
-	            $html = '<table><tr><td  style="width: 120px;"><img src="' . base_url('assets/company_photo/logo.png') . '" alt="test alt attribute" width="100" height="70" border="0" /></td><td>&nbsp;<br><b>Name : '.$name.'</b>  <br><b>Adrress : '.$address.'</b>  <br><b>Phone : '.$phone.'</b>  <br></td></tr></table>';
+	            $html = '<table><tr><td  style="width: 120px;"><img src="' . base_url('assets/company_photo/' . ($qRes[0] ? $qRes[0]->url : 'logo.png')) . '" alt="test alt attribute" width="100" height="70" border="0" /></td><td>&nbsp;<br><b>Name : '.$name.'</b>  <br><b>Adrress : '.$address.'</b>  <br><b>Phone : '.$phone.'</b>  <br></td></tr></table>';
 	          
 	            $pdf->writeHTML($html, true, false, true, false, '');
 	             $pdf->Image(base_url('assets/report_photo/').$a[$i], $x, $y, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, $fitbox, false, false);

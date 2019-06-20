@@ -27,15 +27,22 @@ class Setting extends CI_Controller {
 				echo 'Error: ' . $_FILES['file']['error'] . '<br>';
 			}
 			else {
-				move_uploaded_file($_FILES['file']['tmp_name'], 'assets/company_photo/' . $_FILES['file']['name']);
-				echo $_FILES['file']['name'];
+				$fileInfo = pathinfo($_FILES['file']['name']);
+				$filename = $fileInfo['filename'] . '.' . $fileInfo['extension'];
+				$extentFilename = 1;
+				while (file_exists('assets/company_photo/' . $filename)) {
+					$filename = $fileInfo['filename'] . '_' . $extentFilename . '.' . $fileInfo['extension'];
+					$extentFilename++;
+				}
+				move_uploaded_file($_FILES['file']['tmp_name'], 'assets/company_photo/' . $filename);
+				echo $filename;
 			}
 		}
 	   
 	    public function ajaxsave(){
 			$posts = $this->input->post();
 			if($posts['id']=='logo'){
-			$this->db->query("UPDATE admin_setting SET url='".$posts['name']."' WHERE name='".$posts['id']."'");
+			$this->db->query("UPDATE admin_setting SET url='".$posts['name']."'");
 			}
 			else{
 			$this->db->query("UPDATE admin_setting SET favicon='".$posts['name']."'");
