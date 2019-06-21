@@ -31,10 +31,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 
 # Custom Manually Added
+.env
 error_log
-application/config/config.php
-application/config/database.php
-application/libraries/Notify.php
 assets/job_doc
 assets/job_photo/*
 !assets/job_photo/.htaccess
