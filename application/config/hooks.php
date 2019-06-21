@@ -12,6 +12,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 
+$hook['pre_system'] = function () {
+    $dotenv = Dotenv\Dotenv::create(APPPATH . '..' . DIRECTORY_SEPARATOR);
+    $dotenv->load();
+};
+
 $hook['post_controller_constructor'][] = [
     'class' => 'DbSelection',
     'function' => 'selectDB',
