@@ -127,6 +127,9 @@ $route['lead/closed'] = 'leads/closed';
 $route['lead/closed/(:num)'] = 'leads/closed/$1';
 $route['lead/signed'] = 'leads/allAssignedLead';
 $route['lead/signed/(:num)'] = 'leads/allAssignedLead/$1';
+$route['lead/(:num)/notes'] = 'leads/notes/$1';
+$route['lead/(:num)/add-note']['post'] = 'leads/addNote/$1';
+$route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
 
 $route['party/(:num)/add'] = 'party/index/$1';
 $route['party/(:num)/update'] = 'party/update/$1';
@@ -185,6 +188,5 @@ $route['report/upload'] = 'reports/upload';
 $route['report/save-img'] = 'reports/save_img';
 $route['report/(:num)/save'] = 'reports/save/$1';
 $route['report/(:num)/pdf/(:num)'] = 'reports/pdf/$1/$2';
-
 
 $route['(.+)'] = 'errors/page_missing';
