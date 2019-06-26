@@ -7,11 +7,12 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'UserModel', 'StatusTagModel', 'LeadStatusModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'StatusTagModel', 'LeadStatusModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
 		$this->lead_note = new LeadNoteModel();
+		$this->lead_note_reply = new LeadNoteReplyModel();
 		$this->user = new UserModel();
 		$this->status_tags = new StatusTagModel();
 		$this->status = new LeadStatusModel();
@@ -332,9 +333,92 @@ class Leads extends CI_Controller
 		if ($lead && $lead[0]) {
 			$delete = $this->lead_note->delete($noteId, $leadId);
 			if (!$delete) {
-                $this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
-            }
-            redirect('lead/' . $leadId . '/notes');
+				$this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+			}
+			redirect('lead/' . $leadId . '/notes');
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('leads');
+		}
+	}
+
+	public function replies($leadId, $noteId)
+	{
+		$lead = $this->lead->get_all_where('jobs', ['id' => $leadId]);
+		if ($lead && $lead[0]) {
+			$note = $this->lead_note->getNoteById($noteId, $leadId);
+			if ($note) {
+				$note_replies = $this->lead_note_reply->getRepliesByNoteId($noteId);
+				$users = $this->user->getUserList();
+
+				$this->load->view('header', ['title' => 'Job Notes']);
+				$this->load->view('leads/note_replies', ['lead' => $lead[0], 'note' => $note, 'note_replies' => $note_replies, 'users' => $users]);
+				$this->load->view('footer');
+			} else {
+				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+				redirect('lead/' . $leadId . '/notes');
+			}
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('leads');
+		}
+	}
+
+	public function addNoteReply($leadId, $noteId)
+	{
+		$lead = $this->lead->get_all_where('jobs', ['id' => $leadId]);
+		if ($lead && $lead[0]) {
+			$note = $this->lead_note->getNoteById($noteId, $leadId);
+			if ($note) {
+				$this->form_validation->set_rules('reply', 'Reply', 'trim|required');
+
+				if ($this->form_validation->run() == TRUE) {
+					$replyData = $this->input->post();
+					$insert = $this->lead_note_reply->insert([
+						'reply' => nl2br($replyData['reply']),
+						'note_id' => $noteId
+					]);
+					if ($insert) {
+						$userIds = [];
+						if (preg_match_all('~(@\w+)~', $replyData['reply'], $matches, PREG_PATTERN_ORDER)) {
+							$usernames = array_map(function ($val) {
+								return ltrim($val, '@');
+							}, $matches[1]);
+							$userIds = $this->user->getUserIdArrByUserNames($usernames);
+						}
+						// use userIds to send emails to those users
+					} else {
+						$this->session->set_flashdata('errors', '<p>Unable to add Note.</p>');
+					}
+				} else {
+					$this->session->set_flashdata('errors', validation_errors());
+				}
+				redirect('lead/' . $leadId . '/note/' . $noteId . '/replies');
+			} else {
+				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+				redirect('lead/' . $leadId . '/notes');
+			}
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('leads');
+		}
+	}
+
+	public function deleteNoteReply($leadId, $noteId, $replyId)
+	{
+		$lead = $this->lead->get_all_where('jobs', ['id' => $leadId]);
+		if ($lead && $lead[0]) {
+			$note = $this->lead_note->getNoteById($noteId, $leadId);
+			if ($note) {
+				$delete = $this->lead_note_reply->delete($replyId, $noteId);
+				if (!$delete) {
+					$this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
+				}
+				redirect('lead/' . $leadId . '/note/' . $noteId . '/replies');
+			} else {
+				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+				redirect('lead/' . $leadId . '/notes');
+			}
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
 			redirect('leads');

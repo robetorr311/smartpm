@@ -44,4 +44,21 @@ class LeadNoteModel extends CI_Model
         $result = $query->result();
         return (count($result) > 0) ? $result : false;
     }
+
+    public function getNoteById($id, $leadId = false)
+    {
+        $this->db->select("jobs_note.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname");
+        $this->db->from($this->table);
+        $this->db->join('users as users_created_by', 'jobs_note.created_by=users_created_by.id', 'left');
+        $this->db->where([
+            'jobs_note.id' => $id,
+            'jobs_note.is_deleted' => FALSE
+        ]);
+        if ($leadId) {
+            $this->db->where('jobs_note.job_id', $leadId);
+        }
+        $query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
 }
