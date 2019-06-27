@@ -76,6 +76,12 @@ $route['migrate/master/undo_migration'] = 'master_migrate/undo_migration';
 $route['migrate/master/undo_migration/(:num)'] = 'master_migrate/undo_migration/$1';
 $route['migrate/master/reset_migration'] = 'master_migrate/reset_migration';
 
+$route['migrate/(:num)/do_migration'] = 'migrate_company/do_migration/$1';
+$route['migrate/(:num)/do_migration/(:num)'] = 'migrate_company/do_migration/$1/$2';
+$route['migrate/(:num)/undo_migration'] = 'migrate_company/undo_migration/$1';
+$route['migrate/(:num)/undo_migration/(:num)'] = 'migrate_company/undo_migration/$1/$2';
+$route['migrate/(:num)/reset_migration'] = 'migrate_company/reset_migration/$1';
+
 $route['dashboard'] = 'dashboard/index';
 
 $route['photos/(:num)'] = 'photos/index/$1';
