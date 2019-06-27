@@ -116,6 +116,7 @@ echo '</div>';
    <a href="<?php echo base_url('report/'.$lead->id);?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
    <a href="<?php echo base_url('docs/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
+   <a href="<?php echo base_url('/lead/'.$lead->id.'/notes');?>" class="btn btn-success btn-fill">Notes</a>
                                 </div>
                                                                    <?php endforeach; ?>
                     </div>
