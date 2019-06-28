@@ -1,4 +1,7 @@
 <?php
+/**
+ * This will needs to be deleted once email notification task get completed...
+ */
 defined('BASEPATH') or exit('No direct script access allowed');
 class Email extends CI_Controller
 {
