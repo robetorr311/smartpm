@@ -21,19 +21,24 @@ class Notify
 
     public function resetPassword($email, $token)
     {
-        $tokenUrl = base_url('reset-password/' . $token);
         $this->CI->email->to($email);
         $this->CI->email->subject('Reset Password - SmartPM');
-        $this->CI->email->message('<p>You can reset your password by visiting to the url given below.</p><p><a href="' . $tokenUrl . '">' . $tokenUrl . '</a></p>');
+        $html_message = $this->CI->load->view('template/email/reset-password.php', [
+            'token' => $token
+        ], true);
+        $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
 
     public function emailVerification($email, $company_code, $token)
     {
-        $tokenUrl = base_url('verification/' . $company_code . '/' . $token);
         $this->CI->email->to($email);
         $this->CI->email->subject('Email Verification - SmartPM');
-        $this->CI->email->message('<p>Your Company Code is <b>' . $company_code . '</b></p><br /><p>You can verify your email by visiting to the url given below.</p><p><a href="' . $tokenUrl . '">' . $tokenUrl . '</a></p>');
+        $html_message = $this->CI->load->view('template/email/email-verification.php', [
+            'company_code' => $company_code,
+            'token' => $token
+        ], true);
+        $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
 }
