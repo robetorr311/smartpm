@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">Update Lead</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
+                                <h4 class="title" style="float: left;">Update Lead</h4> <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
 <div class="clearfix"></div>
                                 
                                                              <?php if(validation_errors())
@@ -21,9 +21,6 @@ echo '</div>';
 ?>
                             </div>
                             <div class="content">
-                                  <?php
-                             
-                                   foreach( $leads as $lead ) : ?>  
 
                                 <?php echo form_open('lead/'.$lead->id.'/update',array('method'=>'post'));?>
                          
@@ -119,7 +116,6 @@ echo '</div>';
    <a href="<?php echo base_url('docs/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
    <a href="<?php echo base_url('lead/'.$lead->id.'/notes');?>" class="btn btn-success btn-fill">Notes</a>
                                 </div>
-								                                   <?php endforeach; ?>
 					</div>
                           
                         </div>
@@ -130,11 +126,11 @@ echo '</div>';
         $lstatus="";
         $cstatus="";
         $jtype=""; ?>
-<?php foreach( $leadstatus as $status ) : 
+<?php if ($status ) : 
     $lstatus = $status->lead;
     $cstatus = $status->contract;
     $jtype = $status->job;
-endforeach; ?>
+endif; ?>
             <div class="card">
                 <div class="header">
                     <h4 class="title" style="float: left;">Lead Status</h4>
@@ -189,36 +185,34 @@ endforeach; ?>
                             </div>
                             <div class="content">
                             <?php if( !empty( $add_info ) ) : ?>
-                            <?php foreach( $add_info as $info ) : ?>  
                                 <?php echo form_open('party/'.$jobid.'/update',array('method'=>'post'));?>
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input class="form-control" name="firstname" value="<?php echo $info->fname ?>" placeholder="First Name" type="text">
+                                                <input class="form-control" name="firstname" value="<?php echo $add_info->fname ?>" placeholder="First Name" type="text">
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input class="form-control" placeholder="Last Name" name="lastname" value="<?php echo $info->lname ?>" type="text">
+                                                <input class="form-control" placeholder="Last Name" name="lastname" value="<?php echo $add_info->lname ?>" type="text">
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <input class="form-control" placeholder="Phone" name="phone" value="<?php echo $info->phone ?>" type="text">
+                                                <input class="form-control" placeholder="Phone" name="phone" value="<?php echo $add_info->phone ?>" type="text">
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input class="form-control" placeholder="Email" name="email" value="<?php echo $info->email ?>" type="text">
+                                                <input class="form-control" placeholder="Email" name="email" value="<?php echo $add_info->email ?>" type="text">
                                             </div>
                                              <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                                         </div>
                                     </div>
 
                                  <?php echo form_close(); ?>
-                                 <?php endforeach; ?>
                                 <?php else : ?>
                                    <?php echo form_open('party/'.$jobid.'/add',array('method'=>'post'));?>
 
