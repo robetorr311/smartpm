@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Name (Team Region Name)</label>
+                                    <label>Name (Team Region Name)<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="Team Name" name="name" type="text" value="<?= $team->team_name ?>">
                                 </div>
                             </div>
@@ -39,7 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Manager</label>
+                                    <label>Manager<span class="red-mark">*</span></label>
                                     <select name="manager" class="form-control">
                                         <option value="" disabled<?= empty($team->manager) ? ' selected' : '' ?>>Select Manager</option>
                                         <?php foreach ($users as $user) {
@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Team Leader</label>
+                                    <label>Team Leader<span class="red-mark">*</span></label>
                                     <select name="team_leader" class="form-control">
                                         <option value="" disabled<?= empty($team->team_leader) ? ' selected' : '' ?>>Select Team Leader</option>
                                         <?php foreach ($users as $user) {

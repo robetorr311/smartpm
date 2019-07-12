@@ -23,23 +23,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<?= $this->session->flashdata('message') ?>
 
 	<div class="input-group">
-		<label>First Name</label>
+		<label>First Name<span class="red-mark">*</span></label>
 		<input type="text" name="first_name" placeholder="First Name" required>
 	</div>
 	<div class="input-group">
-		<label>Last Name</label>
+		<label>Last Name<span class="red-mark">*</span></label>
 		<input type="text" name="last_name" placeholder="Last Name" required>
 	</div>
 	<div class="input-group">
-		<label>Email ID</label>
+		<label>Email ID<span class="red-mark">*</span></label>
 		<input type="email" name="email_id" placeholder="Email ID" required>
 	</div>
 	<div class="input-group">
-		<label>Password</label>
+		<label>Password<span class="red-mark">*</span></label>
 		<input type="password" name="password" placeholder="Password" required>
 	</div>
 	<div class="input-group">
-		<label>Confirm Password</label>
+		<label>Confirm Password<span class="red-mark">*</span></label>
 		<input type="password" name="conf_password" placeholder="Confirm Password" required>
 	</div>
 	<div class="input-group">
