@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Task Name</label>
+                                    <label>Task Name<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="Task Name" name="name" type="text" value="<?= $task->name ?>">
                                 </div>
                             </div>
@@ -31,7 +31,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Type</label>
+                                    <label>Type<span class="red-mark">*</span></label>
                                     <select name="type" class="form-control">
                                         <option value="" disabled>Select Type</option>
                                         <?php foreach ($types as $id => $type) {
@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Importance Level</label>
+                                    <label>Importance Level<span class="red-mark">*</span></label>
                                     <select name="level" class="form-control">
                                         <option value="" disabled<?= empty($task->level) ? ' selected' : '' ?>>Select Importance Level</option>
                                         <?php foreach ($levels as $id => $level) {
@@ -53,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Assigned To</label>
+                                    <label>Assigned To<span class="red-mark">*</span></label>
                                     <select name="assigned_to" class="form-control">
                                         <option value="" disabled<?= empty($task->created_by) ? ' selected' : '' ?>>Select Assigned To</option>
                                         <?php foreach ($users as $user) {
@@ -64,7 +64,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Status</label>
+                                    <label>Status<span class="red-mark">*</span></label>
                                     <select name="status" class="form-control">
                                         <option value="" disabled<?= empty($task->status) ? ' selected' : '' ?>>Select Status</option>
                                         <?php foreach ($status as $key => $value) {

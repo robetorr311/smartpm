@@ -23,13 +23,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>First Name</label>
+                                    <label>First Name<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="First Name" name="first_name" type="text" value="<?= $user->first_name ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Last Name</label>
+                                    <label>Last Name<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="Last Name" name="last_name" type="text" value="<?= $user->last_name ?>">
                                 </div>
                             </div>
@@ -37,13 +37,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Email ID</label>
+                                    <label>Email ID<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="Email ID" name="email_id" type="email" value="<?= $user->email_id ?>" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Level</label>
+                                    <label>Level<span class="red-mark">*</span></label>
                                     <select name="level" class="form-control">
                                         <option value="" disabled<?= empty($user->level) ? ' selected' : '' ?>>Select Level</option>
                                         <?php foreach ($levels as $id => $level) {
@@ -84,7 +84,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Notifications</label>
+                                    <label>Notifications<span class="red-mark">*</span></label>
                                     <select name="notifications" class="form-control">
                                         <option value="" disabled<?= empty($user->notifications) ? ' selected' : '' ?>>Select Notifications</option>
                                         <?php foreach ($notifications as $id => $notification) {
@@ -95,11 +95,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Status</label>
+                                    <label>Status<span class="red-mark">*</span></label>
                                     <select name="is_active" class="form-control">
                                         <option value="" disabled<?= empty($user->is_active) ? ' selected' : '' ?>>Select Status</option>
-                                        <option value="1"<?= $user->is_active == 1 ? ' selected' : '' ?>>Active</option>
-                                        <option value="0"<?= $user->is_active == 0 ? ' selected' : '' ?>>Inactive</option>
+                                        <option value="1" <?= $user->is_active == 1 ? ' selected' : '' ?>>Active</option>
+                                        <option value="0" <?= $user->is_active == 0 ? ' selected' : '' ?>>Inactive</option>
                                     </select>
                                 </div>
                             </div>

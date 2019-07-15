@@ -83,6 +83,12 @@ img {
 	color: #ffffff;
 	font-size: 14px;
 }
+.red-mark {
+	color: red;
+	margin-top: -3px;
+	display: inline-block;
+	margin-left: 2px;
+}
 
 @media (max-width: 700px) {
 	.header,

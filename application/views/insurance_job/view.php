@@ -28,7 +28,7 @@ echo '</div>';
                                 
                               
                                     <div class="row">
-                                        <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>"></input>
+                                        <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Job Name</label>

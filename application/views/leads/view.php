@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                            
                 
                             <div class="header">
-                                <h4 class="title" style="float: left;">Lead Detail</h4> <a href="javascript:window.history.go(-1);" class="btn btn-info btn-fill pull-right">Back</a>
+                                <h4 class="title" style="float: left;">Lead Detail</h4> <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
 <div class="clearfix"></div>
                                 
                                                              <?php if(validation_errors())
@@ -22,11 +22,11 @@ echo '</div>';
                             </div>
                             <div class="content view">
                                   <?php
-                                $status='';
-                                   foreach( $leads as $lead ) : ?>  
+                                $lead_status='';
+                                ?>  
 
                                
-                                <?php  $status= $lead->status; ?>
+                                <?php  $lead_status= $lead->status; ?>
                                     <div class="row">
                                        
                                         <div class="col-md-12">
@@ -116,9 +116,8 @@ echo '</div>';
    <a href="<?php echo base_url('report/'.$lead->id);?>" class="btn btn-danger btn-fill">All Report</a>
    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
    <a href="<?php echo base_url('docs/'.$lead->id);?>" class="btn btn-danger btn-fill">Docs</a>
-   <a href="<?php echo base_url('/lead/'.$lead->id.'/notes');?>" class="btn btn-success btn-fill">Notes</a>
+   <a href="<?php echo base_url('lead/'.$lead->id.'/notes');?>" class="btn btn-success btn-fill">Notes</a>
                                 </div>
-                                                                   <?php endforeach; ?>
                     </div>
                           
                         </div>
@@ -126,7 +125,7 @@ echo '</div>';
 
  <div class="col-md-4">
             <div class="card">
-                <?php  foreach( $leadstatus as $status ) : ?>  
+                <?php  if($status) : ?>  
                 <div class="header">
                     <h4 class="title" style="float: left;">Lead Status</h4><span class="status <?php if($status->lead!='open'){ echo 'closed';}else{ echo 'open';} ?>"><?php echo  $status->lead; ?></span> 
                     <div class="clearfix" style="padding: 10px;" ></div>  
@@ -139,7 +138,7 @@ echo '</div>';
                       </span> 
                     <div class="clearfix" style="padding: 10px;"></div>         
                 </div>
-                <?php endforeach; ?>  
+                <?php endif; ?>  
              </div>
         <div class="card">
 
@@ -151,37 +150,35 @@ echo '</div>';
                             </div>
                             <div class="content">
                             <?php if( !empty( $add_info ) ) : ?>
-                            <?php foreach( $add_info as $info ) : ?>  
                                 <?php echo form_open('server/additional_party_update',array('id'=>"jobform",'autocomplete'=>"off"));?>
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input type="hidden"  name="id" value="<?php echo $jobid; ?>"></input>
+                                                <input type="hidden"  name="id" value="<?php echo $jobid; ?>">
                                                 <label>First Name</label>
-                                               <p><?php echo $info->fname ?></p>
+                                               <p><?php echo $add_info->fname ?></p>
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <p><?php echo $info->lname ?></p>
+                                                <p><?php echo $add_info->lname ?></p>
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Phone</label>
-                                                <p><?php echo $info->phone ?></p>
+                                                <p><?php echo $add_info->phone ?></p>
                                             </div>
                                        
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <p><?php echo $info->email ?></p>
+                                                <p><?php echo $add_info->email ?></p>
                                             </div>
                                              <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
                                         </div>
                                     </div>
 
                                  <?php echo form_close(); ?>
-                                 <?php endforeach; ?>
                                 <?php else : ?>
                                    
                                     <div class="row">

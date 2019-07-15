@@ -10,14 +10,15 @@ class RoofingProjectModel extends CI_Model
         $this->db->where($condition);
         $this->db->order_by("id", "desc");
         $result = $this->db->get($this->table);
-        return $result->result();   
+        return $result->result();
     }
 
-    public function get_all_where( $condition ){
+    public function get_all_where($condition)
+    {
 
         $this->db->where($condition);
         $result = $this->db->get($this->table);
-        return $result->result();   
+        return $result->result();
     }
 
     public function insert($data)
@@ -25,7 +26,4 @@ class RoofingProjectModel extends CI_Model
         $result = $this->db->insert($this->table, $data);
         return $result ? $this->db->insert_id() : $result;
     }
-
-    
-    
 }

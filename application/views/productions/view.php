@@ -28,7 +28,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 
                               
                                     <div class="row">
-                                        <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>"></input>
+                                        <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Job Name</label>
@@ -168,7 +168,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input type="hidden"  name="id" value="<?php echo $jobid; ?>"></input>
+                                                <input type="hidden"  name="id" value="<?php echo $jobid; ?>">
                                                 <label>First Name</label>
                                                <p><?php echo $info->fname ?></p>
                                             </div>

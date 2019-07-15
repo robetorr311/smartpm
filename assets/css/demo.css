@@ -493,8 +493,6 @@ span.info-tag {
 	visibility: hidden;
 }
 
-.navbar-default {
-}
 .navbar-default .navbar-brand {
 	color: #fff !important;
 }
@@ -790,8 +788,6 @@ td .fa {
 }
 .bg-color-box:hover {
 	left: 0px;
-}
-.bg-color-box ul li {
 }
 .black {
 	background: black;

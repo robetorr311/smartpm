@@ -10,7 +10,17 @@ class LeadStatusModel extends CI_Model
         $this->db->where($condition);
 		$result = $this->db->get($this->table);
 		return $result->result();	
-	}
+    }
+    
+    public function getStatusByLeadId($jobid)
+    {
+        $this->db->where([
+            'jobid' => $jobid
+        ]);
+		$query = $this->db->get($this->table);
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
 
     public function allJobStatus(){
         $this->db->select("SUM(if(contract='unsigned',1,NULL)) as OPEN, SUM(if(job='labor only' AND lead='open',1,NULL)) as LABOR, SUM(if(job='insurance' AND lead='open',1,NULL)) as INSURANCE, SUM(if(job='cash' AND lead='open',1,NULL)) as CASH , SUM(if(production='complete' AND closeout='yes',1,NULL)) as CLOSED, SUM(if(production='complete' AND closeout='no',1,NULL)) as COMPLETE,"); 

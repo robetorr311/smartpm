@@ -23,17 +23,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<?= $this->session->flashdata('message') ?>
 
 	<div class="input-group">
-		<label>Company Code</label>
+		<label>Company Code<span class="red-mark">*</span></label>
 		<input type="text" name="company_code" placeholder="Company Code">
 	</div>
 
 	<div class="input-group">
-		<label>Password</label>
+		<label>Password<span class="red-mark">*</span></label>
 		<input type="password" name="password" placeholder="Password">
 	</div>
 
 	<div class="input-group">
-		<label>Confirm Password</label>
+		<label>Confirm Password<span class="red-mark">*</span></label>
 		<input type="password" name="confirm_password" placeholder="Confirm Password">
 	</div>
 
