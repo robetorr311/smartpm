@@ -11,6 +11,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
             ?>
         </div>
+    </div>
+    <div class="row">
         <div class="col-lg-9">
             <div class="card task-notes-card">
                 <div class="header">
@@ -161,11 +163,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                     <?php if ($task->status != 4) { ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="<?= base_url('task/' . $task->id .'/complete' ) ?>" data-method="POST" class="btn btn-info btn-fill col-xs-12">Mark As Complete</a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="<?= base_url('task/' . $task->id . '/complete') ?>" data-method="POST" class="btn btn-info btn-fill col-xs-12">Mark As Complete</a>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                     <div class="clearfix"></div>
                 </div>
@@ -174,7 +176,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#note-input').atwho({
             at: '@',
             data: <?= json_encode($users) ?>,
