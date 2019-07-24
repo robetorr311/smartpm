@@ -1,97 +1,70 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-?> <div class="container-fluid">
-                <div class="row">
-                   <div class="col-md-12">
-                        <div class="card">
-                             <div class="row header">
-                                 <div class="col-md-6">
-                                         <input class="form-control" id="myInput"  placeholder="Search Lead" type="text">
-                                 </div>
-                                  <div class="col-md-4">
-                              
-                                    <a href="<?php echo base_url('lead/new');?>" class="btn btn-info btn-fill pull-right">Add New Lead </a>
-                                 </div>
-                                  <div class="col-md-2">
-                              
-                                    <a href="<?php echo base_url('lead/signed');?>" class="btn btn-info btn-fill pull-right">View Signed Job </a>
-                                 </div>
-                            </div>
-                            <div class="header">      
-                                 <?= $this->session->flashdata('message') ?>
-                             
-                            </div>
-                            <div class="content table-responsive" style="overflow-x: scroll;width: 100%;">
-                                <table class="table table-hover table-striped">
-                                    <thead>
-                                       <!-- <th></th> -->
-                                        <th>View</th>
-                                        <th>Edit</th>
-                                        <th>Job Number</th>
-                                        <th>Lead Name</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Address</th>
-                                        <th>Status</th>
-                                        <th>Contract</th>
-                                        
-                                       
-                                     <!--   <th>Status</th>-->
-                                      
-                                        
-                                    </thead>
-                                    <tbody id="myTable">
-
-                                    <?php if( !empty( $leads ) ) : ?>
-              <?php $i=1; foreach( $leads as $lead ) : ?>  
-                <tr> <!--<td style="width: 30px"><i class="del-doc pe-7s-trash" id=""></i></td>-->
-                <td style="width: 30px"><a href="<?php echo base_url('lead/'.$lead->id);?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
-              <td><a href="<?php echo base_url('lead/'.$lead->id.'/edit');?>"><span class=""><i class="del-edit pe-7s-note" style="font-size: 30px;" /></span></a></td>
-              
-                  <td><?php echo $lead->job_number; ?></td>
-                  <td><?php echo $lead->job_name ?></td>
-                  <td><?php echo $lead->firstname ?></td>
-                  <td><?php echo $lead->lastname ?></td>
-                  <td><?php echo $lead->address ?></td>
-                
-                   <td><?php echo $lead->lead_status ?></td>
-                  <td><?php echo $lead->contract_status ?></td>
-                 
-              
-                 </tr>
-                  <?php $i++; endforeach; ?>
-            <?php else : ?>
-                  <tr>
-                      <td colspan="13" class="text-center">No Record Found!</td>
-                  </tr>
-            <?php endif; ?>
-               
-
-
-                                  
-                                    </tbody>
-                                </table>
-<div class="pagination">
-                          <?= $pagiLinks ?>
-                    </div>
-                            </div> 
-                        </div>
-                    </div>
-					   </div>
-                        </div>
-<script>
-  $(document).ready(function(){
-      $(".del-job").click(function () {
-          var id = $(this).attr('id');
-                                    
-          $.ajax({
-            url: baseUrl+'index.php/server/deletejobreport',
-            data: {id: id},        
-            type: 'post',
-            success: function(php_script_response){
-              $('.tr'+id).remove();
-            }
-           });
-        });
-  });
-</script>
+?><div class="container-fluid">
+	<div class="row page-header-buttons">
+		<div class="col-md-12">
+			<a href="<?= base_url('lead/create') ?>" class="btn btn-info btn-fill pull-right">New Lead</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<?php
+			if (!empty($this->session->flashdata('errors'))) {
+				echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+				echo $this->session->flashdata('errors');
+				echo '</div>';
+			}
+			?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="header">
+					<h4 class="title">Leads</h4>
+				</div>
+				<div class="content table-responsive table-full-width">
+					<table class="table table-hover table-striped">
+						<thead>
+							<th>Job Number</th>
+							<th>Lead Name</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Address</th>
+							<th>Status</th>
+							<th>Contract</th>
+							<th class="text-center">View</th>
+							<th class="text-center">Edit</th>
+							<th class="text-center">Delete</th>
+						</thead>
+						<tbody>
+							<?php if (!empty($leads)) : ?>
+								<?php foreach ($leads as $lead) : ?>
+									<tr>
+										<td><?= $lead->job_number; ?></td>
+										<td><?= $lead->job_name ?></td>
+										<td><?= $lead->firstname ?></td>
+										<td><?= $lead->lastname ?></td>
+										<td><?= $lead->address ?></td>
+										<td><?= $lead->lead_status ?></td>
+										<td><?= $lead->contract_status ?></td>
+										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+									</tr>
+								<?php endforeach; ?>
+							<?php else : ?>
+								<tr>
+									<td colspan="10" class="text-center">No Record Found!</td>
+								</tr>
+							<?php endif; ?>
+						</tbody>
+					</table>
+					<div class="pagination">
+						<?= $pagiLinks ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

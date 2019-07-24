@@ -38,21 +38,21 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function new()
+	public function create()
 	{
 		$this->load->view('header', ['title' => 'Add New Leads']);
-		$this->load->view('leads/new');
+		$this->load->view('leads/create');
 		$this->load->view('footer');
 	}
 
-	public function view($jobid)
+	public function show($jobid)
 	{
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$status = $this->status->getStatusByLeadId($jobid);
 			$this->load->view('header', ['title' => 'Lead Detail']);
-			$this->load->view('leads/view', ['status' => $status, 'lead' => $lead, 'add_info' => $add_info, 'jobid' => $jobid]);
+			$this->load->view('leads/show', ['status' => $status, 'lead' => $lead, 'add_info' => $add_info, 'jobid' => $jobid]);
 			$this->load->view('footer');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');

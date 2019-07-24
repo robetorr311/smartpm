@@ -84,18 +84,6 @@ $route['migrate/(:num)/reset_migration'] = 'migrate_company/reset_migration/$1';
 
 $route['dashboard'] = 'dashboard/index';
 
-$route['photos/(:num)'] = 'photos/index/$1';
-$route['photo/upload'] = 'photos/ajaxupload_jobphoto';
-$route['photo/save'] = 'photos/ajaxsave_jobphoto';
-$route['photo/delete'] = 'photos/deletephoto';
-$route['photo/rotate'] = 'photos/imagerotate';
-
-$route['docs/(:num)'] = 'docs/index/$1';
-$route['doc/upload'] = 'docs/ajaxupload_jobdoc';
-$route['doc/save'] = 'docs/ajaxsave_jobdoc';
-$route['doc/delete'] = 'docs/deletedoc';
-$route['doc/update'] = 'docs/updatedocname';
-
 $route['users'] = 'users/index';
 $route['users/(:num)'] = 'users/index/$1';
 $route['user/create'] = 'users/create';
@@ -119,14 +107,12 @@ $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
 $route['leads/(:num)'] = 'leads/index/$1';
-$route['lead/(:num)'] = 'leads/view/$1';
+$route['lead/(:num)'] = 'leads/show/$1';
 $route['lead/(:num)/edit'] = 'leads/edit/$1';
 $route['lead/(:num)/update'] = 'leads/update/$1';
-$route['lead/new'] = 'leads/new';
+$route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
 $route['lead/updatestatus'] = 'leads/updatestatus';
-$route['lead/(:num)/reports'] = 'leads/alljobreport/$1';
-$route['lead/(:num)/delete-report'] = 'leads/deletejobreport/$1';
 $route['lead/archive'] = 'leads/archive';
 $route['lead/archive/(:num)'] = 'leads/archive/$1';
 $route['lead/closed'] = 'leads/closed';
@@ -139,6 +125,24 @@ $route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
 $route['lead/(:num)/note/(:num)/replies'] = 'leads/replies/$1/$2';
 $route['lead/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$1/$2';
 $route['lead/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$1/$2/$3';
+$route['lead/(:num)/photos'] = 'photos/index/$1';
+$route['lead/(:num)/photo/upload'] = 'photos/ajaxupload_jobphoto';
+$route['lead/(:num)/photo/save'] = 'photos/ajaxsave_jobphoto';
+$route['lead/(:num)/photo/delete'] = 'photos/deletephoto';
+$route['lead/(:num)/photo/rotate'] = 'photos/imagerotate';
+$route['lead/(:num)/reports'] = 'reports/index/$1';
+$route['lead/(:num)/report/create'] = 'reports/create/$1';
+$route['lead/(:num)/report/upload'] = 'reports/upload';
+$route['lead/(:num)/report/save-img'] = 'reports/save_img';
+$route['lead/(:num)/report/save'] = 'reports/save/$1';
+$route['lead/(:num)/report/(:num)/pdf'] = 'reports/pdf/$2/$1';
+// $route['lead/(:num)/reports'] = 'leads/alljobreport/$1';
+$route['lead/(:num)/delete-report'] = 'leads/deletejobreport/$1';
+$route['lead/(:num)/docs'] = 'docs/index/$1';
+$route['lead/(:num)/doc/upload'] = 'docs/ajaxupload_jobdoc';
+$route['lead/(:num)/doc/save'] = 'docs/ajaxsave_jobdoc';
+$route['lead/(:num)/doc/delete'] = 'docs/deletedoc';
+$route['lead/(:num)/doc/update'] = 'docs/updatedocname';
 
 $route['party/(:num)/add'] = 'party/index/$1';
 $route['party/(:num)/update'] = 'party/update/$1';
@@ -190,12 +194,5 @@ $route['setting/(:num)/delete'] = 'setting/deltag';
 $route['setting/ajaxupload'] = 'setting/ajaxupload';
 $route['setting/ajaxsave'] = 'setting/ajaxsave';
 $route['setting/ajaxcolor'] = 'setting/ajaxcolor';
-
-$route['report/(:num)'] = 'reports/index/$1';
-$route['report/(:num)/create'] = 'reports/create/$1';
-$route['report/upload'] = 'reports/upload';
-$route['report/save-img'] = 'reports/save_img';
-$route['report/(:num)/save'] = 'reports/save/$1';
-$route['report/(:num)/pdf/(:num)'] = 'reports/pdf/$1/$2';
 
 $route['(.+)'] = 'errors/page_missing';
