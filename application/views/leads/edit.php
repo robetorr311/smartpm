@@ -165,7 +165,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content">
                     <?php if (!empty($add_info)) : ?>
-                        <?= form_open('party/' . $jobid . '/update', array('method' => 'post')); ?>
+                        <?= form_open('lead/' . $jobid . '/party/update', array('method' => 'post')); ?>
 
                         <div class="row">
                             <div class="col-md-12">
@@ -194,7 +194,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         <?= form_close(); ?>
                     <?php else : ?>
-                        <?= form_open('party/' . $jobid . '/add', array('method' => 'post')); ?>
+                        <?= form_open('lead/' . $jobid . '/party/add', array('method' => 'post')); ?>
 
                         <div class="row">
 

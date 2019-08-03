@@ -142,9 +142,8 @@ $route['lead/(:num)/doc/upload']['post'] = 'docs/ajaxupload_jobdoc';
 $route['lead/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
 $route['lead/(:num)/doc/delete']['post'] = 'docs/deletedoc';
 $route['lead/(:num)/doc/update']['post'] = 'docs/updatedocname';
-
-$route['party/(:num)/add'] = 'party/index/$1';
-$route['party/(:num)/update'] = 'party/update/$1';
+$route['lead/(:num)/party/add']['post'] = 'party/index/$1';
+$route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 
 $route['cash-jobs'] = 'cash_jobs/index';
 $route['cash-jobs/(:num)'] = 'cash_jobs/index/$1';
