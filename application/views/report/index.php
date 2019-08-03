@@ -59,10 +59,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     $(".del-job").click(function() {
       var id = $(this).attr('id');
       $.ajax({
-        url: baseUrl + 'lead/' + id + '/delete-report',
-        data: {
-          id: id
-        },
+        url: baseUrl + 'lead/<?= $jobid ?>/report/' + id + '/delete',
         type: 'post',
         success: function(php_script_response) {
           $('.tr' + id).remove();

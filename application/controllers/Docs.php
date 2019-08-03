@@ -6,12 +6,14 @@ class Docs extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
+		authAdminAccess();
+		
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['session', 'image_lib']);
 		$this->load->model(['JobsDocModel', 'Common_model']);
 		$this->doc = new JobsDocModel();
 	}
+	
 	public function index($job_id)
 	{
 		$params = array();

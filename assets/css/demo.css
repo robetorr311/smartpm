@@ -65,6 +65,7 @@
 		position: initial;
 	}
 }
+
 img {
 	width: 100%;
 }
@@ -85,12 +86,10 @@ img {
 	border: 2px solid aliceblue;
 	border-radius: 3px;
 	margin: 0 auto;
-	margin-top: 0px;
-	margin-top: 50px;
 	text-align: center;
 	overflow: auto;
 	background: rgba(199, 199, 199, 0.4);
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 .upload-area:hover {
@@ -111,12 +110,10 @@ img {
 	border: 2px solid aliceblue;
 	border-radius: 3px;
 	margin: 0 auto;
-	margin-top: 0px;
-	margin-top: 50px;
 	text-align: center;
 	overflow: auto;
 	background: rgba(199, 199, 199, 0.4);
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 .upload-doc-area:hover {
@@ -313,18 +310,9 @@ img {
 .modal-body {
 	overflow-y: scroll;
 }
-.del-doc {
-	font-size: 28px !important;
-	color: red;
-}
 .pop img {
 	border: 2px solid gray;
 	margin-bottom: 20px;
-}
-.doc_list td span {
-	float: left;
-	display: block;
-	font-size: 30px;
 }
 .dashbord-box .box {
 	padding: 15px 15px;

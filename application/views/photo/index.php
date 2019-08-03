@@ -13,6 +13,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 
     <div class="col-md-12">
+      <div class="form-element">
+        <input type="file" class="jobphoto" name="photo[]" id="<?= $jobid; ?>" multiple />
+        <div class="upload-area" id="<?= $jobid; ?>">
+          <h1>Drag and Drop file here<br />Or<br />Click to select file</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
       <div class="card">
         <div class="header">
           <h4 class="title" style="float: left;">Photos</h4>
@@ -32,15 +41,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
           </div>
         </div>
 
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="form-element">
-        <input type="file" class="jobphoto" name="photo[]" id="<?= $jobid; ?>" multiple />
-        <div class="upload-area" id="<?= $jobid; ?>">
-          <h1>Drag and Drop file here<br />Or<br />Click to select file</h1>
-        </div>
       </div>
     </div>
   </div>
@@ -162,10 +162,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       var id = $(this).attr('id');
 
       $.ajax({
-        url: baseUrl + 'lead/<?= $jobid ?>/photo/delete',
-        data: {
-          id: id
-        },
+        url: baseUrl + 'lead/<?= $jobid ?>/photo/' + id + '/delete',
         type: 'post',
         success: function(php_script_response) {
           $('#ph' + id).remove();

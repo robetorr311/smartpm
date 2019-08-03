@@ -257,21 +257,9 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function alljobreport($job_id = NULL)
+	public function deletejobreport($job_id, $report_id)
 	{
-		$params = array();
-		$params['active'] = 1;
-		$params['job_id'] = $job_id;
-		$allreport = $this->lead->get_all_where('roofing_project', $params);
-
-		$this->load->view('header', ['title' => 'Job Report']);
-		$this->load->view('leads/report', ['allreport' => $allreport, 'jobid' => $job_id]);
-		$this->load->view('footer');
-	}
-
-	public function deletejobreport($job_id)
-	{
-		$this->db->query("UPDATE roofing_project SET active=0 WHERE id='" . $job_id . "'");
+		$this->db->query("UPDATE roofing_project SET active=0 WHERE id='" . $report_id . "' AND job_id='" . $job_id .  "'");
 		return true;
 	}
 

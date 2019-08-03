@@ -203,11 +203,9 @@ class Photos extends CI_Controller
 	}
 
 	/* function for image delete */
-	public function deletephoto()
+	public function deletephoto($job_id, $photo_id)
 	{
-
-		$posts = $this->input->post();
-		$this->db->query("UPDATE jobs_photo SET is_active=0 WHERE id='" . $posts['id'] . "'");
+		$this->db->query("UPDATE jobs_photo SET is_active=0 WHERE id='" . $photo_id . "' AND job_id='" . $job_id . "'");
 		return true;
 	}
 }
