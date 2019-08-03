@@ -24,7 +24,7 @@ class Party extends CI_Controller {
 					$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
 					$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>'.validation_errors().' for Additional Party</strong>';
 					$errors .= '</div>';
-           			$this->session->set_flashdata('message', $errors);
+           			$this->session->set_flashdata('errors', $errors);
 					redirect('lead/'.$id.'/edit');
 				
 			} else {
@@ -41,7 +41,7 @@ class Party extends CI_Controller {
 				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
 				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Additional info Record Added Successfully!</strong>';
 				$message .= '</div>';
-				$this->session->set_flashdata('message',$message);
+				$this->session->set_flashdata('errors',$message);
 				redirect('lead/'.$id.'/edit');
 			}
 		}
@@ -61,7 +61,7 @@ class Party extends CI_Controller {
 					$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
 					$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>'.validation_errors().' for Additional Party</strong>';
 					$errors .= '</div>';
-           			$this->session->set_flashdata('message', $errors);
+           			$this->session->set_flashdata('errors', $errors);
 					redirect('lead/'.$id.'/edit');
 				
 			} else {
@@ -79,7 +79,7 @@ class Party extends CI_Controller {
 				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
 				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Additional info Record Updated Successfully!</strong>';
 				$message .= '</div>';
-				$this->session->set_flashdata('message',$message);
+				$this->session->set_flashdata('errors',$message);
 				redirect('lead/'.$id.'/edit');
 			}
 		}

@@ -198,7 +198,7 @@ class Photos extends CI_Controller
 				$this->thumbnail($row->image_name);
 			}
 		}
-		$this->session->set_flashdata('message', '<p>Thumbnail Created Sucessfully</p>');
+		$this->session->set_flashdata('errors', '<p>Thumbnail Created Sucessfully</p>');
 		redirect('/dashboard');
 	}
 

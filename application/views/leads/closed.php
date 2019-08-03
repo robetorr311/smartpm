@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                  </div>
                             </div>
                             <div class="header">      
-                                 <?= $this->session->flashdata('message') ?>
+                                 <?= $this->session->flashdata('errors') ?>
                              
                             </div>
                             <div class="content table-responsive" style="overflow-x: scroll;width: 100%;">

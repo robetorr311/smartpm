@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 
                             </div>
                             <div class="header">
-                                 <?= $this->session->flashdata('message') ?>
+                                 <?= $this->session->flashdata('errors') ?>
                                 <h4 class="title">Cash Job List</h4>
                                 
                             </div>

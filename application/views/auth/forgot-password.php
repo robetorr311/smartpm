@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<?= form_open('send-password-token', ['method' => 'post']) ?>
 	<h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Forgot Password</h2>
 
-	<?= $this->session->flashdata('message') ?>
+	<?= $this->session->flashdata('errors') ?>
 
 	<div class="input-group">
 		<label>Company Code<span class="red-mark">*</span></label>

@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                    </div>
                             </div>
                             <div class="header">
-                                 <?= $this->session->flashdata('message') ?>
+                                 <?= $this->session->flashdata('errors') ?>
                                 <h4 class="title">Insurance Job List</h4>
                             
                             </div>

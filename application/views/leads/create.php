@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?> <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <?= $this->session->flashdata('message') ?>
+            <?= $this->session->flashdata('errors') ?>
         </div>
     </div>
     <div class="row">

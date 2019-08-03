@@ -62,27 +62,27 @@ class Auth extends CI_Controller
 							redirect('dashboard');
 						} else {
 							$message = '<div class="error"><p>Your account is not activated.</p></div>';
-							$this->session->set_flashdata('message', $message);
+							$this->session->set_flashdata('errors', $message);
 							redirect('login');
 						}
 					} else {
 						$message = '<div class="error"><p>Complete Email ID verification before login.</p></div>';
-						$this->session->set_flashdata('message', $message);
+						$this->session->set_flashdata('errors', $message);
 						redirect('login');
 					}
 				} else {
 					$message = '<div class="error"><p>Email ID or Password Invalid.</p></div>';
-					$this->session->set_flashdata('message', $message);
+					$this->session->set_flashdata('errors', $message);
 					redirect('login');
 				}
 			} else {
 				$message = '<div class="error"><p>Unable to find database for entered Company Code.</p></div>';
-				$this->session->set_flashdata('message', $message);
+				$this->session->set_flashdata('errors', $message);
 				redirect('login');
 			}
 		} else {
 			$message = '<div class="error">' . validation_errors() . '</div>';
-			$this->session->set_flashdata('message', $message);
+			$this->session->set_flashdata('errors', $message);
 			redirect('login');
 		}
 	}
@@ -110,30 +110,30 @@ class Auth extends CI_Controller
 						$token = $this->user->setPasswordToken($user);
 						$this->notify->resetPassword($user->email_id, $token);
 						$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Reset Password link successfully sent to your Email ID.</div>';
-						$this->session->set_flashdata('message', $message);
+						$this->session->set_flashdata('errors', $message);
 						redirect('forgot-password');
 					} else if (empty($user->verification_token)) {
 						$message = '<div class="error"><p>Your account is not activated.</p></div>';
-						$this->session->set_flashdata('message', $message);
+						$this->session->set_flashdata('errors', $message);
 						redirect('forgot-password');
 					} else {
 						$message = '<div class="error"><p>Your Email ID is not verified.</p></div>';
-						$this->session->set_flashdata('message', $message);
+						$this->session->set_flashdata('errors', $message);
 						redirect('forgot-password');
 					}
 				} else {
 					$message = '<div class="error"><p>Unable to find your email in our system.</p></div>';
-					$this->session->set_flashdata('message', $message);
+					$this->session->set_flashdata('errors', $message);
 					redirect('forgot-password');
 				}
 			} else {
 				$message = '<div class="error"><p>Unable to find database for entered Company Code.</p></div>';
-				$this->session->set_flashdata('message', $message);
+				$this->session->set_flashdata('errors', $message);
 				redirect('forgot-password');
 			}
 		} else {
 			$message = '<div class="error">' . validation_errors() . '</div>';
-			$this->session->set_flashdata('message', $message);
+			$this->session->set_flashdata('errors', $message);
 			redirect('forgot-password');
 		}
 	}
@@ -167,32 +167,32 @@ class Auth extends CI_Controller
 								redirect('login');
 							} else {
 								$message = '<div class="error"><p>Invalid Password Reset Token.</p></div>';
-								$this->session->set_flashdata('message', $message);
+								$this->session->set_flashdata('errors', $message);
 								redirect('reset-password/' . $token);
 							}
 						} else {
 							$message = '<div class="error"><p>Your Password Reset token is expired.</p></div>';
-							$this->session->set_flashdata('message', $message);
+							$this->session->set_flashdata('errors', $message);
 							redirect('reset-password/' . $token);
 						}
 					} else if (empty($user->password_token)) {
 						$message = '<div class="error"><p>Your account is not activated.</p></div>';
-						$this->session->set_flashdata('message', $message);
+						$this->session->set_flashdata('errors', $message);
 						redirect('reset-password/' . $token);
 					}
 				} else {
 					$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
-					$this->session->set_flashdata('message', $message);
+					$this->session->set_flashdata('errors', $message);
 					redirect('reset-password/' . $token);
 				}
 			} else {
 				$message = '<div class="error"><p>Unable to find database for entered Company Code.</p></div>';
-				$this->session->set_flashdata('message', $message);
+				$this->session->set_flashdata('errors', $message);
 				redirect('reset-password/' . $token);
 			}
 		} else {
 			$message = '<div class="error">' . validation_errors() . '</div>';
-			$this->session->set_flashdata('message', $message);
+			$this->session->set_flashdata('errors', $message);
 			redirect('reset-password/' . $token);
 		}
 	}
@@ -289,32 +289,32 @@ class Auth extends CI_Controller
 							$token = $this->user->setVerificationToken($user);
 							$this->notify->emailVerification($user->email_id, $company_code, $token);
 							$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully. Check your email for email verification!</div>';
-							$this->session->set_flashdata('message', $message);
+							$this->session->set_flashdata('errors', $message);
 							redirect('login');
 						} else {
 							$message .= '<div class="error" title="Error:" >User not created. Please try again!</div>';
-							$this->session->set_flashdata('message', $message);
+							$this->session->set_flashdata('errors', $message);
 							redirect('signup');
 						}
 					} else {
 						$message .= '<div class="error" title="Error:" >Unable to create your company. Please try again!</div>';
-						$this->session->set_flashdata('message', $message);
+						$this->session->set_flashdata('errors', $message);
 						redirect('signup');
 					}
 				} else {
 					$this->new_company->createDB($database);
 					$message .= '<div class="error" title="Error:" >Unable to create your company\'s database. Please try again!</div>';
-					$this->session->set_flashdata('message', $message);
+					$this->session->set_flashdata('errors', $message);
 					redirect('signup');
 				}
 			} else {
 				$message .= '<div class="error" title="Error:" >Unable to create your company. Please try again!</div>';
-				$this->session->set_flashdata('message', $message);
+				$this->session->set_flashdata('errors', $message);
 				redirect('signup');
 			}
 		} else {
 			$message = '<div class="error">' . validation_errors() . '</div>';
-			$this->session->set_flashdata('message', $message);
+			$this->session->set_flashdata('errors', $message);
 			redirect('signup');
 		}
 	}

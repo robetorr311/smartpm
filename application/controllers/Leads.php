@@ -144,19 +144,19 @@ class Leads extends CI_Controller
 				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
 				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Saved Successfully!</strong>';
 				$message .= '</div>';
-				$this->session->set_flashdata('message', $message);
+				$this->session->set_flashdata('errors', $message);
 				redirect('leads');
 			} else {
 				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
 				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Job Not Saved Successfully!</strong>';
 				$message .= '</div>';
-				$this->session->set_flashdata('message', $message);
+				$this->session->set_flashdata('errors', $message);
 			}
 		} else {
 			$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
 			$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>' . validation_errors() . ' </strong>';
 			$errors .= '</div>';
-			$this->session->set_flashdata('message', $errors);
+			$this->session->set_flashdata('errors', $errors);
 			$this->load->view('header', ['title' => 'Add New Leads']);
 			$this->load->view('leads/new');
 			$this->load->view('footer');
@@ -181,7 +181,7 @@ class Leads extends CI_Controller
 			$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
 			$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>' . validation_errors() . '</strong>';
 			$errors .= '</div>';
-			$this->session->set_flashdata('message', $errors);
+			$this->session->set_flashdata('errors', $errors);
 			redirect('lead/' . $id . '/edit');
 		} else {
 			$posts = $this->input->post();
@@ -201,7 +201,7 @@ class Leads extends CI_Controller
 			$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
 			$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Saved Successfully!</strong>';
 			$message .= '</div>';
-			$this->session->set_flashdata('message', $message);
+			$this->session->set_flashdata('errors', $message);
 			redirect('lead/' . $id . '/edit');
 		}
 	}
