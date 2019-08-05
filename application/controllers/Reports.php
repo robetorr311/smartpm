@@ -37,19 +37,29 @@ class Reports extends CI_Controller
 			$img = array();
 			$i = 0;
 			foreach ($_FILES['image']['name'] as $key => $filename) {
-
 				$file_name = explode(".", $filename);
+				$file_ext = array_pop($file_name);
+				$file_name_only = implode('.', $file_name);
 				$allowed_extension = array("jpg", "jpeg", "png", "gif", "JPG", "PNG", "zip");
-				if (in_array($file_name[1], $allowed_extension)) {
-					if ($file_name[1] != 'zip') {
-						$new_name = rand() . '.' . $file_name[1];
+				if (in_array($file_ext, $allowed_extension)) {
+					if ($file_ext != 'zip') {
+						$tmp_file_name = explode(".", $_FILES["image"]["name"][$key]);
+						$tmp_file_ext = array_pop($tmp_file_name);
+						$tmp_file_name_only = implode('.', $file_name);
+						$tmp_i = 1;
+
+						$new_name = $tmp_file_name_only . '.' . $tmp_file_ext;
 						$sourcePath = $_FILES["image"]["tmp_name"][$key];
 						$targetPath = "assets/job_photo/" . $new_name;
+						while (file_exists($targetPath)) {
+							$new_name = $tmp_file_name_only . '_' . $tmp_i . '.' . $tmp_file_ext;
+							$targetPath = "assets/job_photo/" . $new_name;
+							$tmp_i++;
+						}
 						move_uploaded_file($sourcePath, $targetPath);
 						$img[$i] = $new_name;
 						$i++;
 					} else {
-
 						$targetPath = 'assets/job_photo/';
 						$location = $targetPath . $filename;
 						if (move_uploaded_file($_FILES['image']['tmp_name'][$key], $location)) {
@@ -57,24 +67,30 @@ class Reports extends CI_Controller
 							if ($zip->open($location)) {
 								$zip->extractTo($targetPath);
 								$dir = trim($zip->getNameIndex(0), '/');
-								$destinationFolder = $targetPath . "/$dir";
+								$destinationFolder = $targetPath . $dir;
 
 								if (!is_dir($destinationFolder)) {
-									mkdir($targetPath . "/$file_name[0]");
-									$zip->extractTo($targetPath . "/$file_name[0]");
+									mkdir($targetPath . "/" . $file_name_only);
+									$zip->extractTo($targetPath . "/" . $file_name_only);
 									$zip->close();
-									$files = scandir($targetPath . "/$file_name[0]");
+									$files = scandir($targetPath . "/" . $file_name_only);
 
 									foreach ($files as $file) {
-										$tmp = explode(".", $file);
-										$file_ext = end($tmp);
+										$tmp_file_name = explode(".", $file);
+										$tmp_file_ext = array_pop($tmp_file_name);
+										$tmp_file_name_only = implode('.', $file_name);
+										$tmp_i = 1;
+
 										$allowed_ext = array("jpg", "jpeg", "png", "PNG", "gif", "JPG");
 										$new_name = '';
-										if (in_array($file_ext, $allowed_ext)) {
-											$new_name = md5(rand()) . '.' . $file_ext;
-
-											copy($targetPath . "/$file_name[0]" . '/' . $file, $targetPath . $new_name);
-											unlink($targetPath . "/$file_name[0]" . '/' . $file);
+										if (in_array($tmp_file_ext, $allowed_ext)) {
+											$new_name = $tmp_file_name_only . '.' . $tmp_file_ext;
+											while (file_exists($targetPath . $new_name)) {
+												$new_name = $tmp_file_name_only . '_' . $tmp_i . '.' . $tmp_file_ext;
+												$tmp_i++;
+											}
+											copy($targetPath . "/" . $file_name_only . '/' . $file, $targetPath . $new_name);
+											unlink($targetPath . "/" . $file_name_only . '/' . $file);
 										}
 										if ($new_name != '') {
 											$img[$i] = $new_name;
@@ -82,21 +98,26 @@ class Reports extends CI_Controller
 										}
 									}
 									unlink($location);
-									$this->rrmdir($targetPath . "/$file_name[0]");
+									$this->rrmdir($targetPath . "/" . $file_name_only);
 								} else {
-
 									$dir = trim($zip->getNameIndex(0), '/');
 									$zip->close();
 									$files = scandir($targetPath . $dir);
 
 									foreach ($files as $file) {
-										$tmp = explode(".", $file);
-										$file_ext = end($tmp);
+										$tmp_file_name = explode(".", $file);
+										$tmp_file_ext = array_pop($tmp_file_name);
+										$tmp_file_name_only = implode('.', $file_name);
+										$tmp_i = 1;
+
 										$allowed_ext = array("jpg", "jpeg", "png", "PNG", "gif", "JPG");
 										$new_name = '';
-										if (in_array($file_ext, $allowed_ext)) {
-											$new_name = md5(rand()) . '.' . $file_ext;
-
+										if (in_array($tmp_file_ext, $allowed_ext)) {
+											$new_name = $tmp_file_name_only . '.' . $tmp_file_ext;
+											while (file_exists($targetPath . $new_name)) {
+												$new_name = $tmp_file_name_only . '_' . $tmp_i . '.' . $tmp_file_ext;
+												$tmp_i++;
+											}
 											copy($targetPath . $dir . '/' . $file, $targetPath . $new_name);
 											unlink($targetPath . $dir . '/' . $file);
 										}
@@ -113,7 +134,6 @@ class Reports extends CI_Controller
 					}
 				}
 			}
-
 			echo json_encode($img);
 		}
 	}
