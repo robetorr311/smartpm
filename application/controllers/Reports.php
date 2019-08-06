@@ -138,6 +138,12 @@ class Reports extends CI_Controller
 		}
 	}
 
+	public function delete($job_id, $report_id)
+	{
+		$this->db->query("UPDATE roofing_project SET active=0 WHERE id='" . $report_id . "' AND job_id='" . $job_id .  "'");
+		return true;
+	}
+
 	function rrmdir($dir)
 	{
 		if (is_dir($dir)) {

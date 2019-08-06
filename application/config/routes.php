@@ -125,23 +125,27 @@ $route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
 $route['lead/(:num)/note/(:num)/replies'] = 'leads/replies/$1/$2';
 $route['lead/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$1/$2';
 $route['lead/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$1/$2/$3';
+
 $route['lead/(:num)/photos'] = 'photos/index/$1';
 $route['lead/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';
 $route['lead/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto';
 $route['lead/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$1/$2';
 $route['lead/(:num)/photo/rotate']['post'] = 'photos/imagerotate';
+
 $route['lead/(:num)/reports'] = 'reports/index/$1';
 $route['lead/(:num)/report/create'] = 'reports/create/$1';
 $route['lead/(:num)/report/upload']['post'] = 'reports/upload';
 $route['lead/(:num)/report/save-img']['post'] = 'reports/save_img';
 $route['lead/(:num)/report/save']['post'] = 'reports/save/$1';
 $route['lead/(:num)/report/(:num)/pdf'] = 'reports/pdf/$2/$1';
-$route['lead/(:num)/report/(:num)/delete']['post'] = 'leads/deletejobreport/$1/$2';
+$route['lead/(:num)/report/(:num)/delete']['post'] = 'reports/delete/$1/$2';
+
 $route['lead/(:num)/docs'] = 'docs/index/$1';
 $route['lead/(:num)/doc/upload']['post'] = 'docs/ajaxupload_jobdoc';
 $route['lead/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
 $route['lead/(:num)/doc/delete']['post'] = 'docs/deletedoc';
 $route['lead/(:num)/doc/update']['post'] = 'docs/updatedocname';
+
 $route['lead/(:num)/party/add']['post'] = 'party/index/$1';
 $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 
