@@ -167,7 +167,6 @@ $route['labor-job/(:num)'] = 'labor_jobs/view/$1';
 $route['labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam/$1';
 $route['labor-job/(:num)/delete'] = 'labor_jobs/delete/$1';
 
-
 $route['productions'] = 'productions/index';
 $route['productions/(:num)'] = 'productions/index/$1';
 $route['production/(:num)'] = 'productions/view/$1';
