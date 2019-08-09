@@ -206,6 +206,12 @@ class Leads extends CI_Controller
 		}
 	}
 
+	public function delete($id)
+	{
+		$this->lead->delete($id);
+		redirect('leads');
+	}
+
 	public function updatestatus()
 	{
 		$posts = $this->input->post();

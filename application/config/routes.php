@@ -112,6 +112,7 @@ $route['leads/(:num)'] = 'leads/index/$1';
 $route['lead/(:num)'] = 'leads/show/$1';
 $route['lead/(:num)/edit'] = 'leads/edit/$1';
 $route['lead/(:num)/update'] = 'leads/update/$1';
+$route['lead/(:num)/delete']['post'] = 'leads/delete/$1';
 $route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
 $route['lead/updatestatus'] = 'leads/updatestatus';
