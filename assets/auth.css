@@ -90,10 +90,22 @@ img {
 	margin-left: 2px;
 }
 
+.forgot-links {
+	float: right;
+	margin-top: 7px;
+	text-align: right;
+}
+
 @media (max-width: 700px) {
 	.header,
 	form,
 	.content {
 		width: 75%;
+	}
+
+	.forgot-links {
+		float: none;
+		margin-top: 20px;
+		text-align: left;
 	}
 }

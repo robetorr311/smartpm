@@ -41,4 +41,15 @@ class Notify
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
+
+    public function sendCompanyCode($email, $company_code)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('Forgot Company Code - SmartPM');
+        $html_message = $this->CI->load->view('template/email/forgot-company-code.php', [
+            'company_code' => $company_code
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
 }

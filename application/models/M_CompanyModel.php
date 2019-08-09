@@ -31,6 +31,17 @@ class M_CompanyModel extends CI_Model
 		], true);
 	}
 
+	public function getCompanyByEmailId($email_id)
+	{
+		$this->selected_db->where([
+			'email_id' => $email_id,
+			'is_deleted' => false
+		]);
+		$query = $this->selected_db->get($this->table);
+		$result = $query->first_row();
+        return $result ? $result : false;
+	}
+
 	public function insert($data)
 	{
 		$insert = $this->selected_db->insert($this->table, $data);

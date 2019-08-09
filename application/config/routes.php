@@ -62,6 +62,8 @@ $route['set-token-verified-password/(:any)']['post'] = 'auth/setTokenVerifiedPas
 $route['signup'] = 'auth/signup';
 $route['register']['post'] = 'auth/register';
 $route['verification/(:any)/(:any)'] = 'auth/verification/$1/$2';
+$route['forgot-company-code'] = 'auth/forgotCompanyCode';
+$route['send-company-code']['post'] = 'auth/sendCompanyCode';
 $route['logout']['post'] = 'auth/logout';
 
 $route['migrate/do_migration'] = 'migrate/do_migration';

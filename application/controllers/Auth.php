@@ -11,6 +11,7 @@ class Auth extends CI_Controller
 		$this->m_emailCred = new M_EmailCredModel();
 		$this->m_database = new M_DatabaseModel();
 	}
+
 	public function index()
 	{
 		if ($this->session->logged_in) {
@@ -19,6 +20,7 @@ class Auth extends CI_Controller
 		}
 		redirect('login');
 	}
+
 	public function login()
 	{
 		if ($this->session->logged_in) {
@@ -27,6 +29,7 @@ class Auth extends CI_Controller
 		}
 		$this->load->view('auth/index');
 	}
+
 	public function auth()
 	{
 		if ($this->session->logged_in) {
@@ -86,6 +89,7 @@ class Auth extends CI_Controller
 			redirect('login');
 		}
 	}
+
 	public function forgotPassword()
 	{
 		if ($this->session->logged_in) {
@@ -94,6 +98,7 @@ class Auth extends CI_Controller
 		}
 		$this->load->view('auth/forgot-password');
 	}
+
 	public function sendPasswordToken()
 	{
 		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
@@ -137,6 +142,7 @@ class Auth extends CI_Controller
 			redirect('forgot-password');
 		}
 	}
+
 	public function resetPassword($token)
 	{
 		if ($this->session->logged_in) {
@@ -147,6 +153,7 @@ class Auth extends CI_Controller
 			'token' => $token
 		]);
 	}
+
 	public function setTokenVerifiedPassword($token)
 	{
 		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
@@ -196,6 +203,7 @@ class Auth extends CI_Controller
 			redirect('reset-password/' . $token);
 		}
 	}
+
 	public function signup()
 	{
 		if ($this->session->logged_in) {
@@ -204,6 +212,7 @@ class Auth extends CI_Controller
 		}
 		$this->load->view('auth/register');
 	}
+
 	public function register()
 	{
 		if ($this->session->logged_in) {
@@ -222,8 +231,11 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
 		$this->form_validation->set_rules('cell_1', 'Cell 1', 'trim|numeric');
 		$this->form_validation->set_rules('cell_2', 'Cell 2', 'trim|numeric');
-		$this->form_validation->set_rules('company_email', 'Company Email ID', 'trim|valid_email');
-		$this->form_validation->set_rules('company_alt_email', 'Company Alt Email ID', 'trim|valid_email');
+		$this->form_validation->set_rules('company_email_id', 'Company Email ID', 'trim|valid_email');
+		$this->form_validation->set_rules('company_email_id', 'Company Email ID', 'trim|required|valid_email|is_unique[companies.email_id]', [
+			'is_unique' => 'The company with this Email ID is already exist.'
+		]);
+		$this->form_validation->set_rules('company_alt_email_id', 'Company Alt Email ID', 'trim|valid_email');
 		if ($this->form_validation->run() == TRUE) {
 			$userData = $this->input->post();
 			$m_companyInsert = $this->m_company->insert([
@@ -318,6 +330,7 @@ class Auth extends CI_Controller
 			redirect('signup');
 		}
 	}
+
 	public function verification($company_code, $token)
 	{
 		if ($this->session->logged_in) {
@@ -346,6 +359,39 @@ class Auth extends CI_Controller
 			'company_code' => $company_code
 		]);
 	}
+
+	public function forgotCompanyCode()
+	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+		$this->load->view('auth/forgot-company-code');
+	}
+
+	public function sendCompanyCode()
+	{
+		$this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email');
+		if ($this->form_validation->run() == TRUE) {
+			$data = $this->input->post();
+			$company = $this->m_company->getCompanyByEmailId($data['email']);
+			if ($company) {
+				$this->notify->sendCompanyCode($company->email_id, $company->company_code);
+				$message = '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Your company code successfully sent to your company\'s Email ID.</div>';
+				$this->session->set_flashdata('errors', $message);
+				redirect('forgot-company-code');
+			} else {
+				$message = '<div class="error"><p>Unable to find your company\'s email in our system.</p></div>';
+				$this->session->set_flashdata('errors', $message);
+				redirect('forgot-company-code');
+			}
+		} else {
+			$message = '<div class="error">' . validation_errors() . '</div>';
+			$this->session->set_flashdata('errors', $message);
+			redirect('forgot-company-code');
+		}
+	}
+
 	public function logout()
 	{
 		$this->session->sess_destroy();

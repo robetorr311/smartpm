@@ -38,14 +38,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="input-group">
 		<button type="submit" id="submit" class="btn" name="login_user" onclick="setCompanyCode()">Login</button>
 
-		<p style="float: right; margin-top: 7px;">
-			<a href="<?= base_url('forgot-password') ?>">forogot password</a>
+		<p class="forgot-links">
+			<a href="<?= base_url('forgot-password') ?>">forogot password</a><br />
+			<a href="<?= base_url('forgot-company-code') ?>">forogot company code</a>
 		</p>
 	</div>
 
-	<p>
-		Not yet a member? <a href="<?= base_url('signup'); ?>">Sign up</a>
-	</p>
+	<div style="width: 100%; margin-top: 20px;">
+		<p>
+			Not yet a member? <a href="<?= base_url('signup'); ?>">Sign up</a>
+		</p>
+	</div>
 	<?= form_close(); ?>
 
 	<script>
