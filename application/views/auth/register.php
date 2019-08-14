@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<?= form_open('register', ['method' => 'post']) ?>
 	<h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Create Account</h2>
 
-	<?= $this->session->flashdata('message') ?>
+	<?= $this->session->flashdata('errors') ?>
 
 	<div class="input-group">
 		<label>First Name<span class="red-mark">*</span></label>
@@ -68,8 +68,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<input type="text" name="company_name" placeholder="Name">
 	</div>
 	<div class="input-group">
-		<label>Email ID</label>
-		<input type="text" name="company_email_id" placeholder="Email ID">
+		<label>Email ID<span class="red-mark">*</span></label>
+		<input type="text" name="company_email_id" placeholder="Email ID" required>
 	</div>
 	<div class="input-group">
 		<label>Alternate Email ID</label>

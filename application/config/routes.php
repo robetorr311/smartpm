@@ -62,6 +62,8 @@ $route['set-token-verified-password/(:any)']['post'] = 'auth/setTokenVerifiedPas
 $route['signup'] = 'auth/signup';
 $route['register']['post'] = 'auth/register';
 $route['verification/(:any)/(:any)'] = 'auth/verification/$1/$2';
+$route['forgot-company-code'] = 'auth/forgotCompanyCode';
+$route['send-company-code']['post'] = 'auth/sendCompanyCode';
 $route['logout']['post'] = 'auth/logout';
 
 $route['migrate/do_migration'] = 'migrate/do_migration';
@@ -83,18 +85,6 @@ $route['migrate/(:num)/undo_migration/(:num)'] = 'migrate_company/undo_migration
 $route['migrate/(:num)/reset_migration'] = 'migrate_company/reset_migration/$1';
 
 $route['dashboard'] = 'dashboard/index';
-
-$route['photos/(:num)'] = 'photos/index/$1';
-$route['photo/upload'] = 'photos/ajaxupload_jobphoto';
-$route['photo/save'] = 'photos/ajaxsave_jobphoto';
-$route['photo/delete'] = 'photos/deletephoto';
-$route['photo/rotate'] = 'photos/imagerotate';
-
-$route['docs/(:num)'] = 'docs/index/$1';
-$route['doc/upload'] = 'docs/ajaxupload_jobdoc';
-$route['doc/save'] = 'docs/ajaxsave_jobdoc';
-$route['doc/delete'] = 'docs/deletedoc';
-$route['doc/update'] = 'docs/updatedocname';
 
 $route['users'] = 'users/index';
 $route['users/(:num)'] = 'users/index/$1';
@@ -119,14 +109,13 @@ $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
 $route['leads/(:num)'] = 'leads/index/$1';
-$route['lead/(:num)'] = 'leads/view/$1';
+$route['lead/(:num)'] = 'leads/show/$1';
 $route['lead/(:num)/edit'] = 'leads/edit/$1';
 $route['lead/(:num)/update'] = 'leads/update/$1';
-$route['lead/new'] = 'leads/new';
+$route['lead/(:num)/delete']['post'] = 'leads/delete/$1';
+$route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
-$route['lead/updatestatus'] = 'leads/updatestatus';
-$route['lead/(:num)/reports'] = 'leads/alljobreport/$1';
-$route['lead/(:num)/delete-report'] = 'leads/deletejobreport/$1';
+$route['lead/(:num)/updatestatus'] = 'leads/updatestatus/$1';
 $route['lead/archive'] = 'leads/archive';
 $route['lead/archive/(:num)'] = 'leads/archive/$1';
 $route['lead/closed'] = 'leads/closed';
@@ -140,8 +129,28 @@ $route['lead/(:num)/note/(:num)/replies'] = 'leads/replies/$1/$2';
 $route['lead/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$1/$2';
 $route['lead/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$1/$2/$3';
 
-$route['party/(:num)/add'] = 'party/index/$1';
-$route['party/(:num)/update'] = 'party/update/$1';
+$route['lead/(:num)/photos'] = 'photos/index/$1';
+$route['lead/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';
+$route['lead/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto';
+$route['lead/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$1/$2';
+$route['lead/(:num)/photo/rotate']['post'] = 'photos/imagerotate';
+
+$route['lead/(:num)/reports'] = 'reports/index/$1';
+$route['lead/(:num)/report/create'] = 'reports/create/$1';
+$route['lead/(:num)/report/upload']['post'] = 'reports/upload';
+$route['lead/(:num)/report/save-img']['post'] = 'reports/save_img';
+$route['lead/(:num)/report/save']['post'] = 'reports/save/$1';
+$route['lead/(:num)/report/(:num)/pdf'] = 'reports/pdf/$2/$1';
+$route['lead/(:num)/report/(:num)/delete']['post'] = 'reports/delete/$1/$2';
+
+$route['lead/(:num)/docs'] = 'docs/index/$1';
+$route['lead/(:num)/doc/upload']['post'] = 'docs/ajaxupload_jobdoc';
+$route['lead/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
+$route['lead/(:num)/doc/delete']['post'] = 'docs/deletedoc';
+$route['lead/(:num)/doc/update']['post'] = 'docs/updatedocname';
+
+$route['lead/(:num)/party/add']['post'] = 'party/index/$1';
+$route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 
 $route['cash-jobs'] = 'cash_jobs/index';
 $route['cash-jobs/(:num)'] = 'cash_jobs/index/$1';
@@ -160,7 +169,6 @@ $route['labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['labor-job/(:num)'] = 'labor_jobs/view/$1';
 $route['labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam/$1';
 $route['labor-job/(:num)/delete'] = 'labor_jobs/delete/$1';
-
 
 $route['productions'] = 'productions/index';
 $route['productions/(:num)'] = 'productions/index/$1';
@@ -190,12 +198,5 @@ $route['setting/(:num)/delete'] = 'setting/deltag';
 $route['setting/ajaxupload'] = 'setting/ajaxupload';
 $route['setting/ajaxsave'] = 'setting/ajaxsave';
 $route['setting/ajaxcolor'] = 'setting/ajaxcolor';
-
-$route['report/(:num)'] = 'reports/index/$1';
-$route['report/(:num)/create'] = 'reports/create/$1';
-$route['report/upload'] = 'reports/upload';
-$route['report/save-img'] = 'reports/save_img';
-$route['report/(:num)/save'] = 'reports/save/$1';
-$route['report/(:num)/pdf/(:num)'] = 'reports/pdf/$1/$2';
 
 $route['(.+)'] = 'errors/page_missing';

@@ -128,7 +128,7 @@ class TaskModel extends CI_Model
     /**
      * Static Methods
      */
-    public static function typetostr($id)
+    public static function typeToStr($id)
     {
         return isset(self::$type[$id]) ? self::$type[$id] : $id;
     }
@@ -138,7 +138,7 @@ class TaskModel extends CI_Model
         return self::$type;
     }
 
-    public static function leveltostr($id)
+    public static function levelToStr($id)
     {
         return isset(self::$level[$id]) ? self::$level[$id] : $id;
     }
@@ -148,7 +148,7 @@ class TaskModel extends CI_Model
         return self::$level;
     }
 
-    public static function statustostr($id)
+    public static function statusToStr($id)
     {
         return isset(self::$status[$id]) ? self::$status[$id] : $id;
     }

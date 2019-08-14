@@ -11,6 +11,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
             ?>
         </div>
+    </div>
+    <div class="row">
         <div class="col-lg-9">
             <div class="card task-notes-card">
                 <div class="header">
@@ -79,13 +81,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <label>Type</label>
-                            <p><?= TaskModel::typetostr($task->type) ?></p>
+                            <p><?= TaskModel::typeToStr($task->type) ?></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <label>Importance Level</label>
-                            <p><?= TaskModel::leveltostr($task->level) ?></p>
+                            <p><?= TaskModel::levelToStr($task->level) ?></p>
                         </div>
                     </div>
                     <div class="row">
@@ -145,7 +147,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <label>Status</label>
-                            <p><?= TaskModel::statustostr($task->status) ?></p>
+                            <p><?= TaskModel::statusToStr($task->status) ?></p>
                         </div>
                     </div>
                     <div class="row">
@@ -161,11 +163,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                     <?php if ($task->status != 4) { ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="<?= base_url('task/' . $task->id .'/complete' ) ?>" data-method="POST" class="btn btn-info btn-fill col-xs-12">Mark As Complete</a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="<?= base_url('task/' . $task->id . '/complete') ?>" data-method="POST" class="btn btn-info btn-fill col-xs-12">Mark As Complete</a>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                     <div class="clearfix"></div>
                 </div>
@@ -174,7 +176,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#note-input').atwho({
             at: '@',
             data: <?= json_encode($users) ?>,

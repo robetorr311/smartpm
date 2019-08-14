@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="container-fluid">
-  <div class="row admin"><?= $this->session->flashdata('message') ?>
+  <div class="row admin"><?= $this->session->flashdata('errors') ?>
     <?php if (!empty($settings)) : ?>
       <div class="">
         <div class="col-md-6">

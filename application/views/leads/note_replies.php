@@ -88,12 +88,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content view">
                     <div class="row">
                         <div class="col-md-12">
-                            <label>Job Number</label>
-                            <p><?= $lead->job_number ?></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
                             <label>Lead Name</label>
                             <p><?= $lead->job_name ?></p>
                         </div>

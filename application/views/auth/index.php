@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<?= form_open('auth', ['method' => 'post']) ?>
 	<h2 style="font-size: 16px;text-align: center;margin-bottom: 20px;">Sign in to continue</h2>
 
-	<?= $this->session->flashdata('message') ?>
+	<?= $this->session->flashdata('errors') ?>
 
 	<div class="input-group">
 		<label>Company Code<span class="red-mark">*</span></label>
@@ -38,14 +38,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="input-group">
 		<button type="submit" id="submit" class="btn" name="login_user" onclick="setCompanyCode()">Login</button>
 
-		<p style="float: right; margin-top: 7px;">
-			<a href="<?= base_url('forgot-password') ?>">forogot password</a>
+		<p class="forgot-links">
+			<a href="<?= base_url('forgot-password') ?>">forogot password</a><br />
+			<a href="<?= base_url('forgot-company-code') ?>">forogot company code</a>
 		</p>
 	</div>
 
-	<p>
-		Not yet a member? <a href="<?= base_url('signup'); ?>">Sign up</a>
-	</p>
+	<div style="width: 100%; margin-top: 20px;">
+		<p>
+			Not yet a member? <a href="<?= base_url('signup'); ?>">Sign up</a>
+		</p>
+	</div>
 	<?= form_close(); ?>
 
 	<script>

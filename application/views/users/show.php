@@ -52,7 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Level</label>
-                                    <p><?= UserModel::leveltostr($user->level) ?></p>
+                                    <p><?= UserModel::levelToStr($user->level) ?></p>
                                 </div>
                             </div>
                         </div>
@@ -88,13 +88,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Notifications</label>
-                                    <p><?= UserModel::notificationstostr($user->notifications) ?></p>
+                                    <p><?= UserModel::notificationsToStr($user->notifications) ?></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <p><?= UserModel::activetostr($user->is_active) ?></p>
+                                    <p><?= UserModel::activeToStr($user->is_active) ?></p>
                                 </div>
                             </div>
                         </div>
