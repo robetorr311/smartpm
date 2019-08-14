@@ -215,7 +215,7 @@ class UserModel extends CI_Model
 	/**
 	 * Static Methods
 	 */
-	public static function leveltostr($level)
+	public static function levelToStr($level)
 	{
 		return (self::$levels[$level]) ? self::$levels[$level] : $level;
 	}
@@ -225,12 +225,12 @@ class UserModel extends CI_Model
 		return self::$levels;
 	}
 
-	public static function activetostr($active)
+	public static function activeToStr($active)
 	{
 		return $active ? 'Active' : 'Inactive';
 	}
 
-	public static function notificationstostr($id)
+	public static function notificationsToStr($id)
 	{
 		return (self::$notifications[$id]) ? self::$notifications[$id] : $id;
 	}

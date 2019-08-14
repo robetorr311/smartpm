@@ -5,15 +5,86 @@ class LeadModel extends CI_Model
 {
     private $table = 'jobs';
 
-    /* get All jobs */
+    private static $status = [
+        0 => 'New',
+        1 => 'Appointment Scheduled',
+        2 => 'Needs Follow Up Call',
+        3 => 'Needs Site Visit',
+        4 => 'Needs Estimate/Bid',
+        5 => 'Estimate Sent',
+        6 => 'Ready to Sign / Verbal Go',
+        7 => 'Signed Insurance Contract',
+        8 => 'Signed Cash Contract',
+        9 => 'Worry to Lose',
+        10 => 'Postponed',
+        11 => 'Dead / Lost'
+    ];
+    private static $type = [
+        0 => 'Undefined / None',
+        1 => 'Residential',
+        2 => 'Commercial',
+        3 => 'Government',
+        4 => 'Industrial',
+        5 => 'Repair'
+    ];
+
+    public function allLeads($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where('is_deleted', FALSE);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getLeadsCount()
+    {
+        $this->db->where('is_deleted', FALSE);
+        return $this->db->count_all_results($this->table);
+    }
+
+    public function insert($data)
+    {
+        $data['created_by'] = $this->session->id;
+        $insert = $this->db->insert($this->table, $data);
+        return $insert ? $this->db->insert_id() : $insert;
+    }
+
+
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        $update = $this->db->update($this->table, $data);
+        return $update;
+    }
+
+    public function delete($id)
+    {
+        return $this->update($id, [
+            'is_deleted' => TRUE
+        ]);
+    }
+
+    /**
+     * ***********************************
+     * ***********************************
+     * 
+     * OLD CODES FROM THIS COMMENT ONWARDS
+     * 
+     * ***********************************
+     * ***********************************
+     */
+
     public function getAllJob($start = 0, $limit = 10)
     {
-        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
+        // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
+        $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status');
         $this->db->from($this->table);
-        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        $this->db->where([
-            'lead' => 'open', 'job' => ''
-        ]);
+        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        // $this->db->where([
+        //     'lead' => '0', 'job' => ''
+        // ]);
         $this->db->order_by('id', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -25,7 +96,6 @@ class LeadModel extends CI_Model
         $this->db->where([
             'id' => $id
         ]);
-        $this->db->order_by("id", "desc");
         $query = $this->db->get($this->table);
         $result = $query->first_row();
         return $result ? $result : false;
@@ -33,12 +103,12 @@ class LeadModel extends CI_Model
 
     public function getAllSignedJob($start = 0, $limit = 10)
     {
-        $this->db->select('jobs.*, jobs_status.*');
+        // $this->db->select('jobs.*, jobs_status.*');
         $this->db->from($this->table);
-        $this->db->join('jobs_status', 'jobs.id=jobs_status.jobid', 'left');
-        $this->db->where([
-            'jobs_status.lead' => 'open', 'jobs_status.contract' => 'signed'
-        ]);
+        // $this->db->join('jobs_status', 'jobs.id=jobs_status.jobid', 'left');
+        // $this->db->where([
+        //     'jobs_status.lead' => 'open', 'jobs_status.contract' => 'signed'
+        // ]);
         $this->db->order_by('jobs.id', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -47,8 +117,9 @@ class LeadModel extends CI_Model
 
     public function getSignedJobCount()
     {
-        $this->db->where(['contract' => 'signed']);
-        return $this->db->count_all_results('jobs_status');
+        // $this->db->where(['contract' => 'signed']);
+        // return $this->db->count_all_results('jobs_status');
+        return $this->db->count_all_results($this->table);
     }
 
     public function get_all_where($tablename, $condition)
@@ -59,13 +130,13 @@ class LeadModel extends CI_Model
         return $result->result();
     }
 
-    /* get job based on job type */
     public function getJobType($start = 0, $limit = 10, $condition)
     {
-        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
+        $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status');
+        // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
         $this->db->from($this->table);
-        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        $this->db->where($condition);
+        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        // $this->db->where($condition);
         $this->db->order_by('id', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -74,41 +145,37 @@ class LeadModel extends CI_Model
 
     public function getCount()
     {
-        $this->db->where(['contract' => 'unsigned', 'lead' => 'open']);
-        return $this->db->count_all_results('jobs_status');
+        $this->db->from($this->table);
+        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        // $this->db->where([
+        //     'lead' => 'open', 'job' => ''
+        // ]);
+        return $this->db->count_all_results();
     }
 
     public function getCountBasedJobType($type)
     {
-        $this->db->where(['job' => $type, 'lead' => 'open']);
-        return $this->db->count_all_results('jobs_status');
+        // $this->db->where(['job' => $type, 'lead' => 'open']);
+        // return $this->db->count_all_results('jobs_status');
+        return $this->db->count_all_results($this->table);
     }
 
     public function getCountBasedJobStatus($status)
     {
-        $this->db->where(['production' => $status]);
-        return $this->db->count_all_results('jobs_status');
-    }
-
-    public function add_record($array)
-    {
-        $this->db->insert($this->table, $array);
-
-        if ($this->db->affected_rows() > 0) {
-            return $this->db->insert_id();
-        } else {
-            return false;
-        }
+        // $this->db->where(['production' => $status]);
+        // return $this->db->count_all_results('jobs_status');
+        return $this->db->count_all_results($this->table);
     }
 
     public function getClosedJob($start = 0, $limit = 10)
     {
-        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
+        $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status, jobs.id as date');
+        // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
         $this->db->from($this->table);
-        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        $this->db->where([
-            'status.closeout' => 'yes'
-        ]);
+        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        // $this->db->where([
+        //     'status.closeout' => 'yes'
+        // ]);
         $this->db->order_by('id', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -117,12 +184,13 @@ class LeadModel extends CI_Model
 
     public function archiveJob($start = 0, $limit = 10)
     {
-        $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
+        $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status, jobs.id as date');
+        // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
         $this->db->from($this->table);
-        $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        $this->db->where([
-            'status.closeout' => 'yes'
-        ]);
+        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
+        // $this->db->where([
+        //     'status.closeout' => 'yes'
+        // ]);
         $this->db->order_by('id', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -131,8 +199,9 @@ class LeadModel extends CI_Model
 
     public function getCountClosedJob()
     {
-        $this->db->where(['closeout' => 'yes']);
-        return $this->db->count_all_results('jobs_status');
+        // $this->db->where(['closeout' => 'yes']);
+        // return $this->db->count_all_results('jobs_status');
+        return $this->db->count_all_results($this->table);
     }
 
     public function update_record($updatedArray, $condition)
@@ -146,11 +215,26 @@ class LeadModel extends CI_Model
         }
     }
 
-
-    public function delete($id)
+    /**
+     * Static Methods
+     */
+    public static function statusToStr($id)
     {
-        return $this->db->delete($this->table, [
-            'id' => $id
-        ]);
+        return isset(self::$status[$id]) ? self::$status[$id] : $id;
+    }
+
+    public static function getStatus()
+    {
+        return self::$status;
+    }
+
+    public static function typeToStr($id)
+    {
+        return isset(self::$type[$id]) ? self::$type[$id] : $id;
+    }
+
+    public static function getType()
+    {
+        return self::$type;
     }
 }

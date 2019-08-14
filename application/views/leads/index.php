@@ -30,9 +30,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<th>Lead Name</th>
 							<th>First Name</th>
 							<th>Last Name</th>
-							<th>Address</th>
 							<th>Status</th>
-							<th>Contract</th>
+							<th>Type</th>
 							<th class="text-center">View</th>
 							<th class="text-center">Edit</th>
 							<th class="text-center">Delete</th>
@@ -41,13 +40,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<?php if (!empty($leads)) : ?>
 								<?php foreach ($leads as $lead) : ?>
 									<tr>
-										<td><?= $lead->job_number; ?></td>
+										<td><?= ('RJOB' . $lead->id); ?></td>
 										<td><?= $lead->job_name ?></td>
 										<td><?= $lead->firstname ?></td>
 										<td><?= $lead->lastname ?></td>
-										<td><?= $lead->address ?></td>
-										<td><?= $lead->lead_status ?></td>
-										<td><?= $lead->contract_status ?></td>
+										<td><?= LeadModel::statusToStr($lead->status) ?></td>
+										<td><?= LeadModel::typeToStr($lead->type) ?></td>
 										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
 										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
 										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>

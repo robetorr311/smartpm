@@ -364,6 +364,7 @@ th {
 	float: right;
 	display: block;
 	color: white;
+	background-color: #333333;
 	padding: 4px 20px;
 	border-radius: 2px;
 	letter-spacing: 1px;

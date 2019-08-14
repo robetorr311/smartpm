@@ -86,13 +86,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Home Phone :</label>
-                                <p><?= $lead->phone2 ?></p>
+                                <p><?= $lead->phone2 ? $lead->phone2 : '-' ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email :</label>
-                                <p><?= $lead->email ?></p>
+                                <p><?= $lead->email ? $lead->email : '-' ?></p>
                             </div>
                         </div>
                     </div>
@@ -113,25 +113,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <div class="col-md-4">
             <div class="card">
-                <?php if ($status) : ?>
                     <div class="header">
                         <h4 class="title" style="float: left;">Lead Status</h4>
-                        <span class="status <?= ($status->lead != 'open') ? 'closed' : 'open' ?>">
-                            <?= $status->lead; ?>
-                        </span>
-                        <div class="clearfix" style="padding: 10px;"></div>
-                        <h4 class="title" style="float: left;">Contract Status</h4>
-                        <span class="status <?= ($status->contract == 'signed') ? 'open' : 'closed' ?>">
-                            <?= $status->contract; ?>
+                        <span class="status">
+                            <?= LeadModel::statusToStr($lead->status); ?>
                         </span>
                         <div class="clearfix" style="padding: 10px;"></div>
                         <h4 class="title" style="float: left;">Job Type</h4>
-                        <span class="status <?= ($status->job == '') ? 'closed' : 'open' ?>">
-                            <?= empty($status->job) ? ' None' : $status->job ?>
+                        <span class="status">
+                            <?= LeadModel::typeToStr($lead->type) ?>
                         </span>
                         <div class="clearfix" style="padding: 10px;"></div>
                     </div>
-                <?php endif; ?>
             </div>
             <div class="card">
                 <div class="header">

@@ -2,7 +2,17 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row">
-        <?= $this->session->flashdata('errors') ?>
+        <div class="col-md-12">
+            <?php
+            if (!empty($this->session->flashdata('errors'))) {
+                echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+                echo $this->session->flashdata('errors');
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
@@ -11,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                 </div>
                 <div class="content">
-                    <?= form_open('lead/' . $lead->id . '/update', array('method' => 'post')); ?>
+                    <?= form_open('lead/' . $lead->id . '/update', array('method' => 'post')) ?>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -56,7 +66,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>State<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Country" Name="country" value="<?= $lead->state ?>" type="text">
+                                <input class="form-control" placeholder="State" Name="state" value="<?= $lead->state ?>" type="text">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -90,74 +100,46 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
                     <div class="clearfix"></div>
-                    <?= form_close(); ?>
+                    <?= form_close() ?>
                 </div>
 
             </div>
         </div>
 
         <div class="col-md-4">
-            <?php
-            $lstatus = "";
-            $cstatus = "";
-            $jtype = ""; ?>
-            <?php if ($status) :
-                $lstatus = $status->lead;
-                $cstatus = $status->contract;
-                $jtype = $status->job;
-            endif; ?>
             <div class="card">
+                <?= form_open('lead/' . $jobid . '/updatestatus', array('method' => 'post')) ?>
                 <div class="header">
                     <h4 class="title" style="float: left;">Lead Status</h4>
-                    <span class="status lead <?= ($lstatus == 'closed') ? 'closed' : 'open' ?>">
-                        <?= ($lstatus != '') ? $lstatus : "None" ?>
+                    <span class="status">
+                        <?= LeadModel::statusToStr($lead->status) ?>
                     </span>
                     <div class="clearfix"></div>
                     <div class="content">
-                        <select class="form-control" id="lead">
-                            <?php foreach ($lead_status_tags as $s_tags) : ?>
-                                <option value="<?= $s_tags->status_value ?>" <?= ($s_tags->status_value == $lstatus) ? 'selected' : '' ?>>
-                                    <?= $s_tags->status_value ?>
-                                </option>
+                        <select class="form-control" id="lead" name="status">
+                            <?php foreach ($lead_status_tags as $s_id => $s_tags) : ?>
+                            <option value="<?= $s_id ?>" <?= ($s_id == $lead->status) ? 'selected' : '' ?>><?= $s_tags ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
-
-                <div class="header">
-                    <h4 class="title" style="float: left;">Contract Status</h4>
-                    <span class="status contract <?= ($cstatus == 'unsigned') ? 'closed' : 'open' ?>">
-                        <?= ($cstatus != '') ? $cstatus : "None" ?>
-                    </span>
-                    <div class="clearfix"></div>
-                    <div class="content">
-                        <select class="form-control lead-status" id="contract">
-                            <?php foreach ($contract_status_tags as $contract) : ?>
-                                <option value="<?= $contract->status_value ?>" <?= ($contract->status_value == $cstatus) ? 'selected' : '' ?>>
-                                    <?= $contract->status_value ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-
                 <div class="header">
                     <h4 class="title" style="float: left;">Job Type</h4>
-                    <span class="status job <?= ($jtype == '') ? 'closed' : 'open' ?>">
-                        <?= ($jtype != '') ? $jtype : "None" ?>
+                    <span class="status">
+                        <?= LeadModel::typeToStr($lead->type) ?>
                     </span>
                     <div class="clearfix"></div>
                     <div class="content">
-                        <select class="form-control lead-status" id="job" disabled="">
-                            <option value="">Choose type</option>
-                            <?php foreach ($job_type_tags as $job) : ?>
-                                <option value="<?= $job->status_value ?>" <?= ($job->status_value == $jtype) ? 'selected': '' ?>>
-                                    <?= $job->status_value ?>
-                                </option>
+                        <select class="form-control lead-status" id="job" name="type">
+                            <?php foreach ($job_type_tags as $j_id => $job) : ?>
+                            <option value="<?= $j_id ?>" <?= ($j_id == $lead->type) ? 'selected' : '' ?>><?= $job ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                    <div class="clearfix" style="padding: 10px;"></div>
                 </div>
+                <?= form_close() ?>
             </div>
             <div class="card">
                 <div class="header">
@@ -165,64 +147,64 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content">
                     <?php if (!empty($add_info)) : ?>
-                        <?= form_open('lead/' . $jobid . '/party/update', array('method' => 'post')); ?>
+                    <?= form_open('lead/' . $jobid . '/party/update', array('method' => 'post')) ?>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <input class="form-control" name="firstname" value="<?= $add_info->fname ?>" placeholder="First Name" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input class="form-control" placeholder="Last Name" name="lastname" value="<?= $add_info->lname ?>" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input class="form-control" placeholder="Phone" name="phone" value="<?= $add_info->phone ?>" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input class="form-control" placeholder="Email" name="email" value="<?= $add_info->email ?>" type="text">
-                                </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input class="form-control" name="firstname" value="<?= $add_info->fname ?>" placeholder="First Name" type="text">
                             </div>
-                        </div>
 
-                        <?= form_close(); ?>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input class="form-control" placeholder="Last Name" name="lastname" value="<?= $add_info->lname ?>" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input class="form-control" placeholder="Phone" name="phone" value="<?= $add_info->phone ?>" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" placeholder="Email" name="email" value="<?= $add_info->email ?>" type="text">
+                            </div>
+                            <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                        </div>
+                    </div>
+
+                    <?= form_close() ?>
                     <?php else : ?>
-                        <?= form_open('lead/' . $jobid . '/party/add', array('method' => 'post')); ?>
+                    <?= form_open('lead/' . $jobid . '/party/add', array('method' => 'post')) ?>
 
-                        <div class="row">
+                    <div class="row">
 
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <input class="form-control" name="firstname" value="" placeholder="First Name" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input class="form-control" placeholder="Last Name" name="lastname" value="" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input class="form-control" placeholder="Phone" name="phone" value="" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input class="form-control" placeholder="Email" name="email" value="" type="text">
-                                </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input class="form-control" name="firstname" value="" placeholder="First Name" type="text">
                             </div>
-                        </div>
 
-                        <?= form_close(); ?>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input class="form-control" placeholder="Last Name" name="lastname" value="" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input class="form-control" placeholder="Phone" name="phone" value="" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" placeholder="Email" name="email" value="" type="text">
+                            </div>
+                            <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                        </div>
+                    </div>
+
+                    <?= form_close() ?>
 
                     <?php endif; ?>
                 </div>
@@ -230,82 +212,3 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        var baseUrl = '<?= base_url(); ?>';
-        $('#lead').change(function() {
-            var value = $(this).val();
-            var id = $('.hidden_id').val();
-            var status = $(this).attr('id');
-            var contract_status = $('#contract').val();
-            if (value == 'open') {
-                $('#contract').removeAttr('disabled');
-                $('#job').removeAttr('disabled');
-                $.ajax({
-                    url: baseUrl + 'lead/updatestatus',
-                    data: {
-                        value: value,
-                        id: id,
-                        status: status
-                    },
-                    type: 'post',
-                    success: function(php_script_response) {
-                        $('.' + status).html(value);
-                    }
-                });
-            } else if (value != open && contract_status != 'signed') {
-                $('#contract').prop('disabled', 'disabled');
-                $('#job').prop('disabled', 'disabled');
-                $.ajax({
-                    url: baseUrl + 'lead/updatestatus',
-                    data: {
-                        value: value,
-                        id: id,
-                        status: status
-                    },
-                    type: 'post',
-                    success: function(php_script_response) {
-                        $('.' + status).html(value);
-                    }
-                });
-            } else {
-                alert('Contract Already Signed. First Unsigned Contract than update lead Status!');
-            }
-        });
-
-        $('.lead-status').change(function() {
-            var value = $(this).val();
-            var id = $('.hidden_id').val();
-            var status = $(this).attr('id');
-
-            var lead_status = $('#lead').val();
-            var contract_status = $('#contract').val();
-            if (contract_status == "signed") {
-                $('#job').removeAttr('disabled');
-            } else {
-                $('#job').prop('disabled', 'disabled');
-            }
-
-            if (lead_status == 'open') {
-                $.ajax({
-                    url: baseUrl + 'lead/updatestatus',
-                    data: {
-                        value: value,
-                        id: id,
-                        status: status
-                    },
-                    type: 'post',
-                    success: function(php_script_response) {
-
-                        $('.' + status).html(value);
-                        if (value == 'unsigned') {
-                            $("#job option:selected").prop("selected", false)
-                        }
-                    }
-                });
-            } else {
-                alert('Job Status Must be Open Before Sign a Contract!');
-            }
-        });
-    });
-</script>

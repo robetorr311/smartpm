@@ -43,9 +43,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tr>
                                         <td><?= $task->id ?></td>
                                         <td><?= $task->name ?></td>
-                                        <td><?= TaskModel::typetostr($task->type) ?></td>
-                                        <td><?= TaskModel::leveltostr($task->level) ?></td>
-                                        <td><?= TaskModel::statustostr($task->status) ?></td>
+                                        <td><?= TaskModel::typeToStr($task->type) ?></td>
+                                        <td><?= TaskModel::levelToStr($task->level) ?></td>
+                                        <td><?= TaskModel::statusToStr($task->status) ?></td>
                                         <td><?= $task->assigned_user_fullname ?></td>
                                         <td><?= $task->created_user_fullname ?></td>
                                         <td class="text-center"><a href="<?= base_url('task/' . $task->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>

@@ -24,12 +24,12 @@ class Leads extends CI_Controller
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('leads'),
-			'total_rows' => $this->lead->getCount(),
+			'total_rows' => $this->lead->getLeadsCount(),
 			'per_page' => $limit
 		];
 		$this->pagination->initialize($pagiConfig);
 
-		$leads = $this->lead->getAllJob($start, $limit);
+		$leads = $this->lead->allLeads($start, $limit);
 		$this->load->view('header', ['title' => 'Leads']);
 		$this->load->view('leads/index', [
 			'leads' => $leads,
@@ -45,18 +45,44 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function show($jobid)
+	public function store()
 	{
-		$lead = $this->lead->getLeadById($jobid);
-		if ($lead) {
-			$add_info = $this->party->getPartyByLeadId($jobid);
-			$status = $this->status->getStatusByLeadId($jobid);
-			$this->load->view('header', ['title' => 'Lead Detail']);
-			$this->load->view('leads/show', ['status' => $status, 'lead' => $lead, 'add_info' => $add_info, 'jobid' => $jobid]);
-			$this->load->view('footer');
+		$this->form_validation->set_rules('jobname', 'Job Name', 'trim|required');
+		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
+		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
+		$this->form_validation->set_rules('address', 'Address', 'trim|required');
+		$this->form_validation->set_rules('city', 'City', 'trim|required');
+		$this->form_validation->set_rules('state', 'State', 'trim|required');
+		$this->form_validation->set_rules('zip', 'Postal Code', 'trim|required');
+		$this->form_validation->set_rules('phone1', 'Cell Phone', 'trim|required');
+		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
+		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
+
+		if ($this->form_validation->run() == TRUE) {
+			$posts = $this->input->post();
+			$insert = $this->lead->insert([
+				'job_name' => $posts['jobname'],
+				'firstname' => $posts['firstname'],
+				'lastname' => $posts['lastname'],
+				'address' => $posts['address'],
+				'city' => $posts['city'],
+				'state' => $posts['state'],
+				'zip' => $posts['zip'],
+				'phone1' => $posts['phone1'],
+				'phone2' => $posts['phone2'],
+				'email' => $posts['email'],
+				'entry_date' => date('Y-m-d h:i:s')
+			]);
+
+			if ($insert) {
+				redirect('lead/' . $insert);
+			} else {
+				$this->session->set_flashdata('errors', '<p>Unable to Create Lead.</p>');
+				redirect('lead/create');
+			}
 		} else {
-			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			$this->session->set_flashdata('errors', validation_errors());
+			redirect('lead/create');
 		}
 	}
 
@@ -84,85 +110,24 @@ class Leads extends CI_Controller
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
-			$job_type_tags = $this->status_tags->getall('job_type');
-			$lead_status_tags = $this->status_tags->getall('lead_status');
-			$contract_status_tags = $this->status_tags->getall('contract_status');
+			$job_type_tags = LeadModel::getType();
+			$lead_status_tags = LeadModel::getStatus();
 			$status = $this->status->getStatusByLeadId($jobid);
 			$this->load->view('header', ['title' => 'Lead Update']);
-			$this->load->view('leads/edit', ['job_type_tags' => $job_type_tags, 'lead_status_tags' => $lead_status_tags, 'contract_status_tags' => $contract_status_tags, 'lead' => $lead, 'status' => $status, 'add_info' => $add_info, 'jobid' => $jobid]);
+			$this->load->view('leads/edit', [
+				'job_type_tags' => $job_type_tags,
+				'lead_status_tags' => $lead_status_tags,
+				'lead' => $lead,
+				'status' => $status,
+				'add_info' => $add_info,
+				'jobid' => $jobid
+			]);
 			$this->load->view('footer');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
 			redirect('leads');
 		}
 	}
-
-
-	public function store()
-	{
-		$this->form_validation->set_rules('jobname', 'Job Name', 'trim|required');
-		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
-		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
-		$this->form_validation->set_rules('address', 'Address', 'trim|required');
-		$this->form_validation->set_rules('city', 'City', 'trim|required');
-		$this->form_validation->set_rules('country', 'State', 'trim|required');
-		$this->form_validation->set_rules('zip', 'Postal Code', 'trim|required');
-		$this->form_validation->set_rules('phone1', 'Cell Phone', 'trim|required');
-		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
-		$this->form_validation->set_rules('email', 'Email', 'trim');
-
-		if ($this->form_validation->run() == TRUE) {
-			$getjob = $this->db->query('SELECT * FROM jobs');
-			$total = $getjob->num_rows();
-			$total++;
-
-			$posts = $this->input->post();
-			$params['job_name'] 		= $posts['jobname'];
-			$params['status'] 		= 'open';
-			$params['firstname'] 		= $posts['firstname'];
-			$params['lastname'] 		= $posts['lastname'];
-			$params['address'] 		= $posts['address'];
-			$params['city'] 		= $posts['city'];
-			$params['state'] 		= $posts['country'];
-			$params['zip'] 		= $posts['zip'];
-			$params['phone1'] 		= $posts['phone1'];
-			$params['phone2'] 		= $posts['phone2'];
-			$params['email'] 		= $posts['email'];
-			$params['entry_date'] 			= date('Y-m-d h:i:s');
-			$params['is_active'] 			= TRUE;
-			$params['job_number'] 		= 'RJOB' . $total;
-
-
-			$query = $this->lead->add_record($params);
-			$this->status->add_record([
-				'jobid' => $query,
-				'lead' => 'open',
-				'contract' => 'unsigned'
-			]);
-
-			if ($query) {
-				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
-				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Saved Successfully!</strong>';
-				$message .= '</div>';
-				$this->session->set_flashdata('errors', $message);
-				redirect('leads');
-			} else {
-				$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
-				$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Job Not Saved Successfully!</strong>';
-				$message .= '</div>';
-				$this->session->set_flashdata('errors', $message);
-			}
-		} else {
-			$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
-			$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>' . validation_errors() . ' </strong>';
-			$errors .= '</div>';
-			$this->session->set_flashdata('errors', $errors);
-			$this->load->view('header', ['title' => 'Add New Leads']);
-			$this->load->view('leads/new');
-			$this->load->view('footer');
-		}
-	}
-
 
 	public function update($id)
 	{
@@ -171,38 +136,74 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
 		$this->form_validation->set_rules('city', 'City', 'trim|required');
-		$this->form_validation->set_rules('country', 'State', 'trim|required');
+		$this->form_validation->set_rules('state', 'State', 'trim|required');
 		$this->form_validation->set_rules('zip', 'Postal Code', 'trim|required');
 		$this->form_validation->set_rules('phone1', 'Phone 1', 'trim|required');
 		$this->form_validation->set_rules('phone2', 'Phone 2', 'trim');
-		$this->form_validation->set_rules('email', 'Email', 'trim');
+		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
 
-		if ($this->form_validation->run() == FALSE) {
-			$errors = '<div class="alert alert-danger fade in alert-dismissable col-lg-12">';
-			$errors .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>' . validation_errors() . '</strong>';
-			$errors .= '</div>';
-			$this->session->set_flashdata('errors', $errors);
-			redirect('lead/' . $id . '/edit');
-		} else {
+		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
-			$params = array();
-			$params['job_name'] 		= $posts['jobname'];
-			$params['firstname'] 		= $posts['firstname'];
-			$params['lastname'] 		= $posts['lastname'];
-			$params['address'] 		= $posts['address'];
-			$params['city'] 		= $posts['city'];
-			$params['state'] 		= $posts['country'];
-			$params['zip'] 		= $posts['zip'];
-			$params['phone1'] 		= $posts['phone1'];
-			$params['phone2'] 		= $posts['phone2'];
-			$params['email'] 		= $posts['email'];
-
-			$this->lead->update_record($params, ['id' => $id]);
-			$message = '<div class="alert alert-success fade in alert-dismissable col-lg-12">';
-			$message .= '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Record Saved Successfully!</strong>';
-			$message .= '</div>';
-			$this->session->set_flashdata('errors', $message);
+			$update = $this->lead->update($id, [
+				'job_name' => $posts['jobname'],
+				'firstname' => $posts['firstname'],
+				'lastname' => $posts['lastname'],
+				'address' => $posts['address'],
+				'city' => $posts['city'],
+				'state' => $posts['state'],
+				'zip' => $posts['zip'],
+				'phone1' => $posts['phone1'],
+				'phone2' => $posts['phone2'],
+				'email' => $posts['email'],
+			]);
+			if ($update) {
+				redirect('lead/' . $id);
+			} else {
+				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
+				redirect('lead/' . $id . '/edit');
+			}
+		} else {
+			$this->session->set_flashdata('errors', validation_errors());
 			redirect('lead/' . $id . '/edit');
+		}
+	}
+
+	public function updatestatus($id)
+	{
+		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
+		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
+
+		if ($this->form_validation->run() == TRUE) {
+			$posts = $this->input->post();
+			$update = $this->lead->update($id, [
+				'status' => $posts['status'],
+				'type' => $posts['type']
+			]);
+
+			if ($update) {
+				redirect('lead/' . $id);
+			} else {
+				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
+				redirect('lead/' . $id . '/edit');
+			}
+		} else {
+			$this->session->set_flashdata('errors', validation_errors());
+			redirect('lead/' . $id . '/edit');
+		}
+	}
+
+	public function show($jobid)
+	{
+		$lead = $this->lead->getLeadById($jobid);
+		if ($lead) {
+			$add_info = $this->party->getPartyByLeadId($jobid);
+			$status = $this->status->getStatusByLeadId($jobid);
+			$this->load->view('header', ['title' => 'Lead Detail']);
+			$this->load->view('leads/show', ['status' => $status, 'lead' => $lead, 'add_info' => $add_info, 'jobid' => $jobid]);
+			$this->load->view('footer');
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('leads');
 		}
 	}
 
@@ -210,27 +211,6 @@ class Leads extends CI_Controller
 	{
 		$this->lead->delete($id);
 		redirect('leads');
-	}
-
-	public function updatestatus()
-	{
-		$posts = $this->input->post();
-		if ($posts['status'] == 'job') {
-			$this->status->update_record([
-				'job' => $posts['value'],
-				'production' => 'pre-production',
-				'start_at' => date("Y-m-d h:i:s"),
-			], ['jobid' => $posts['id']]);
-			return true;
-		} else {
-			$this->status->update_record([
-				$posts['status'] => $posts['value'],
-				'production' => '',
-				'job' => '',
-				'start_at' =>  ''
-			], ['jobid' => $posts['id']]);
-			return true;
-		}
 	}
 
 	public function closed($start = 0)

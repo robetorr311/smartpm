@@ -14,17 +14,20 @@ class LeadStatusModel extends CI_Model
     
     public function getStatusByLeadId($jobid)
     {
-        $this->db->where([
-            'jobid' => $jobid
-        ]);
-		$query = $this->db->get($this->table);
+        // $this->db->where([
+        //     'jobid' => $jobid
+        // ]);
+		// $query = $this->db->get($this->table);
+		$query = $this->db->get('jobs');
         $result = $query->first_row();
         return $result ? $result : false;
     }
 
     public function allJobStatus(){
-        $this->db->select("SUM(if(contract='unsigned',1,NULL)) as OPEN, SUM(if(job='labor only' AND lead='open',1,NULL)) as LABOR, SUM(if(job='insurance' AND lead='open',1,NULL)) as INSURANCE, SUM(if(job='cash' AND lead='open',1,NULL)) as CASH , SUM(if(production='complete' AND closeout='yes',1,NULL)) as CLOSED, SUM(if(production='complete' AND closeout='no',1,NULL)) as COMPLETE,"); 
-        $this->db->from($this->table);
+        // $this->db->select("SUM(if(contract='unsigned',1,NULL)) as OPEN, SUM(if(job='labor only' AND lead='open',1,NULL)) as LABOR, SUM(if(job='insurance' AND lead='open',1,NULL)) as INSURANCE, SUM(if(job='cash' AND lead='open',1,NULL)) as CASH , SUM(if(production='complete' AND closeout='yes',1,NULL)) as CLOSED, SUM(if(production='complete' AND closeout='no',1,NULL)) as COMPLETE,"); 
+        $this->db->select("count(*) as OPEN, count(*) as LABOR, count(*) as INSURANCE, count(*) as CASH , count(*) as CLOSED, count(*) as COMPLETE,"); 
+        // $this->db->from($this->table);
+        $this->db->from('jobs');
         $query = $this->db->get();
         return $query->result(); 
     }
