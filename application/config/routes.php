@@ -152,17 +152,17 @@ $route['lead/(:num)/doc/update']['post'] = 'docs/updatedocname';
 $route['lead/(:num)/party/add']['post'] = 'party/index/$1';
 $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 
-$route['cash-jobs'] = 'cash_jobs/index';
-$route['cash-jobs/(:num)'] = 'cash_jobs/index/$1';
-$route['cash-job/(:num)'] = 'cash_jobs/view/$1';
-$route['cash-job/(:num)/addTeam'] = 'cash_jobs/addTeam/$1';
-$route['cash-job/(:num)/delete'] = 'cash_jobs/delete/$1';
+$route['lead/cash-jobs'] = 'cash_jobs/index';
+$route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
+$route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
+$route['lead/cash-job/(:num)/addTeam'] = 'cash_jobs/addTeam/$1';
+$route['lead/cash-job/(:num)/delete'] = 'cash_jobs/delete/$1';
 
-$route['insurance-jobs'] = 'insurance_jobs/index';
-$route['insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
-$route['insurance-job/(:num)'] = 'insurance_jobs/view/$1';
-$route['insurance-job/(:num)/addTeam'] = 'insurance_jobs/addTeam/$1';
-$route['insurance-job/(:num)/delete'] = 'insurance_jobs/delete/$1';
+$route['lead/insurance-jobs'] = 'insurance_jobs/index';
+$route['lead/insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
+$route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
+$route['lead/insurance-job/(:num)/addTeam'] = 'insurance_jobs/addTeam/$1';
+$route['lead/insurance-job/(:num)/delete'] = 'insurance_jobs/delete/$1';
 
 $route['labor-jobs'] = 'labor_jobs/index';
 $route['labor-jobs/(:num)'] = 'labor_jobs/index/$1';
