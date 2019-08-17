@@ -21,31 +21,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
-                            <th></th>
-                            <th>ID</th>
+                            <th>Job Number</th>
                             <th>Job Name</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Address</th>
                             <th>Email</th>
+                            <th class="text-center">View</th>
+                            <th class="text-center">Edit</th>
+                            <th class="text-center">Delete</th>
                         </thead>
-                        <tbody id="myTable">
+                        <tbody>
                             <?php if (!empty($jobs)) : ?>
-                                <?php foreach ($jobs as $job) : ?>
-                                    <tr>
-                                        <td style="width: 30px"><a href="<?php echo base_url('insurance-job/' . $job->id); ?>"><i class="pe-7s-news-paper" style="font-size: 30px" /></a></td>
-                                        <td><?php echo $job->id ?></td>
-                                        <td><?php echo $job->job_name ?></td>
-                                        <td><?php echo $job->firstname ?></td>
-                                        <td><?php echo $job->lastname ?></td>
-                                        <td><?php echo $job->address ?></td>
-                                        <td><?php echo $job->email ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
+                            <?php foreach ($jobs as $job) : ?>
+                            <tr>
+                                <td><?= ('RJOB' . $job->id); ?></td>
+                                <td><?= $job->job_name ?></td>
+                                <td><?= $job->firstname ?></td>
+                                <td><?= $job->lastname ?></td>
+                                <td><?= $job->address ?></td>
+                                <td><?= $job->email ?></td>
+                                <td class="text-center"><a href="<?= base_url('lead/insurance-job/' . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                <td class="text-center"><a href="<?= base_url('lead/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+                                <td class="text-center"><a href="<?= base_url('lead/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                            </tr>
+                            <?php endforeach; ?>
                             <?php else : ?>
-                                <tr>
-                                    <td colspan="7" class="text-center">No Record Found!</td>
-                                </tr>
+                            <tr>
+                                <td colspan="9" class="text-center">No Record Found!</td>
+                            </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

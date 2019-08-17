@@ -7,15 +7,13 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'StatusTagModel', 'LeadStatusModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
 		$this->lead_note = new LeadNoteModel();
 		$this->lead_note_reply = new LeadNoteReplyModel();
 		$this->user = new UserModel();
-		$this->status_tags = new StatusTagModel();
-		$this->status = new LeadStatusModel();
 		$this->party = new PartyModel();
 	}
 
@@ -112,13 +110,11 @@ class Leads extends CI_Controller
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
-			$status = $this->status->getStatusByLeadId($jobid);
 			$this->load->view('header', ['title' => 'Lead Update']);
 			$this->load->view('leads/edit', [
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
 				'lead' => $lead,
-				'status' => $status,
 				'add_info' => $add_info,
 				'jobid' => $jobid
 			]);
@@ -197,9 +193,12 @@ class Leads extends CI_Controller
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
-			$status = $this->status->getStatusByLeadId($jobid);
 			$this->load->view('header', ['title' => 'Lead Detail']);
-			$this->load->view('leads/show', ['status' => $status, 'lead' => $lead, 'add_info' => $add_info, 'jobid' => $jobid]);
+			$this->load->view('leads/show', [
+				'lead' => $lead,
+				'add_info' => $add_info,
+				'jobid' => $jobid
+			]);
 			$this->load->view('footer');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');

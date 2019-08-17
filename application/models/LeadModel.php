@@ -31,7 +31,10 @@ class LeadModel extends CI_Model
     public function allLeads($start = 0, $limit = 10)
     {
         $this->db->from($this->table);
-        $this->db->where('is_deleted', FALSE);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status <' => 7
+        ]);
         $this->db->order_by('created_at', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -40,8 +43,65 @@ class LeadModel extends CI_Model
 
     public function getLeadsCount()
     {
-        $this->db->where('is_deleted', FALSE);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status <' => 7
+        ]);
         return $this->db->count_all_results($this->table);
+    }
+
+    public function allCashJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 8
+        ]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getCashJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 8
+        ]);
+        return $this->db->count_all_results($this->table);
+    }
+
+    public function allInsuranceJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 7
+        ]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getInsuranceJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 7
+        ]);
+        return $this->db->count_all_results($this->table);
+    }
+
+    public function getLeadById($id)
+    {
+        $this->db->where([
+            'id' => $id
+        ]);
+        $query = $this->db->get($this->table);
+        $result = $query->first_row();
+        return $result ? $result : false;
     }
 
     public function insert($data)
@@ -89,16 +149,6 @@ class LeadModel extends CI_Model
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getLeadById($id)
-    {
-        $this->db->where([
-            'id' => $id
-        ]);
-        $query = $this->db->get($this->table);
-        $result = $query->first_row();
-        return $result ? $result : false;
     }
 
     public function getAllSignedJob($start = 0, $limit = 10)
