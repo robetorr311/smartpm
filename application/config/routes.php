@@ -109,22 +109,25 @@ $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
 $route['leads/(:num)'] = 'leads/index/$1';
+$route['lead/create'] = 'leads/create';
+$route['lead/store']['post'] = 'leads/store';
 $route['lead/(:num)'] = 'leads/show/$1';
 $route['lead/(:num)/edit'] = 'leads/edit/$1';
 $route['lead/(:num)/update'] = 'leads/update/$1';
 $route['lead/(:num)/delete']['post'] = 'leads/delete/$1';
-$route['lead/create'] = 'leads/create';
-$route['lead/store']['post'] = 'leads/store';
 $route['lead/(:num)/updatestatus'] = 'leads/updatestatus/$1';
+
 $route['lead/archive'] = 'leads/archive';
 $route['lead/archive/(:num)'] = 'leads/archive/$1';
 $route['lead/closed'] = 'leads/closed';
 $route['lead/closed/(:num)'] = 'leads/closed/$1';
 $route['lead/signed'] = 'leads/allAssignedLead';
 $route['lead/signed/(:num)'] = 'leads/allAssignedLead/$1';
+
 $route['lead/(:num)/notes'] = 'leads/notes/$1';
 $route['lead/(:num)/add-note']['post'] = 'leads/addNote/$1';
 $route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
+
 $route['lead/(:num)/note/(:num)/replies'] = 'leads/replies/$1/$2';
 $route['lead/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$1/$2';
 $route['lead/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$1/$2/$3';
@@ -134,6 +137,12 @@ $route['lead/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';
 $route['lead/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto';
 $route['lead/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$1/$2';
 $route['lead/(:num)/photo/rotate']['post'] = 'photos/imagerotate';
+
+$route['lead/(:any)/(:num)/photos'] = 'photos/index/$2/$1';
+$route['lead/(:any)/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto/$1';
+$route['lead/(:any)/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto/$1';
+$route['lead/(:any)/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$2/$3/$1';
+$route['lead/(:any)/(:num)/photo/rotate']['post'] = 'photos/imagerotate/$1';
 
 $route['lead/(:num)/reports'] = 'reports/index/$1';
 $route['lead/(:num)/report/create'] = 'reports/create/$1';

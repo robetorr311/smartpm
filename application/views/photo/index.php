@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <div class="card">
         <div class="header">
           <h4 class="title" style="float: left;">Photos</h4>
-          <a href="<?= base_url('lead/' . $jobid) ?>" class="btn btn-info btn-fill pull-right">Back</a>
+          <a href="<?= base_url('lead/' . $sub_base_path . $jobid) ?>" class="btn btn-info btn-fill pull-right">Back</a>
           <div class="clearfix"></div>
         </div>
 
@@ -85,7 +85,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         form_data.append("photo[]", file_data[i]);
       }
       $.ajax({
-        url: baseUrl + 'lead/<?= $jobid ?>/photo/upload', // point to server-side PHP script     
+        url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/upload', // point to server-side PHP script     
         dataType: 'text', // what to expect back from the PHP script, if anything
         cache: false,
         contentType: false,
@@ -97,7 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           if (obj.length != 0) {
             $.ajax({
               type: 'POST',
-              url: baseUrl + 'lead/<?= $jobid ?>/photo/save', // point to server-side PHP script     
+              url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
               data: {
                 id: id,
                 name: php_script_response
@@ -129,7 +129,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       }
 
       $.ajax({
-        url: baseUrl + 'lead/<?= $jobid ?>/photo/upload', // point to server-side PHP script     
+        url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/upload', // point to server-side PHP script     
         dataType: 'text', // what to expect back from the PHP script, if anything
         cache: false,
         contentType: false,
@@ -142,7 +142,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           if (obj.length != 0) {
             $.ajax({
               type: 'POST',
-              url: baseUrl + 'lead/<?= $jobid ?>/photo/save', // point to server-side PHP script     
+              url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
               data: {
                 id: id,
                 name: php_script_response
@@ -162,7 +162,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       var id = $(this).attr('id');
 
       $.ajax({
-        url: baseUrl + 'lead/<?= $jobid ?>/photo/' + id + '/delete',
+        url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/' + id + '/delete',
         type: 'post',
         success: function(php_script_response) {
           $('#ph' + id).remove();
@@ -188,7 +188,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       var name = $('.fancybox-caption__body').html();
       var angle = 90;
       $.ajax({
-        url: baseUrl + 'lead/<?= $jobid ?>/photo/rotate',
+        url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/rotate',
         data: {
           name: name,
           angle: angle

@@ -22,11 +22,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content view">
                     <div class="row">
-                        <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>">
+                        <input type="hidden" name="id" class="hidden_id" value="<?= $job->id ?>">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Job Name</label>
-                                <p> <?php echo $job->job_name ?></p>
+                                <p> <?= $job->job_name ?></p>
                             </div>
                         </div>
                     </div>
@@ -35,13 +35,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <p><?php echo $job->firstname ?></p>
+                                <p><?= $job->firstname ?></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <p><?php echo $job->lastname ?></p>
+                                <p><?= $job->lastname ?></p>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Address</label>
-                                <p><?php echo $job->address ?></p>
+                                <p><?= $job->address ?></p>
                             </div>
                         </div>
                     </div>
@@ -59,19 +59,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>City</label>
-                                <p><?php echo $job->city ?></p>
+                                <p><?= $job->city ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>State</label>
-                                <p><?php echo $job->state ?></p>
+                                <p><?= $job->state ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Postal Code</label>
-                                <p><?php echo $job->zip ?></p>
+                                <p><?= $job->zip ?></p>
                             </div>
                         </div>
                     </div>
@@ -80,29 +80,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Phone 1</label>
-                                <p><?php echo $job->phone1 ?></p>
+                                <p><?= $job->phone1 ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Phone 2</label>
-                                <p><?php echo $job->phone2 ?></p>
+                                <p><?= $job->phone2 ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email</label>
-                                <p><?php echo $job->email ?></p>
+                                <p><?= $job->email ?></p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="footer">
-                    <a href="<?php echo base_url('lead/' . $job->id . '/photos'); ?>" class="btn btn-success btn-fill">Photos</a>
-                    <a href="<?php echo base_url('lead/' . $job->id . '/reports'); ?>" class="btn btn-danger btn-fill">All Report</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/photos'); ?>" class="btn btn-success btn-fill">Photos</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/reports'); ?>" class="btn btn-danger btn-fill">All Report</a>
                     <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-                    <a href="<?= base_url('lead/' . $job->id . '/docs'); ?>" class="btn btn-danger btn-fill">Docs</a>
-                    <a href="<?= base_url('lead/' . $job->id . '/notes'); ?>" class="btn btn-success btn-fill">Notes</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/docs'); ?>" class="btn btn-danger btn-fill">Docs</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/notes'); ?>" class="btn btn-success btn-fill">Notes</a>
                 </div>
             </div>
         </div>
@@ -113,24 +113,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php if (!empty($teams_detail)) : ?>
                     <?php foreach ($teams_detail as $data) : ?>
                     <div style="float: right;text-align: right;">
-                        <p><?php echo $data->name ?></p>
-                        <p><?php echo $data->assign_date ?></p>
-                        <a href="<?php echo base_url('lead/cash-job/' . $jobid . '/delete') ?>">Remove</a>
+                        <p><?= $data->name ?></p>
+                        <p><?= $data->assign_date ?></p>
+                        <a href="<?= base_url('lead/cash-job/' . $jobid . '/delete') ?>">Remove</a>
                     </div>
                     <?php endforeach; ?>
                     <?php else : ?>
                     <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
                     <div class="content team-block">
-                        <?php echo form_open('lead/cash-job/' . $jobid . '/addTeam', array('method' => 'post')); ?>
+                        <?= form_open('lead/cash-job/' . $jobid . '/addTeam', array('method' => 'post')); ?>
                         <select name="team_id" class="form-control team_assign">
                             <option>Select Team</option>
                             <?php foreach ($teams as $team) : ?>
-                            <option value="<?php echo $team->id ?>"><?php echo $team->team_name ?></option>
+                            <option value="<?= $team->id ?>"><?= $team->team_name ?></option>
                             <?php endforeach; ?>
                         </select>
                         <div class="clearfix"></div>
                         <input class="btn btn-success btn-fill" type="submit" value="Add Team">
-                        <?php echo form_close(); ?>
+                        <?= form_close(); ?>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -147,22 +147,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <p><?php echo $info->fname ?></p>
+                                <p><?= $info->fname ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <p><?php echo $info->lname ?></p>
+                                <p><?= $info->lname ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Phone</label>
-                                <p><?php echo $info->phone ?></p>
+                                <p><?= $info->phone ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Email</label>
-                                <p><?php echo $info->email ?></p>
+                                <p><?= $info->email ?></p>
                             </div>
 
                         </div>

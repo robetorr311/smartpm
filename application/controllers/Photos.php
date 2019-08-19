@@ -13,15 +13,21 @@ class Photos extends CI_Controller
 		$this->load->model(['JobsPhotoModel']);
 		// $this->jobsPhoto = new JobsPhotoModel();
 	}
-	public function index($job_id)
+	public function index($job_id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$params = array();
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
 		$count = $this->JobsPhotoModel->getCount($params);
 		$imgs  = $this->JobsPhotoModel->allPhoto($params);
 		$this->load->view('header', ['title' => 'Add Photo']);
-		$this->load->view('photo/index', ['count' => $count, 'imgs' => $imgs, 'jobid' => $job_id]);
+		$this->load->view('photo/index', [
+			'count' => $count,
+			'imgs' => $imgs,
+			'jobid' => $job_id,
+			'sub_base_path' => $sub_base_path
+		]);
 		$this->load->view('footer');
 	}
 	/* function for remove directory */
@@ -65,7 +71,6 @@ class Photos extends CI_Controller
 	/* function for image upload */
 	public function ajaxupload_jobphoto()
 	{
-
 		if (is_array($_FILES) && !empty($_FILES['photo'])) {
 			$img = array();
 			$i = 0;
