@@ -166,6 +166,12 @@ $route['lead/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
 $route['lead/(:num)/doc/delete']['post'] = 'docs/deletedoc';
 $route['lead/(:num)/doc/update']['post'] = 'docs/updatedocname';
 
+$route['lead/(:any)/(:num)/docs'] = 'docs/index/$2/$1';
+$route['lead/(:any)/(:num)/doc/upload']['post'] = 'docs/ajaxupload_jobdoc';
+$route['lead/(:any)/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
+$route['lead/(:any)/(:num)/doc/delete']['post'] = 'docs/deletedoc';
+$route['lead/(:any)/(:num)/doc/update']['post'] = 'docs/updatedocname';
+
 $route['lead/(:num)/party/add']['post'] = 'party/index/$1';
 $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 
