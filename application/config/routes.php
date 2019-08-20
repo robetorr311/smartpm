@@ -139,10 +139,10 @@ $route['lead/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$1/$2';
 $route['lead/(:num)/photo/rotate']['post'] = 'photos/imagerotate';
 
 $route['lead/(:any)/(:num)/photos'] = 'photos/index/$2/$1';
-$route['lead/(:any)/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto/$1';
-$route['lead/(:any)/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto/$1';
-$route['lead/(:any)/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$2/$3/$1';
-$route['lead/(:any)/(:num)/photo/rotate']['post'] = 'photos/imagerotate/$1';
+$route['lead/(:any)/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';
+$route['lead/(:any)/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto';
+$route['lead/(:any)/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$2/$3';
+$route['lead/(:any)/(:num)/photo/rotate']['post'] = 'photos/imagerotate';
 
 $route['lead/(:num)/reports'] = 'reports/index/$1';
 $route['lead/(:num)/report/create'] = 'reports/create/$1';
@@ -151,6 +151,14 @@ $route['lead/(:num)/report/save-img']['post'] = 'reports/save_img';
 $route['lead/(:num)/report/save']['post'] = 'reports/save/$1';
 $route['lead/(:num)/report/(:num)/pdf'] = 'reports/pdf/$2/$1';
 $route['lead/(:num)/report/(:num)/delete']['post'] = 'reports/delete/$1/$2';
+
+$route['lead/(:any)/(:num)/reports'] = 'reports/index/$2/$1';
+$route['lead/(:any)/(:num)/report/create'] = 'reports/create/$2/$1';
+$route['lead/(:any)/(:num)/report/upload']['post'] = 'reports/upload';
+$route['lead/(:any)/(:num)/report/save-img']['post'] = 'reports/save_img';
+$route['lead/(:any)/(:num)/report/save']['post'] = 'reports/save/$2';
+$route['lead/(:any)/(:num)/report/(:num)/pdf'] = 'reports/pdf/$3/$2';
+$route['lead/(:any)/(:num)/report/(:num)/delete']['post'] = 'reports/delete/$2/$3';
 
 $route['lead/(:num)/docs'] = 'docs/index/$1';
 $route['lead/(:num)/doc/upload']['post'] = 'docs/ajaxupload_jobdoc';

@@ -15,19 +15,29 @@ class Reports extends CI_Controller
 		$this->lead = new LeadModel();
 	}
 
-	public function index($id)
+	public function index($id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$allreport = $this->roofing->allProject(['job_id' => $id, 'active' => 1]);
 		$this->load->view('header', ['title' => 'All Reports']);
-		$this->load->view('report/index', ['allreport' => $allreport, 'jobid' => $id]);
+		$this->load->view('report/index', [
+			'allreport' => $allreport,
+			'jobid' => $id,
+			'sub_base_path' => $sub_base_path
+		]);
 		$this->load->view('footer');
 	}
 
-	public function create($id)
+	public function create($id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$photos = $this->photos->allPhoto(['job_id' => $id, 'is_active' => 1]);
 		$this->load->view('header', ['title' => 'Genrate Report']);
-		$this->load->view('report/create', ['jobid' => $id, 'photos' => $photos]);
+		$this->load->view('report/create', [
+			'jobid' => $id,
+			'photos' => $photos,
+			'sub_base_path' => $sub_base_path
+		]);
 		$this->load->view('footer');
 	}
 
