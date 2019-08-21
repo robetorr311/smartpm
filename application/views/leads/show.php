@@ -109,7 +109,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                     <div class="header">
-                        <h4 class="title" style="float: left;">Lead Status</h4>
+                        <h4 class="title" style="float: left;">Status</h4>
                         <span class="status">
                             <?= LeadModel::statusToStr($lead->status); ?>
                         </span>

@@ -110,7 +110,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card">
                 <?= form_open('lead/' . $jobid . '/updatestatus', array('method' => 'post')) ?>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Lead Status</h4>
+                    <h4 class="title" style="float: left;">Status</h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($lead->status) ?>
                     </span>
