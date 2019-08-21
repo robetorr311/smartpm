@@ -193,11 +193,11 @@ $route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
 $route['lead/insurance-job/(:num)/addTeam'] = 'insurance_jobs/addTeam/$1';
 $route['lead/insurance-job/(:num)/delete'] = 'insurance_jobs/delete/$1';
 
-$route['labor-jobs'] = 'labor_jobs/index';
-$route['labor-jobs/(:num)'] = 'labor_jobs/index/$1';
-$route['labor-job/(:num)'] = 'labor_jobs/view/$1';
-$route['labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam/$1';
-$route['labor-job/(:num)/delete'] = 'labor_jobs/delete/$1';
+$route['lead/labor-jobs'] = 'labor_jobs/index';
+$route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
+$route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
+$route['lead/labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam/$1';
+$route['lead/labor-job/(:num)/delete'] = 'labor_jobs/delete/$1';
 
 $route['productions'] = 'productions/index';
 $route['productions/(:num)'] = 'productions/index/$1';

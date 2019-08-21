@@ -30,7 +30,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -45,7 +44,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -54,7 +52,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -75,7 +72,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -96,13 +92,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="footer">
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/photos'); ?>" class="btn btn-success btn-fill">Photos</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/reports'); ?>" class="btn btn-danger btn-fill">All Report</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/photos') ?>" class="btn btn-success btn-fill">Photos</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/reports') ?>" class="btn btn-danger btn-fill">All Report</a>
                     <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/docs'); ?>" class="btn btn-danger btn-fill">Docs</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/notes'); ?>" class="btn btn-success btn-fill">Notes</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/docs') ?>" class="btn btn-danger btn-fill">Docs</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/notes') ?>" class="btn btn-success btn-fill">Notes</a>
                 </div>
             </div>
         </div>
@@ -121,16 +118,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php else : ?>
                     <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
                     <div class="content team-block">
-                        <?= form_open('lead/cash-job/' . $jobid . '/addTeam', array('method' => 'post')); ?>
+                        <?= form_open('lead/cash-job/' . $jobid . '/addTeam', array('method' => 'post')) ?>
                         <select name="team_id" class="form-control team_assign">
                             <option>Select Team</option>
                             <?php foreach ($teams as $team) : ?>
                             <option value="<?= $team->id ?>"><?= $team->team_name ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <div class="clearfix"></div>
                         <input class="btn btn-success btn-fill" type="submit" value="Add Team">
-                        <?= form_close(); ?>
+                        <?= form_close() ?>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -149,22 +145,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <label>First Name</label>
                                 <p><?= $info->fname ?></p>
                             </div>
-
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <p><?= $info->lname ?></p>
                             </div>
-
                             <div class="form-group">
                                 <label>Phone</label>
                                 <p><?= $info->phone ?></p>
                             </div>
-
                             <div class="form-group">
                                 <label>Email</label>
                                 <p><?= $info->email ?></p>
                             </div>
-
                         </div>
                     </div>
                     <?php endforeach; ?>

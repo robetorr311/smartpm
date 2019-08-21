@@ -94,7 +94,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('labor-jobs');?>">
+                    <a href="<?php echo base_url('lead/labor-jobs');?>">
                         <i class="pe-7s-note"></i>
                         <p>Labor Only Jobs</p>
                     </a>
