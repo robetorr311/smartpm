@@ -162,8 +162,8 @@ $route['lead/(:any)/(:num)/reports'] = 'reports/index/$2/$1';
 $route['lead/(:any)/(:num)/report/create'] = 'reports/create/$2/$1';
 $route['lead/(:any)/(:num)/report/upload']['post'] = 'reports/upload';
 $route['lead/(:any)/(:num)/report/save-img']['post'] = 'reports/save_img';
-$route['lead/(:any)/(:num)/report/save']['post'] = 'reports/save/$2';
-$route['lead/(:any)/(:num)/report/(:num)/pdf'] = 'reports/pdf/$3/$2';
+$route['lead/(:any)/(:num)/report/save']['post'] = 'reports/save/$2/$1';
+$route['lead/(:any)/(:num)/report/(:num)/pdf'] = 'reports/pdf/$3/$2/$1';
 $route['lead/(:any)/(:num)/report/(:num)/delete']['post'] = 'reports/delete/$2/$3';
 
 $route['lead/(:num)/docs'] = 'docs/index/$1';

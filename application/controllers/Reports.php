@@ -180,9 +180,9 @@ class Reports extends CI_Controller
 		echo $random;
 	}
 
-	public function save($id)
+	public function save($id, $sub_base_path = '')
 	{
-
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		if (isset($_POST) && count($_POST) > 0) {
 			$posts = $this->input->post();
 			$params = array();
@@ -197,16 +197,16 @@ class Reports extends CI_Controller
 
 				$this->pdf($result, $id);
 			} else {
-				redirect('/report/' . $id);
+				redirect('lead/' . $sub_base_path . $id . '/reports');
 			}
 		} else {
-			redirect('/report/' . $id);
+			redirect('lead/' . $sub_base_path . $id . '/reports');
 		}
 	}
 
-	public function pdf($id, $jobid)
+	public function pdf($id, $jobid, $sub_base_path = '')
 	{
-
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$condition = array('id' => $id, "active" => true);
 		$data = $this->roofing->get_all_where($condition);
 
@@ -247,7 +247,7 @@ class Reports extends CI_Controller
 			ob_clean();
 			$pdf->Output('report.pdf', 'I');
 		} else {
-			redirect('/report/' . $jobid);
+			redirect('lead/' . $sub_base_path . $jobid . '/reports');
 		}
 	}
 }
