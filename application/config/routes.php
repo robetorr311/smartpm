@@ -127,10 +127,16 @@ $route['lead/signed/(:num)'] = 'leads/allAssignedLead/$1';
 $route['lead/(:num)/notes'] = 'leads/notes/$1';
 $route['lead/(:num)/add-note']['post'] = 'leads/addNote/$1';
 $route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
-
 $route['lead/(:num)/note/(:num)/replies'] = 'leads/replies/$1/$2';
 $route['lead/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$1/$2';
 $route['lead/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$1/$2/$3';
+
+$route['lead/(:any)/(:num)/notes'] = 'leads/notes/$2/$1';
+$route['lead/(:any)/(:num)/add-note']['post'] = 'leads/addNote/$2/$1';
+$route['lead/(:any)/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$2/$3/$1';
+$route['lead/(:any)/(:num)/note/(:num)/replies'] = 'leads/replies/$2/$3/$1';
+$route['lead/(:any)/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$2/$3/$1';
+$route['lead/(:any)/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$2/$3/$4/$1';
 
 $route['lead/(:num)/photos'] = 'photos/index/$1';
 $route['lead/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';

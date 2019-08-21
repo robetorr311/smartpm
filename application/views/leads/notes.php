@@ -23,10 +23,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             echo '<div class="row note-item">';
                             echo '<div class="col-md-12">';
                             echo '<label>' . $note->created_user_fullname . '</label>';
-                            echo '<a href="' . base_url('lead/' . $lead->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
+                            echo '<a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';
                             echo '<div style="text-align: right;">';
-                            echo '<small><a href="' . base_url('lead/' . $lead->id . '/note/' . $note->id . '/replies') . '">Thread Details</a></small>';
+                            echo '<small><a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/replies') . '">Thread Details</a></small>';
                             echo '</div>';
                             echo '</div>';
                             echo '</div>';
@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content view">
                     <div class="row add-note-form">
                         <div class="col-md-12">
-                            <form action="<?= base_url('lead/' . $lead->id . '/add-note') ?>" method="post">
+                            <form action="<?= base_url('lead/' . $sub_base_path . $lead->id . '/add-note') ?>" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -56,7 +56,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <a href="<?= base_url('lead/' . $lead->id) ?>" class="btn btn-info btn-fill">Back</a>
+                                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id) ?>" class="btn btn-info btn-fill">Back</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#note-input').atwho({
             at: '@',
             data: <?= json_encode($users) ?>,
