@@ -42,7 +42,7 @@ class Labor_jobs extends CI_Controller
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 
 		$this->load->view('header', ['title' => 'Labor Job Detail']);
-		$this->load->view('labor_jobs/view', [
+		$this->load->view('labor_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
 			'add_info' => $add_info,

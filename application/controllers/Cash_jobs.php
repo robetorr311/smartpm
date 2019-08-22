@@ -40,7 +40,7 @@ class Cash_jobs extends CI_Controller
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 
 		$this->load->view('header', ['title' => 'Cash Job Detail']);
-		$this->load->view('cash_job/view', [
+		$this->load->view('cash_job/show', [
 			'jobid' => $jobid,
 			'job' => $job,
 			'add_info' => $add_info,

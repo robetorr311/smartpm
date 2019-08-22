@@ -16,8 +16,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">View</h4>
-                    <a href="<?= base_url('lead/cash-jobs') ?>" class="btn btn-info btn-fill pull-right">Back</a>
+                    <h4 class="title" style="float: left;">Job Details</h4>
+                    <a href="<?= base_url('lead/labor-jobs') ?>" class="btn btn-info btn-fill pull-right">Back</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="content view">
@@ -86,11 +86,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                 </div>
                 <div class="footer">
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/photos') ?>" class="btn btn-success btn-fill">Photos</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/reports') ?>" class="btn btn-danger btn-fill">All Report</a>
+                    <a href="<?= base_url('lead/labor-job/' . $job->id . '/photos') ?>" class="btn btn-success btn-fill">Photos</a>
+                    <a href="<?= base_url('lead/labor-job/' . $job->id . '/reports') ?>" class="btn btn-danger btn-fill">All Report</a>
                     <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/docs') ?>" class="btn btn-danger btn-fill">Docs</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/notes') ?>" class="btn btn-success btn-fill">Notes</a>
+                    <a href="<?= base_url('lead/labor-job/' . $job->id . '/docs') ?>" class="btn btn-danger btn-fill">Docs</a>
+                    <a href="<?= base_url('lead/labor-job/' . $job->id . '/notes') ?>" class="btn btn-success btn-fill">Notes</a>
                 </div>
             </div>
         </div>
@@ -103,13 +103,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div style="float: right;text-align: right;">
                         <p><?= $data->name ?></p>
                         <p><?= $data->assign_date ?></p>
-                        <a href="<?= base_url('lead/cash-job/' . $jobid . '/delete') ?>">Remove</a>
+                        <a href="<?= base_url('labor-job/' . $jobid . '/delete') ?>">Remove</a>
                     </div>
                     <?php endforeach; ?>
                     <?php else : ?>
                     <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
                     <div class="content team-block">
-                        <?= form_open('lead/cash-job/' . $jobid . '/addTeam', array('method' => 'post')) ?>
+                        <?= form_open('labor-job/' . $jobid . '/addTeam', array('method' => 'post')) ?>
                         <select name="team_id" class="form-control team_assign">
                             <option>Select Team</option>
                             <?php foreach ($teams as $team) : ?>
@@ -121,6 +121,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <?php endif; ?>
                 </div>
+            </div>
+            <div class="card">
+                    <div class="header">
+                        <h4 class="title" style="float: left;">Status</h4>
+                        <span class="status">
+                            <?= LeadModel::statusToStr($job->status); ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                        <h4 class="title" style="float: left;">Job Type</h4>
+                        <span class="status">
+                            <?= LeadModel::typeToStr($job->type) ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    </div>
             </div>
             <div class="card">
                 <div class="header">

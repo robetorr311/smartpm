@@ -40,7 +40,7 @@ class Insurance_jobs extends CI_Controller
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 
 		$this->load->view('header', ['title' => 'Insurance Job Detail']);
-		$this->load->view('insurance_job/view', [
+		$this->load->view('insurance_job/show', [
 			'jobid' => $jobid,
 			'job' => $job,
 			'add_info' => $add_info,
