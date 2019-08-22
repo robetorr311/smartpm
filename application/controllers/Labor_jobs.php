@@ -55,7 +55,9 @@ class Labor_jobs extends CI_Controller
 
 	public function addTeam($jobid)
 	{
-		if (isset($_POST) && count($_POST) > 0) {
+		$this->form_validation->set_rules('team_id', 'Team', 'trim|required');
+
+		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
 			$params = array();
 			$params['team_id'] 		= $posts['team_id'];
@@ -63,17 +65,15 @@ class Labor_jobs extends CI_Controller
 			$params['assign_date'] 		= date('Y-m-d h:i:s');
 			$params['is_deleted'] 		= false;
 			$this->team_job_track->add_record($params);
-			// $this->status->update_record(['production' => 'production'], ['jobid' => $jobid]);
-			redirect('labor-job/' . $jobid);
 		} else {
-			redirect('labor-jobs');
+			$this->session->set_flashdata('errors', validation_errors());
 		}
+		redirect('lead/labor-job/' . $jobid);
 	}
 
-	public function delete($jobid)
+	public function removeTeam($jobid)
 	{
 		$this->team_job_track->remove_team($jobid);
-		// $this->status->update_record(['production' => 'pre-production'], ['jobid' => $jobid]);
-		redirect('labor-job/' . $jobid);
+		redirect('lead/labor-job/' . $jobid);
 	}
 }

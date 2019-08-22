@@ -184,20 +184,20 @@ $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 $route['lead/cash-jobs'] = 'cash_jobs/index';
 $route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
 $route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
-$route['lead/cash-job/(:num)/addTeam'] = 'cash_jobs/addTeam/$1';
-$route['lead/cash-job/(:num)/delete'] = 'cash_jobs/delete/$1';
+$route['lead/cash-job/(:num)/add-team'] = 'cash_jobs/addTeam/$1';
+$route['lead/cash-job/(:num)/remove-team'] = 'cash_jobs/removeTeam/$1';
 
 $route['lead/insurance-jobs'] = 'insurance_jobs/index';
 $route['lead/insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
 $route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
-$route['lead/insurance-job/(:num)/addTeam'] = 'insurance_jobs/addTeam/$1';
-$route['lead/insurance-job/(:num)/delete'] = 'insurance_jobs/delete/$1';
+$route['lead/insurance-job/(:num)/add-team']['post'] = 'insurance_jobs/addTeam/$1';
+$route['lead/insurance-job/(:num)/remove-team']['post'] = 'insurance_jobs/removeTeam/$1';
 
 $route['lead/labor-jobs'] = 'labor_jobs/index';
 $route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
-$route['lead/labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam/$1';
-$route['lead/labor-job/(:num)/delete'] = 'labor_jobs/delete/$1';
+$route['lead/labor-job/(:num)/add-team'] = 'labor_jobs/addTeam/$1';
+$route['lead/labor-job/(:num)/remove-team'] = 'labor_jobs/removeTeam/$1';
 
 $route['productions'] = 'productions/index';
 $route['productions/(:num)'] = 'productions/index/$1';

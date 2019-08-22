@@ -103,15 +103,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div style="float: right;text-align: right;">
                         <p><?= $data->name ?></p>
                         <p><?= $data->assign_date ?></p>
-                        <a href="<?= base_url('lead/insurance-job/' . $jobid . '/delete') ?>">Remove</a>
+                        <a href="<?= base_url('lead/insurance-job/' . $jobid . '/remove-team') ?>" data-method="POST">Remove</a>
                     </div>
                     <?php endforeach; ?>
                     <?php else : ?>
                     <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
                     <div class="content team-block">
-                        <?= form_open('lead/insurance-job/' . $jobid . '/addTeam', array('method' => 'post')) ?>
+                        <?= form_open('lead/insurance-job/' . $jobid . '/add-team', array('method' => 'post')) ?>
                         <select name="team_id" class="form-control team_assign">
-                            <option>Select Team</option>
+                            <option value="">Select Team</option>
                             <?php foreach ($teams as $team) : ?>
                             <option value="<?= $team->id ?>"><?= $team->team_name ?></option>
                             <?php endforeach; ?>
