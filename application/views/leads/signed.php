@@ -24,7 +24,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <th>View</th>
                                       
                                         <th>Job Number</th>
-                                        <th>Lead Name</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Address</th>
@@ -50,7 +49,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
              
               
                   <td><?php echo $lead->job_number; ?></td>
-                  <td><?php echo $lead->job_name ?></td>
                   <td><?php echo $lead->firstname ?></td>
                   <td><?php echo $lead->lastname ?></td>
                   <td><?php echo $lead->address ?></td>

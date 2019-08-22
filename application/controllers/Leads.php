@@ -45,7 +45,6 @@ class Leads extends CI_Controller
 
 	public function store()
 	{
-		$this->form_validation->set_rules('jobname', 'Job Name', 'trim|required');
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -59,7 +58,6 @@ class Leads extends CI_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
 			$insert = $this->lead->insert([
-				'job_name' => $posts['jobname'],
 				'firstname' => $posts['firstname'],
 				'lastname' => $posts['lastname'],
 				'address' => $posts['address'],
@@ -127,7 +125,6 @@ class Leads extends CI_Controller
 
 	public function update($id)
 	{
-		$this->form_validation->set_rules('jobname', 'Job Name', 'trim|required');
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -141,7 +138,6 @@ class Leads extends CI_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
 			$update = $this->lead->update($id, [
-				'job_name' => $posts['jobname'],
 				'firstname' => $posts['firstname'],
 				'lastname' => $posts['lastname'],
 				'address' => $posts['address'],

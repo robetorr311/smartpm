@@ -22,7 +22,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <table class="table table-hover table-striped">
                         <thead>
                             <th>Job Number</th>
-                            <th>Job Name</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Address</th>
@@ -36,7 +35,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php foreach ($jobs as $job) : ?>
                             <tr>
                                 <td><?= ('RJOB' . $job->id); ?></td>
-                                <td><?= $job->job_name ?></td>
                                 <td><?= $job->firstname ?></td>
                                 <td><?= $job->lastname ?></td>
                                 <td><?= $job->address ?></td>

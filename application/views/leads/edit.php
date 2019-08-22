@@ -24,15 +24,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?= form_open('lead/' . $lead->id . '/update', array('method' => 'post')) ?>
 
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group"> <input type="hidden" name="id" class="hidden_id" value="<?= $lead->id ?>" />
-                                <label>Lead Name<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Lead Name" name="jobname" value="<?= $lead->job_name ?>" type="text">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>First Name<span class="red-mark">*</span></label>

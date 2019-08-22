@@ -22,15 +22,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content view">
                     <div class="row">
-                        <input type="hidden" name="id" class="hidden_id" value="<?= $job->id ?>">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Job Name</label>
-                                <p> <?= $job->job_name ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>First Name</label>

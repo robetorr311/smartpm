@@ -22,15 +22,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             ?>
                         </div>
                     </div>
+                    
                     <?= form_open('lead/store', array('method' => 'post')) ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Lead Name<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Lead Name" name="jobname" type="text">
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-md-6">
