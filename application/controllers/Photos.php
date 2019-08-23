@@ -11,20 +11,26 @@ class Photos extends CI_Controller
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['form_validation', 'email', 'user_agent', 'session', 'image_lib']);
 		$this->load->model(['JobsPhotoModel']);
-		// $this->jobsPhoto = new JobsPhotoModel();
 	}
-	public function index($job_id)
+
+	public function index($job_id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$params = array();
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
 		$count = $this->JobsPhotoModel->getCount($params);
 		$imgs  = $this->JobsPhotoModel->allPhoto($params);
 		$this->load->view('header', ['title' => 'Add Photo']);
-		$this->load->view('photo/index', ['count' => $count, 'imgs' => $imgs, 'jobid' => $job_id]);
+		$this->load->view('photo/index', [
+			'count' => $count,
+			'imgs' => $imgs,
+			'jobid' => $job_id,
+			'sub_base_path' => $sub_base_path
+		]);
 		$this->load->view('footer');
 	}
-	/* function for remove directory */
+
 	function rrmdir($dir)
 	{
 		if (is_dir($dir)) {
@@ -41,7 +47,6 @@ class Photos extends CI_Controller
 		}
 	}
 
-	/* function for image Thumbnail */
 	function thumbnail($src)
 	{
 		$file_path = $_SERVER['DOCUMENT_ROOT'] . "/assets/job_photo/" . $src;
@@ -58,14 +63,12 @@ class Photos extends CI_Controller
 		$img_cfg['height'] = 150;
 		$this->image_lib->initialize($img_cfg);
 		if (!$this->image_lib->resize()) {
-			echo "Image Not Exist"; //$this->image_lib->display_errors();
+			echo "Image Not Exist";
 		}
 	}
 
-	/* function for image upload */
 	public function ajaxupload_jobphoto()
 	{
-
 		if (is_array($_FILES) && !empty($_FILES['photo'])) {
 			$img = array();
 			$i = 0;
@@ -171,8 +174,6 @@ class Photos extends CI_Controller
 		}
 	}
 
-
-	/* function for image save in db */
 	public function ajaxsave_jobphoto()
 	{
 		$posts = $this->input->post();
@@ -191,7 +192,6 @@ class Photos extends CI_Controller
 		}
 	}
 
-	/* function for image rotate */
 	public function imagerotate()
 	{
 		$posts = $this->input->post();
@@ -209,7 +209,6 @@ class Photos extends CI_Controller
 		}
 	}
 
-	/* function for image tumbnail to All existing images  */
 	public function thumbnail_all()
 	{
 		$this->db->select('image_name');
@@ -227,7 +226,6 @@ class Photos extends CI_Controller
 		redirect('/dashboard');
 	}
 
-	/* function for image delete */
 	public function deletephoto($job_id, $photo_id)
 	{
 		$this->db->query("UPDATE jobs_photo SET is_active=0 WHERE id='" . $photo_id . "' AND job_id='" . $job_id . "'");

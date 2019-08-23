@@ -23,7 +23,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <thead>
               <th>View</th>
               <th>Job Number</th>
-              <th>Lead Name</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Address</th>
@@ -40,7 +39,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tr>
                       <td style="width: 30px"><a href="<?php echo base_url('lead/' . $lead->id); ?>"><i class="pe-7s-look" style="font-size: 30px" /></a></td>
                       <td><?php echo $lead->job_number; ?></td>
-                      <td><?php echo $lead->job_name ?></td>
                       <td><?php echo $lead->firstname ?></td>
                       <td><?php echo $lead->lastname ?></td>
                       <td><?php echo $lead->address ?></td>

@@ -15,9 +15,10 @@ class LeadModel extends CI_Model
         6 => 'Ready to Sign / Verbal Go',
         7 => 'Signed Insurance Contract',
         8 => 'Signed Cash Contract',
-        9 => 'Worry to Lose',
-        10 => 'Postponed',
-        11 => 'Dead / Lost'
+        9 => 'Signed Labor Only',
+        10 => 'Worry to Lose',
+        11 => 'Postponed',
+        12 => 'Dead / Lost'
     ];
     private static $type = [
         0 => 'Undefined / None',
@@ -31,7 +32,10 @@ class LeadModel extends CI_Model
     public function allLeads($start = 0, $limit = 10)
     {
         $this->db->from($this->table);
-        $this->db->where('is_deleted', FALSE);
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 10, 11]);
         $this->db->order_by('created_at', 'ASC');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -40,8 +44,87 @@ class LeadModel extends CI_Model
 
     public function getLeadsCount()
     {
-        $this->db->where('is_deleted', FALSE);
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 10, 11]);
         return $this->db->count_all_results($this->table);
+    }
+
+    public function allCashJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 8
+        ]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getCashJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 8
+        ]);
+        return $this->db->count_all_results($this->table);
+    }
+
+    public function allInsuranceJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 7
+        ]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getInsuranceJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 7
+        ]);
+        return $this->db->count_all_results($this->table);
+    }
+
+    public function allLaborOnlyJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 9
+        ]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getLaborOnlyJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => 9
+        ]);
+        return $this->db->count_all_results($this->table);
+    }
+
+    public function getLeadById($id)
+    {
+        $this->db->where([
+            'id' => $id
+        ]);
+        $query = $this->db->get($this->table);
+        $result = $query->first_row();
+        return $result ? $result : false;
     }
 
     public function insert($data)
@@ -89,16 +172,6 @@ class LeadModel extends CI_Model
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getLeadById($id)
-    {
-        $this->db->where([
-            'id' => $id
-        ]);
-        $query = $this->db->get($this->table);
-        $result = $query->first_row();
-        return $result ? $result : false;
     }
 
     public function getAllSignedJob($start = 0, $limit = 10)

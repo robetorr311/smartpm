@@ -17,20 +17,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card">
                 <div class="header">
                     <h4 class="title" style="float: left;">Update Lead</h4>
-                    <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
+                    <a href="<?= base_url($sub_base_path != '' ? ('lead/' . $sub_base_path . 's') : 'leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="content">
-                    <?= form_open('lead/' . $lead->id . '/update', array('method' => 'post')) ?>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group"> <input type="hidden" name="id" class="hidden_id" value="<?= $lead->id ?>" />
-                                <label>Lead Name<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Lead Name" name="jobname" value="<?= $lead->job_name ?>" type="text">
-                            </div>
-                        </div>
-                    </div>
+                    <?= form_open('lead/' . $sub_base_path . $lead->id . '/update', array('method' => 'post')) ?>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -108,9 +99,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <div class="col-md-4">
             <div class="card">
-                <?= form_open('lead/' . $jobid . '/updatestatus', array('method' => 'post')) ?>
+                <?= form_open('lead/' . $sub_base_path . $jobid . '/updatestatus', array('method' => 'post')) ?>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Lead Status</h4>
+                    <h4 class="title" style="float: left;">Status</h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($lead->status) ?>
                     </span>
@@ -147,7 +138,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content">
                     <?php if (!empty($add_info)) : ?>
-                    <?= form_open('lead/' . $jobid . '/party/update', array('method' => 'post')) ?>
+                    <?= form_open('lead/' . $sub_base_path . $jobid . '/party/update', array('method' => 'post')) ?>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -176,7 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <?= form_close() ?>
                     <?php else : ?>
-                    <?= form_open('lead/' . $jobid . '/party/add', array('method' => 'post')) ?>
+                    <?= form_open('lead/' . $sub_base_path . $jobid . '/party/add', array('method' => 'post')) ?>
 
                     <div class="row">
 

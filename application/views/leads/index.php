@@ -27,7 +27,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<table class="table table-hover table-striped">
 						<thead>
 							<th>Job Number</th>
-							<th>Lead Name</th>
 							<th>First Name</th>
 							<th>Last Name</th>
 							<th>Status</th>
@@ -41,7 +40,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								<?php foreach ($leads as $lead) : ?>
 									<tr>
 										<td><?= ('RJOB' . $lead->id); ?></td>
-										<td><?= $lead->job_name ?></td>
 										<td><?= $lead->firstname ?></td>
 										<td><?= $lead->lastname ?></td>
 										<td><?= LeadModel::statusToStr($lead->status) ?></td>

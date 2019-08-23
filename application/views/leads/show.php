@@ -22,16 +22,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content view">
                     <div class="row">
-                        <div class="col-md-12">
-                            <input type="hidden" name="id" class="hidden_id" value="<?= $lead->id ?>" />
-                            <div class="form-group">
-                                <label style="line-height: 30px;">Job Name :</label>
-                                <p style="font-size: 25px"> <?= $lead->job_name ?></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>First Name :</label>
@@ -45,7 +35,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -54,7 +43,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -75,7 +63,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -108,13 +95,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="col-md-4">
             <div class="card">
                     <div class="header">
-                        <h4 class="title" style="float: left;">Lead Status</h4>
+                        <h4 class="title" style="float: left;">Status</h4>
                         <span class="status">
                             <?= LeadModel::statusToStr($lead->status); ?>
                         </span>

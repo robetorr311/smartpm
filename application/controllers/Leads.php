@@ -7,15 +7,13 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'StatusTagModel', 'LeadStatusModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
 		$this->lead_note = new LeadNoteModel();
 		$this->lead_note_reply = new LeadNoteReplyModel();
 		$this->user = new UserModel();
-		$this->status_tags = new StatusTagModel();
-		$this->status = new LeadStatusModel();
 		$this->party = new PartyModel();
 	}
 
@@ -47,7 +45,6 @@ class Leads extends CI_Controller
 
 	public function store()
 	{
-		$this->form_validation->set_rules('jobname', 'Job Name', 'trim|required');
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -61,7 +58,6 @@ class Leads extends CI_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
 			$insert = $this->lead->insert([
-				'job_name' => $posts['jobname'],
 				'firstname' => $posts['firstname'],
 				'lastname' => $posts['lastname'],
 				'address' => $posts['address'],
@@ -105,33 +101,34 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function edit($jobid)
+	public function edit($jobid, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
-			$status = $this->status->getStatusByLeadId($jobid);
 			$this->load->view('header', ['title' => 'Lead Update']);
 			$this->load->view('leads/edit', [
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
 				'lead' => $lead,
-				'status' => $status,
 				'add_info' => $add_info,
-				'jobid' => $jobid
+				'jobid' => $jobid,
+				'sub_base_path' => $sub_base_path
 			]);
 			$this->load->view('footer');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 
-	public function update($id)
+	public function update($id, $sub_base_path = '')
 	{
-		$this->form_validation->set_rules('jobname', 'Job Name', 'trim|required');
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -145,7 +142,6 @@ class Leads extends CI_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
 			$update = $this->lead->update($id, [
-				'job_name' => $posts['jobname'],
 				'firstname' => $posts['firstname'],
 				'lastname' => $posts['lastname'],
 				'address' => $posts['address'],
@@ -157,19 +153,21 @@ class Leads extends CI_Controller
 				'email' => $posts['email'],
 			]);
 			if ($update) {
-				redirect('lead/' . $id);
+				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-				redirect('lead/' . $id . '/edit');
+				
+				redirect('lead/' . $sub_base_path . $id . '/edit');
 			}
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
-			redirect('lead/' . $id . '/edit');
+			redirect('lead/' . $sub_base_path . $id . '/edit');
 		}
 	}
 
-	public function updatestatus($id)
+	public function updatestatus($id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 
@@ -181,14 +179,14 @@ class Leads extends CI_Controller
 			]);
 
 			if ($update) {
-				redirect('lead/' . $id);
+				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-				redirect('lead/' . $id . '/edit');
+				redirect('lead/' . $sub_base_path . $id . '/edit');
 			}
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
-			redirect('lead/' . $id . '/edit');
+			redirect('lead/' . $sub_base_path . $id . '/edit');
 		}
 	}
 
@@ -197,9 +195,12 @@ class Leads extends CI_Controller
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
-			$status = $this->status->getStatusByLeadId($jobid);
 			$this->load->view('header', ['title' => 'Lead Detail']);
-			$this->load->view('leads/show', ['status' => $status, 'lead' => $lead, 'add_info' => $add_info, 'jobid' => $jobid]);
+			$this->load->view('leads/show', [
+				'lead' => $lead,
+				'add_info' => $add_info,
+				'jobid' => $jobid
+			]);
 			$this->load->view('footer');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
@@ -207,10 +208,10 @@ class Leads extends CI_Controller
 		}
 	}
 
-	public function delete($id)
+	public function delete($id, $sub_base_path = '')
 	{
 		$this->lead->delete($id);
-		redirect('leads');
+		redirect($sub_base_path != '' ? ('lead/' . $sub_base_path . 's') : 'leads');
 	}
 
 	public function closed($start = 0)
@@ -243,24 +244,33 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function notes($leadId)
+	public function notes($leadId, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
 		if ($lead) {
 			$notes = $this->lead_note->getNotesByLeadId($leadId);
 			$users = $this->user->getUserList();
 
 			$this->load->view('header', ['title' => 'Job Notes']);
-			$this->load->view('leads/notes', ['lead' => $lead, 'notes' => $notes, 'users' => $users]);
+			$this->load->view('leads/notes', [
+				'lead' => $lead,
+				'notes' => $notes,
+				'users' => $users,
+				'sub_base_path' => $sub_base_path
+			]);
 			$this->load->view('footer');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 
-	public function addNote($leadId)
+	public function addNote($leadId, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
 		if ($lead) {
 			$this->form_validation->set_rules('note', 'Note', 'trim|required');
@@ -286,30 +296,34 @@ class Leads extends CI_Controller
 			} else {
 				$this->session->set_flashdata('errors', validation_errors());
 			}
-			redirect('lead/' . $leadId . '/notes');
+			redirect('lead/' . $sub_base_path . $leadId . '/notes');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 
-	public function deleteNote($leadId, $noteId)
+	public function deleteNote($leadId, $noteId, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
 		if ($lead) {
 			$delete = $this->lead_note->delete($noteId, $leadId);
 			if (!$delete) {
 				$this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
 			}
-			redirect('lead/' . $leadId . '/notes');
+			redirect('lead/' . $sub_base_path . $leadId . '/notes');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 
-	public function replies($leadId, $noteId)
+	public function replies($leadId, $noteId, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
 		if ($lead) {
 			$note = $this->lead_note->getNoteById($noteId, $leadId);
@@ -318,20 +332,28 @@ class Leads extends CI_Controller
 				$users = $this->user->getUserList();
 
 				$this->load->view('header', ['title' => 'Job Notes']);
-				$this->load->view('leads/note_replies', ['lead' => $lead, 'note' => $note, 'note_replies' => $note_replies, 'users' => $users]);
+				$this->load->view('leads/note_replies', [
+					'lead' => $lead,
+					'note' => $note,
+					'note_replies' => $note_replies,
+					'users' => $users,
+					'sub_base_path' => $sub_base_path
+				]);
 				$this->load->view('footer');
 			} else {
 				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-				redirect('lead/' . $leadId . '/notes');
+				redirect('lead/' . $sub_base_path . $leadId . '/notes');
 			}
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 
-	public function addNoteReply($leadId, $noteId)
+	public function addNoteReply($leadId, $noteId, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
 		if ($lead) {
 			$note = $this->lead_note->getNoteById($noteId, $leadId);
@@ -359,19 +381,21 @@ class Leads extends CI_Controller
 				} else {
 					$this->session->set_flashdata('errors', validation_errors());
 				}
-				redirect('lead/' . $leadId . '/note/' . $noteId . '/replies');
+				redirect('lead/' . $sub_base_path . $leadId . '/note/' . $noteId . '/replies');
 			} else {
 				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-				redirect('lead/' . $leadId . '/notes');
+				redirect('lead/' . $sub_base_path . $leadId . '/notes');
 			}
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 
-	public function deleteNoteReply($leadId, $noteId, $replyId)
+	public function deleteNoteReply($leadId, $noteId, $replyId, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
 		if ($lead) {
 			$note = $this->lead_note->getNoteById($noteId, $leadId);
@@ -380,14 +404,14 @@ class Leads extends CI_Controller
 				if (!$delete) {
 					$this->session->set_flashdata('errors', '<p>Unable to Delete Note.</p>');
 				}
-				redirect('lead/' . $leadId . '/note/' . $noteId . '/replies');
+				redirect('lead/' . $sub_base_path . $leadId . '/note/' . $noteId . '/replies');
 			} else {
 				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-				redirect('lead/' . $leadId . '/notes');
+				redirect('lead/' . $sub_base_path . $leadId . '/notes');
 			}
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 }

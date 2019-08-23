@@ -14,14 +14,19 @@ class Docs extends CI_Controller
 		$this->doc = new JobsDocModel();
 	}
 
-	public function index($job_id)
+	public function index($job_id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$params = array();
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
 		$docs = $this->Common_model->get_all_where('jobs_doc', $params);
 		$this->load->view('header', ['title' => 'Add Doucment']);
-		$this->load->view('doc/index', ['docs' => $docs, 'jobid' => $job_id]);
+		$this->load->view('doc/index', [
+			'docs' => $docs,
+			'jobid' => $job_id,
+			'sub_base_path' => $sub_base_path
+		]);
 		$this->load->view('footer');
 	}
 

@@ -25,18 +25,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                               
                                    foreach( $jobs as $job ) : ?>  
 
-                                
-                              
-                                    <div class="row">
-                                        <input type="hidden" name="id" class="hidden_id" value="<?php echo $job->id ?>">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Job Name</label>
-                                               <p> <?php echo $job->job_name ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">

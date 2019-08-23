@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row note-item">
                         <div class="col-md-12">
                             <label><?= $note->created_user_fullname ?></label>
-                            <a href="<?= base_url('lead/' . $lead->id . '/note/' . $note->id . '/delete') ?>" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>
+                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/delete') ?>" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>
                             <p><?= $note->note ?></p>
                         </div>
                     </div>
@@ -37,7 +37,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             echo '<div class="row note-item">';
                             echo '<div class="col-md-12">';
                             echo '<label>' . $note_reply->created_user_fullname . '</label>';
-                            echo '<a href="' . base_url('lead/' . $lead->id . '/note/' . $note->id . '/reply/' . $note_reply->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
+                            echo '<a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/reply/' . $note_reply->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note_reply->reply . '</p>';
                             echo '<div style="text-align: right;">';
                             echo '</div>';
@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content view">
                     <div class="row add-note-form">
                         <div class="col-md-12">
-                            <form action="<?= base_url('lead/' . $lead->id . '/note/' . $note->id . '/reply') ?>" method="post">
+                            <form action="<?= base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/reply') ?>" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -69,7 +69,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <a href="<?= base_url('lead/' . $lead->id . '/notes') ?>" class="btn btn-info btn-fill">Back</a>
+                                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/notes') ?>" class="btn btn-info btn-fill">Back</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
                                         </div>
                                     </div>
@@ -86,12 +86,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <h4 class="title">Task Details</h4>
                 </div>
                 <div class="content view">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Lead Name</label>
-                            <p><?= $lead->job_name ?></p>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <label>First Name</label>

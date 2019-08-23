@@ -109,19 +109,26 @@ $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
 $route['leads/(:num)'] = 'leads/index/$1';
-$route['lead/(:num)'] = 'leads/show/$1';
-$route['lead/(:num)/edit'] = 'leads/edit/$1';
-$route['lead/(:num)/update'] = 'leads/update/$1';
-$route['lead/(:num)/delete']['post'] = 'leads/delete/$1';
 $route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
-$route['lead/(:num)/updatestatus'] = 'leads/updatestatus/$1';
+$route['lead/(:num)'] = 'leads/show/$1';
+$route['lead/(:num)/edit'] = 'leads/edit/$1';
+$route['lead/(:num)/update']['post'] = 'leads/update/$1';
+$route['lead/(:num)/delete']['post'] = 'leads/delete/$1';
+$route['lead/(:num)/updatestatus']['post'] = 'leads/updatestatus/$1';
+
+$route['lead/(:any)/(:num)/edit'] = 'leads/edit/$2/$1';
+$route['lead/(:any)/(:num)/update']['post'] = 'leads/update/$2/$1';
+$route['lead/(:any)/(:num)/delete']['post'] = 'leads/delete/$2/$1';
+$route['lead/(:any)/(:num)/updatestatus']['post'] = 'leads/updatestatus/$2/$1';
+
 $route['lead/archive'] = 'leads/archive';
 $route['lead/archive/(:num)'] = 'leads/archive/$1';
 $route['lead/closed'] = 'leads/closed';
 $route['lead/closed/(:num)'] = 'leads/closed/$1';
 $route['lead/signed'] = 'leads/allAssignedLead';
 $route['lead/signed/(:num)'] = 'leads/allAssignedLead/$1';
+
 $route['lead/(:num)/notes'] = 'leads/notes/$1';
 $route['lead/(:num)/add-note']['post'] = 'leads/addNote/$1';
 $route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
@@ -129,11 +136,24 @@ $route['lead/(:num)/note/(:num)/replies'] = 'leads/replies/$1/$2';
 $route['lead/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$1/$2';
 $route['lead/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$1/$2/$3';
 
+$route['lead/(:any)/(:num)/notes'] = 'leads/notes/$2/$1';
+$route['lead/(:any)/(:num)/add-note']['post'] = 'leads/addNote/$2/$1';
+$route['lead/(:any)/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$2/$3/$1';
+$route['lead/(:any)/(:num)/note/(:num)/replies'] = 'leads/replies/$2/$3/$1';
+$route['lead/(:any)/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$2/$3/$1';
+$route['lead/(:any)/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$2/$3/$4/$1';
+
 $route['lead/(:num)/photos'] = 'photos/index/$1';
 $route['lead/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';
 $route['lead/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto';
 $route['lead/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$1/$2';
 $route['lead/(:num)/photo/rotate']['post'] = 'photos/imagerotate';
+
+$route['lead/(:any)/(:num)/photos'] = 'photos/index/$2/$1';
+$route['lead/(:any)/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';
+$route['lead/(:any)/(:num)/photo/save']['post'] = 'photos/ajaxsave_jobphoto';
+$route['lead/(:any)/(:num)/photo/(:num)/delete']['post'] = 'photos/deletephoto/$2/$3';
+$route['lead/(:any)/(:num)/photo/rotate']['post'] = 'photos/imagerotate';
 
 $route['lead/(:num)/reports'] = 'reports/index/$1';
 $route['lead/(:num)/report/create'] = 'reports/create/$1';
@@ -143,32 +163,49 @@ $route['lead/(:num)/report/save']['post'] = 'reports/save/$1';
 $route['lead/(:num)/report/(:num)/pdf'] = 'reports/pdf/$2/$1';
 $route['lead/(:num)/report/(:num)/delete']['post'] = 'reports/delete/$1/$2';
 
+$route['lead/(:any)/(:num)/reports'] = 'reports/index/$2/$1';
+$route['lead/(:any)/(:num)/report/create'] = 'reports/create/$2/$1';
+$route['lead/(:any)/(:num)/report/upload']['post'] = 'reports/upload';
+$route['lead/(:any)/(:num)/report/save-img']['post'] = 'reports/save_img';
+$route['lead/(:any)/(:num)/report/save']['post'] = 'reports/save/$2/$1';
+$route['lead/(:any)/(:num)/report/(:num)/pdf'] = 'reports/pdf/$3/$2/$1';
+$route['lead/(:any)/(:num)/report/(:num)/delete']['post'] = 'reports/delete/$2/$3';
+
 $route['lead/(:num)/docs'] = 'docs/index/$1';
 $route['lead/(:num)/doc/upload']['post'] = 'docs/ajaxupload_jobdoc';
 $route['lead/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
 $route['lead/(:num)/doc/delete']['post'] = 'docs/deletedoc';
 $route['lead/(:num)/doc/update']['post'] = 'docs/updatedocname';
 
-$route['lead/(:num)/party/add']['post'] = 'party/index/$1';
+$route['lead/(:any)/(:num)/docs'] = 'docs/index/$2/$1';
+$route['lead/(:any)/(:num)/doc/upload']['post'] = 'docs/ajaxupload_jobdoc';
+$route['lead/(:any)/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
+$route['lead/(:any)/(:num)/doc/delete']['post'] = 'docs/deletedoc';
+$route['lead/(:any)/(:num)/doc/update']['post'] = 'docs/updatedocname';
+
+$route['lead/(:num)/party/add']['post'] = 'party/add/$1';
 $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 
-$route['cash-jobs'] = 'cash_jobs/index';
-$route['cash-jobs/(:num)'] = 'cash_jobs/index/$1';
-$route['cash-job/(:num)'] = 'cash_jobs/view/$1';
-$route['cash-job/(:num)/addTeam'] = 'cash_jobs/addTeam/$1';
-$route['cash-job/(:num)/delete'] = 'cash_jobs/delete/$1';
+$route['lead/(:any)/(:num)/party/add']['post'] = 'party/add/$2/$1';
+$route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
-$route['insurance-jobs'] = 'insurance_jobs/index';
-$route['insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
-$route['insurance-job/(:num)'] = 'insurance_jobs/view/$1';
-$route['insurance-job/(:num)/addTeam'] = 'insurance_jobs/addTeam/$1';
-$route['insurance-job/(:num)/delete'] = 'insurance_jobs/delete/$1';
+$route['lead/cash-jobs'] = 'cash_jobs/index';
+$route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
+$route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
+$route['lead/cash-job/(:num)/add-team'] = 'cash_jobs/addTeam/$1';
+$route['lead/cash-job/(:num)/remove-team'] = 'cash_jobs/removeTeam/$1';
 
-$route['labor-jobs'] = 'labor_jobs/index';
-$route['labor-jobs/(:num)'] = 'labor_jobs/index/$1';
-$route['labor-job/(:num)'] = 'labor_jobs/view/$1';
-$route['labor-job/(:num)/addTeam'] = 'labor_jobs/addTeam/$1';
-$route['labor-job/(:num)/delete'] = 'labor_jobs/delete/$1';
+$route['lead/insurance-jobs'] = 'insurance_jobs/index';
+$route['lead/insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
+$route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
+$route['lead/insurance-job/(:num)/add-team']['post'] = 'insurance_jobs/addTeam/$1';
+$route['lead/insurance-job/(:num)/remove-team']['post'] = 'insurance_jobs/removeTeam/$1';
+
+$route['lead/labor-jobs'] = 'labor_jobs/index';
+$route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
+$route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
+$route['lead/labor-job/(:num)/add-team'] = 'labor_jobs/addTeam/$1';
+$route['lead/labor-job/(:num)/remove-team'] = 'labor_jobs/removeTeam/$1';
 
 $route['productions'] = 'productions/index';
 $route['productions/(:num)'] = 'productions/index/$1';
