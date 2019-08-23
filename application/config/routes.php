@@ -113,9 +113,14 @@ $route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
 $route['lead/(:num)'] = 'leads/show/$1';
 $route['lead/(:num)/edit'] = 'leads/edit/$1';
-$route['lead/(:num)/update'] = 'leads/update/$1';
+$route['lead/(:num)/update']['post'] = 'leads/update/$1';
 $route['lead/(:num)/delete']['post'] = 'leads/delete/$1';
-$route['lead/(:num)/updatestatus'] = 'leads/updatestatus/$1';
+$route['lead/(:num)/updatestatus']['post'] = 'leads/updatestatus/$1';
+
+$route['lead/(:any)/(:num)/edit'] = 'leads/edit/$2/$1';
+$route['lead/(:any)/(:num)/update']['post'] = 'leads/update/$2/$1';
+$route['lead/(:any)/(:num)/delete']['post'] = 'leads/delete/$2/$1';
+$route['lead/(:any)/(:num)/updatestatus']['post'] = 'leads/updatestatus/$2/$1';
 
 $route['lead/archive'] = 'leads/archive';
 $route['lead/archive/(:num)'] = 'leads/archive/$1';
@@ -178,8 +183,11 @@ $route['lead/(:any)/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
 $route['lead/(:any)/(:num)/doc/delete']['post'] = 'docs/deletedoc';
 $route['lead/(:any)/(:num)/doc/update']['post'] = 'docs/updatedocname';
 
-$route['lead/(:num)/party/add']['post'] = 'party/index/$1';
+$route['lead/(:num)/party/add']['post'] = 'party/add/$1';
 $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
+
+$route['lead/(:any)/(:num)/party/add']['post'] = 'party/add/$2/$1';
+$route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
 $route['lead/cash-jobs'] = 'cash_jobs/index';
 $route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';

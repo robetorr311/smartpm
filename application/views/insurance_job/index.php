@@ -40,8 +40,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td><?= $job->address ?></td>
                                 <td><?= $job->email ?></td>
                                 <td class="text-center"><a href="<?= base_url('lead/insurance-job/' . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                <td class="text-center"><a href="<?= base_url('lead/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                <td class="text-center"><a href="<?= base_url('lead/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                <td class="text-center"><a href="<?= base_url('lead/insurance-job/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+                                <td class="text-center"><a href="<?= base_url('lead/insurance-job/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                             </tr>
                             <?php endforeach; ?>
                             <?php else : ?>

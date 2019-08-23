@@ -13,8 +13,9 @@ class Party extends CI_Controller
 		$this->party = new PartyModel();
 	}
 
-	public function index($id)
+	public function add($id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		if (isset($_POST) && count($_POST) > 0) {
 			$posts = $this->input->post();
 			$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
@@ -23,7 +24,7 @@ class Party extends CI_Controller
 			$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
 				$this->session->set_flashdata('errors', validation_errors());
-				redirect('lead/' . $id . '/edit');
+				redirect('lead/' . $sub_base_path . $id . '/edit');
 			} else {
 				$params = array();
 				$params['job_id'] = $id;
@@ -32,13 +33,14 @@ class Party extends CI_Controller
 				$params['email'] = $posts['email'];
 				$params['phone'] = $posts['phone'];
 				$this->party->add_record($params);
-				redirect('lead/' . $id);
+				redirect('lead/' . $sub_base_path . $id);
 			}
 		}
 	}
 
-	public function update($id)
+	public function update($id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		if (isset($_POST) && count($_POST) > 0) {
 			$posts = $this->input->post();
 			$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
@@ -47,7 +49,7 @@ class Party extends CI_Controller
 			$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
 				$this->session->set_flashdata('errors', validation_errors());
-				redirect('lead/' . $id . '/edit');
+				redirect('lead/' . $sub_base_path . $id . '/edit');
 			} else {
 				$params = array();
 				$params['fname'] = $posts['firstname'];
@@ -55,7 +57,7 @@ class Party extends CI_Controller
 				$params['email'] = $posts['email'];
 				$params['phone'] = $posts['phone'];
 				$this->party->update_record($params, ['job_id' => $id]);
-				redirect('lead/' . $id);
+				redirect('lead/' . $sub_base_path . $id);
 			}
 		}
 	}

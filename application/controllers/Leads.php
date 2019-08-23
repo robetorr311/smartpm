@@ -101,8 +101,10 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function edit($jobid)
+	public function edit($jobid, $sub_base_path = '')
 	{
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
@@ -114,17 +116,19 @@ class Leads extends CI_Controller
 				'lead_status_tags' => $lead_status_tags,
 				'lead' => $lead,
 				'add_info' => $add_info,
-				'jobid' => $jobid
+				'jobid' => $jobid,
+				'sub_base_path' => $sub_base_path
 			]);
 			$this->load->view('footer');
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('leads');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
 
-	public function update($id)
+	public function update($id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -149,19 +153,21 @@ class Leads extends CI_Controller
 				'email' => $posts['email'],
 			]);
 			if ($update) {
-				redirect('lead/' . $id);
+				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-				redirect('lead/' . $id . '/edit');
+				
+				redirect('lead/' . $sub_base_path . $id . '/edit');
 			}
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
-			redirect('lead/' . $id . '/edit');
+			redirect('lead/' . $sub_base_path . $id . '/edit');
 		}
 	}
 
-	public function updatestatus($id)
+	public function updatestatus($id, $sub_base_path = '')
 	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 
@@ -173,14 +179,14 @@ class Leads extends CI_Controller
 			]);
 
 			if ($update) {
-				redirect('lead/' . $id);
+				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-				redirect('lead/' . $id . '/edit');
+				redirect('lead/' . $sub_base_path . $id . '/edit');
 			}
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
-			redirect('lead/' . $id . '/edit');
+			redirect('lead/' . $sub_base_path . $id . '/edit');
 		}
 	}
 
@@ -202,10 +208,10 @@ class Leads extends CI_Controller
 		}
 	}
 
-	public function delete($id)
+	public function delete($id, $sub_base_path = '')
 	{
 		$this->lead->delete($id);
-		redirect('leads');
+		redirect($sub_base_path != '' ? ('lead/' . $sub_base_path . 's') : 'leads');
 	}
 
 	public function closed($start = 0)
