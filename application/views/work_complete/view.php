@@ -154,7 +154,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="content">
                             <?php if( !empty( $add_info ) ) : ?>
                             <?php foreach( $add_info as $info ) : ?>  
-                                <?php echo form_open('server/additional_party_update',array('id'=>"jobform",'autocomplete'=>"off"));?>
+                                <?php echo form_open('server/additional_party_update',array('id'=>"jobform"));?>
 
                                     <div class="row">
                                         <div class="col-md-12">

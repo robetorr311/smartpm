@@ -207,11 +207,11 @@ $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
 $route['lead/labor-job/(:num)/add-team'] = 'labor_jobs/addTeam/$1';
 $route['lead/labor-job/(:num)/remove-team'] = 'labor_jobs/removeTeam/$1';
 
-$route['productions'] = 'productions/index';
-$route['productions/(:num)'] = 'productions/index/$1';
-$route['production/(:num)'] = 'productions/view/$1';
-$route['production/(:num)/mark-complete'] = 'productions/complete/$1';
-$route['production/(:num)/mark-incomplete'] = 'productions/incomplete/$1';
+$route['lead/production-jobs'] = 'productions/index';
+$route['lead/production-jobs/(:num)'] = 'productions/index/$1';
+$route['lead/production-job/(:num)'] = 'productions/view/$1';
+$route['lead/production-job/(:num)/mark-complete'] = 'productions/complete/$1';
+$route['lead/production-job/(:num)/mark-incomplete'] = 'productions/incomplete/$1';
 
 $route['work-completed'] = 'work_complete/index';
 $route['work-completed/(:num)'] = 'work_complete/index/$1';
