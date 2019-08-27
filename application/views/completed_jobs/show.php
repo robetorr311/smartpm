@@ -2,10 +2,21 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row">
+        <div class="col-md-12">
+            <?php
+            if (!empty($this->session->flashdata('errors'))) {
+                echo '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+                echo $this->session->flashdata('errors');
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">View</h4>
+                    <h4 class="title" style="float: left;">Job Details</h4>
                     <a href="<?= base_url('lead/completed-jobs') ?>" class="btn btn-info btn-fill pull-right">Back</a>
                     <div class="clearfix"></div>
                 </div>
@@ -14,13 +25,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <p><?php echo $job->firstname ?></p>
+                                <p><?= $job->firstname ?></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <p><?php echo $job->lastname ?></p>
+                                <p><?= $job->lastname ?></p>
                             </div>
                         </div>
                     </div>
@@ -28,7 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Address</label>
-                                <p><?php echo $job->address ?></p>
+                                <p><?= $job->address ?></p>
                             </div>
                         </div>
                     </div>
@@ -36,19 +47,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>City</label>
-                                <p><?php echo $job->city ?></p>
+                                <p><?= $job->city ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>State</label>
-                                <p><?php echo $job->state ?></p>
+                                <p><?= $job->state ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Postal Code</label>
-                                <p><?php echo $job->zip ?></p>
+                                <p><?= $job->zip ?></p>
                             </div>
                         </div>
                     </div>
@@ -56,19 +67,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Phone 1</label>
-                                <p><?php echo $job->phone1 ?></p>
+                                <p><?= $job->phone1 ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Phone 2</label>
-                                <p><?php echo $job->phone2 ?></p>
+                                <p><?= $job->phone2 ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email</label>
-                                <p><?php echo $job->email ?></p>
+                                <p><?= $job->email ?></p>
                             </div>
                         </div>
                     </div>
@@ -86,7 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Team Detail:</h4>
+                    <h4 class="title" style="float: left;">Team Detail</h4>
                     <?php if (!empty($teams_detail)) : ?>
                     <?php foreach ($teams_detail as $data) : ?>
                     <div style="float: right;text-align: right;">
@@ -103,7 +114,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title" style="float: left;">Status</h4>
                     <span class="status">
-                        <?= LeadModel::statusToStr($job->status); ?>
+                        <?= LeadModel::statusToStr($job->status) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
                     <h4 class="title" style="float: left;">Job Type</h4>
