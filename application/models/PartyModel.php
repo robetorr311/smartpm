@@ -15,25 +15,16 @@ class PartyModel extends CI_Model
         return $result ? $result : false;
     }
 
-    public function add_record( $array ){
-    
-        $this->db->insert($this->table, $array);
-        
-        if ($this->db->affected_rows() > 0) {
-            return $this->db->insert_id();
-        } else {
-            return false; 
-        }
+    public function insert($data)
+    {
+        $insert = $this->db->insert($this->table, $data);
+        return $insert ? $this->db->insert_id() : $insert;
     }
-    
-    public function update_record($updatedArray, $condition){
-        $this->db->where($condition);
-        $this->db->update($this->table, $updatedArray);
-        if ( $this->db->affected_rows() > 0 ) {
-            return TRUE;
-        } else {
-            return FALSE;  
-        }
+
+    public function updateByLeadId($id, $data)
+    {
+        $this->db->where('job_id', $id);
+        $update = $this->db->update($this->table, $data);
+        return $update;
     }
-    
 }

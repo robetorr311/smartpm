@@ -24,7 +24,7 @@ class Cash_jobs extends CI_Controller
 		];
 		$this->pagination->initialize($pagiConfig);
 		$jobs = $this->lead->allCashJobs($start, $limit);
-		$this->load->view('header', ['title' => 'Cash Job']);
+		$this->load->view('header', ['title' => 'Cash Jobs']);
 		$this->load->view('cash_job/index', [
 			'jobs' => $jobs,
 			'pagiLinks' => $this->pagination->create_links()
@@ -73,5 +73,13 @@ class Cash_jobs extends CI_Controller
 	{
 		$this->team_job_track->remove_team($jobid);
 		redirect('lead/cash-job/' . $jobid);
+	}
+
+	public function moveNextStage($jobid)
+	{
+		$this->lead->update($jobid, [
+			'signed_stage' => 1
+		]);
+		redirect('lead/production-job/' . $jobid);
 	}
 }

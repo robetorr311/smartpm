@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Production List</h4>
+                    <h4 class="title">Completed Job List</h4>
                 </div>
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
@@ -39,9 +39,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td><?= $job->lastname ?></td>
                                 <td><?= $job->address ?></td>
                                 <td><?= $job->email ?></td>
-                                <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                <td class="text-center"><a href="<?= base_url('lead/completed-job/' . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                <td class="text-center"><a href="<?= base_url('lead/completed-job/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+                                <td class="text-center"><a href="<?= base_url('lead/completed-job/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                             </tr>
                             <?php endforeach; ?>
                             <?php else : ?>

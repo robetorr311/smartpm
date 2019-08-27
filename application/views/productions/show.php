@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card">
                 <div class="header">
                     <h4 class="title" style="float: left;">Job Details</h4>
-                    <a href="<?= base_url('lead/insurance-jobs') ?>" class="btn btn-info btn-fill pull-right">Back</a>
+                    <a href="<?= base_url('lead/production-jobs') ?>" class="btn btn-info btn-fill pull-right">Back</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="content view">
@@ -86,11 +86,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                 </div>
                 <div class="footer">
-                    <a href="<?= base_url('lead/insurance-job/' . $job->id . '/photos') ?>" class="btn btn-success btn-fill">Photos</a>
-                    <a href="<?= base_url('lead/insurance-job/' . $job->id . '/reports') ?>" class="btn btn-danger btn-fill">All Report</a>
+                    <a href="<?= base_url('lead/production-job/' . $job->id . '/photos') ?>" class="btn btn-success btn-fill">Photos</a>
+                    <a href="<?= base_url('lead/production-job/' . $job->id . '/reports') ?>" class="btn btn-danger btn-fill">All Report</a>
                     <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-                    <a href="<?= base_url('lead/insurance-job/' . $job->id . '/docs') ?>" class="btn btn-danger btn-fill">Docs</a>
-                    <a href="<?= base_url('lead/insurance-job/' . $job->id . '/notes') ?>" class="btn btn-success btn-fill">Notes</a>
+                    <a href="<?= base_url('lead/production-job/' . $job->id . '/docs') ?>" class="btn btn-danger btn-fill">Docs</a>
+                    <a href="<?= base_url('lead/production-job/' . $job->id . '/notes') ?>" class="btn btn-success btn-fill">Notes</a>
                 </div>
             </div>
         </div>
@@ -103,38 +103,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div style="float: right;text-align: right;">
                         <p><?= $data->name ?></p>
                         <p><?= $data->assign_date ?></p>
-                        <a href="<?= base_url('lead/insurance-job/' . $jobid . '/remove-team') ?>" data-method="POST">Remove</a>
                     </div>
-                    <?php endforeach; ?>
+                    <?php endforeach ?>
                     <?php else : ?>
                     <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
-                    <div class="content team-block">
-                        <?= form_open('lead/insurance-job/' . $jobid . '/add-team', array('method' => 'post')) ?>
-                        <select name="team_id" class="form-control team_assign">
-                            <option value="">Select Team</option>
-                            <?php foreach ($teams as $team) : ?>
-                            <option value="<?= $team->id ?>"><?= $team->team_name ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <input class="btn btn-success btn-fill" type="submit" value="Add Team">
-                        <?= form_close() ?>
-                    </div>
-                    <?php endif; ?>
+                    <?php endif ?>
                 </div>
             </div>
             <div class="card">
-                    <div class="header">
-                        <h4 class="title" style="float: left;">Status</h4>
-                        <span class="status">
-                            <?= LeadModel::statusToStr($job->status) ?>
-                        </span>
-                        <div class="clearfix" style="padding: 10px;"></div>
-                        <h4 class="title" style="float: left;">Job Type</h4>
-                        <span class="status">
-                            <?= LeadModel::typeToStr($job->type) ?>
-                        </span>
-                        <div class="clearfix" style="padding: 10px;"></div>
-                    </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Status</h4>
+                    <span class="status">
+                        <?= LeadModel::statusToStr($job->status) ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
+                    <h4 class="title" style="float: left;">Job Type</h4>
+                    <span class="status">
+                        <?= LeadModel::typeToStr($job->type) ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
+                </div>
             </div>
             <div class="card">
                 <div class="header">
@@ -175,8 +163,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <a href="<?= base_url('lead/insurance-job/' . $job->id . '/move-next-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST">Move to Production&nbsp;<i class="pe-7s-angle-right"></i></a>
+                <div class="col-md-6">
+                    <a href="<?= base_url('lead/production-job/' . $job->id . '/move-previous-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST"><i class="pe-7s-angle-left"></i>&nbsp;Move to <?= $previous_status ?></a>
+                </div>
+                <div class="col-md-6">
+                    <a href="<?= base_url('lead/production-job/' . $job->id . '/move-next-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST">Move to Completed&nbsp;<i class="pe-7s-angle-right"></i></a>
                 </div>
             </div>
         </div>

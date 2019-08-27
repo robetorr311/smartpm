@@ -73,4 +73,12 @@ class Insurance_jobs extends CI_Controller
 		$this->team_job_track->remove_team($jobid);
 		redirect('lead/insurance-job/' . $jobid);
 	}
+
+	public function moveNextStage($jobid)
+	{
+		$this->lead->update($jobid, [
+			'signed_stage' => 1
+		]);
+		redirect('lead/production-job/' . $jobid);
+	}
 }

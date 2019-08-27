@@ -194,30 +194,32 @@ $route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
 $route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
 $route['lead/cash-job/(:num)/add-team'] = 'cash_jobs/addTeam/$1';
 $route['lead/cash-job/(:num)/remove-team'] = 'cash_jobs/removeTeam/$1';
+$route['lead/cash-job/(:num)/move-next-stage']['post'] = 'cash_jobs/moveNextStage/$1';
 
 $route['lead/insurance-jobs'] = 'insurance_jobs/index';
 $route['lead/insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
 $route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
 $route['lead/insurance-job/(:num)/add-team']['post'] = 'insurance_jobs/addTeam/$1';
 $route['lead/insurance-job/(:num)/remove-team']['post'] = 'insurance_jobs/removeTeam/$1';
+$route['lead/insurance-job/(:num)/move-next-stage']['post'] = 'insurance_jobs/moveNextStage/$1';
 
 $route['lead/labor-jobs'] = 'labor_jobs/index';
 $route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
 $route['lead/labor-job/(:num)/add-team'] = 'labor_jobs/addTeam/$1';
 $route['lead/labor-job/(:num)/remove-team'] = 'labor_jobs/removeTeam/$1';
+$route['lead/labor-job/(:num)/move-next-stage'] = 'labor_jobs/moveNextStage/$1';
 
-$route['productions'] = 'productions/index';
-$route['productions/(:num)'] = 'productions/index/$1';
-$route['production/(:num)'] = 'productions/view/$1';
-$route['production/(:num)/mark-complete'] = 'productions/complete/$1';
-$route['production/(:num)/mark-incomplete'] = 'productions/incomplete/$1';
+$route['lead/production-jobs'] = 'productions/index';
+$route['lead/production-jobs/(:num)'] = 'productions/index/$1';
+$route['lead/production-job/(:num)'] = 'productions/view/$1';
+$route['lead/production-job/(:num)/move-previous-stage'] = 'productions/movePreviousStage/$1';
+$route['lead/production-job/(:num)/move-next-stage'] = 'productions/moveNextStage/$1';
 
-$route['work-completed'] = 'work_complete/index';
-$route['work-completed/(:num)'] = 'work_complete/index/$1';
-$route['work-complete/(:num)'] = 'work_complete/view/$1';
-$route['work-complete/(:num)/mark-complete'] = 'work_complete/complete/$1';
-$route['work-complete/(:num)/mark-incomplete'] = 'work_complete/incomplete/$1';
+$route['lead/completed-jobs'] = 'completed_jobs/index';
+$route['lead/completed-jobs/(:num)'] = 'completed_jobs/index/$1';
+$route['lead/completed-job/(:num)'] = 'completed_jobs/view/$1';
+$route['lead/completed-job/(:num)/move-previous-stage'] = 'completed_jobs/movePreviousStage/$1';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';

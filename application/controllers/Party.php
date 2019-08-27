@@ -16,49 +16,45 @@ class Party extends CI_Controller
 	public function add($id, $sub_base_path = '')
 	{
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
-		if (isset($_POST) && count($_POST) > 0) {
+		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
+		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('errors', validation_errors());
+			redirect('lead/' . $sub_base_path . $id . '/edit');
+		} else {
 			$posts = $this->input->post();
-			$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
-			$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
-			$this->form_validation->set_rules('email', 'Email', 'trim|required');
-			$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
-			if ($this->form_validation->run() == FALSE) {
-				$this->session->set_flashdata('errors', validation_errors());
-				redirect('lead/' . $sub_base_path . $id . '/edit');
-			} else {
-				$params = array();
-				$params['job_id'] = $id;
-				$params['fname'] = $posts['firstname'];
-				$params['lname'] = $posts['lastname'];
-				$params['email'] = $posts['email'];
-				$params['phone'] = $posts['phone'];
-				$this->party->add_record($params);
-				redirect('lead/' . $sub_base_path . $id);
-			}
+			$insert = $this->party->insert([
+				'job_id' => $id,
+				'fname' => $posts['firstname'],
+				'lname' => $posts['lastname'],
+				'email' => $posts['email'],
+				'phone' => $posts['phone']
+			]);
+			redirect('lead/' . $sub_base_path . $id);
 		}
 	}
 
 	public function update($id, $sub_base_path = '')
 	{
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
-		if (isset($_POST) && count($_POST) > 0) {
+		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
+		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('errors', validation_errors());
+			redirect('lead/' . $sub_base_path . $id . '/edit');
+		} else {
 			$posts = $this->input->post();
-			$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
-			$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
-			$this->form_validation->set_rules('email', 'Email', 'trim|required');
-			$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
-			if ($this->form_validation->run() == FALSE) {
-				$this->session->set_flashdata('errors', validation_errors());
-				redirect('lead/' . $sub_base_path . $id . '/edit');
-			} else {
-				$params = array();
-				$params['fname'] = $posts['firstname'];
-				$params['lname'] = $posts['lastname'];
-				$params['email'] = $posts['email'];
-				$params['phone'] = $posts['phone'];
-				$this->party->update_record($params, ['job_id' => $id]);
-				redirect('lead/' . $sub_base_path . $id);
-			}
+			$update = $this->party->updateByLeadId($id, [
+				'fname' => $posts['firstname'],
+				'lname' => $posts['lastname'],
+				'email' => $posts['email'],
+				'phone' => $posts['phone']
+			]);
+			redirect('lead/' . $sub_base_path . $id);
 		}
 	}
 }

@@ -97,7 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Team Detail:</h4>
+                    <h4 class="title" style="float: left;">Team Detail</h4>
                     <?php if (!empty($teams_detail)) : ?>
                     <?php foreach ($teams_detail as $data) : ?>
                     <div style="float: right;text-align: right;">
@@ -126,7 +126,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="header">
                         <h4 class="title" style="float: left;">Status</h4>
                         <span class="status">
-                            <?= LeadModel::statusToStr($job->status); ?>
+                            <?= LeadModel::statusToStr($job->status) ?>
                         </span>
                         <div class="clearfix" style="padding: 10px;"></div>
                         <h4 class="title" style="float: left;">Job Type</h4>
@@ -172,6 +172,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                     <?php endif; ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="<?= base_url('lead/labor-job/' . $job->id . '/move-next-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST">Move to Production&nbsp;<i class="pe-7s-angle-right"></i></a>
                 </div>
             </div>
         </div>
