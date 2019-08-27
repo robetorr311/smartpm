@@ -1024,3 +1024,11 @@ input[type="button"] {
 	resize: none;
 	width: 100%;
 }
+.lead-move-btn {
+	width: 100%;
+}
+.lead-move-btn i {
+	line-height: 20px;
+	font-size: 20px;
+	vertical-align: middle;
+}

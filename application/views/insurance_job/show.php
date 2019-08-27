@@ -174,6 +174,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="<?= base_url('lead/insurance-job/' . $job->id . '/move-next-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST">Move to Production&nbsp;<i class="pe-7s-angle-right"></i></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

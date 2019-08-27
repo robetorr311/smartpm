@@ -149,6 +149,30 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
+    public function allCompletedJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'signed_stage' => 2
+        ]);
+        $this->db->where_in('status', [7, 8, 9]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getCompletedJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'signed_stage' => 2
+        ]);
+        $this->db->where_in('status', [7, 8, 9]);
+        return $this->db->count_all_results($this->table);
+    }
+
     public function getLeadById($id)
     {
         $this->db->where([

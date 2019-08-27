@@ -106,9 +106,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('work-completed');?>">
+                    <a href="<?php echo base_url('lead/completed-jobs');?>">
                         <i class="pe-7s-note"></i>
-                        <p>Work Complete</p>
+                        <p>Completed Jobs</p>
                     </a>
                 </li>
                 <li>
