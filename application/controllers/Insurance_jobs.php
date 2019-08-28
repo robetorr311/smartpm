@@ -7,11 +7,12 @@ class Insurance_jobs extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel']);
+		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
+		$this->insurance_job_details = new InsuranceJobDetailsModel();
 	}
 
 	public function index($start = 0)
@@ -80,5 +81,38 @@ class Insurance_jobs extends CI_Controller
 			'signed_stage' => 1
 		]);
 		redirect('lead/production-job/' . $jobid);
+	}
+
+	public function insertInsuranceDetails($jobid, $sub_base_path)
+	{
+		$posts = $this->input->post();
+		$insert = $this->insurance_job_details->insert([
+			'insurance_carrier' => $posts['insurance_carrier'],
+			'carrier_phone' => $posts['carrier_phone'],
+			'carrier_email' => $posts['carrier_email'],
+			'policy_number' => $posts['policy_number'],
+			'date_of_loss' => $posts['date_of_loss'],
+			'adjuster' => $posts['adjuster'],
+			'adjuster_phone' => $posts['adjuster_phone'],
+			'adjuster_email' => $posts['adjuster_email'],
+			'job_id' => $jobid
+		]);
+		redirect('lead/' . $sub_base_path . '/' . $jobid . '/edit');
+	}
+
+	public function updateInsuranceDetails($jobid, $sub_base_path)
+	{
+		$posts = $this->input->post();
+		$update = $this->insurance_job_details->updateByLeadId($jobid, [
+			'insurance_carrier' => $posts['insurance_carrier'],
+			'carrier_phone' => $posts['carrier_phone'],
+			'carrier_email' => $posts['carrier_email'],
+			'policy_number' => $posts['policy_number'],
+			'date_of_loss' => $posts['date_of_loss'],
+			'adjuster' => $posts['adjuster'],
+			'adjuster_phone' => $posts['adjuster_phone'],
+			'adjuster_email' => $posts['adjuster_email']
+		]);
+		redirect('lead/' . $sub_base_path . '/' . $jobid . '/edit');
 	}
 }

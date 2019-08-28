@@ -7,7 +7,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
@@ -15,6 +15,7 @@ class Leads extends CI_Controller
 		$this->lead_note_reply = new LeadNoteReplyModel();
 		$this->user = new UserModel();
 		$this->party = new PartyModel();
+		$this->insurance_job_details = new InsuranceJobDetailsModel();
 	}
 
 	public function index($start = 0)
@@ -108,6 +109,10 @@ class Leads extends CI_Controller
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
+			$insurance_job_details = false;
+			if ($lead->status == 7) {
+				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
+			}
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
 			$this->load->view('header', ['title' => 'Lead Update']);
@@ -117,7 +122,8 @@ class Leads extends CI_Controller
 				'lead' => $lead,
 				'add_info' => $add_info,
 				'jobid' => $jobid,
-				'sub_base_path' => $sub_base_path
+				'sub_base_path' => $sub_base_path,
+				'insurance_job_details' => $insurance_job_details
 			]);
 			$this->load->view('footer');
 		} else {
