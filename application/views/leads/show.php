@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Lead Detail</h4>
+                    <h4 class="title" style="float: left;">Leads / Clients Detail</h4>
                     <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
                     <div class="clearfix"></div>
                 </div>

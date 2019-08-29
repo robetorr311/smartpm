@@ -29,7 +29,7 @@ class Leads extends CI_Controller
 		$this->pagination->initialize($pagiConfig);
 
 		$leads = $this->lead->allLeads($start, $limit);
-		$this->load->view('header', ['title' => 'Leads']);
+		$this->load->view('header', ['title' => 'Leads / Clients']);
 		$this->load->view('leads/index', [
 			'leads' => $leads,
 			'pagiLinks' => $this->pagination->create_links()
@@ -39,7 +39,7 @@ class Leads extends CI_Controller
 
 	public function create()
 	{
-		$this->load->view('header', ['title' => 'Add New Leads']);
+		$this->load->view('header', ['title' => 'Leads / Clients']);
 		$this->load->view('leads/create');
 		$this->load->view('footer');
 	}
@@ -94,7 +94,7 @@ class Leads extends CI_Controller
 		$this->pagination->initialize($pagiConfig);
 
 		$leads = $this->lead->getAllSignedJob($start, $limit);
-		$this->load->view('header', ['title' => 'Leads']);
+		$this->load->view('header', ['title' => 'Leads / Clients']);
 		$this->load->view('leads/signed', [
 			'leads' => $leads,
 			'pagiLinks' => $this->pagination->create_links()
@@ -115,7 +115,7 @@ class Leads extends CI_Controller
 			}
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
-			$this->load->view('header', ['title' => 'Lead Update']);
+			$this->load->view('header', ['title' => 'Leads / Clients']);
 			$this->load->view('leads/edit', [
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
@@ -201,7 +201,7 @@ class Leads extends CI_Controller
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
-			$this->load->view('header', ['title' => 'Lead Detail']);
+			$this->load->view('header', ['title' => 'Leads / Clients']);
 			$this->load->view('leads/show', [
 				'lead' => $lead,
 				'add_info' => $add_info,
@@ -259,7 +259,7 @@ class Leads extends CI_Controller
 			$notes = $this->lead_note->getNotesByLeadId($leadId);
 			$users = $this->user->getUserList();
 
-			$this->load->view('header', ['title' => 'Job Notes']);
+			$this->load->view('header', ['title' => 'Leads / Clients Notes']);
 			$this->load->view('leads/notes', [
 				'lead' => $lead,
 				'notes' => $notes,
@@ -337,7 +337,7 @@ class Leads extends CI_Controller
 				$note_replies = $this->lead_note_reply->getRepliesByNoteId($noteId);
 				$users = $this->user->getUserList();
 
-				$this->load->view('header', ['title' => 'Job Notes']);
+				$this->load->view('header', ['title' => 'Leads / Clients Notes']);
 				$this->load->view('leads/note_replies', [
 					'lead' => $lead,
 					'note' => $note,

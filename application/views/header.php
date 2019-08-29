@@ -78,7 +78,7 @@
                 <li>
                     <a href="<?php echo base_url('leads');?>">
                         <i class="pe-7s-note2"></i>
-                        <p>Leads </p>
+                        <p>Leads / Clients</p>
                     </a>
                 </li>
                 <li>

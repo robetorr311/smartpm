@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Update Lead</h4>
+                    <h4 class="title" style="float: left;">Update Leads / Clients</h4>
                     <a href="<?= base_url($sub_base_path != '' ? ('lead/' . rtrim($sub_base_path, '/') . 's') : 'leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
                     <div class="clearfix"></div>
                 </div>
