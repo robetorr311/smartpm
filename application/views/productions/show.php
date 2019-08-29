@@ -99,14 +99,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title" style="float: left;">Team Detail</h4>
                     <?php if (!empty($teams_detail)) : ?>
-                    <?php foreach ($teams_detail as $data) : ?>
-                    <div style="float: right;text-align: right;">
-                        <p><?= $data->name ?></p>
-                        <p><?= $data->assign_date ?></p>
-                    </div>
-                    <?php endforeach ?>
+                        <?php foreach ($teams_detail as $data) : ?>
+                            <div style="float: right;text-align: right;">
+                                <p><?= $data->name ?></p>
+                                <p><?= $data->assign_date ?></p>
+                            </div>
+                        <?php endforeach ?>
                     <?php else : ?>
-                    <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
+                        <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
                     <?php endif ?>
                 </div>
             </div>
@@ -131,37 +131,91 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content">
                     <?php if (!empty($add_info)) : ?>
-                    <?php foreach ($add_info as $info) : ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>First Name</label>
-                                <p><?= $info->fname ?></p>
+                        <?php foreach ($add_info as $info) : ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <p><?= $info->fname ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <p><?= $info->lname ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <p><?= $info->phone ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <p><?= $info->email ?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <p><?= $info->lname ?></p>
-                            </div>
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <p><?= $info->phone ?></p>
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <p><?= $info->email ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
                     <?php else : ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            No record!
+                        <div class="row">
+                            <div class="col-md-12">
+                                No record!
+                            </div>
                         </div>
-                    </div>
                     <?php endif; ?>
                 </div>
             </div>
+            <?php if ($job->status == 7) : ?>
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title" style="float: left;">Insurance Details</h4>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="content">
+                        <?php if ($insurance_job_details) : ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Insurance Carrier</label>
+                                        <p><?= $insurance_job_details->insurance_carrier ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Carrier Phone #</label>
+                                        <p><?= $insurance_job_details->carrier_phone ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Carrier Email</label>
+                                        <p><?= $insurance_job_details->carrier_email ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Policy #</label>
+                                        <p><?= $insurance_job_details->policy_number ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Date of Loss</label>
+                                        <p><?= $insurance_job_details->date_of_loss ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adjuster</label>
+                                        <p><?= $insurance_job_details->adjuster ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adjuster Phone #</label>
+                                        <p><?= $insurance_job_details->adjuster_phone ?></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adjuster Email</label>
+                                        <p><?= $insurance_job_details->adjuster_email ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php else : ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    No record!
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="row">
                 <div class="col-md-6">
                     <a href="<?= base_url('lead/production-job/' . $job->id . '/move-previous-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST"><i class="pe-7s-angle-left"></i>&nbsp;Move to <?= $previous_status ?></a>

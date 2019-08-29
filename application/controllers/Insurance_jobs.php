@@ -39,6 +39,10 @@ class Insurance_jobs extends CI_Controller
 		$add_info = $this->lead->get_all_where('job_add_party', array('job_id' => $jobid));
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
+		$insurance_job_details = false;
+		if ($job->status == 7) {
+			$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
+		}
 
 		$this->load->view('header', ['title' => 'Insurance Job Detail']);
 		$this->load->view('insurance_job/show', [
@@ -46,7 +50,8 @@ class Insurance_jobs extends CI_Controller
 			'job' => $job,
 			'add_info' => $add_info,
 			'teams_detail' => $teams_detail,
-			'teams' => $teams
+			'teams' => $teams,
+			'insurance_job_details' => $insurance_job_details
 		]);
 		$this->load->view('footer');
 	}
