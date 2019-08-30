@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-lg-9">
             <div class="card lead-notes-card">
                 <div class="header">
-                    <h4 class="title">Lead Notes</h4>
+                    <h4 class="title">Leads / Clients Notes</h4>
                 </div>
                 <div class="content view">
                     <?php

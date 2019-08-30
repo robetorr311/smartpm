@@ -24,30 +24,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Job Number</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Type</th>
                             <th class="text-center">View</th>
                             <th class="text-center">Edit</th>
                             <th class="text-center">Delete</th>
                         </thead>
                         <tbody>
                             <?php if (!empty($jobs)) : ?>
-                            <?php foreach ($jobs as $job) : ?>
-                            <tr>
-                                <td><?= ('RJOB' . $job->id); ?></td>
-                                <td><?= $job->firstname ?></td>
-                                <td><?= $job->lastname ?></td>
-                                <td><?= $job->address ?></td>
-                                <td><?= $job->email ?></td>
-                                <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                            <?php endforeach; ?>
+                                <?php foreach ($jobs as $job) : ?>
+                                    <tr>
+                                        <td><?= ('RJOB' . $job->id); ?></td>
+                                        <td><?= $job->firstname ?></td>
+                                        <td><?= $job->lastname ?></td>
+                                        <td><?= LeadModel::statusToStr($job->status) ?></td>
+                                        <td><?= LeadModel::typeToStr($job->type) ?></td>
+                                        <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                    </tr>
+                                <?php endforeach; ?>
                             <?php else : ?>
-                            <tr>
-                                <td colspan="9" class="text-center">No Record Found!</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="9" class="text-center">No Record Found!</td>
+                                </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

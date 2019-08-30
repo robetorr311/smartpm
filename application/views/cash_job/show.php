@@ -86,11 +86,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                 </div>
                 <div class="footer">
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/photos') ?>" class="btn btn-success btn-fill">Photos</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/reports') ?>" class="btn btn-danger btn-fill">All Report</a>
-                    <a href="" class="btn btn-success btn-fill">Create Estimate</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/docs') ?>" class="btn btn-danger btn-fill">Docs</a>
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/notes') ?>" class="btn btn-success btn-fill">Notes</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/photos') ?>" class="btn btn-fill">Photos</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/reports') ?>" class="btn btn-fill">Photo Report</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/docs') ?>" class="btn btn-fill">Docs</a>
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/notes') ?>" class="btn btn-fill">Notes</a>
                 </div>
             </div>
         </div>

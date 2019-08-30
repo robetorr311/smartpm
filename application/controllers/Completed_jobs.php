@@ -7,10 +7,11 @@ class Completed_jobs extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'TeamJobTrackModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team_job_track = new TeamJobTrackModel();
+		$this->insurance_job_details = new InsuranceJobDetailsModel();
 	}
 
 	public function index($start = 0)
@@ -36,13 +37,18 @@ class Completed_jobs extends CI_Controller
 		$job = $this->lead->getLeadById($jobid);
 		$add_info = $this->lead->get_all_where('job_add_party', array('job_id' => $jobid));
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
+		$insurance_job_details = false;
+		if ($job->status == 7) {
+			$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
+		}
 
 		$this->load->view('header', ['title' => 'Completed Job Detail']);
 		$this->load->view('completed_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
 			'add_info' => $add_info,
-			'teams_detail' => $teams_detail
+			'teams_detail' => $teams_detail,
+			'insurance_job_details' => $insurance_job_details
 		]);
 		$this->load->view('footer');
 	}

@@ -203,6 +203,9 @@ $route['lead/insurance-job/(:num)/add-team']['post'] = 'insurance_jobs/addTeam/$
 $route['lead/insurance-job/(:num)/remove-team']['post'] = 'insurance_jobs/removeTeam/$1';
 $route['lead/insurance-job/(:num)/move-next-stage']['post'] = 'insurance_jobs/moveNextStage/$1';
 
+$route['lead/(:any)/(:num)/update-insurance-details']['post'] = 'insurance_jobs/updateInsuranceDetails/$2/$1';
+$route['lead/(:any)/(:num)/insert-insurance-details']['post'] = 'insurance_jobs/insertInsuranceDetails/$2/$1';
+
 $route['lead/labor-jobs'] = 'labor_jobs/index';
 $route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';

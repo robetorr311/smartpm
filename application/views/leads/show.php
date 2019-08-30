@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Lead Detail</h4>
+                    <h4 class="title" style="float: left;">Leads / Clients Detail</h4>
                     <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
                     <div class="clearfix"></div>
                 </div>
@@ -87,11 +87,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="footer">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="<?= base_url('lead/' . $lead->id . '/photos'); ?>" class="btn btn-success btn-fill">Photos</a>
-                            <a href="<?= base_url('lead/' . $lead->id . '/reports'); ?>" class="btn btn-danger btn-fill">All Report</a>
-                            <a href="#" class="btn btn-success btn-fill">Create Estimate</a>
-                            <a href="<?= base_url('lead/' . $lead->id . '/docs'); ?>" class="btn btn-danger btn-fill">Docs</a>
-                            <a href="<?= base_url('lead/' . $lead->id . '/notes'); ?>" class="btn btn-success btn-fill">Notes</a>
+                            <a href="<?= base_url('lead/' . $lead->id . '/photos'); ?>" class="btn btn-fill">Photos</a>
+                            <a href="<?= base_url('lead/' . $lead->id . '/reports'); ?>" class="btn btn-fill">Photo Report</a>
+                            <a href="<?= base_url('lead/' . $lead->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
+                            <a href="<?= base_url('lead/' . $lead->id . '/notes'); ?>" class="btn btn-fill">Notes</a>
                         </div>
                     </div>
                 </div>

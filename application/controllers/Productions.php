@@ -7,10 +7,11 @@ class Productions extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'TeamJobTrackModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team_job_track = new TeamJobTrackModel();
+		$this->insurance_job_details = new InsuranceJobDetailsModel();
 	}
 
 	public function index($start = 0)
@@ -37,10 +38,12 @@ class Productions extends CI_Controller
 		$add_info = $this->lead->get_all_where('job_add_party', array('job_id' => $jobid));
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
 		$previous_status = '';
+		$insurance_job_details = false;
 
 		switch ($job->status) {
 			case 7:
 				$previous_status = 'Insurance';
+				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
 				break;
 
 			case 8:
@@ -62,7 +65,8 @@ class Productions extends CI_Controller
 			'job' => $job,
 			'add_info' => $add_info,
 			'teams_detail' => $teams_detail,
-			'previous_status' => $previous_status
+			'previous_status' => $previous_status,
+			'insurance_job_details' => $insurance_job_details
 		]);
 		$this->load->view('footer');
 	}
