@@ -185,6 +185,20 @@ class Leads extends CI_Controller
 			]);
 
 			if ($update) {
+				$lead = $this->lead->getLeadById($id);
+				if ($lead->signed_stage == 1 && ($lead->status == 7 || $lead->status == 8 || $lead->status == 9)) {
+					$sub_base_path = 'production-job/';
+				} else if ($lead->signed_stage == 2 && ($lead->status == 7 || $lead->status == 8 || $lead->status == 9)) {
+					$sub_base_path = 'completed-job/';
+				} else if ($lead->status == 7) {
+					$sub_base_path = 'insurance-job/';
+				} else if ($lead->status == 8) {
+					$sub_base_path = 'cash-job/';
+				} else if ($lead->status == 9) {
+					$sub_base_path = 'labor-job/';
+				} else {
+					$sub_base_path = '';
+				}
 				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
