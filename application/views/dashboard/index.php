@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads') ?>">
 					<span><?= $leads ?></span>
-					<p>Unsigned<br> Leads</p>
+					<p>Unsigned<br>Leads</p>
 				</a>
 			</div>
 		</div>
@@ -28,9 +28,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('work-completed') ?>">
-					<span><?= 0 ?></span>
-					<p>Complete<br> Jobs</p>
+				<a href="<?= base_url('lead/completed-jobs') ?>">
+					<span><?= $completedJobs ?></span>
+					<p>Completed<br>Jobs</p>
 				</a>
 			</div>
 		</div>
@@ -38,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/closed') ?>">
 					<span><?= 0 ?></span>
-					<p>Closed <br>Jobs</p>
+					<p>Closed<br>Jobs</p>
 				</a>
 			</div>
 		</div>
