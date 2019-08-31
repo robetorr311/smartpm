@@ -98,6 +98,50 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Additional Party Detail</h4>
+                </div>
+                <div class="content view">
+                    <?php if (!empty($add_info)) : ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="hidden" name="id" value="<?= $jobid; ?>">
+                                    <label>First Name</label>
+                                    <p><?= $add_info->fname ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <p><?= $add_info->lname ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <p><?= $add_info->phone ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <p><?= $add_info->email ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                No record!
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -112,45 +156,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::typeToStr($lead->type) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Additional Party Detail</h4>
-                </div>
-                <div class="content view">
-                    <?php if (!empty($add_info)) : ?>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="hidden" name="id" value="<?= $jobid; ?>">
-                                    <label>First Name</label>
-                                    <p><?= $add_info->fname ?></p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <p><?= $add_info->lname ?></p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <p><?= $add_info->phone ?></p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <p><?= $add_info->email ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    <?php else : ?>
-                        <div class="row">
-                            <div class="col-md-12">
-                                No record!
-                            </div>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
