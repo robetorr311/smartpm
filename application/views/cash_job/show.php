@@ -141,6 +141,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title" style="float: left;">Contract Status</h4>
+                    <span class="status">
+                        <?= LeadModel::statusToStr($job->status) ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
+                    <h4 class="title" style="float: left;">Job Type</h4>
+                    <span class="status">
+                        <?= LeadModel::typeToStr($job->type) ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/move-next-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST">Move to Production&nbsp;<i class="pe-7s-angle-right"></i></a>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -168,25 +187,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?= form_close() ?>
                         </div>
                     <?php endif; ?>
-                </div>
-            </div>
-            <div class="card">
-                <div class="header">
-                    <h4 class="title" style="float: left;">Status</h4>
-                    <span class="status">
-                        <?= LeadModel::statusToStr($job->status) ?>
-                    </span>
-                    <div class="clearfix" style="padding: 10px;"></div>
-                    <h4 class="title" style="float: left;">Job Type</h4>
-                    <span class="status">
-                        <?= LeadModel::typeToStr($job->type) ?>
-                    </span>
-                    <div class="clearfix" style="padding: 10px;"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="<?= base_url('lead/cash-job/' . $job->id . '/move-next-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST">Move to Production&nbsp;<i class="pe-7s-angle-right"></i></a>
                 </div>
             </div>
         </div>

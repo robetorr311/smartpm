@@ -175,13 +175,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-4">
             <div class="card">
                 <?= form_open('lead/' . $sub_base_path . $jobid . '/updatestatus', array('method' => 'post')) ?>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Status</h4>
+                    <h4 class="title" style="float: left;">Contract Status</h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($lead->status) ?>
                     </span>
@@ -212,6 +209,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <?= form_close() ?>
             </div>
+        </div>
+
+        <div class="col-md-4">
             <?php if ($lead->status == 7) : ?>
                 <?php if ($insurance_job_details) : ?>
                     <div class="card">

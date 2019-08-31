@@ -142,11 +142,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Status</h4>
+                    <h4 class="title" style="float: left;">Contract Status</h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($lead->status); ?>
                     </span>
