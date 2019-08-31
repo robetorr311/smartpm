@@ -98,6 +98,83 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
             </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Additional Party(If any)</h4>
+                </div>
+                <div class="content">
+                    <?php if (!empty($add_info)) : ?>
+                        <?= form_open('lead/' . $sub_base_path . $jobid . '/party/update', array('method' => 'post')) ?>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input class="form-control" name="firstname" value="<?= $add_info->fname ?>" placeholder="First Name" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" placeholder="Last Name" name="lastname" value="<?= $add_info->lname ?>" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input class="form-control" placeholder="Phone" name="phone" value="<?= $add_info->phone ?>" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input class="form-control" placeholder="Email" name="email" value="<?= $add_info->email ?>" type="text">
+                                </div>
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                            </div>
+                        </div>
+
+                        <?= form_close() ?>
+                    <?php else : ?>
+                        <?= form_open('lead/' . $sub_base_path . $jobid . '/party/add', array('method' => 'post')) ?>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input class="form-control" name="firstname" value="" placeholder="First Name" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" placeholder="Last Name" name="lastname" value="" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input class="form-control" placeholder="Phone" name="phone" value="" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input class="form-control" placeholder="Email" name="email" value="" type="text">
+                                </div>
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                            </div>
+                        </div>
+
+                        <?= form_close() ?>
+
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-4">
@@ -134,74 +211,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix" style="padding: 10px;"></div>
                 </div>
                 <?= form_close() ?>
-            </div>
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Additional Party(If any)</h4>
-                </div>
-                <div class="content">
-                    <?php if (!empty($add_info)) : ?>
-                        <?= form_open('lead/' . $sub_base_path . $jobid . '/party/update', array('method' => 'post')) ?>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <input class="form-control" name="firstname" value="<?= $add_info->fname ?>" placeholder="First Name" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input class="form-control" placeholder="Last Name" name="lastname" value="<?= $add_info->lname ?>" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input class="form-control" placeholder="Phone" name="phone" value="<?= $add_info->phone ?>" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input class="form-control" placeholder="Email" name="email" value="<?= $add_info->email ?>" type="text">
-                                </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
-                            </div>
-                        </div>
-
-                        <?= form_close() ?>
-                    <?php else : ?>
-                        <?= form_open('lead/' . $sub_base_path . $jobid . '/party/add', array('method' => 'post')) ?>
-
-                        <div class="row">
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <input class="form-control" name="firstname" value="" placeholder="First Name" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input class="form-control" placeholder="Last Name" name="lastname" value="" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input class="form-control" placeholder="Phone" name="phone" value="" type="text">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input class="form-control" placeholder="Email" name="email" value="" type="text">
-                                </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
-                            </div>
-                        </div>
-
-                        <?= form_close() ?>
-
-                    <?php endif; ?>
-                </div>
             </div>
             <?php if ($lead->status == 7) : ?>
                 <?php if ($insurance_job_details) : ?>

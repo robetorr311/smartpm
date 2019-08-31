@@ -95,6 +95,52 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <a href="<?= base_url('lead/production-job/' . $job->id . '/notes') ?>" class="btn btn-fill">Notes</a>
                 </div>
             </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title" style="float: left;">Additional Party Detail</h4>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="content view">
+                    <?php if (!empty($add_info)) : ?>
+                        <?php foreach ($add_info as $info) : ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <p><?= $info->fname ?></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <p><?= $info->lname ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <p><?= $info->phone ?></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <p><?= $info->email ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                No record!
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -124,44 +170,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::typeToStr($job->type) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="header">
-                    <h4 class="title" style="float: left;">Additional Party Detail</h4>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="content">
-                    <?php if (!empty($add_info)) : ?>
-                        <?php foreach ($add_info as $info) : ?>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>First Name</label>
-                                        <p><?= $info->fname ?></p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Last Name</label>
-                                        <p><?= $info->lname ?></p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone</label>
-                                        <p><?= $info->phone ?></p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <p><?= $info->email ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <div class="row">
-                            <div class="col-md-12">
-                                No record!
-                            </div>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
             <?php if ($job->status == 7) : ?>
