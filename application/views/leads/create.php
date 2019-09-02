@@ -5,9 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-8">
             <div class="card">
                 <div class="header">
-                    <h4 class="title" style="float: left;">Add Leads / Clients</h4>
-                    <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill pull-right">Back</a>
-                    <div class="clearfix"></div>
+                    <h4 class="title">Add Leads / Clients</h4>
                 </div>
 
                 <div class="content">
@@ -22,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             ?>
                         </div>
                     </div>
-                    
+
                     <?= form_open('lead/store', array('method' => 'post')) ?>
 
                     <div class="row">
@@ -90,9 +88,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
-                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill">Back</a>
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Create</button>
+                            </div>
+                        </div>
+                    </div>
                     <?= form_close() ?>
                 </div>
             </div>

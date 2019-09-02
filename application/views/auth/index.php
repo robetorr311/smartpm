@@ -39,8 +39,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<button type="submit" id="submit" class="btn" name="login_user" onclick="setCompanyCode()">Login</button>
 
 		<p class="forgot-links">
-			<a href="<?= base_url('forgot-password') ?>">forogot password</a><br />
-			<a href="<?= base_url('forgot-company-code') ?>">forogot company code</a>
+			<a href="<?= base_url('forgot-password') ?>">forgot password</a><br />
+			<a href="<?= base_url('forgot-company-code') ?>">forgot company code</a>
 		</p>
 	</div>
 
