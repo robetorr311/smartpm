@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
+	<div class="row page-header-buttons">
+		<div class="col-md-12">
+			<a href="<?= base_url('lead/' . $sub_base_path . $jobid) ?>" class="btn btn-info btn-fill">Back</a>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<?php
@@ -16,9 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="col-md-6">
 			<div class="card">
 				<div class="header">
-					<h4 class="title" style="float: left;">Photo Report</h4>
-					<a href="<?= base_url('lead/' . $sub_base_path . $jobid) ?>" class="btn btn-info btn-fill pull-right">Back</a>
-					<div class="clearfix"></div>
+					<h4 class="title">Photo Report</h4>
 				</div>
 				<div class="content table-responsive table-full-width">
 					<table class="table table-hover table-striped">
@@ -29,19 +32,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</thead>
 						<tbody class="has-del-btn">
 							<?php if (!empty($allreport)) : ?>
-							<?php foreach ($allreport as $jobs) : ?>
-							<tr class="tr<?= $jobs->id ?>">
-								<td><i class="del-job pe-7s-close" id="<?= $jobs->id; ?>"></i></td>
-								<td><?= $jobs->id ?></td>
-								<td><a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/report/' . $jobs->id . '/pdf'); ?>" target="_blank" class="btn btn-danger btn-right btn-fill">view</a></td>
-							</tr>
-							<?php endforeach; ?>
+								<?php foreach ($allreport as $jobs) : ?>
+									<tr class="tr<?= $jobs->id ?>">
+										<td><i class="del-job pe-7s-close" id="<?= $jobs->id; ?>"></i></td>
+										<td><?= $jobs->id ?></td>
+										<td><a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/report/' . $jobs->id . '/pdf'); ?>" target="_blank" class="btn btn-danger btn-right btn-fill">view</a></td>
+									</tr>
+								<?php endforeach; ?>
 							<?php else : ?>
-							<tr>
-								<td colspan="3">
-									<p class="mb-15"> No Record Found!</p>
-								</td>
-							</tr>
+								<tr>
+									<td colspan="3">
+										<p class="mb-15"> No Record Found!</p>
+									</td>
+								</tr>
 							<?php endif; ?>
 						</tbody>
 					</table>

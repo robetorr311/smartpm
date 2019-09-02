@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
+  <div class="row page-header-buttons">
+    <div class="col-md-12">
+      <a href="<?= base_url('lead/' . $sub_base_path . $jobid) ?>" class="btn btn-info btn-fill">Back</a>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-12">
       <?php
@@ -24,9 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="col-md-12">
       <div class="card">
         <div class="header">
-          <h4 class="title" style="float: left;">Photos</h4>
-          <a href="<?= base_url('lead/' . $sub_base_path . $jobid) ?>" class="btn btn-info btn-fill pull-right">Back</a>
-          <div class="clearfix"></div>
+          <h4 class="title">Photos</h4>
         </div>
 
         <div class="content">

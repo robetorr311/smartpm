@@ -1,11 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
+	<div class="row page-header-buttons">
+		<div class="col-md-12">
+			<a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/reports') ?>" class="btn btn-info btn-fill">Back</a>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="header">
-				<h4 class="title" style="float: left;">Genrate New Report</h4> <a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/reports') ?>" class="btn btn-info btn-fill pull-right">Back</a>
-				<div class="clearfix"></div>
+				<h4 class="title">Genrate New Report</h4>
 			</div>
 		</div>
 		<?= form_open('lead/' . $jobid . '/report/save', array('method' => 'post', 'id' => 'report-form')); ?>
