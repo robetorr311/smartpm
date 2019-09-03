@@ -82,3 +82,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#note-input').atwho({
+            at: '@',
+            data: <?= json_encode($users) ?>,
+            headerTpl: '<div class="atwho-header">User List:</div>',
+            displayTpl: '<li>${name} (@${username})</li>',
+            insertTpl: '${atwho-at}${username}',
+            searchKey: 'username',
+            limit: 100
+        });
+    });
+</script>
