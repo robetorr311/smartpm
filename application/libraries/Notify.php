@@ -30,6 +30,18 @@ class Notify
         $this->CI->email->send();
     }
 
+    public function createPassword($email, $token, $logoUrl)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('Welcome to SmartPM');
+        $html_message = $this->CI->load->view('template/email/create-password.php', [
+            'token' => $token,
+            'logoUrl' => $logoUrl
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
     public function emailVerification($email, $company_code, $token)
     {
         $this->CI->email->to($email);

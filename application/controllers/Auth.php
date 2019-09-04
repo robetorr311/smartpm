@@ -204,6 +204,55 @@ class Auth extends CI_Controller
 		}
 	}
 
+	public function createPassword($token)
+	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+		$this->load->view('auth/create-password', [
+			'token' => $token
+		]);
+	}
+
+	public function createTokenVerifiedPassword($token)
+	{
+		$this->form_validation->set_rules('company_code', 'Company Code', 'trim|required|numeric');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
+		if ($this->form_validation->run() == TRUE) {
+			$data = $this->input->post();
+			$db = 'smartpm_' . $data['company_code'];
+			if (verifyDB($db, TRUE)) {
+				dbSelect($db);
+				$this->user = new UserModel();
+				$user = $this->user->getUserByPasswordToken($token);
+				if ($user) {
+					if ($token === $user->password_token) {
+						$this->user->resetPassword($user, $data['password']);
+						redirect('login');
+					} else {
+						$message = '<div class="error"><p>Invalid Password Token.</p></div>';
+						$this->session->set_flashdata('errors', $message);
+						redirect('create-password/' . $token);
+					}
+				} else {
+					$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
+					$this->session->set_flashdata('errors', $message);
+					redirect('create-password/' . $token);
+				}
+			} else {
+				$message = '<div class="error"><p>Unable to find database for entered Company Code.</p></div>';
+				$this->session->set_flashdata('errors', $message);
+				redirect('create-password/' . $token);
+			}
+		} else {
+			$message = '<div class="error">' . validation_errors() . '</div>';
+			$this->session->set_flashdata('errors', $message);
+			redirect('create-password/' . $token);
+		}
+	}
+
 	public function signup()
 	{
 		if ($this->session->logged_in) {
