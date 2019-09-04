@@ -10,10 +10,11 @@ class Users extends CI_Controller
 		parent::__construct();
 		authAdminAccess();
 
-		$this->load->model(['UserModel']);
+		$this->load->model(['UserModel', 'AdminSettingModel']);
 		$this->load->library(['pagination', 'form_validation', 'notify']);
 
 		$this->user = new UserModel();
+		$this->admin_setting = new AdminSettingModel();
 	}
 
 	public function index($start = 0)
@@ -90,7 +91,9 @@ class Users extends CI_Controller
 				$user = $this->user->getUserById($insert);
 				if ($user) {
 					$token = $this->user->setPasswordToken($user);
-					$this->notify->resetPassword($user->email_id, $token);
+					$admin_setting = $this->admin_setting->getAdminSetting();
+					$logoUrl = rawurlencode($admin_setting ? 'company_photo/' . $admin_setting->url : 'img/logo.png');
+					$this->notify->createPassword($user->email_id, $token, $logoUrl);
 				}
 				redirect('user/' . $insert);
 			} else {

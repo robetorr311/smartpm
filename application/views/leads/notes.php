@@ -67,28 +67,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Task Details</h4>
-                </div>
-                <div class="content view">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>First Name</label>
-                            <p><?= $lead->firstname ?></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Last Name</label>
-                            <p><?= $lead->lastname ?></p>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script>

@@ -50,31 +50,6 @@ class Cash_jobs extends CI_Controller
 		$this->load->view('footer');
 	}
 
-
-	public function addTeam($jobid)
-	{
-		$this->form_validation->set_rules('team_id', 'Team', 'trim|required');
-
-		if ($this->form_validation->run() == TRUE) {
-			$posts = $this->input->post();
-			$params = array();
-			$params['team_id'] = $posts['team_id'];
-			$params['job_id'] = $jobid;
-			$params['assign_date'] = date('Y-m-d h:i:s');
-			$params['is_deleted'] = false;
-			$this->team_job_track->add_record($params);
-		} else {
-			$this->session->set_flashdata('errors', validation_errors());
-		}
-		redirect('lead/cash-job/' . $jobid);
-	}
-
-	public function removeTeam($jobid)
-	{
-		$this->team_job_track->remove_team($jobid);
-		redirect('lead/cash-job/' . $jobid);
-	}
-
 	public function moveNextStage($jobid)
 	{
 		$this->lead->update($jobid, [
