@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
           <div class="card" style="min-height:200px">
             <div class="header">
               <h4 class="title">Update Logo</h4>
-              <p class="category">Here is a subtitle for this table</p>
+              <p class="category">Width: 100px, Height: 70px</p>
             </div>
             <div class="content table-responsive table-full-width">
               <div class="row logo-update">
@@ -29,7 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
           <div class="card" style="min-height:200px">
             <div class="header">
               <h4 class="title">Update Favicon</h4>
-              <p class="category">Here is a subtitle for this table</p>
+              <p class="category">&nbsp;</p>
             </div>
             <div class="content table-responsive table-full-width">
               <div class="row favicon-update">
