@@ -7,7 +7,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'TeamModel', 'TeamJobTrackModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
@@ -16,6 +16,8 @@ class Leads extends CI_Controller
 		$this->user = new UserModel();
 		$this->party = new PartyModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
+		$this->team = new TeamModel();
+		$this->team_job_track = new TeamJobTrackModel();
 	}
 
 	public function index($start = 0)
@@ -109,6 +111,12 @@ class Leads extends CI_Controller
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
+			$teams_detail = false;
+			$teams = [];
+			if (in_array($lead->status, [7, 8, 9, 12])) {
+				$teams_detail = $this->team_job_track->getTeamName($jobid);
+				$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
+			}
 			$insurance_job_details = false;
 			if ($lead->status == 7) {
 				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
@@ -123,7 +131,9 @@ class Leads extends CI_Controller
 				'add_info' => $add_info,
 				'jobid' => $jobid,
 				'sub_base_path' => $sub_base_path,
-				'insurance_job_details' => $insurance_job_details
+				'insurance_job_details' => $insurance_job_details,
+				'teams_detail' => $teams_detail,
+				'teams' => $teams
 			]);
 			$this->load->view('footer');
 		} else {
@@ -162,7 +172,7 @@ class Leads extends CI_Controller
 				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-				
+
 				redirect('lead/' . $sub_base_path . $id . '/edit');
 			}
 		} else {
@@ -433,5 +443,31 @@ class Leads extends CI_Controller
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
 			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
+	}
+
+	public function addTeam($jobid, $sub_base_path = '')
+	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$this->form_validation->set_rules('team_id', 'Team', 'trim|required');
+
+		if ($this->form_validation->run() == TRUE) {
+			$posts = $this->input->post();
+			$params = array();
+			$params['team_id'] = $posts['team_id'];
+			$params['job_id'] = $jobid;
+			$params['assign_date'] = date('Y-m-d h:i:s');
+			$params['is_deleted'] = false;
+			$this->team_job_track->add_record($params);
+		} else {
+			$this->session->set_flashdata('errors', validation_errors());
+		}
+		redirect('lead/' . $sub_base_path . $jobid . '/edit');
+	}
+
+	public function removeTeam($jobid, $sub_base_path = '')
+	{
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$this->team_job_track->remove_team($jobid);
+		redirect('lead/' . $sub_base_path . $jobid . '/edit');
 	}
 }

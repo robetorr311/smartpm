@@ -212,6 +212,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
 
         <div class="col-md-4">
+            <?php if (in_array($lead->status, [7, 8, 9, 12])) : ?>
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title" style="float: left;">Team Detail</h4>
+                        <?php if (!empty($teams_detail)) : ?>
+                            <?php foreach ($teams_detail as $data) : ?>
+                                <div style="float: right;text-align: right;">
+                                    <p><?= $data->name ?></p>
+                                    <p><?= $data->assign_date ?></p>
+                                    <a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/remove-team') ?>" data-method="POST">Remove</a>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
+                            <div class="content team-block">
+                                <?= form_open('lead/' . $sub_base_path . $jobid . '/add-team', array('method' => 'post')) ?>
+                                <select name="team_id" class="form-control team_assign">
+                                    <option value="">Select Team</option>
+                                    <?php foreach ($teams as $team) : ?>
+                                        <option value="<?= $team->id ?>"><?= $team->team_name ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <input class="btn btn-success btn-fill" type="submit" value="Add Team">
+                                <?= form_close() ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
             <?php if ($lead->status == 7) : ?>
                 <?php if ($insurance_job_details) : ?>
                     <div class="card">

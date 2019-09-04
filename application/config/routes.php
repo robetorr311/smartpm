@@ -121,6 +121,8 @@ $route['lead/(:any)/(:num)/edit'] = 'leads/edit/$2/$1';
 $route['lead/(:any)/(:num)/update']['post'] = 'leads/update/$2/$1';
 $route['lead/(:any)/(:num)/delete']['post'] = 'leads/delete/$2/$1';
 $route['lead/(:any)/(:num)/updatestatus']['post'] = 'leads/updatestatus/$2/$1';
+$route['lead/(:any)/(:num)/add-team']['post'] = 'leads/addTeam/$2/$1';
+$route['lead/(:any)/(:num)/remove-team']['post'] = 'leads/removeTeam/$2/$1';
 
 $route['lead/archive'] = 'leads/archive';
 $route['lead/archive/(:num)'] = 'leads/archive/$1';
@@ -192,15 +194,11 @@ $route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 $route['lead/cash-jobs'] = 'cash_jobs/index';
 $route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
 $route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
-$route['lead/cash-job/(:num)/add-team'] = 'cash_jobs/addTeam/$1';
-$route['lead/cash-job/(:num)/remove-team'] = 'cash_jobs/removeTeam/$1';
 $route['lead/cash-job/(:num)/move-next-stage']['post'] = 'cash_jobs/moveNextStage/$1';
 
 $route['lead/insurance-jobs'] = 'insurance_jobs/index';
 $route['lead/insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
 $route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
-$route['lead/insurance-job/(:num)/add-team']['post'] = 'insurance_jobs/addTeam/$1';
-$route['lead/insurance-job/(:num)/remove-team']['post'] = 'insurance_jobs/removeTeam/$1';
 $route['lead/insurance-job/(:num)/move-next-stage']['post'] = 'insurance_jobs/moveNextStage/$1';
 
 $route['lead/(:any)/(:num)/update-insurance-details']['post'] = 'insurance_jobs/updateInsuranceDetails/$2/$1';
@@ -209,8 +207,6 @@ $route['lead/(:any)/(:num)/insert-insurance-details']['post'] = 'insurance_jobs/
 $route['lead/labor-jobs'] = 'labor_jobs/index';
 $route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
-$route['lead/labor-job/(:num)/add-team'] = 'labor_jobs/addTeam/$1';
-$route['lead/labor-job/(:num)/remove-team'] = 'labor_jobs/removeTeam/$1';
 $route['lead/labor-job/(:num)/move-next-stage'] = 'labor_jobs/moveNextStage/$1';
 
 $route['lead/production-jobs'] = 'productions/index';
