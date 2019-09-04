@@ -37,7 +37,7 @@ class Docs extends CI_Controller
 			$i = 0;
 			foreach ($_FILES['doc']['name'] as $key => $filename) {
 				$file_name = explode(".", $filename);
-				$file_ext = array_pop($file_name);
+				$file_ext = strtolower(array_pop($file_name));
 				$file_name_only = implode('.', $file_name);
 				$allowed_extension = array("pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "zip");
 				if (in_array($file_ext, $allowed_extension)) {
@@ -76,7 +76,7 @@ class Docs extends CI_Controller
 
 									foreach ($files as $file) {
 										$tmp_file_name = explode(".", $file);
-										$tmp_file_ext = array_pop($tmp_file_name);
+										$tmp_file_ext = strtolower(array_pop($tmp_file_name));
 										$tmp_file_name_only = implode('.', $file_name);
 										$tmp_i = 1;
 
@@ -105,7 +105,7 @@ class Docs extends CI_Controller
 
 									foreach ($files as $file) {
 										$tmp_file_name = explode(".", $file);
-										$tmp_file_ext = array_pop($tmp_file_name);
+										$tmp_file_ext = strtolower(array_pop($tmp_file_name));
 										$tmp_file_name_only = implode('.', $file_name);
 										$tmp_i = 1;
 
