@@ -48,6 +48,8 @@ class Auth extends CI_Controller
 				if ($user = $this->user->authenticate($authData['email'], $authData['password'])) {
 					if (empty($user->verification_token)) {
 						if ($user->is_active == 1) {
+							$this->admin_setting = new AdminSettingModel();
+							$admin_conf = $this->admin_setting->getAdminSetting();
 							$this->session->set_userdata([
 								'first_name' => $user->first_name,
 								'last_name' => $user->last_name,
@@ -58,6 +60,7 @@ class Auth extends CI_Controller
 								'company_id' => $user->company_id,
 								'company_code' => $authData['company_code'],
 								'database' => $db,
+								'logoUrl' => $admin_conf->url,
 								'logged_in' => TRUE
 							]);
 							$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);

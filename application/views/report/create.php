@@ -168,12 +168,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				success: function(php_script_response) {
 					var str = $.parseJSON(php_script_response);
 					var i;
-					if (str.length != 0) {
+					if (str.img && str.img.length != 0) {
+						str = str.img;
 						for (i = 0; i < str.length; i++) {
 							imgbox.push('#box' + timg);
 							$('.img-container').append('<div class="image-box" id="box' + timg + '"><img class="img' + timg + '" src="' + baseUrl + 'assets/job_photo/' + str[i] + '" /><span class="marker">Add Marker</span><i class="fa fa-repeat rotate" id="img' + timg + '" title="' + str[i] + '" ></i><i class="fa fa-times" id="boxclose"  style="display:block"></i></div>');
 							timg++;
 						}
+					} else if (str.error) {
+						alert(str.error);
 					} else {
 						alert('Something went wrong!. File type not ok');
 					}
@@ -205,12 +208,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					success: function(php_script_response) {
 						var str = $.parseJSON(php_script_response);
 						var i;
-						if (str.length != 0) {
+						if (str.img && str.img.length != 0) {
+							str = str.img;
 							for (i = 0; i < str.length; i++) {
 								imgbox.push('#box' + timg);
 								$('.img-container').append('<div class="image-box" id="box' + timg + '"><img class="img' + timg + '" src="' + baseUrl + 'assets/job_photo/' + str[i] + '" /><span class="marker">Add Marker</span><i class="fa fa-repeat rotate" id="img' + timg + '" title="' + str[i] + '"  style="display:block;width: 30px;float: left;position: absolute;top: 0;right: 92px;padding: 3px;color: white;background: black;"></i><i class="fa fa-times" id="boxclose"  style="display:block"></i></div>');
 								timg++;
 							}
+						} else if (str.error) {
+							alert(str.error);
 						} else {
 							alert('Something went wrong!. File type not ok');
 						}
