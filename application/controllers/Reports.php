@@ -46,6 +46,15 @@ class Reports extends CI_Controller
 		if (is_array($_FILES) && !empty($_FILES['image'])) {
 			$img = array();
 			$i = 0;
+			foreach ($_FILES['image']['size'] as $key => $size) {
+				if ($size > 10485760) {
+					// Error Only 100MB
+					echo json_encode([
+						'error' => 'Max file size limit is 100MB'
+					]);
+					die();
+				}
+			}
 			foreach ($_FILES['image']['name'] as $key => $filename) {
 				$file_name = explode(".", $filename);
 				$file_ext = array_pop($file_name);
@@ -144,7 +153,9 @@ class Reports extends CI_Controller
 					}
 				}
 			}
-			echo json_encode($img);
+			echo json_encode([
+				'img' => $img
+			]);
 		}
 	}
 

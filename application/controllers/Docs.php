@@ -35,6 +35,15 @@ class Docs extends CI_Controller
 		if (is_array($_FILES) && !empty($_FILES['doc'])) {
 			$doc = array();
 			$i = 0;
+			foreach ($_FILES['doc']['size'] as $key => $size) {
+				if ($size > 10485760) {
+					// Error Only 100MB
+					echo json_encode([
+						'error' => 'Max file size limit is 100MB'
+					]);
+					die();
+				}
+			}
 			foreach ($_FILES['doc']['name'] as $key => $filename) {
 				$file_name = explode(".", $filename);
 				$file_ext = strtolower(array_pop($file_name));
@@ -133,7 +142,9 @@ class Docs extends CI_Controller
 					}
 				}
 			}
-			echo json_encode($doc);
+			echo json_encode([
+				'doc' => $doc
+			]);
 		}
 	}
 

@@ -97,19 +97,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
         type: 'post',
         success: function(php_script_response) {
           var obj = JSON.parse(php_script_response)
-          if (obj.length != 0) {
+          if (obj.img && obj.img.length != 0) {
             $.ajax({
               type: 'POST',
               url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
               data: {
                 id: id,
-                name: php_script_response
+                name: JSON.stringify(obj.img)
               },
               success: function(photoid) {
                 //alert(photoid);
                 $('.image_div').append(photoid);
               }
             });
+          } else if (obj.error) {
+            alert(obj.error);
           } else {
             alert('Something went wrong!. File type not ok');
           }
@@ -142,19 +144,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
         success: function(php_script_response) {
           var obj = JSON.parse(php_script_response)
           //alert(obj.length);
-          if (obj.length != 0) {
+          if (obj.img && obj.img.length != 0) {
             $.ajax({
               type: 'POST',
               url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
               data: {
                 id: id,
-                name: php_script_response
+                name: JSON.stringify(obj.img)
               },
               success: function(photoid) {
                 //alert(photoid);
                 $('.image_div').append(photoid);
               }
             });
+          } else if (obj.error) {
+            alert(obj.error);
           } else {
             alert('Something went wrong!. File type not ok');
           }

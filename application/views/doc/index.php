@@ -102,19 +102,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				type: 'post',
 				success: function(php_script_response) {
 					var obj = JSON.parse(php_script_response)
-					if (obj.length != 0) {
+					if (obj.doc && obj.doc.length != 0) {
 						$.ajax({
 							type: 'POST',
 							url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/doc/save', // point to server-side PHP script     
 							data: {
 								id: id,
-								name: php_script_response
+								name: JSON.stringify(obj.doc)
 							},
 							success: function(photoid) {
 								//alert(photoid);
 								$('.doc_div table').append(photoid);
 							}
 						});
+					} else if (obj.error) {
+						alert(obj.error);
 					} else {
 						alert('Something went wrong!. File type not ok');
 					}
@@ -146,19 +148,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				type: 'post',
 				success: function(php_script_response) {
 					var obj = JSON.parse(php_script_response)
-					if (obj.length != 0) {
+					if (obj.doc && obj.doc.length != 0) {
 						$.ajax({
 							type: 'POST',
 							url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/doc/save', // point to server-side PHP script     
 							data: {
 								id: id,
-								name: php_script_response
+								name: JSON.stringify(obj.doc)
 							},
 							success: function(photoid) {
 								//alert(photoid);
 								$('.doc_div table').append(photoid);
 							}
 						});
+					} else if (obj.error) {
+						alert(obj.error);
 					} else {
 						alert('Something went wrong!. File type not ok');
 					}
