@@ -10,6 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 	<title>Login - SmartPM CRM</title>
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/auth.css') ?>">
+	<script src="<?= base_url('assets/js/jquery.3.2.1.min.js') ?>" type="text/javascript"></script>
 </head>
 
 <body>
@@ -59,6 +60,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		function setCompanyCode() {
 			localStorage.company_code = document.getElementsByName('company_code')[0].value;
 		}
+		$(document).ready(function() {
+			/**
+			 * Anchor Tag POST request feature
+			 */
+			$('a[data-method="POST"]').click(function(e) {
+				e.preventDefault();
+				var method = $(this).data('method');
+				var url = $(this).attr('href');
+				var parent = $(this).parent();
+				var id = Date.now();
+				parent.append('<form id="' + id + '" action="' + url + '" method="POST" style="display:none;"></form>');
+				parent.find('form#' + id).submit();
+			});
+		});
 	</script>
 </body>
 

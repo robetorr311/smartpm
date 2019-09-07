@@ -72,7 +72,7 @@ class Auth extends CI_Controller
 							redirect('login');
 						}
 					} else {
-						$message = '<div class="error"><p>Complete Email ID verification before login.</p></div>';
+						$message = '<div class="error"><p>Complete Email ID verification before login. <a href="' . base_url('resend-verification-email/' . $authData['company_code'] . '/' . rawurlencode($authData['email'])) . '" data-method="POST">Resend Email</a></p></div>';
 						$this->session->set_flashdata('errors', $message);
 						redirect('login');
 					}
@@ -442,6 +442,32 @@ class Auth extends CI_Controller
 			$this->session->set_flashdata('errors', $message);
 			redirect('forgot-company-code');
 		}
+	}
+
+	public function resendVerificationEmail($company_code, $email)
+	{
+		if ($this->session->logged_in) {
+			redirect();
+			die();
+		}
+		$db = 'smartpm_' . $company_code;
+		if (verifyDB($db, TRUE)) {
+			dbSelect($db);
+			$this->user = new UserModel();
+			$user = $this->user->getUserByEmailId($email);
+			if (!($user->verification_token == null || empty($user->verification_token))) {
+				$this->notify->emailVerification($user->email_id, $company_code, $user->verification_token);
+				$message = '<div class="error"><p>Verification Email Resent.</p></div>';
+				$this->session->set_flashdata('errors', $message);
+			} else {
+				$message = '<div class="error"><p>Your account is already verified.</p></div>';
+				$this->session->set_flashdata('errors', $message);
+			}
+		} else {
+			$message = '<div class="error"><p>Unable to find your token in our system.</p></div>';
+			$this->session->set_flashdata('errors', $message);
+		}
+		redirect('login');
 	}
 
 	public function logout()
