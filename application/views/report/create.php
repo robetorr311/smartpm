@@ -180,6 +180,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					} else {
 						alert('Something went wrong!. File type not ok');
 					}
+				},
+				error: function(jqXHR) {
+					if (jqXHR.status == 413) {
+						alert('Large File, Max file size limit is 100MB.');
+					} else {
+						alert('Something went wrong!. File type not ok');
+					}
 				}
 			});
 		});
@@ -217,6 +224,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							}
 						} else if (str.error) {
 							alert(str.error);
+						} else {
+							alert('Something went wrong!. File type not ok');
+						}
+					},
+					error: function(jqXHR) {
+						if (jqXHR.status == 413) {
+							alert('Large File, Max file size limit is 100MB.');
 						} else {
 							alert('Something went wrong!. File type not ok');
 						}
