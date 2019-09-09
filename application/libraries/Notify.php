@@ -44,8 +44,7 @@ class Notify
 
     public function emailVerification($email, $company_code, $token)
     {
-        // $this->CI->email->to($email);
-        $this->CI->email->to('ankur2194@gmail.com');
+        $this->CI->email->to($email);
         $this->CI->email->subject('Email Verification - SmartPM');
         $html_message = $this->CI->load->view('template/email/email-verification.php', [
             'company_code' => $company_code,
