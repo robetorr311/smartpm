@@ -194,6 +194,9 @@ $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 $route['lead/(:any)/(:num)/party/add']['post'] = 'party/add/$2/$1';
 $route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
+$route['lead/all-status'] = 'all_status/index';
+$route['lead/all-status/(:num)'] = 'all_status/index/$1';
+
 $route['lead/cash-jobs'] = 'cash_jobs/index';
 $route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
 $route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
