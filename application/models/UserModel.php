@@ -13,7 +13,7 @@ class UserModel extends CI_Model
 	public static $level_non_user = 6;
 
 	private static $levels = [
-		1 => 'Super Admin',
+		// 1 => 'Super Admin',
 		2 => 'Admin',
 		3 => 'Manager',
 		4 => 'Team Leader',
@@ -30,7 +30,7 @@ class UserModel extends CI_Model
 	public function signup($data)
 	{
 		$data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
-		$data['level'] = self::$level_super_admin;
+		$data['level'] = self::$level_admin;
 		return $this->insert($data);
 	}
 
