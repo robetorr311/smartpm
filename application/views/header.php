@@ -87,6 +87,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo base_url('lead/all-status');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>All Statuses</p>
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo base_url('lead/cash-jobs');?>">
                         <i class="pe-7s-user"></i>
                         <p>Cash Jobs</p>
@@ -96,6 +102,12 @@
                     <a href="<?php echo base_url('lead/insurance-jobs');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Insurance Jobs</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="pe-7s-note2"></i>
+                        <p>Insurance Negotiations</p>
                     </a>
                 </li>
                 <li>

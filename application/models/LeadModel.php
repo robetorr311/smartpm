@@ -53,6 +53,26 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
+    public function allJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        return $this->db->count_all_results($this->table);
+    }
+
     public function allCashJobs($start = 0, $limit = 10)
     {
         $this->db->from($this->table);
