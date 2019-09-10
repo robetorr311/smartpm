@@ -8,8 +8,7 @@ class Users extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
-
+		
 		$this->load->model(['UserModel', 'AdminSettingModel']);
 		$this->load->library(['pagination', 'form_validation', 'notify']);
 
@@ -19,6 +18,8 @@ class Users extends CI_Controller
 
 	public function index($start = 0)
 	{
+		authAccess([UserModel::$level_admin]);
+
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('users'),
@@ -39,6 +40,8 @@ class Users extends CI_Controller
 
 	public function create()
 	{
+		authAccess([UserModel::$level_admin]);
+
 		$levels = UserModel::getLevels();
 		$notifications = UserModel::getNotifications();
 
@@ -54,6 +57,8 @@ class Users extends CI_Controller
 
 	public function store()
 	{
+		authAccess([UserModel::$level_admin]);
+
 		$levelKeys = implode(',', array_keys(UserModel::getLevels()));
 		$notificationKeys = implode(',', array_keys(UserModel::getNotifications()));
 
@@ -108,6 +113,8 @@ class Users extends CI_Controller
 
 	public function edit($id)
 	{
+		authAccess([UserModel::$level_admin]);
+
 		$user = $this->user->getUserById($id);
 		if ($user) {
 			$levels = UserModel::getLevels();
@@ -130,6 +137,8 @@ class Users extends CI_Controller
 
 	public function update($id)
 	{
+		authAccess([UserModel::$level_admin]);
+		
 		$user = $this->user->getUserById($id);
 		if ($user) {
 			$levelKeys = implode(',', array_keys(UserModel::getLevels()));
@@ -177,6 +186,8 @@ class Users extends CI_Controller
 
 	public function show($id)
 	{
+		authAccess([UserModel::$level_admin]);
+
 		$user = $this->user->getUserById($id);
 		if ($user) {
 			$this->load->view('header', [
@@ -194,6 +205,8 @@ class Users extends CI_Controller
 
 	public function delete($id)
 	{
+		authAccess([UserModel::$level_admin]);
+		
 		$user = $this->user->getUserById($id);
 		if ($user) {
 			$delete = $this->user->delete($id);
