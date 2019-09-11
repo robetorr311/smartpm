@@ -88,6 +88,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="title">Additional Party</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name<span class="red-mark">*</span></label>
+                                <input class="form-control" name="ap_firstname" placeholder="First Name" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input class="form-control" placeholder="Last Name" name="ap_lastname" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input class="form-control" placeholder="Phone" name="ap_phone" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" placeholder="Email" name="ap_email" type="text">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -99,6 +136,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?= form_close() ?>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
         </div>
     </div>
 </div>

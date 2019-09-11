@@ -7,7 +7,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'TeamModel', 'TeamJobTrackModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
@@ -57,6 +57,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('phone1', 'Cell Phone', 'trim|required');
 		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
+		$this->form_validation->set_rules('ap_firstname', 'Additional Party First Name', 'trim|required');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
@@ -74,6 +75,13 @@ class Leads extends CI_Controller
 			]);
 
 			if ($insert) {
+				$ap_insert = $this->party->insert([
+					'job_id' => $insert,
+					'fname' => $posts['ap_firstname'],
+					'lname' => $posts['ap_lastname'],
+					'email' => $posts['ap_email'],
+					'phone' => $posts['ap_phone']
+				]);
 				redirect('lead/' . $insert);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Create Lead.</p>');
