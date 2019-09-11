@@ -7,11 +7,12 @@ class Cash_jobs extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel']);
+		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
+		$this->party = new PartyModel();
 	}
 
 	public function index($start = 0)
@@ -35,7 +36,7 @@ class Cash_jobs extends CI_Controller
 	public function view($jobid)
 	{
 		$job = $this->lead->getLeadById($jobid);
-		$add_info = $this->lead->get_all_where('job_add_party', array('job_id' => $jobid));
+		$add_info = $this->party->getPartyByLeadId($jobid);
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 

@@ -102,36 +102,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content view">
                     <?php if (!empty($add_info)) : ?>
-                        <?php foreach ($add_info as $info) : ?>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>First Name</label>
-                                        <p><?= $add_info->fname ? $add_info->fname : '-' ?></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Last Name</label>
-                                        <p><?= $add_info->lname ? $add_info->lname : '-' ?></p>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <p><?= $add_info->fname ? $add_info->fname : '-' ?></p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Phone</label>
-                                        <p><?= $add_info->phone ? $add_info->phone : '-' ?></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <p><?= $add_info->email ? $add_info->email : '-' ?></p>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <p><?= $add_info->lname ? $add_info->lname : '-' ?></p>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <p><?= $add_info->phone ? $add_info->phone : '-' ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <p><?= $add_info->email ? $add_info->email : '-' ?></p>
+                                </div>
+                            </div>
+                        </div>
                     <?php else : ?>
                         <div class="row">
                             <div class="col-md-12">
