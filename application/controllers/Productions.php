@@ -7,11 +7,12 @@ class Productions extends CI_Controller
 	{
 		parent::__construct();
 		authAdminAccess();
-		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
+		$this->party = new PartyModel();
 	}
 
 	public function index($start = 0)
@@ -35,7 +36,7 @@ class Productions extends CI_Controller
 	public function view($jobid)
 	{
 		$job = $this->lead->getLeadById($jobid);
-		$add_info = $this->lead->get_all_where('job_add_party', array('job_id' => $jobid));
+		$add_info = $this->party->getPartyByLeadId($jobid);
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
 		$previous_status = '';
 		$insurance_job_details = false;
