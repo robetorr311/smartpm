@@ -100,7 +100,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Additional Party(If any)</h4>
+                    <h4 class="title">Additional Party</h4>
                 </div>
                 <div class="content">
                     <?php if (!empty($add_info)) : ?>
