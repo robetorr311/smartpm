@@ -92,7 +92,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                    <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                     <div class="clearfix"></div>
                     <?= form_close() ?>
                 </div>
@@ -109,7 +109,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>First Name</label>
+                                    <label>First Name<span class="red-mark">*</span></label>
                                     <input class="form-control" name="firstname" value="<?= $add_info->fname ?>" placeholder="First Name" type="text">
                                 </div>
                             </div>
@@ -143,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>First Name</label>
+                                    <label>First Name<span class="red-mark">*</span></label>
                                     <input class="form-control" name="firstname" value="" placeholder="First Name" type="text">
                                 </div>
                             </div>
