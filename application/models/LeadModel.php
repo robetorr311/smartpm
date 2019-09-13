@@ -235,21 +235,6 @@ class LeadModel extends CI_Model
      * ***********************************
      */
 
-    public function getAllJob($start = 0, $limit = 10)
-    {
-        // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
-        $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status');
-        $this->db->from($this->table);
-        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        // $this->db->where([
-        //     'lead' => '0', 'job' => ''
-        // ]);
-        $this->db->order_by('id', 'ASC');
-        $this->db->limit($limit, $start);
-        $query = $this->db->get();
-        return $query->result();
-    }
-
     public function getAllSignedJob($start = 0, $limit = 10)
     {
         // $this->db->select('jobs.*, jobs_status.*');
@@ -279,59 +264,7 @@ class LeadModel extends CI_Model
         return $result->result();
     }
 
-    public function getJobType($start = 0, $limit = 10, $condition)
-    {
-        $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status');
-        // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status');
-        $this->db->from($this->table);
-        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        // $this->db->where($condition);
-        $this->db->order_by('id', 'ASC');
-        $this->db->limit($limit, $start);
-        $query = $this->db->get();
-        return $query->result();
-    }
-
-    public function getCount()
-    {
-        $this->db->from($this->table);
-        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        // $this->db->where([
-        //     'lead' => 'open', 'job' => ''
-        // ]);
-        return $this->db->count_all_results();
-    }
-
-    public function getCountBasedJobType($type)
-    {
-        // $this->db->where(['job' => $type, 'lead' => 'open']);
-        // return $this->db->count_all_results('jobs_status');
-        return $this->db->count_all_results($this->table);
-    }
-
-    public function getCountBasedJobStatus($status)
-    {
-        // $this->db->where(['production' => $status]);
-        // return $this->db->count_all_results('jobs_status');
-        return $this->db->count_all_results($this->table);
-    }
-
     public function getClosedJob($start = 0, $limit = 10)
-    {
-        $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status, jobs.id as date');
-        // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
-        $this->db->from($this->table);
-        // $this->db->join('jobs_status as status', 'jobs.id=status.jobid', 'left');
-        // $this->db->where([
-        //     'status.closeout' => 'yes'
-        // ]);
-        $this->db->order_by('id', 'ASC');
-        $this->db->limit($limit, $start);
-        $query = $this->db->get();
-        return $query->result();
-    }
-
-    public function archiveJob($start = 0, $limit = 10)
     {
         $this->db->select('jobs.*, jobs.id as lead_status, jobs.id as job_type, jobs.id as contract_status, jobs.id as date');
         // $this->db->select('jobs.*, status.lead as lead_status, status.job as job_type, status.contract as contract_status, status.close_at as date');
@@ -351,17 +284,6 @@ class LeadModel extends CI_Model
         // $this->db->where(['closeout' => 'yes']);
         // return $this->db->count_all_results('jobs_status');
         return $this->db->count_all_results($this->table);
-    }
-
-    public function update_record($updatedArray, $condition)
-    {
-        $this->db->where($condition);
-        $this->db->update($this->table, $updatedArray);
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
     }
 
     /**
