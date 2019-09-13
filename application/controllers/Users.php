@@ -97,7 +97,7 @@ class Users extends CI_Controller
 				if ($user) {
 					$token = $this->user->setPasswordToken($user);
 					$admin_setting = $this->admin_setting->getAdminSetting();
-					$logoUrl = rawurlencode($admin_setting ? 'company_photo/' . $admin_setting->url : 'img/logo.png');
+					$logoUrl = $admin_setting ? 'company_photo/' . $admin_setting->url : 'img/logo.png';
 					$this->notify->createPassword($user->email_id, $token, $logoUrl);
 				}
 				redirect('user/' . $insert);
