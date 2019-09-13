@@ -141,6 +141,12 @@
                     </a>
                 </li>
                  <li>
+                    <a href="<?php echo base_url('financial');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Financial</p>
+                    </a>
+                </li>
+                 <li>
                     <a href="<?php echo base_url('users');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Users</p>

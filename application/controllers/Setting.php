@@ -6,7 +6,7 @@ class Setting extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
+		
 		$this->load->model(['StatusTagModel', 'AdminSettingModel']);
 		$this->status = new StatusTagModel();
 		$this->adminSetting = new AdminSettingModel();
@@ -14,6 +14,8 @@ class Setting extends CI_Controller
 
 	public function index()
 	{
+		authAccess();
+		
 		$settings = $this->adminSetting->getAdminSetting();
 		$this->load->view('header', ['title' => 'Setting']);
 		$this->load->view('setting/index', ['settings' => $settings]);
@@ -22,6 +24,8 @@ class Setting extends CI_Controller
 
 	public function ajaxupload()
 	{
+		authAccess();
+		
 		if (0 < $_FILES['file']['error']) {
 			echo 'Error: ' . $_FILES['file']['error'] . '<br>';
 		} else {
@@ -39,6 +43,8 @@ class Setting extends CI_Controller
 
 	public function ajaxsave()
 	{
+		authAccess();
+		
 		$posts = $this->input->post();
 		if ($posts['id'] == 'logo') {
 			$this->db->query("UPDATE admin_setting SET url='" . $posts['name'] . "'");
@@ -50,7 +56,8 @@ class Setting extends CI_Controller
 
 	public function ajaxcolor()
 	{
-
+		authAccess();
+		
 		$array = json_decode(json_encode($this->session->userdata), true);
 		$posts = $this->input->post();
 		$this->db->query("UPDATE admin_setting SET color='" . $posts['color'] . "' WHERE company_id='" . $array['company_id'] . "'");
@@ -60,8 +67,8 @@ class Setting extends CI_Controller
 
 	public function status_tag()
 	{
-
-
+		authAccess();
+		
 		$query['job_type'] = $this->status->getall('job_type');
 		$query['job_classification'] = $this->status->getall('job_classification');
 		$query['lead_status'] = $this->status->getall('lead_status');
@@ -74,6 +81,8 @@ class Setting extends CI_Controller
 
 	public function newtag()
 	{
+		authAccess();
+		
 		$posts = $this->input->post();
 		$params = array();
 		$params['status_tag_id'] 		= $posts['id'];
@@ -85,6 +94,8 @@ class Setting extends CI_Controller
 
 	public function deltag()
 	{
+		authAccess();
+		
 		$this->status->delete_record(['id' => $this->uri->segment(2)]);
 		redirect('setting/status');
 	}

@@ -7,13 +7,14 @@ class Dashboard extends CI_Controller
 	{
 		parent::__construct();
 
-		authAdminAccess();
 		$this->load->model(['LeadModel']);
 		$this->lead = new LeadModel();
 	}
 
 	public function index()
 	{
+		authAccess();
+		
 		$this->load->view('header', ['title' => 'Dashboard']);
 		$this->load->view('dashboard/index', [
 			'leads' => $this->lead->getLeadsCount(),

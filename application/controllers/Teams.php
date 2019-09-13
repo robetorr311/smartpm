@@ -10,8 +10,6 @@ class Teams extends CI_Controller
 	{
 		parent::__construct();
 
-		authAdminAccess();
-
 		$this->load->model(['TeamModel', 'UserModel', 'TeamUserMapModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
@@ -22,6 +20,8 @@ class Teams extends CI_Controller
 
 	public function index($start = 0)
 	{
+		authAccess();
+
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('teams'),
@@ -42,6 +42,8 @@ class Teams extends CI_Controller
 
 	public function create()
 	{
+		authAccess();
+
 		$users = $this->user->getUserList();
 		$this->load->view('header', [
 			'title' => $this->title
@@ -54,6 +56,8 @@ class Teams extends CI_Controller
 
 	public function store()
 	{
+		authAccess();
+
 		$userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
 
 		$this->form_validation->set_rules('name', 'Team Name', 'trim|required');
@@ -99,6 +103,8 @@ class Teams extends CI_Controller
 
 	public function edit($id)
 	{
+		authAccess();
+		
 		$team = $this->team->getTeamById($id);
 		if ($team) {
 			$members = $this->team_user_map->getUsersByTeamId($id);
@@ -121,6 +127,8 @@ class Teams extends CI_Controller
 
 	public function update($id)
 	{
+		authAccess();
+		
 		$team = $this->team->getTeamById($id);
 		if ($team) {
 			$userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
@@ -181,6 +189,8 @@ class Teams extends CI_Controller
 
 	public function show($id)
 	{
+		authAccess();
+		
 		$team = $this->team->getTeamById($id);
 		if ($team) {
 			$members = $this->team_user_map->getUsersByTeamId($id);
@@ -200,6 +210,8 @@ class Teams extends CI_Controller
 
 	public function delete($id)
 	{
+		authAccess();
+		
 		$team = $this->team->getTeamById($id);
 		if ($team) {
 			$this->team_user_map->deleteRelated($id);

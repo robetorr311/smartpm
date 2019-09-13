@@ -6,7 +6,7 @@ class Cash_jobs extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
+		
 		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
@@ -17,6 +17,8 @@ class Cash_jobs extends CI_Controller
 
 	public function index($start = 0)
 	{
+		authAccess();
+		
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('lead/cash-jobs'),
@@ -35,6 +37,8 @@ class Cash_jobs extends CI_Controller
 
 	public function view($jobid)
 	{
+		authAccess();
+		
 		$job = $this->lead->getLeadById($jobid);
 		$add_info = $this->party->getPartyByLeadId($jobid);
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
@@ -53,6 +57,8 @@ class Cash_jobs extends CI_Controller
 
 	public function moveNextStage($jobid)
 	{
+		authAccess();
+		
 		$this->lead->update($jobid, [
 			'signed_stage' => 1
 		]);

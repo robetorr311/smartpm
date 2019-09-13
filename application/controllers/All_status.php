@@ -5,8 +5,8 @@ class All_status extends CI_Controller
 {
     public function __construct()
     {
-        parent::__construct();
-        authAdminAccess();
+		parent::__construct();
+		
 		$this->load->model(['LeadModel']);
         $this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
@@ -14,6 +14,8 @@ class All_status extends CI_Controller
 
 	public function index($start = 0)
 	{
+		authAccess();
+		
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('lead/all-status'),

@@ -1,15 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-/**
- * Authenticate if current user is Admin
- */
-if (!function_exists('authAdminAccess')) {
-    function authAdminAccess()
-    {
-        authAccess();
-    }
-}
 
 /**
  * Authenticate if current user has access

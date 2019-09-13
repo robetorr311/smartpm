@@ -6,7 +6,6 @@ class Docs extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['session', 'image_lib']);
@@ -16,6 +15,8 @@ class Docs extends CI_Controller
 
 	public function index($job_id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$params = array();
 		$params['job_id'] = $job_id;
@@ -32,6 +33,8 @@ class Docs extends CI_Controller
 
 	public function ajaxupload_jobdoc()
 	{
+		authAccess();
+		
 		if (is_array($_FILES) && !empty($_FILES['doc'])) {
 			$doc = array();
 			$i = 0;
@@ -150,6 +153,8 @@ class Docs extends CI_Controller
 
 	public function ajaxsave_jobdoc()
 	{
+		authAccess();
+		
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
 		for ($i = 0; $i < count($data); $i++) {
@@ -170,6 +175,8 @@ class Docs extends CI_Controller
 
 	public function deletedoc()
 	{
+		authAccess();
+		
 		$posts = $this->input->post();
 		$this->db->query("UPDATE jobs_doc SET is_active=0 WHERE id='" . $posts['id'] . "'");
 		return true;
@@ -177,6 +184,8 @@ class Docs extends CI_Controller
 
 	public function updatedocname()
 	{
+		authAccess();
+		
 		$posts = $this->input->post();
 		$name = $posts['na'];
 		$this->db->set('name', $name);

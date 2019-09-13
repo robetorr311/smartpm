@@ -6,7 +6,7 @@ class Party extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
+		
 		$this->load->model('PartyModel');
 		$this->load->library(['pagination', 'form_validation']);
 
@@ -15,6 +15,8 @@ class Party extends CI_Controller
 
 	public function add($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('firstname', 'Additional Party First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Additional Party Last Name', 'trim');
@@ -38,6 +40,8 @@ class Party extends CI_Controller
 
 	public function update($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('firstname', 'Additional Party First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Additional Party Last Name', 'trim');

@@ -6,8 +6,7 @@ class Reports extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
-
+		
 		$this->load->model(['RoofingProjectModel', 'JobsPhotoModel', 'LeadModel']);
 		$this->load->library(['pagination']);
 		$this->roofing = new RoofingProjectModel();
@@ -17,6 +16,8 @@ class Reports extends CI_Controller
 
 	public function index($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$allreport = $this->roofing->allProject(['job_id' => $id, 'active' => 1]);
 		$this->load->view('header', ['title' => 'All Reports']);
@@ -30,6 +31,8 @@ class Reports extends CI_Controller
 
 	public function create($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$photos = $this->photos->allPhoto(['job_id' => $id, 'is_active' => 1]);
 		$this->load->view('header', ['title' => 'Genrate Report']);
@@ -43,6 +46,8 @@ class Reports extends CI_Controller
 
 	public function upload()
 	{
+		authAccess();
+		
 		if (is_array($_FILES) && !empty($_FILES['image'])) {
 			$img = array();
 			$i = 0;
@@ -161,6 +166,8 @@ class Reports extends CI_Controller
 
 	public function delete($job_id, $report_id)
 	{
+		authAccess();
+		
 		$this->db->query("UPDATE roofing_project SET active=0 WHERE id='" . $report_id . "' AND job_id='" . $job_id .  "'");
 		return true;
 	}
@@ -183,6 +190,8 @@ class Reports extends CI_Controller
 
 	public function save_img()
 	{
+		authAccess();
+		
 		$now = new DateTime();
 		$now->format('Y-m-d H:i:s');
 		$posts = $this->input->post();
@@ -193,6 +202,8 @@ class Reports extends CI_Controller
 
 	public function save($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		if (isset($_POST) && count($_POST) > 0) {
 			$posts = $this->input->post();
@@ -217,6 +228,8 @@ class Reports extends CI_Controller
 
 	public function pdf($id, $jobid, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$condition = array('id' => $id, "active" => true);
 		$data = $this->roofing->get_all_where($condition);
