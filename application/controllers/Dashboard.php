@@ -20,7 +20,8 @@ class Dashboard extends CI_Controller
 			'leads' => $this->lead->getLeadsCount(),
 			'cashJobs' => $this->lead->getCashJobsCount(),
 			'insuranceJobs' => $this->lead->getInsuranceJobsCount(),
-			'completedJobs' => $this->lead->getCompletedJobsCount()
+			'completedJobs' => $this->lead->getCompletedJobsCount(),
+			'closedJobs' => $this->lead->getClosedJobsCount()
 		]);
 		$this->load->view('footer');
 	}

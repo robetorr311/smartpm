@@ -36,8 +36,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('lead/closed') ?>">
-					<span><?= 0 ?></span>
+				<a href="<?= base_url('lead/closed-jobs') ?>">
+					<span><?= $closedJobs ?></span>
 					<p>Closed<br>Jobs</p>
 				</a>
 			</div>
