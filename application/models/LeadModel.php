@@ -274,24 +274,6 @@ class LeadModel extends CI_Model
     }
 
     /**
-     * ***********************************
-     * ***********************************
-     * 
-     * OLD CODES FROM THIS COMMENT ONWARDS
-     * 
-     * ***********************************
-     * ***********************************
-     */
-
-    public function get_all_where($tablename, $condition)
-    {
-        $this->db->where($condition);
-        $this->db->order_by("id", "desc");
-        $result = $this->db->get($tablename);
-        return $result->result();
-    }
-
-    /**
      * Static Methods
      */
     public static function statusToStr($id)

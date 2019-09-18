@@ -236,12 +236,10 @@ class Reports extends CI_Controller
 
 		$qRes = ($this->db->query("SELECT * FROM admin_setting;"))->result();
 
-		$jobs = $this->lead->get_all_where('jobs', ['id' => $jobid]);
-		foreach ($jobs as $job) {
-			$name = $job->job_name;
-			$address = $job->address;
-			$phone = $job->phone1;
-		}
+		$job = $this->lead->getLeadById($jobid);
+		$name = ('RJOB' . $job->id);
+		$address = $job->address;
+		$phone = $job->phone1;
 
 		$this->load->library("Pdf");
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -261,7 +259,7 @@ class Reports extends CI_Controller
 				$w = 190;
 				$h = 0;
 				$pdf->AddPage();
-				$html = '<table><tr><td  style="width: 120px;"><img src="' . base_url('assets/company_photo/' . $qRes[0] ? $qRes[0]->url : 'logo.png') . '" alt="test alt attribute" width="100" height="70" border="0" /></td><td>&nbsp;<br><b>Name : ' . $name . '</b>  <br><b>Adrress : ' . $address . '</b>  <br><b>Phone : ' . $phone . '</b>  <br></td></tr></table>';
+				$html = '<table><tr><td  style="width: 120px;"><img src="' . base_url('assets/company_photo/' . ($qRes[0] ? $qRes[0]->url : 'logo.png')) . '" alt="test alt attribute" width="100" height="70" border="0" /></td><td>&nbsp;<br><b>Name : ' . $name . '</b>  <br><b>Adrress : ' . $address . '</b>  <br><b>Phone : ' . $phone . '</b>  <br></td></tr></table>';
 
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->Image(base_url('assets/report_photo/') . $a[$i], $x, $y, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, false, false, false);
