@@ -129,15 +129,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('lead/closed');?>">
+                    <a href="<?php echo base_url('lead/closed-jobs');?>">
                         <i class="pe-7s-note"></i>
-                        <p>Closed</p>
+                        <p>Closed Jobs</p>
                     </a>
                 </li>
                  <li>
-                    <a href="<?php echo base_url('lead/archive');?>">
+                    <a href="<?php echo base_url('lead/archive-jobs');?>">
                         <i class="pe-7s-note"></i>
-                        <p>Archive</p>
+                        <p>Archive Jobs</p>
                     </a>
                 </li>
                  <li>

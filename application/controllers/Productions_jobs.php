@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Productions extends CI_Controller
+class Productions_jobs extends CI_Controller
 {
 	public function __construct()
 	{
@@ -21,14 +21,14 @@ class Productions extends CI_Controller
 		
 		$limit = 10;
 		$pagiConfig = [
-			'base_url' => base_url('lead/productions'),
+			'base_url' => base_url('lead/productions-jobs'),
 			'total_rows' => $this->lead->getProductionJobsCount(),
 			'per_page' => $limit
 		];
 		$this->pagination->initialize($pagiConfig);
 		$jobs = $this->lead->allProductionJobs($start, $limit);
 		$this->load->view('header', ['title' => 'Production Jobs']);
-		$this->load->view('productions/index', [
+		$this->load->view('productions_jobs/index', [
 			'jobs' => $jobs,
 			'pagiLinks' => $this->pagination->create_links()
 		]);
@@ -65,7 +65,7 @@ class Productions extends CI_Controller
 		}
 
 		$this->load->view('header', ['title' => 'Production Job Detail']);
-		$this->load->view('productions/show', [
+		$this->load->view('productions_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
 			'add_info' => $add_info,

@@ -127,13 +127,6 @@ $route['lead/(:any)/(:num)/updatestatus']['post'] = 'leads/updatestatus/$2/$1';
 $route['lead/(:any)/(:num)/add-team']['post'] = 'leads/addTeam/$2/$1';
 $route['lead/(:any)/(:num)/remove-team']['post'] = 'leads/removeTeam/$2/$1';
 
-$route['lead/archive'] = 'leads/archive';
-$route['lead/archive/(:num)'] = 'leads/archive/$1';
-$route['lead/closed'] = 'leads/closed';
-$route['lead/closed/(:num)'] = 'leads/closed/$1';
-$route['lead/signed'] = 'leads/allAssignedLead';
-$route['lead/signed/(:num)'] = 'leads/allAssignedLead/$1';
-
 $route['lead/(:num)/notes'] = 'leads/notes/$1';
 $route['lead/(:num)/add-note']['post'] = 'leads/addNote/$1';
 $route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
@@ -213,18 +206,32 @@ $route['lead/(:any)/(:num)/insert-insurance-details']['post'] = 'insurance_jobs/
 $route['lead/labor-jobs'] = 'labor_jobs/index';
 $route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
-$route['lead/labor-job/(:num)/move-next-stage'] = 'labor_jobs/moveNextStage/$1';
+$route['lead/labor-job/(:num)/move-next-stage']['post'] = 'labor_jobs/moveNextStage/$1';
 
-$route['lead/production-jobs'] = 'productions/index';
-$route['lead/production-jobs/(:num)'] = 'productions/index/$1';
-$route['lead/production-job/(:num)'] = 'productions/view/$1';
-$route['lead/production-job/(:num)/move-previous-stage'] = 'productions/movePreviousStage/$1';
-$route['lead/production-job/(:num)/move-next-stage'] = 'productions/moveNextStage/$1';
+$route['lead/production-jobs'] = 'productions_jobs/index';
+$route['lead/production-jobs/(:num)'] = 'productions_jobs/index/$1';
+$route['lead/production-job/(:num)'] = 'productions_jobs/view/$1';
+$route['lead/production-job/(:num)/move-previous-stage']['post'] = 'productions_jobs/movePreviousStage/$1';
+$route['lead/production-job/(:num)/move-next-stage']['post'] = 'productions_jobs/moveNextStage/$1';
 
 $route['lead/completed-jobs'] = 'completed_jobs/index';
 $route['lead/completed-jobs/(:num)'] = 'completed_jobs/index/$1';
 $route['lead/completed-job/(:num)'] = 'completed_jobs/view/$1';
-$route['lead/completed-job/(:num)/move-previous-stage'] = 'completed_jobs/movePreviousStage/$1';
+$route['lead/completed-job/(:num)/move-previous-stage']['post'] = 'completed_jobs/movePreviousStage/$1';
+$route['lead/completed-job/(:num)/move-next-stage']['post'] = 'completed_jobs/moveNextStage/$1';
+
+$route['lead/closed-jobs'] = 'closed_jobs/index';
+$route['lead/closed-jobs/(:num)'] = 'closed_jobs/index/$1';
+$route['lead/closed-job/(:num)'] = 'closed_jobs/view/$1';
+$route['lead/closed-job/(:num)/move-previous-stage']['post'] = 'closed_jobs/movePreviousStage/$1';
+$route['lead/closed-job/(:num)/move-next-stage']['post'] = 'closed_jobs/moveNextStage/$1';
+
+$route['lead/archive-jobs'] = 'archive_jobs/index';
+$route['lead/archive-jobs/(:num)'] = 'archive_jobs/index/$1';
+$route['lead/archive-job/(:num)'] = 'archive_jobs/view/$1';
+$route['lead/archive-job/(:num)/move-previous-stage']['post'] = 'archive_jobs/movePreviousStage/$1';
+
+$route['financial'] = 'financial/index';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';
