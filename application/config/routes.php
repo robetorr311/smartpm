@@ -232,6 +232,7 @@ $route['lead/archive-job/(:num)'] = 'archive_jobs/view/$1';
 $route['lead/archive-job/(:num)/move-previous-stage']['post'] = 'archive_jobs/movePreviousStage/$1';
 
 $route['financial'] = 'financial/index';
+$route['financial/(:num)'] = 'financial/show/$1';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';
