@@ -16,10 +16,6 @@ class Migration_Create_company_docs_table extends CI_Migration
                 'constraint' => 11,
                 'auto_increment' => TRUE,
             ],
-            'job_id' => [
-                'type' => 'INT',
-                'constraint' => 11
-            ],
             'doc_name' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100
