@@ -173,6 +173,8 @@ class Company_docs extends CI_Controller
 
 	public function download($id)
 	{
+		authAccess();
+
 		$doc = $this->company_docs->getCompanyDocById($id);
 		if ($doc) {
 			$file = urldecode($doc->doc_name);
@@ -192,5 +194,27 @@ class Company_docs extends CI_Controller
 			}
 		}
 		show_404();
+	}
+
+	public function delete($id)
+	{
+		authAccess();
+
+		$doc = $this->company_docs->getCompanyDocById($id);
+		if ($doc) {
+			$file = urldecode($doc->doc_name);
+			$filepath = "assets/company_doc/" . $file;
+			if (file_exists($filepath)) {
+				unlink($filepath);
+			}
+
+			$delete = $this->company_docs->delete($id);
+			if (!$delete) {
+				$this->session->set_flashdata('errors', '<p>Unable to delete document.</p>');
+			}
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+		}
+		redirect('company-docs');
 	}
 }

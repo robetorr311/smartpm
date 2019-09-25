@@ -46,6 +46,14 @@ class CompanyDocsModel extends CI_Model
         }
     }
 
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
+    }
+
     /**
      * Private Methods
      */
