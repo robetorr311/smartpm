@@ -202,11 +202,11 @@ class Company_docs extends CI_Controller
 
 		$doc = $this->company_docs->getCompanyDocById($id);
 		if ($doc) {
-			$file = urldecode($doc->doc_name);
-			$filepath = "assets/company_doc/" . $file;
-			if (file_exists($filepath)) {
-				unlink($filepath);
-			}
+			// $file = urldecode($doc->doc_name);
+			// $filepath = "assets/company_doc/" . $file;
+			// if (file_exists($filepath)) {
+			// 	unlink($filepath);
+			// }
 
 			$delete = $this->company_docs->delete($id);
 			if (!$delete) {
