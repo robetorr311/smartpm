@@ -1,15 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-/**
- * Authenticate if current user is Admin
- */
-if (!function_exists('authAdminAccess')) {
-    function authAdminAccess()
-    {
-        authAccess();
-    }
-}
 
 /**
  * Authenticate if current user has access
@@ -25,7 +16,7 @@ if (!function_exists('authAccess')) {
             redirect('/');
             die();
         } else if (count($levels) > 0 && !in_array($CI->session->level, $levels)) {
-            redirect('/404');
+            show_404();
             die();
         }
     }

@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url('lead/completed-jobs') ?>" class="btn btn-info btn-fill">Back</a>
+            <a href="<?= base_url('lead/archive-jobs') ?>" class="btn btn-info btn-fill">Back</a>
         </div>
     </div>
     <div class="row">
@@ -89,10 +89,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                 </div>
                 <div class="footer">
-                    <a href="<?= base_url('lead/completed-job/' . $job->id . '/photos') ?>" class="btn btn-fill">Photos</a>
-                    <a href="<?= base_url('lead/completed-job/' . $job->id . '/reports') ?>" class="btn btn-fill">Photo Report</a>
-                    <a href="<?= base_url('lead/completed-job/' . $job->id . '/docs') ?>" class="btn btn-fill">Docs</a>
-                    <a href="<?= base_url('lead/completed-job/' . $job->id . '/notes') ?>" class="btn btn-fill">Notes</a>
+                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/photos') ?>" class="btn btn-fill">Photos</a>
+                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/reports') ?>" class="btn btn-fill">Photo Report</a>
+                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/docs') ?>" class="btn btn-fill">Docs</a>
+                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/notes') ?>" class="btn btn-fill">Notes</a>
                 </div>
             </div>
             <div class="card">
@@ -154,11 +154,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <a href="<?= base_url('lead/completed-job/' . $job->id . '/move-previous-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST"><i class="pe-7s-angle-left"></i>&nbsp;Move to Production</a>
-                </div>
-                <div class="col-md-6">
-                    <a href="<?= base_url('lead/completed-job/' . $job->id . '/move-next-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST">Move to Closed&nbsp;<i class="pe-7s-angle-right"></i></a>
+                <div class="col-md-12">
+                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/move-previous-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST"><i class="pe-7s-angle-left"></i>&nbsp;Move to Closed</a>
                 </div>
             </div>
         </div>

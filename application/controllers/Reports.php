@@ -6,8 +6,7 @@ class Reports extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
-
+		
 		$this->load->model(['RoofingProjectModel', 'JobsPhotoModel', 'LeadModel']);
 		$this->load->library(['pagination']);
 		$this->roofing = new RoofingProjectModel();
@@ -17,6 +16,8 @@ class Reports extends CI_Controller
 
 	public function index($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$allreport = $this->roofing->allProject(['job_id' => $id, 'active' => 1]);
 		$this->load->view('header', ['title' => 'All Reports']);
@@ -30,6 +31,8 @@ class Reports extends CI_Controller
 
 	public function create($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$photos = $this->photos->allPhoto(['job_id' => $id, 'is_active' => 1]);
 		$this->load->view('header', ['title' => 'Genrate Report']);
@@ -43,6 +46,8 @@ class Reports extends CI_Controller
 
 	public function upload()
 	{
+		authAccess();
+		
 		if (is_array($_FILES) && !empty($_FILES['image'])) {
 			$img = array();
 			$i = 0;
@@ -161,6 +166,8 @@ class Reports extends CI_Controller
 
 	public function delete($job_id, $report_id)
 	{
+		authAccess();
+		
 		$this->db->query("UPDATE roofing_project SET active=0 WHERE id='" . $report_id . "' AND job_id='" . $job_id .  "'");
 		return true;
 	}
@@ -183,6 +190,8 @@ class Reports extends CI_Controller
 
 	public function save_img()
 	{
+		authAccess();
+		
 		$now = new DateTime();
 		$now->format('Y-m-d H:i:s');
 		$posts = $this->input->post();
@@ -193,6 +202,8 @@ class Reports extends CI_Controller
 
 	public function save($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		if (isset($_POST) && count($_POST) > 0) {
 			$posts = $this->input->post();
@@ -217,18 +228,18 @@ class Reports extends CI_Controller
 
 	public function pdf($id, $jobid, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$condition = array('id' => $id, "active" => true);
 		$data = $this->roofing->get_all_where($condition);
 
 		$qRes = ($this->db->query("SELECT * FROM admin_setting;"))->result();
 
-		$jobs = $this->lead->get_all_where('jobs', ['id' => $jobid]);
-		foreach ($jobs as $job) {
-			$name = $job->job_name;
-			$address = $job->address;
-			$phone = $job->phone1;
-		}
+		$job = $this->lead->getLeadById($jobid);
+		$name = ('RJOB' . $job->id);
+		$address = $job->address;
+		$phone = $job->phone1;
 
 		$this->load->library("Pdf");
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -248,7 +259,7 @@ class Reports extends CI_Controller
 				$w = 190;
 				$h = 0;
 				$pdf->AddPage();
-				$html = '<table><tr><td  style="width: 120px;"><img src="' . base_url('assets/company_photo/' . $qRes[0] ? $qRes[0]->url : 'logo.png') . '" alt="test alt attribute" width="100" height="70" border="0" /></td><td>&nbsp;<br><b>Name : ' . $name . '</b>  <br><b>Adrress : ' . $address . '</b>  <br><b>Phone : ' . $phone . '</b>  <br></td></tr></table>';
+				$html = '<table><tr><td  style="width: 120px;"><img src="' . base_url('assets/company_photo/' . ($qRes[0] ? $qRes[0]->url : 'logo.png')) . '" alt="test alt attribute" width="100" height="70" border="0" /></td><td>&nbsp;<br><b>Name : ' . $name . '</b>  <br><b>Adrress : ' . $address . '</b>  <br><b>Phone : ' . $phone . '</b>  <br></td></tr></table>';
 
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->Image(base_url('assets/report_photo/') . $a[$i], $x, $y, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, false, false, false);

@@ -1,19 +1,22 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Completed_jobs extends CI_Controller
+class Closed_jobs extends CI_Controller
 {
-	public function __construct()
-	{
-		parent::__construct();
-		
-		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'PartyModel']);
-		$this->load->library(['pagination', 'form_validation']);
-		$this->lead = new LeadModel();
-		$this->team_job_track = new TeamJobTrackModel();
-		$this->insurance_job_details = new InsuranceJobDetailsModel();
+    private $title = 'Closed Jobs';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'TeamJobTrackModel']);
+        $this->load->library(['pagination', 'form_validation']);
+
+        $this->lead = new LeadModel();
 		$this->party = new PartyModel();
-	}
+		$this->insurance_job_details = new InsuranceJobDetailsModel();
+		$this->team_job_track = new TeamJobTrackModel();
+    }
 
 	public function index($start = 0)
 	{
@@ -21,15 +24,18 @@ class Completed_jobs extends CI_Controller
 		
 		$limit = 10;
 		$pagiConfig = [
-			'base_url' => base_url('lead/completed-jobs'),
-			'total_rows' => $this->lead->getCompletedJobsCount(),
+			'base_url' => base_url('lead/closed-jobs'),
+			'total_rows' => $this->lead->getClosedJobsCount(),
 			'per_page' => $limit
 		];
 		$this->pagination->initialize($pagiConfig);
-		$jobs = $this->lead->allCompletedJobs($start, $limit);
-		$this->load->view('header', ['title' => 'Completed Jobs']);
-		$this->load->view('completed_jobs/index', [
-			'jobs' => $jobs,
+
+		$leads = $this->lead->allClosedJobs($start, $limit);
+		$this->load->view('header', [
+			'title' => $this->title
+		]);
+		$this->load->view('closed_jobs/index', [
+			'leads' => $leads,
 			'pagiLinks' => $this->pagination->create_links()
 		]);
 		$this->load->view('footer');
@@ -47,8 +53,10 @@ class Completed_jobs extends CI_Controller
 			$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
 		}
 
-		$this->load->view('header', ['title' => 'Completed Job Detail']);
-		$this->load->view('completed_jobs/show', [
+		$this->load->view('header', [
+            'title' => $this->title
+        ]);
+		$this->load->view('closed_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
 			'add_info' => $add_info,
@@ -63,9 +71,9 @@ class Completed_jobs extends CI_Controller
 		authAccess();
 		
 		$this->lead->update($jobid, [
-			'signed_stage' => 1
+			'signed_stage' => 2
 		]);
-		redirect('lead/production-job/' . $jobid);
+		redirect('lead/completed-job/' . $jobid);
 	}
 
 	public function moveNextStage($jobid)
@@ -73,8 +81,8 @@ class Completed_jobs extends CI_Controller
 		authAccess();
 		
 		$this->lead->update($jobid, [
-			'signed_stage' => 3
+			'signed_stage' => 4
 		]);
-		redirect('lead/closed-job/' . $jobid);
+		redirect('lead/archive-job/' . $jobid);
 	}
 }

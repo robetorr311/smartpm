@@ -6,7 +6,7 @@ class Leads extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
+		
 		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
@@ -22,6 +22,8 @@ class Leads extends CI_Controller
 
 	public function index($start = 0)
 	{
+		authAccess();
+		
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('leads'),
@@ -41,6 +43,8 @@ class Leads extends CI_Controller
 
 	public function create()
 	{
+		authAccess();
+		
 		$this->load->view('header', ['title' => 'Leads / Clients']);
 		$this->load->view('leads/create');
 		$this->load->view('footer');
@@ -48,6 +52,8 @@ class Leads extends CI_Controller
 
 	public function store()
 	{
+		authAccess();
+		
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -93,27 +99,10 @@ class Leads extends CI_Controller
 		}
 	}
 
-	public function allAssignedLead($start = 0)
-	{
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('lead/signed'),
-			'total_rows' => $this->lead->getSignedJobCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-
-		$leads = $this->lead->getAllSignedJob($start, $limit);
-		$this->load->view('header', ['title' => 'Leads / Clients']);
-		$this->load->view('leads/signed', [
-			'leads' => $leads,
-			'pagiLinks' => $this->pagination->create_links()
-		]);
-		$this->load->view('footer');
-	}
-
 	public function edit($jobid, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($jobid);
@@ -152,6 +141,8 @@ class Leads extends CI_Controller
 
 	public function update($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
@@ -191,6 +182,8 @@ class Leads extends CI_Controller
 
 	public function updatestatus($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
@@ -230,6 +223,8 @@ class Leads extends CI_Controller
 
 	public function show($jobid)
 	{
+		authAccess();
+		
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
@@ -248,12 +243,16 @@ class Leads extends CI_Controller
 
 	public function delete($id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$this->lead->delete($id);
 		redirect($sub_base_path != '' ? ('lead/' . $sub_base_path . 's') : 'leads');
 	}
 
 	public function closed($start = 0)
 	{
+		authAccess();
+		
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('leads'),
@@ -267,23 +266,10 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function archive($start = 0)
-	{
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('leads'),
-			'total_rows' => $this->lead->getCountClosedJob(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$leads = $this->lead->getClosedJob();
-		$this->load->view('header', ['title' => 'Archive Jobs']);
-		$this->load->view('leads/archive', ['leads' => $leads, 'pagiLinks' => $this->pagination->create_links()]);
-		$this->load->view('footer');
-	}
-
 	public function notes($leadId, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
@@ -307,6 +293,8 @@ class Leads extends CI_Controller
 
 	public function addNote($leadId, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
@@ -343,6 +331,8 @@ class Leads extends CI_Controller
 
 	public function deleteNote($leadId, $noteId, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
@@ -360,6 +350,8 @@ class Leads extends CI_Controller
 
 	public function replies($leadId, $noteId, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
@@ -390,6 +382,8 @@ class Leads extends CI_Controller
 
 	public function addNoteReply($leadId, $noteId, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
@@ -432,6 +426,8 @@ class Leads extends CI_Controller
 
 	public function deleteNoteReply($leadId, $noteId, $replyId, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
@@ -455,6 +451,8 @@ class Leads extends CI_Controller
 
 	public function addTeam($jobid, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('team_id', 'Team', 'trim|required');
 
@@ -474,6 +472,8 @@ class Leads extends CI_Controller
 
 	public function removeTeam($jobid, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->team_job_track->remove_team($jobid);
 		redirect('lead/' . $sub_base_path . $jobid . '/edit');

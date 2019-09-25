@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">All Status Leads / Clients List</h4>
+                    <h4 class="title">Production List</h4>
                 </div>
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
@@ -33,31 +33,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <tbody>
                             <?php if (!empty($jobs)) : ?>
                                 <?php foreach ($jobs as $job) : ?>
-                                    <?php
-                                            $sub_base_path = '';
-                                            if ($job->signed_stage == 1 && ($job->status == 7 || $job->status == 8 || $job->status == 9)) {
-                                                $sub_base_path = 'production-job/';
-                                            } else if ($job->signed_stage == 2 && ($job->status == 7 || $job->status == 8 || $job->status == 9)) {
-                                                $sub_base_path = 'completed-job/';
-                                            } else if ($job->status == 7) {
-                                                $sub_base_path = 'insurance-job/';
-                                            } else if ($job->status == 8) {
-                                                $sub_base_path = 'cash-job/';
-                                            } else if ($job->status == 9) {
-                                                $sub_base_path = 'labor-job/';
-                                            } else {
-                                                $sub_base_path = '';
-                                            }
-                                            ?>
                                     <tr>
                                         <td><?= ('RJOB' . $job->id); ?></td>
                                         <td><?= $job->firstname ?></td>
                                         <td><?= $job->lastname ?></td>
                                         <td><?= LeadModel::statusToStr($job->status) ?></td>
                                         <td><?= LeadModel::typeToStr($job->type) ?></td>
-                                        <td class="text-center"><a href="<?= base_url('lead/' . $sub_base_path . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('lead/' . $sub_base_path . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('lead/' . $sub_base_path . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('lead/production-job/' . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

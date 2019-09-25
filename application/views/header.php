@@ -129,21 +129,39 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('lead/closed');?>">
+                    <a href="<?php echo base_url('lead/closed-jobs');?>">
                         <i class="pe-7s-note"></i>
-                        <p>Closed</p>
+                        <p>Closed Jobs</p>
                     </a>
                 </li>
                  <li>
-                    <a href="<?php echo base_url('lead/archive');?>">
+                    <a href="<?php echo base_url('lead/archive-jobs');?>">
                         <i class="pe-7s-note"></i>
-                        <p>Archive</p>
+                        <p>Archive Jobs</p>
+                    </a>
+                </li>
+                 <li>
+                    <a href="<?php echo base_url('financial');?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>Financial</p>
                     </a>
                 </li>
                  <li>
                     <a href="<?php echo base_url('users');?>">
                         <i class="pe-7s-note2"></i>
                         <p>Users</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('tasks');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Tasks</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('company-docs');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Company Documents</p>
                     </a>
                 </li>
                 <li class="">
@@ -176,18 +194,6 @@
                     </ul>
                   </div>
                 </li>
-                <li>
-                    <a href="<?php echo base_url('tasks');?>">
-                        <i class="pe-7s-note"></i>
-                        <p>Tasks</p>
-                    </a>
-                </li>
-               <!-- <li>
-                    <a href="<?php echo base_url('users');?>">
-                        <i class="pe-7s-note2"></i>
-                        <p>Users</p>
-                    </a>
-                </li>-->
             </ul>
     	</div>
     </div>

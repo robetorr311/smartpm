@@ -6,7 +6,6 @@ class Photos extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		authAdminAccess();
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['form_validation', 'email', 'user_agent', 'session', 'image_lib']);
@@ -15,6 +14,8 @@ class Photos extends CI_Controller
 
 	public function index($job_id, $sub_base_path = '')
 	{
+		authAccess();
+		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$params = array();
 		$params['job_id'] = $job_id;
@@ -69,6 +70,8 @@ class Photos extends CI_Controller
 
 	public function ajaxupload_jobphoto()
 	{
+		authAccess();
+		
 		if (is_array($_FILES) && !empty($_FILES['photo'])) {
 			$img = array();
 			$i = 0;
@@ -187,6 +190,8 @@ class Photos extends CI_Controller
 
 	public function ajaxsave_jobphoto()
 	{
+		authAccess();
+		
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
 
@@ -205,6 +210,8 @@ class Photos extends CI_Controller
 
 	public function imagerotate()
 	{
+		authAccess();
+		
 		$posts = $this->input->post();
 		$this->image_lib->clear();
 		$config = array();
@@ -222,6 +229,8 @@ class Photos extends CI_Controller
 
 	public function thumbnail_all()
 	{
+		authAccess();
+		
 		$this->db->select('image_name');
 		$this->db->where(['is_active' => 1]);
 		$query = $this->db->get('jobs_photo');
@@ -239,6 +248,8 @@ class Photos extends CI_Controller
 
 	public function deletephoto($job_id, $photo_id)
 	{
+		authAccess();
+		
 		$this->db->query("UPDATE jobs_photo SET is_active=0 WHERE id='" . $photo_id . "' AND job_id='" . $job_id . "'");
 		return true;
 	}

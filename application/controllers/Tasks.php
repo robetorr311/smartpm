@@ -9,9 +9,6 @@ class Tasks extends CI_Controller
     {
         parent::__construct();
 
-        // authAdminAccess();
-        // sessionTimeout();
-
         $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
         $this->load->library(['pagination', 'form_validation']);
 

@@ -5,6 +5,7 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		
 		$this->load->library(['new_company', 'notify']);
 		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_DatabaseModel', 'AdminSettingModel']);
 		$this->m_company = new M_CompanyModel();

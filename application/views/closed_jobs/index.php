@@ -1,11 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
-	<div class="row page-header-buttons">
-		<div class="col-md-12">
-			<a href="<?= base_url('lead/create') ?>" class="btn btn-info btn-fill">New Lead / Client</a>
-		</div>
-	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<?php
@@ -21,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="col-md-12">
 			<div class="card">
 				<div class="header">
-					<h4 class="title">Leads / Clients List</h4>
+					<h4 class="title">Archive List</h4>
 				</div>
 				<div class="content table-responsive table-full-width">
 					<table class="table table-hover table-striped">
@@ -44,9 +39,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										<td><?= $lead->lastname ?></td>
 										<td><?= LeadModel::statusToStr($lead->status) ?></td>
 										<td><?= LeadModel::typeToStr($lead->type) ?></td>
-										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-										<td class="text-center"><a href="<?= base_url('lead/' . $lead->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+										<td class="text-center"><a href="<?= base_url('lead/closed-job/' . $lead->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+										<td class="text-center"><a href="<?= base_url('lead/closed-job/' . $lead->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+										<td class="text-center"><a href="<?= base_url('lead/closed-job/' . $lead->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
 									</tr>
 								<?php endforeach; ?>
 							<?php else : ?>
