@@ -243,6 +243,10 @@ $route['team/(:num)/edit'] = 'teams/edit/$1';
 $route['team/(:num)/update']['post'] = 'teams/update/$1';
 $route['team/(:num)/delete']['post'] = 'teams/delete/$1';
 
+$route['company-docs'] = 'company_docs/index';
+$route['company-docs/(:num)'] = 'company_docs/index/$1';
+$route['company-docs/upload']['post'] = 'company_docs/upload/$1';
+
 $route['setting'] = 'setting/index';
 $route['setting/status'] = 'setting/status_tag';
 $route['setting/newtag'] = 'setting/newtag';

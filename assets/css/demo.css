@@ -135,6 +135,9 @@ img {
 .jobdoc {
 	display: none !important;
 }
+.companydoc {
+	display: none !important;
+}
 #wait {
 	display: none;
 	width: 69px;
@@ -1034,4 +1037,8 @@ input[type="button"] {
 	line-height: 20px;
 	font-size: 20px;
 	vertical-align: middle;
+}
+
+.sidebar .sidebar-wrapper {
+	padding-bottom: 0;
 }

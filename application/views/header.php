@@ -152,6 +152,18 @@
                         <p>Users</p>
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo base_url('tasks');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Tasks</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('company-docs');?>">
+                        <i class="pe-7s-note"></i>
+                        <p>Company Documents</p>
+                    </a>
+                </li>
                 <li class="">
                   <a class="nav-link" data-toggle="collapse" href="#componentsCollapse">
                     <i class="pe-7s-graph"></i>
@@ -182,18 +194,6 @@
                     </ul>
                   </div>
                 </li>
-                <li>
-                    <a href="<?php echo base_url('tasks');?>">
-                        <i class="pe-7s-note"></i>
-                        <p>Tasks</p>
-                    </a>
-                </li>
-               <!-- <li>
-                    <a href="<?php echo base_url('users');?>">
-                        <i class="pe-7s-note2"></i>
-                        <p>Users</p>
-                    </a>
-                </li>-->
             </ul>
     	</div>
     </div>

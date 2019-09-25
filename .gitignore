@@ -34,6 +34,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 .env
 error_log
 assets/job_doc
+assets/company_doc
 assets/job_photo/*
 !assets/job_photo/.htaccess
 assets/company_photo/*
