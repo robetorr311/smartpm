@@ -159,7 +159,7 @@ class Company_docs extends CI_Controller
 				];
 			}
 			$inserts = $this->company_docs->insertArr($data);
-			if (!$inserts)  {
+			if (!$inserts) {
 				echo json_encode([
 					'error' => 'Unable to create entry on database'
 				]);
@@ -169,5 +169,28 @@ class Company_docs extends CI_Controller
 				]);
 			}
 		}
+	}
+
+	public function download($id)
+	{
+		$doc = $this->company_docs->getCompanyDocById($id);
+		if ($doc) {
+			$file = urldecode($doc->doc_name);
+			$filepath = "assets/company_doc/" . $file;
+
+			if (file_exists($filepath)) {
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . filesize($filepath));
+				flush();
+				readfile($filepath);
+				die();
+			}
+		}
+		show_404();
 	}
 }

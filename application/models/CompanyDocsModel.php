@@ -23,6 +23,18 @@ class CompanyDocsModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
+    public function getCompanyDocById($id)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'id' => $id,
+            'is_deleted' => FALSE
+        ]);
+        $query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
+
     public function insertArr($data)
     {
         if (is_array($data) && count($data) > 0) {

@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $doc->id ?></td>
                                         <td><?= $doc->doc_name ?></td>
                                         <td><?= $doc->created_user_fullname ?></td>
-                                        <td class="text-center"><a href="<?= base_url('company-doc/' . $doc->id . '/download') ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td class="text-center"><a target="_blank" href="<?= base_url('company-doc/' . $doc->id . '/download') ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('company-doc/' . $doc->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
