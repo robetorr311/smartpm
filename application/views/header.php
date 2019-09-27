@@ -141,10 +141,19 @@
                     </a>
                 </li>
                  <li>
-                    <a href="<?php echo base_url('financial');?>">
-                        <i class="pe-7s-note2"></i>
-                        <p>Financial</p>
+                    <a class="nav-link" data-toggle="collapse" href="#financialCollapse">
+                        <i class="pe-7s-graph"></i>
+                            <p>Financial  <b class="caret"></b></p>   
                     </a>
+                    <div class="collapse submenu" id="financialCollapse">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="<?php echo base_url('financial/records');?>">
+                                <span class="sidebar-normal">Records</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                  <li>
                     <a href="<?php echo base_url('users');?>">

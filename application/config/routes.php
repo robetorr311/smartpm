@@ -232,7 +232,14 @@ $route['lead/archive-job/(:num)'] = 'archive_jobs/view/$1';
 $route['lead/archive-job/(:num)/move-previous-stage']['post'] = 'archive_jobs/movePreviousStage/$1';
 
 $route['financial'] = 'financial/index';
-$route['financial/(:num)'] = 'financial/show/$1';
+$route['financial/records'] = 'financial/records';
+$route['financial/records/(:num)'] = 'financial/records/$1';
+$route['financial/record/create'] = 'financial/create';
+$route['financial/record/store']['post'] = 'financial/store';
+$route['financial/record/(:num)'] = 'financial/show/$1';
+$route['financial/record/(:num)/edit'] = 'financial/edit/$1';
+$route['financial/record/(:num)/update']['post'] = 'financial/update/$1';
+$route['financial/record/(:num)/delete']['post'] = 'financial/delete/$1';
 
 $route['teams'] = 'teams/index';
 $route['teams/(:num)'] = 'teams/index/$1';
