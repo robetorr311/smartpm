@@ -203,7 +203,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                     <div class="form-group">
                                         <label>Date of Loss</label>
-                                        <p><?= $insurance_job_details->date_of_loss ?></p>
+                                        <p><?= date('M j, Y', strtotime($insurance_job_details->date_of_loss)) ?></p>
                                     </div>
                                     <div class="form-group">
                                         <label>Adjuster</label>
