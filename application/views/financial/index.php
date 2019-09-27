@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
+    <div class="row page-header-buttons">
+        <div class="col-md-12">
+            <a href="<?= base_url('financial/record/create') ?>" class="btn btn-info btn-fill">New Financial Record</a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <?php
@@ -21,30 +26,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
-							<th>Job Number</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Status</th>
-							<th>Type</th>
-                            <th class="text-center">Financial Records</th>
+                            <th>Transaction Date</th>
+                            <th>Transaction Number</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Method</th>
+                            <th>Sales Representative</th>
+                            <th class="text-center">View</th>
+                            <th class="text-center">Edit</th>
+                            <th class="text-center">Delete</th>
                         </thead>
                         <tbody>
-							<?php if (!empty($leads)) : ?>
-								<?php foreach ($leads as $lead) : ?>
-									<tr>
-										<td><?= ('RJOB' . $lead->id); ?></td>
-										<td><?= $lead->firstname ?></td>
-										<td><?= $lead->lastname ?></td>
-										<td><?= LeadModel::statusToStr($lead->status) ?></td>
-										<td><?= LeadModel::typeToStr($lead->type) ?></td>
-										<td class="text-center"><a href="<?= base_url('financial/' . $lead->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-									</tr>
-								<?php endforeach; ?>
-							<?php else : ?>
-								<tr>
-									<td colspan="8" class="text-center">No Record Found!</td>
-								</tr>
-							<?php endif; ?>
+                            <?php if (!empty($financials)) : ?>
+                                <?php foreach ($financials as $financial) : ?>
+                                    <tr>
+                                        <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
+                                        <td><?= $financial->transaction_number ?></td>
+                                        <td><?= $financial->amount ?></td>
+                                        <td><?= $financial->type ?></td>
+                                        <td><?= $financial->method ?></td>
+                                        <td><?= $financial->sales_rep_fullname ?></td>
+                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="9" class="text-center">No Record Found!</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                     <div class="pagination">

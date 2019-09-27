@@ -241,6 +241,15 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
+    public function getLeadList($select = "id, CONCAT(firstname, ' ', lastname) AS name")
+    {
+		$this->db->select($select);
+		$this->db->from($this->table);
+        $this->db->where('is_deleted', FALSE);
+		$query = $this->db->get();
+		return $query->result();
+    }
+
     public function getLeadById($id)
     {
         $this->db->where([
