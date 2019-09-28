@@ -61,6 +61,22 @@ class FinancialModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
+    public function getFinancialById($id)
+    {
+        $this->db->select("financial.*, CONCAT(users_sales_rep.first_name, ' ', users_sales_rep.last_name, ' (@', users_sales_rep.username, ')') as sales_rep_fullname, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname, CONCAT('RJOB',  jobs.id, ' - ', jobs.firstname, ' ', jobs.lastname) as job_fullname");
+        $this->db->from($this->table);
+        $this->db->join('users as users_sales_rep', 'financial.sales_rep=users_sales_rep.id', 'left');
+        $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
+        $this->db->join('jobs as jobs', 'financial.job_id=jobs.id', 'left');
+        $this->db->where([
+            'financial.id' => $id,
+            'financial.is_deleted' => FALSE
+        ]);
+        $query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
+
     public function insert($data)
     {
         $data['week'] = date('W', strtotime($data['transaction_date']));

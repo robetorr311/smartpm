@@ -47,7 +47,7 @@ class Financial extends CI_Controller
     public function create()
     {
         authAccess();
-        
+
         $jobs = $this->lead->getLeadList();
         $users = $this->user->getUserList();
 
@@ -102,28 +102,29 @@ class Financial extends CI_Controller
             ]);
 
             if ($insert) {
-				redirect('financial/record/' . $insert);
+                redirect('financial/record/' . $insert);
             } else {
-				$this->session->set_flashdata('errors', '<p>Unable to Create Financial Record.</p>');
-				redirect('financial/record/create');
+                $this->session->set_flashdata('errors', '<p>Unable to Create Financial Record.</p>');
+                redirect('financial/record/create');
             }
         } else {
-			$this->session->set_flashdata('errors', validation_errors());
-			redirect('financial/record/create');
+            $this->session->set_flashdata('errors', validation_errors());
+            redirect('financial/record/create');
         }
     }
 
-    // public function show($jobid)
-    // {
-    //     authAccess();
+    public function show($id)
+    {
+        authAccess();
 
-    //     $this->load->view('header', [
-    //         'title' => $this->title
-    //     ]);
-    //     $this->load->view('financial/show', [
-    //         // 'financial' => $financial,
-    //         // 'pagiLinks' => $this->pagination->create_links()
-    //     ]);
-    //     $this->load->view('footer');
-    // }
+        $financial = $this->financial->getFinancialById($id);
+
+        $this->load->view('header', [
+            'title' => $this->title
+        ]);
+        $this->load->view('financial/show', [
+            'financial' => $financial
+        ]);
+        $this->load->view('footer');
+    }
 }
