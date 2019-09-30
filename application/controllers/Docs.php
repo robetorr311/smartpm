@@ -39,7 +39,7 @@ class Docs extends CI_Controller
 			$doc = array();
 			$i = 0;
 			foreach ($_FILES['doc']['size'] as $key => $size) {
-				if ($size > 10485760) {
+				if ($size > 104857600) {
 					// Error Only 100MB
 					echo json_encode([
 						'error' => 'Max file size limit is 100MB'
