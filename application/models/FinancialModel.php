@@ -84,4 +84,12 @@ class FinancialModel extends CI_Model
         $insert = $this->db->insert($this->table, $data);
         return $insert ? $this->db->insert_id() : $insert;
     }
+
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, [
+            'is_deleted' => TRUE
+        ]);
+    }
 }

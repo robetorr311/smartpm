@@ -127,4 +127,20 @@ class Financial extends CI_Controller
         ]);
         $this->load->view('footer');
     }
+
+    public function delete($id)
+    {
+        authAccess();
+
+        $financial = $this->financial->getFinancialById($id);
+        if ($financial) {
+            $delete = $this->financial->delete($id);
+            if (!$delete) {
+                $this->session->set_flashdata('errors', '<p>Unable to delete Task.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+        }
+        redirect('financial/records');
+    }
 }
