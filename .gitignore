@@ -38,6 +38,7 @@ assets/company_doc
 assets/job_photo/*
 !assets/job_photo/.htaccess
 assets/company_photo/*
+!assets/company_photo/.htaccess
 assets/report_photo/*
 report/output
 report/uploads
