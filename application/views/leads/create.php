@@ -98,7 +98,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>First Name<span class="red-mark">*</span></label>
+                                <label>First Name</label>
                                 <input class="form-control" name="ap_firstname" placeholder="First Name" type="text">
                             </div>
                         </div>

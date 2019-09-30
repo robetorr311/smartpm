@@ -63,7 +63,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('phone1', 'Cell Phone', 'trim|required');
 		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
-		$this->form_validation->set_rules('ap_firstname', 'Additional Party First Name', 'trim|required');
+		// $this->form_validation->set_rules('ap_firstname', 'Additional Party First Name', 'trim|required');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
