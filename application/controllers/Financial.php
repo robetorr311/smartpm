@@ -71,17 +71,26 @@ class Financial extends CI_Controller
     {
         authAccess();
 
+        $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
+        $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+        $typeKeys = implode(',', array_keys($this->financial->types));
+        $subtypeKeys = implode(',', array_keys($this->financial->subTypes));
+        $accountingCodeKeys = implode(',', array_keys($this->financial->accountingCodes));
+        $methodKeys = implode(',', array_keys($this->financial->methods));
+        $bankAccountKeys = implode(',', array_keys($this->financial->bankAccounts));
+        $stateKeys = implode(',', array_keys($this->financial->states));
+
         $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
         $this->form_validation->set_rules('transaction_number', 'Transaction Number', 'trim|required');
-        $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric');
+        $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
-        $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
-        $this->form_validation->set_rules('subtype', 'Type', 'trim|required|numeric');
-        $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|required|numeric');
-        $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric');
-        $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric');
-        $this->form_validation->set_rules('state', 'State', 'trim|required|numeric');
-        $this->form_validation->set_rules('sales_rep', 'Sales Representative', 'trim|required|numeric');
+        $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
+        $this->form_validation->set_rules('subtype', 'Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
+        $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|required|numeric|in_list[' . $accountingCodeKeys . ']');
+        $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
+        $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');
+        $this->form_validation->set_rules('state', 'State', 'trim|required|numeric|in_list[' . $stateKeys . ']');
+        $this->form_validation->set_rules('sales_rep', 'Sales Representative', 'trim|required|numeric|in_list[' . $userKeys . ']');
         $this->form_validation->set_rules('notes', 'Notes', 'trim');
 
         if ($this->form_validation->run() == TRUE) {
@@ -113,6 +122,97 @@ class Financial extends CI_Controller
         }
     }
 
+    public function edit($id)
+    {
+        authAccess();
+
+        $financial = $this->financial->getFinancialById($id);
+        if ($financial) {
+            $jobs = $this->lead->getLeadList();
+            $users = $this->user->getUserList();
+
+            $this->load->view('header', [
+                'title' => $this->title
+            ]);
+            $this->load->view('financial/edit', [
+                'financial' => $financial,
+                'jobs' => $jobs,
+                'types' => $this->financial->types,
+                'subTypes' => $this->financial->subTypes,
+                'accountingCodes' => $this->financial->accountingCodes,
+                'methods' => $this->financial->methods,
+                'bankAccounts' => $this->financial->bankAccounts,
+                'states' => $this->financial->states,
+                'users' => $users
+            ]);
+            $this->load->view('footer');
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('financial/records');
+        }
+    }
+
+    public function update($id)
+    {
+        authAccess();
+
+        $financial = $this->financial->getFinancialById($id);
+        if ($financial) {
+            $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
+            $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
+            $typeKeys = implode(',', array_keys($this->financial->types));
+            $subtypeKeys = implode(',', array_keys($this->financial->subTypes));
+            $accountingCodeKeys = implode(',', array_keys($this->financial->accountingCodes));
+            $methodKeys = implode(',', array_keys($this->financial->methods));
+            $bankAccountKeys = implode(',', array_keys($this->financial->bankAccounts));
+            $stateKeys = implode(',', array_keys($this->financial->states));
+
+            $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
+            $this->form_validation->set_rules('transaction_number', 'Transaction Number', 'trim|required');
+            $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
+            $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
+            $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
+            $this->form_validation->set_rules('subtype', 'Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
+            $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|required|numeric|in_list[' . $accountingCodeKeys . ']');
+            $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
+            $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');
+            $this->form_validation->set_rules('state', 'State', 'trim|required|numeric|in_list[' . $stateKeys . ']');
+            $this->form_validation->set_rules('sales_rep', 'Sales Representative', 'trim|required|numeric|in_list[' . $userKeys . ']');
+            $this->form_validation->set_rules('notes', 'Notes', 'trim');
+
+            if ($this->form_validation->run() == TRUE) {
+                $financialData = $this->input->post();
+                $update = $this->financial->update($id, [
+                    'transaction_date' => $financialData['transaction_date'],
+                    'transaction_number' => $financialData['transaction_number'],
+                    'job_id' => $financialData['job_id'],
+                    'amount' => $financialData['amount'],
+                    'type' => $financialData['type'],
+                    'subtype' => $financialData['subtype'],
+                    'accounting_code' => $financialData['accounting_code'],
+                    'method' => $financialData['method'],
+                    'bank_account' => $financialData['bank_account'],
+                    'state' => $financialData['state'],
+                    'sales_rep' => $financialData['sales_rep'],
+                    'notes' => $financialData['notes']
+                ]);
+
+                if ($update) {
+                    redirect('financial/record/' . $id);
+                } else {
+                    $this->session->set_flashdata('errors', '<p>Unable to Update Financial Record.</p>');
+                    redirect('financial/record/' . $id . '/edit');
+                }
+            } else {
+                $this->session->set_flashdata('errors', validation_errors());
+                redirect('financial/record/' . $id . '/edit');
+            }
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('financial/records');
+        }
+    }
+
     public function show($id)
     {
         authAccess();
@@ -128,6 +228,7 @@ class Financial extends CI_Controller
             $this->load->view('footer');
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('financial/records');
         }
     }
 

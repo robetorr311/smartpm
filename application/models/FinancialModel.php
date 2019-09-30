@@ -85,6 +85,14 @@ class FinancialModel extends CI_Model
         return $insert ? $this->db->insert_id() : $insert;
     }
 
+    public function update($id, $data)
+    {
+        $data['week'] = date('W', strtotime($data['transaction_date']));
+        $this->db->where('id', $id);
+        $update = $this->db->update($this->table, $data);
+        return $update;
+    }
+
     public function delete($id)
     {
         $this->db->where('id', $id);
