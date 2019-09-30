@@ -118,14 +118,17 @@ class Financial extends CI_Controller
         authAccess();
 
         $financial = $this->financial->getFinancialById($id);
-
-        $this->load->view('header', [
-            'title' => $this->title
-        ]);
-        $this->load->view('financial/show', [
-            'financial' => $financial
-        ]);
-        $this->load->view('footer');
+        if ($financial) {
+            $this->load->view('header', [
+                'title' => $this->title
+            ]);
+            $this->load->view('financial/show', [
+                'financial' => $financial
+            ]);
+            $this->load->view('footer');
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+        }
     }
 
     public function delete($id)
