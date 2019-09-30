@@ -52,7 +52,7 @@ class Reports extends CI_Controller
 			$img = array();
 			$i = 0;
 			foreach ($_FILES['image']['size'] as $key => $size) {
-				if ($size > 10737418240) {
+				if ($size > 104857600) {
 					// Error Only 100MB
 					echo json_encode([
 						'error' => 'Max file size limit is 100MB'
