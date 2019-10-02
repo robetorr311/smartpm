@@ -7,7 +7,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 		
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
@@ -16,6 +16,7 @@ class Leads extends CI_Controller
 		$this->user = new UserModel();
 		$this->party = new PartyModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
+		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
 	}
@@ -115,8 +116,10 @@ class Leads extends CI_Controller
 				$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 			}
 			$insurance_job_details = false;
+			$insurance_job_adjusters = false;
 			if ($lead->status == 7) {
 				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
+				$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 			}
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
@@ -129,6 +132,7 @@ class Leads extends CI_Controller
 				'jobid' => $jobid,
 				'sub_base_path' => $sub_base_path,
 				'insurance_job_details' => $insurance_job_details,
+				'insurance_job_adjusters' => $insurance_job_adjusters,
 				'teams_detail' => $teams_detail,
 				'teams' => $teams
 			]);

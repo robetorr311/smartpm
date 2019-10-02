@@ -92,7 +92,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                        </div>
+                    </div>
                     <div class="clearfix"></div>
                     <?= form_close() ?>
                 </div>
@@ -132,10 +136,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Email</label>
                                     <input class="form-control" placeholder="Email" name="email" value="<?= $add_info->email ?>" type="text">
                                 </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
+                            </div>
+                        </div>
                         <?= form_close() ?>
                     <?php else : ?>
                         <?= form_open('lead/' . $sub_base_path . $jobid . '/party/add', array('method' => 'post')) ?>
@@ -166,10 +174,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Email</label>
                                     <input class="form-control" placeholder="Email" name="email" value="" type="text">
                                 </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                            </div>
+                        </div>
                         <?= form_close() ?>
 
                     <?php endif; ?>
@@ -272,18 +284,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <input class="form-control" placeholder="Date of Loss" name="date_of_loss" type="date" value="<?= $insurance_job_details->date_of_loss ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label>Adjuster</label>
-                                        <input class="form-control" placeholder="Adjuster" name="adjuster" type="text" value="<?= $insurance_job_details->adjuster ?>">
+                                        <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Adjuster Phone #</label>
-                                        <input class="form-control" placeholder="Adjuster Phone #" name="adjuster_phone" type="text" value="<?= $insurance_job_details->adjuster_phone ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Adjuster Email</label>
-                                        <input class="form-control" placeholder="Adjuster Email" name="adjuster_email" type="text" value="<?= $insurance_job_details->adjuster_email ?>">
-                                    </div>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                                 </div>
                             </div>
                             <?= form_close() ?>
@@ -330,13 +332,67 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <label>Adjuster Email</label>
                                         <input class="form-control" placeholder="Adjuster Email" name="adjuster_email" type="text">
                                     </div>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+                                    </div>
                                 </div>
                             </div>
                             <?= form_close() ?>
                         </div>
                     </div>
                 <?php endif; ?>
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Adjuster List</h4>
+                    </div>
+                    <div class="content">
+                        <div class="content table-responsive table-full-width">
+                            <table class="table table-hover table-striped">
+                                <tr>
+                                    <th>Adjuster</th>
+                                    <th>Adjuster Phone #</th>
+                                    <th>Adjuster Email</th>
+                                    <th>Delete</th>
+                                </tr>
+                                <?php if (!empty($insurance_job_adjusters)) : ?>
+                                    <?php foreach ($insurance_job_adjusters as $insurance_job_adjuster) : ?>
+                                        <tr>
+                                            <td><?= $insurance_job_adjuster->adjuster ?></td>
+                                            <td><?= $insurance_job_adjuster->adjuster_phone ?></td>
+                                            <td><?= $insurance_job_adjuster->adjuster_email ?></td>
+                                            <td><a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/delete-adjuster/' . $insurance_job_adjuster->id) ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <tr>
+                                        <td colspan="4" class="text-center">No Record Found!</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </table>
+                        </div>
+                        <?= form_open('lead/' . $sub_base_path . $jobid . '/insert-adjuster', array('method' => 'post')) ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Adjuster</label>
+                                    <input class="form-control" placeholder="Adjuster" name="adjuster" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Adjuster Phone #</label>
+                                    <input class="form-control" placeholder="Adjuster Phone #" name="adjuster_phone" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Adjuster Email</label>
+                                    <input class="form-control" placeholder="Adjuster Email" name="adjuster_email" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-info btn-fill pull-right">Add Adjuster</button>
+                                </div>
+                            </div>
+                        </div>
+                        <?= form_close() ?>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
     </div>

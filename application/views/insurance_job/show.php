@@ -205,18 +205,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <label>Date of Loss</label>
                                         <p><?= date('M j, Y', strtotime($insurance_job_details->date_of_loss)) ?></p>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Adjuster</label>
-                                        <p><?= $insurance_job_details->adjuster ?></p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Adjuster Phone #</label>
-                                        <p><?= $insurance_job_details->adjuster_phone ?></p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Adjuster Email</label>
-                                        <p><?= $insurance_job_details->adjuster_email ?></p>
-                                    </div>
                                 </div>
                             </div>
                         <?php else : ?>
@@ -226,6 +214,37 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                             </div>
                         <?php endif; ?>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Adjuster List</h4>
+                    </div>
+                    <div class="content">
+                        <div class="content table-responsive table-full-width">
+                            <table class="table table-hover table-striped">
+                                <tr>
+                                    <th>Adjuster</th>
+                                    <th>Adjuster Phone #</th>
+                                    <th>Adjuster Email</th>
+                                    <th>Delete</th>
+                                </tr>
+                                <?php if (!empty($insurance_job_adjusters)) : ?>
+                                    <?php foreach ($insurance_job_adjusters as $insurance_job_adjuster) : ?>
+                                        <tr>
+                                            <td><?= $insurance_job_adjuster->adjuster ?></td>
+                                            <td><?= $insurance_job_adjuster->adjuster_phone ?></td>
+                                            <td><?= $insurance_job_adjuster->adjuster_email ?></td>
+                                            <td><a href="<?= base_url('lead/insurance-job/' . $jobid . '/delete-adjuster/' . $insurance_job_adjuster->id) ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <tr>
+                                        <td colspan="4" class="text-center">No Record Found!</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </table>
+                        </div>
                     </div>
                 </div>
             <?php endif; ?>

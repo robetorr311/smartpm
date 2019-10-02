@@ -202,6 +202,8 @@ $route['lead/insurance-job/(:num)/move-next-stage']['post'] = 'insurance_jobs/mo
 
 $route['lead/(:any)/(:num)/update-insurance-details']['post'] = 'insurance_jobs/updateInsuranceDetails/$2/$1';
 $route['lead/(:any)/(:num)/insert-insurance-details']['post'] = 'insurance_jobs/insertInsuranceDetails/$2/$1';
+$route['lead/(:any)/(:num)/insert-adjuster']['post'] = 'insurance_jobs/insertAdjuster/$2/$1';
+$route['lead/(:any)/(:num)/delete-adjuster/(:num)']['post'] = 'insurance_jobs/deleteAdjuster/$2/$3/$1';
 
 $route['lead/labor-jobs'] = 'labor_jobs/index';
 $route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';

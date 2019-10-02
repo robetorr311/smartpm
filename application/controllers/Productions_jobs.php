@@ -7,11 +7,12 @@ class Productions_jobs extends CI_Controller
 	{
 		parent::__construct();
 		
-		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
+		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->party = new PartyModel();
 	}
 
@@ -44,11 +45,13 @@ class Productions_jobs extends CI_Controller
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
 		$previous_status = '';
 		$insurance_job_details = false;
+		$insurance_job_adjusters = false;
 
 		switch ($job->status) {
 			case 7:
 				$previous_status = 'Insurance';
 				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
+				$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 				break;
 
 			case 8:
@@ -71,7 +74,8 @@ class Productions_jobs extends CI_Controller
 			'add_info' => $add_info,
 			'teams_detail' => $teams_detail,
 			'previous_status' => $previous_status,
-			'insurance_job_details' => $insurance_job_details
+			'insurance_job_details' => $insurance_job_details,
+			'insurance_job_adjusters' => $insurance_job_adjusters
 		]);
 		$this->load->view('footer');
 	}
