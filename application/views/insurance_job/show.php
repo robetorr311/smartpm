@@ -227,7 +227,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <th>Adjuster</th>
                                     <th>Adjuster Phone #</th>
                                     <th>Adjuster Email</th>
-                                    <th>Delete</th>
                                 </tr>
                                 <?php if (!empty($insurance_job_adjusters)) : ?>
                                     <?php foreach ($insurance_job_adjusters as $insurance_job_adjuster) : ?>
@@ -235,7 +234,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <td><?= $insurance_job_adjuster->adjuster ?></td>
                                             <td><?= $insurance_job_adjuster->adjuster_phone ?></td>
                                             <td><?= $insurance_job_adjuster->adjuster_email ?></td>
-                                            <td><a href="<?= base_url('lead/insurance-job/' . $jobid . '/delete-adjuster/' . $insurance_job_adjuster->id) ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
