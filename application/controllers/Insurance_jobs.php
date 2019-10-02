@@ -86,9 +86,6 @@ class Insurance_jobs extends CI_Controller
 			'carrier_email' => $posts['carrier_email'],
 			'policy_number' => $posts['policy_number'],
 			'date_of_loss' => $posts['date_of_loss'],
-			'adjuster' => $posts['adjuster'],
-			'adjuster_phone' => $posts['adjuster_phone'],
-			'adjuster_email' => $posts['adjuster_email'],
 			'job_id' => $jobid
 		]);
 		redirect('lead/' . $sub_base_path . '/' . $jobid . '/edit');
@@ -104,10 +101,7 @@ class Insurance_jobs extends CI_Controller
 			'carrier_phone' => $posts['carrier_phone'],
 			'carrier_email' => $posts['carrier_email'],
 			'policy_number' => $posts['policy_number'],
-			'date_of_loss' => $posts['date_of_loss'],
-			'adjuster' => $posts['adjuster'],
-			'adjuster_phone' => $posts['adjuster_phone'],
-			'adjuster_email' => $posts['adjuster_email']
+			'date_of_loss' => $posts['date_of_loss']
 		]);
 		redirect('lead/' . $sub_base_path . '/' . $jobid . '/edit');
 	}
