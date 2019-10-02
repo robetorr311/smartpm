@@ -321,18 +321,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <input class="form-control" placeholder="Date of Loss" name="date_of_loss" type="date">
                                     </div>
                                     <div class="form-group">
-                                        <label>Adjuster</label>
-                                        <input class="form-control" placeholder="Adjuster" name="adjuster" type="text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Adjuster Phone #</label>
-                                        <input class="form-control" placeholder="Adjuster Phone #" name="adjuster_phone" type="text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Adjuster Email</label>
-                                        <input class="form-control" placeholder="Adjuster Email" name="adjuster_email" type="text">
-                                    </div>
-                                    <div class="form-group">
                                         <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
                                     </div>
                                 </div>
