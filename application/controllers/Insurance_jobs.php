@@ -7,12 +7,13 @@ class Insurance_jobs extends CI_Controller
 	{
 		parent::__construct();
 		
-		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
+		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->party = new PartyModel();
 	}
 
@@ -45,8 +46,10 @@ class Insurance_jobs extends CI_Controller
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 		$insurance_job_details = false;
+		$insurance_job_adjusters = false;
 		if ($job->status == 7) {
 			$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
+			$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 		}
 
 		$this->load->view('header', ['title' => 'Insurance Job Detail']);
@@ -56,7 +59,8 @@ class Insurance_jobs extends CI_Controller
 			'add_info' => $add_info,
 			'teams_detail' => $teams_detail,
 			'teams' => $teams,
-			'insurance_job_details' => $insurance_job_details
+			'insurance_job_details' => $insurance_job_details,
+			'insurance_job_adjusters' => $insurance_job_adjusters
 		]);
 		$this->load->view('footer');
 	}
@@ -105,6 +109,28 @@ class Insurance_jobs extends CI_Controller
 			'adjuster_phone' => $posts['adjuster_phone'],
 			'adjuster_email' => $posts['adjuster_email']
 		]);
+		redirect('lead/' . $sub_base_path . '/' . $jobid . '/edit');
+	}
+
+	public function insertAdjuster($jobid, $sub_base_path)
+	{
+		authAccess();
+
+		$posts = $this->input->post();
+		$insert = $this->insurance_job_adjuster->insertAdjuster([
+			'adjuster' => $posts['adjuster'],
+			'adjuster_phone' => $posts['adjuster_phone'],
+			'adjuster_email' => $posts['adjuster_email'],
+			'job_id' => $jobid
+		]);
+		redirect('lead/' . $sub_base_path . '/' . $jobid . '/edit');
+	}
+
+	public function deleteAdjuster($jobid, $id, $sub_base_path)
+	{
+		authAccess();
+
+		$delete = $this->insurance_job_adjuster->deleteAdjuster($id, $jobid);
 		redirect('lead/' . $sub_base_path . '/' . $jobid . '/edit');
 	}
 }
