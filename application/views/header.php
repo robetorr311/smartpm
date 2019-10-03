@@ -186,18 +186,8 @@
                         </a>
                       </li>
                       <li class="nav-item ">
-                        <a class="nav-link" href="<?php echo base_url('setting/status');?>">
-                          <span class="sidebar-normal">Status Tag</span>
-                        </a>
-                      </li>
-                      <li class="nav-item ">
                         <a class="nav-link" href="<?php echo base_url('teams');?>">
                           <span class="sidebar-normal"> Teams</span>
-                        </a>
-                      </li>
-                       <li class="nav-item ">
-                        <a class="nav-link" href="<?php echo base_url('archive');?>">
-                          <span class="sidebar-normal"> Archive</span>
                         </a>
                       </li>
                     </ul>

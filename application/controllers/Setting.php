@@ -7,8 +7,7 @@ class Setting extends CI_Controller
 	{
 		parent::__construct();
 		
-		$this->load->model(['StatusTagModel', 'AdminSettingModel']);
-		$this->status = new StatusTagModel();
+		$this->load->model(['AdminSettingModel']);
 		$this->adminSetting = new AdminSettingModel();
 	}
 
@@ -63,40 +62,5 @@ class Setting extends CI_Controller
 		$this->db->query("UPDATE admin_setting SET color='" . $posts['color'] . "' WHERE company_id='" . $array['company_id'] . "'");
 		$this->session->set_userdata("color", $posts['color']);
 		echo $posts['color'];
-	}
-
-	public function status_tag()
-	{
-		authAccess();
-		
-		$query['job_type'] = $this->status->getall('job_type');
-		$query['job_classification'] = $this->status->getall('job_classification');
-		$query['lead_status'] = $this->status->getall('lead_status');
-		$query['client_status'] = $this->status->getall('client_status');
-		$query['contract_status'] = $this->status->getall('contract_status');
-		$this->load->view('header', ['title' => 'Status Tags']);
-		$this->load->view('setting/status', $query);
-		$this->load->view('footer');
-	}
-
-	public function newtag()
-	{
-		authAccess();
-		
-		$posts = $this->input->post();
-		$params = array();
-		$params['status_tag_id'] 		= $posts['id'];
-		$params['value'] 		= strtolower($posts['type']);
-		$params['is_active'] 		= 1;
-		$this->status->addTag($params);
-		redirect('setting/status');
-	}
-
-	public function deltag()
-	{
-		authAccess();
-		
-		$this->status->delete_record(['id' => $this->uri->segment(2)]);
-		redirect('setting/status');
 	}
 }
