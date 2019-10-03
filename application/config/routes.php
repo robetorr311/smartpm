@@ -259,9 +259,6 @@ $route['company-doc/(:num)/download'] = 'company_docs/download/$1';
 $route['company-doc/(:num)/delete']['post'] = 'company_docs/delete/$1';
 
 $route['setting'] = 'setting/index';
-$route['setting/status'] = 'setting/status_tag';
-$route['setting/newtag'] = 'setting/newtag';
-$route['setting/(:num)/delete'] = 'setting/deltag';
 $route['setting/ajaxupload'] = 'setting/ajaxupload';
 $route['setting/ajaxsave'] = 'setting/ajaxsave';
 $route['setting/ajaxcolor'] = 'setting/ajaxcolor';
