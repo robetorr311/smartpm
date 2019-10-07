@@ -420,18 +420,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			if (divcount > 0) {
 				$("#wait").css("display", "block");
 				$(this).attr('disabled', true);
+				$('.img-container .image-box i#boxclose, .img-container .image-box i.rotate, .img-container .image-box span.marker').hide();
 				for (var i = 0; i < divcount; i++) {
 					div_content = document.querySelector(imgbox[i]);
 					div_content1 = $(imgbox[i]).html();
-					$('.img-container .image-box i#boxclose, .img-container .image-box i.rotate, .img-container .image-box span.marker').hide();
 					$('#report-form').append("<input type='hidden' name='imageboxdata[]' value='" + div_content1 + "' />");
 					html2canvas(div_content).then(function(canvas) {
 						data = canvas.toDataURL('image/jpeg');
 						saveimg(data, divcount, j);
 						j++;
 					});
-					$('.img-container .image-box i#boxclose, .img-container .image-box i.rotate, .img-container .image-box span.marker').show();
 				}
+				$('.img-container .image-box i#boxclose, .img-container .image-box i.rotate, .img-container .image-box span.marker').show();
 			} else {
 				alert('Please add Images before genrating a Report File');
 			}
