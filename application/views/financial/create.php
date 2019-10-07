@@ -57,8 +57,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Type<span class="red-mark">*</span></label>
                                     <select name="type" class="form-control">
                                         <option value="" disabled selected>Select Type</option>
-                                        <?php foreach ($types as $id => $type) {
-                                            echo '<option value="' . $id . '">' . $type . '</option>';
+                                        <?php foreach ($types as $type) {
+                                            echo '<option value="' . $type->id . '">' . $type->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -68,8 +68,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Sub Type<span class="red-mark">*</span></label>
                                     <select name="subtype" class="form-control">
                                         <option value="" disabled selected>Select Sub Type</option>
-                                        <?php foreach ($subTypes as $id => $subType) {
-                                            echo '<option value="' . $id . '">' . $subType . '</option>';
+                                        <?php foreach ($subTypes as $subType) {
+                                            echo '<option value="' . $subType->id . '">' . $subType->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -81,8 +81,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Accounting Code<span class="red-mark">*</span></label>
                                     <select name="accounting_code" class="form-control">
                                         <option value="" disabled selected>Select Accounting Code</option>
-                                        <?php foreach ($accountingCodes as $id => $accountingCode) {
-                                            echo '<option value="' . $id . '">' . $accountingCode . '</option>';
+                                        <?php foreach ($accountingCodes as $accountingCode) {
+                                            echo '<option value="' . $accountingCode->id . '">' . $accountingCode->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -92,8 +92,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Method<span class="red-mark">*</span></label>
                                     <select name="method" class="form-control">
                                         <option value="" disabled selected>Select Method</option>
-                                        <?php foreach ($methods as $id => $method) {
-                                            echo '<option value="' . $id . '">' . $method . '</option>';
+                                        <?php foreach ($methods as $method) {
+                                            echo '<option value="' . $method->id . '">' . $method->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>
@@ -103,8 +103,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Bank Account<span class="red-mark">*</span></label>
                                     <select name="bank_account" class="form-control">
                                         <option value="" disabled selected>Select Bank Account</option>
-                                        <?php foreach ($bankAccounts as $id => $bankAccount) {
-                                            echo '<option value="' . $id . '">' . $bankAccount . '</option>';
+                                        <?php foreach ($bankAccounts as $bankAccount) {
+                                            echo '<option value="' . $bankAccount->id . '">' . $bankAccount->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>

@@ -43,8 +43,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
                                         <td><?= $financial->transaction_number ?></td>
                                         <td><?= $financial->amount ?></td>
-                                        <td><?= $financial->type ?></td>
-                                        <td><?= $financial->method ?></td>
+                                        <td><?= $financial->type_name ?></td>
+                                        <td><?= $financial->method_name ?></td>
                                         <td><?= $financial->sales_rep_fullname ?></td>
                                         <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>

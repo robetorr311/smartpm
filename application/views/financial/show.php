@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Type</label>
-                                <p><?= $financial->type ?></p>
+                                <p><?= $financial->type_name ?></p>
                             </div>
                         </div>
                     </div>
@@ -59,19 +59,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Sub Type</label>
-                                <p><?= $financial->subtype ?></p>
+                                <p><?= $financial->subtype_name ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Accounting Code</label>
-                                <p><?= $financial->accounting_code ?></p>
+                                <p><?= $financial->accounting_code_name ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Method</label>
-                                <p><?= $financial->method ?></p>
+                                <p><?= $financial->method_name ?></p>
                             </div>
                         </div>
                     </div>
@@ -79,13 +79,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Bank Account</label>
-                                <p><?= $financial->bank_account ?></p>
+                                <p><?= $financial->bank_account_name ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>State</label>
-                                <p><?= $financial->state ?></p>
+                                <p><?= $states[$financial->state] ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
