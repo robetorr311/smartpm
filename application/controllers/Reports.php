@@ -237,7 +237,7 @@ class Reports extends CI_Controller
 		$qRes = ($this->db->query("SELECT * FROM admin_setting;"))->result();
 
 		$job = $this->lead->getLeadById($jobid);
-		$name = ('RJOB' . $job->id);
+		$name = $job->firstname . ' ' . $job->lastname;
 		$address = $job->address;
 		$phone = $job->phone1;
 
