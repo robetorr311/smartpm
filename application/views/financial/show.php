@@ -109,16 +109,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($financial->notes)) : ?>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Notes</label>
-                                    <p><?= nl2br($financial->notes) ?></p>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Notes</label>
+                                <p><?= (!empty($financial->notes) ? nl2br($financial->notes) : '-') ?></p>
                             </div>
                         </div>
-                    <?php endif; ?>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
             </div>
