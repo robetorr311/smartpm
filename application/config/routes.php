@@ -259,11 +259,19 @@ $route['company-doc/(:num)/download'] = 'company_docs/download/$1';
 $route['company-doc/(:num)/delete']['post'] = 'company_docs/delete/$1';
 
 $route['setting'] = 'setting/index';
-$route['setting/status'] = 'setting/status_tag';
-$route['setting/newtag'] = 'setting/newtag';
-$route['setting/(:num)/delete'] = 'setting/deltag';
 $route['setting/ajaxupload'] = 'setting/ajaxupload';
 $route['setting/ajaxsave'] = 'setting/ajaxsave';
 $route['setting/ajaxcolor'] = 'setting/ajaxcolor';
+$route['setting/financial-options'] = 'FinancialOptions/index';
+$route['setting/financial-options/type/store']['post'] = 'FinancialOptions/insertType';
+$route['setting/financial-options/type/(:num)/delete']['post'] = 'FinancialOptions/deleteType/$1';
+$route['setting/financial-options/subtype/store']['post'] = 'FinancialOptions/insertSubtype';
+$route['setting/financial-options/subtype/(:num)/delete']['post'] = 'FinancialOptions/deleteSubtype/$1';
+$route['setting/financial-options/accCode/store']['post'] = 'FinancialOptions/insertAccCode';
+$route['setting/financial-options/accCode/(:num)/delete']['post'] = 'FinancialOptions/deleteAccCode/$1';
+$route['setting/financial-options/method/store']['post'] = 'FinancialOptions/insertMethod';
+$route['setting/financial-options/method/(:num)/delete']['post'] = 'FinancialOptions/deleteMethod/$1';
+$route['setting/financial-options/bankAcc/store']['post'] = 'FinancialOptions/insertBankAcc';
+$route['setting/financial-options/bankAcc/(:num)/delete']['post'] = 'FinancialOptions/deleteBankAcc/$1';
 
 $route['(.+)'] = 'errors/page_missing';
