@@ -3,49 +3,49 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Archive_jobs extends CI_Controller
 {
-    private $title = 'Archive Jobs';
+	private $title = 'Archive Jobs';
 
-    public function __construct()
-    {
-        parent::__construct();
+	public function __construct()
+	{
+		parent::__construct();
 
-        $this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel']);
-        $this->load->library(['pagination', 'form_validation']);
+		$this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel']);
+		$this->load->library(['pagination', 'form_validation']);
 
-        $this->lead = new LeadModel();
+		$this->lead = new LeadModel();
 		$this->party = new PartyModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->team_job_track = new TeamJobTrackModel();
-    }
+	}
 
-    public function index($start = 0)
-    {
-        authAccess();
+	public function index($start = 0)
+	{
+		authAccess();
 
-        $limit = 10;
-        $pagiConfig = [
-            'base_url' => base_url('lead/archive-jobs'),
-            'total_rows' => $this->lead->getArchivedJobsCount(),
-            'per_page' => $limit
-        ];
-        $this->pagination->initialize($pagiConfig);
+		$limit = 10;
+		$pagiConfig = [
+			'base_url' => base_url('lead/archive-jobs'),
+			'total_rows' => $this->lead->getArchivedJobsCount(),
+			'per_page' => $limit
+		];
+		$this->pagination->initialize($pagiConfig);
 
-        $leads = $this->lead->allArchivedJobs($start, $limit);
-        $this->load->view('header', [
-            'title' => $this->title
-        ]);
-        $this->load->view('archive_jobs/index', [
-            'leads' => $leads,
-            'pagiLinks' => $this->pagination->create_links()
-        ]);
-        $this->load->view('footer');
-    }
+		$leads = $this->lead->allArchivedJobs($start, $limit);
+		$this->load->view('header', [
+			'title' => $this->title
+		]);
+		$this->load->view('archive_jobs/index', [
+			'leads' => $leads,
+			'pagiLinks' => $this->pagination->create_links()
+		]);
+		$this->load->view('footer');
+	}
 
 	public function view($jobid)
 	{
 		authAccess();
-		
+
 		$job = $this->lead->getLeadById($jobid);
 		$add_info = $this->party->getPartyByLeadId($jobid);
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
@@ -57,8 +57,8 @@ class Archive_jobs extends CI_Controller
 		}
 
 		$this->load->view('header', [
-            'title' => $this->title
-        ]);
+			'title' => $this->title
+		]);
 		$this->load->view('archive_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
@@ -73,7 +73,7 @@ class Archive_jobs extends CI_Controller
 	public function movePreviousStage($jobid)
 	{
 		authAccess();
-		
+
 		$this->lead->update($jobid, [
 			'signed_stage' => 3
 		]);

@@ -3,10 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Insurance_jobs extends CI_Controller
 {
+	private $title = 'Insurance Jobs';
+
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
@@ -20,7 +22,7 @@ class Insurance_jobs extends CI_Controller
 	public function index($start = 0)
 	{
 		authAccess();
-		
+
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('lead/insurance-jobs'),
@@ -29,7 +31,7 @@ class Insurance_jobs extends CI_Controller
 		];
 		$this->pagination->initialize($pagiConfig);
 		$jobs = $this->lead->allInsuranceJobs($start, $limit);
-		$this->load->view('header', ['title' => 'Insurance Jobs']);
+		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('insurance_job/index', [
 			'jobs' => $jobs,
 			'pagiLinks' => $this->pagination->create_links()
@@ -40,7 +42,7 @@ class Insurance_jobs extends CI_Controller
 	public function view($jobid)
 	{
 		authAccess();
-		
+
 		$job = $this->lead->getLeadById($jobid);
 		$add_info = $this->party->getPartyByLeadId($jobid);
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
@@ -52,7 +54,7 @@ class Insurance_jobs extends CI_Controller
 			$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 		}
 
-		$this->load->view('header', ['title' => 'Insurance Job Detail']);
+		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('insurance_job/show', [
 			'jobid' => $jobid,
 			'job' => $job,
@@ -68,7 +70,7 @@ class Insurance_jobs extends CI_Controller
 	public function moveNextStage($jobid)
 	{
 		authAccess();
-		
+
 		$this->lead->update($jobid, [
 			'signed_stage' => 1
 		]);
@@ -78,7 +80,7 @@ class Insurance_jobs extends CI_Controller
 	public function insertInsuranceDetails($jobid, $sub_base_path)
 	{
 		authAccess();
-		
+
 		$posts = $this->input->post();
 		$insert = $this->insurance_job_details->insert([
 			'insurance_carrier' => $posts['insurance_carrier'],
@@ -94,7 +96,7 @@ class Insurance_jobs extends CI_Controller
 	public function updateInsuranceDetails($jobid, $sub_base_path)
 	{
 		authAccess();
-		
+
 		$posts = $this->input->post();
 		$update = $this->insurance_job_details->updateByLeadId($jobid, [
 			'insurance_carrier' => $posts['insurance_carrier'],

@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Labor_jobs extends CI_Controller
 {
+	private $title = 'Labor Only Jobs';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,7 +21,7 @@ class Labor_jobs extends CI_Controller
 	public function index($start = 0)
 	{
 		authAccess();
-		
+
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('lead/labor-jobs'),
@@ -28,7 +30,7 @@ class Labor_jobs extends CI_Controller
 		];
 		$this->pagination->initialize($pagiConfig);
 		$jobs = $this->lead->allLaborOnlyJobs($start, $limit);
-		$this->load->view('header', ['title' => 'Labor Only Jobs']);
+		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('labor_jobs/index', [
 			'jobs' => $jobs,
 			'pagiLinks' => $this->pagination->create_links()
@@ -40,13 +42,13 @@ class Labor_jobs extends CI_Controller
 	public function view($jobid)
 	{
 		authAccess();
-		
+
 		$job = $this->lead->getLeadById($jobid);
 		$add_info = $this->party->getPartyByLeadId($jobid);
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 
-		$this->load->view('header', ['title' => 'Labor Job Detail']);
+		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('labor_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
@@ -60,7 +62,7 @@ class Labor_jobs extends CI_Controller
 	public function moveNextStage($jobid)
 	{
 		authAccess();
-		
+
 		$this->lead->update($jobid, [
 			'signed_stage' => 1
 		]);
