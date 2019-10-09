@@ -33,12 +33,11 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # Custom Manually Added
 .env
 error_log
-assets/job_doc
-assets/company_doc
-assets/job_photo/*
+assets/job_doc/
+assets/company_doc/
+assets/job_photo/
 !assets/job_photo/.htaccess
-assets/company_photo/*
+assets/company_photo/
 !assets/company_photo/.htaccess
-assets/report_photo/*
-report/output
-report/uploads
+assets/report_photo/
+assets/report_pdf/

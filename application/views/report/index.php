@@ -29,6 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<th style="width: 55px;"></th>
 							<th style="width: 80px;">ID</th>
 							<th>Report Link</th>
+							<th>Re-Generate PDF</th>
 						</thead>
 						<tbody class="has-del-btn">
 							<?php if (!empty($allreport)) : ?>
@@ -37,6 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										<td><i class="del-job pe-7s-close" id="<?= $jobs->id; ?>"></i></td>
 										<td><?= $jobs->id ?></td>
 										<td><a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/report/' . $jobs->id . '/pdf'); ?>" target="_blank" class="btn btn-danger btn-right btn-fill">view</a></td>
+										<td><a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/report/' . $jobs->id . '/regenerate-pdf'); ?>" data-method="POST" class="btn btn-danger btn-fill"><i class="pe-7s-refresh"></i></a></td>
 									</tr>
 								<?php endforeach; ?>
 							<?php else : ?>
