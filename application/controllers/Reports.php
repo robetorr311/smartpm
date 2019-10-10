@@ -6,7 +6,7 @@ class Reports extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->load->model(['RoofingProjectModel', 'JobsPhotoModel', 'LeadModel']);
 		$this->load->library(['pagination']);
 		$this->roofing = new RoofingProjectModel();
@@ -17,7 +17,7 @@ class Reports extends CI_Controller
 	public function index($id, $sub_base_path = '')
 	{
 		authAccess();
-		
+
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$allreport = $this->roofing->allProject(['job_id' => $id, 'active' => 1]);
 		$this->load->view('header', ['title' => 'All Reports']);
@@ -32,7 +32,7 @@ class Reports extends CI_Controller
 	public function create($id, $sub_base_path = '')
 	{
 		authAccess();
-		
+
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$photos = $this->photos->allPhoto(['job_id' => $id, 'is_active' => 1]);
 		$this->load->view('header', ['title' => 'Genrate Report']);
@@ -47,7 +47,7 @@ class Reports extends CI_Controller
 	public function upload()
 	{
 		authAccess();
-		
+
 		if (is_array($_FILES) && !empty($_FILES['image'])) {
 			$img = array();
 			$i = 0;
@@ -167,7 +167,7 @@ class Reports extends CI_Controller
 	public function delete($job_id, $report_id)
 	{
 		authAccess();
-		
+
 		$this->db->query("UPDATE roofing_project SET active=0 WHERE id='" . $report_id . "' AND job_id='" . $job_id .  "'");
 		return true;
 	}
@@ -191,7 +191,7 @@ class Reports extends CI_Controller
 	public function save_img()
 	{
 		authAccess();
-		
+
 		$now = new DateTime();
 		$now->format('Y-m-d H:i:s');
 		$posts = $this->input->post();
@@ -203,7 +203,7 @@ class Reports extends CI_Controller
 	public function save($id, $sub_base_path = '')
 	{
 		authAccess();
-		
+
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		if (isset($_POST) && count($_POST) > 0) {
 			$posts = $this->input->post();
@@ -217,7 +217,7 @@ class Reports extends CI_Controller
 			$result = $this->roofing->insert($params);
 			if ($result != '') {
 
-				$this->pdf($result, $id);
+				$this->generatePDF($result, $id);
 			} else {
 				redirect('lead/' . $sub_base_path . $id . '/reports');
 			}
@@ -228,8 +228,24 @@ class Reports extends CI_Controller
 
 	public function pdf($id, $jobid, $sub_base_path = '')
 	{
+		$path = 'assets/report_pdf/report_' . $jobid . '_' . $id . '.pdf';
+
+		$filename = 'report.pdf';
+
+		$file = $path;
+		$filename = $filename;
+
+		header('Content-type: application/pdf');
+		header('Content-Disposition: inline; filename="' . $filename . '"');
+		header('Content-Transfer-Encoding: binary');
+		header('Accept-Ranges: bytes');
+		echo file_get_contents($file);
+	}
+
+	public function generatePDF($id, $jobid, $sub_base_path = '')
+	{
 		authAccess();
-		
+
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$condition = array('id' => $id, "active" => true);
 		$data = $this->roofing->get_all_where($condition);
@@ -267,9 +283,12 @@ class Reports extends CI_Controller
 
 
 			ob_clean();
-			$pdf->Output('report.pdf', 'I');
-		} else {
-			redirect('lead/' . $sub_base_path . $jobid . '/reports');
+			$pdfFile = $pdf->Output('report_' . $jobid . '_' . $id . '.pdf', 'S');
+			if (!file_exists('assets/report_pdf')) {
+				mkdir('assets/report_pdf', 0777, true);
+			}
+			file_put_contents('assets/report_pdf/report_' . $jobid . '_' . $id . '.pdf', $pdfFile);
 		}
+		redirect('lead/' . $sub_base_path . $jobid . '/reports');
 	}
 }
