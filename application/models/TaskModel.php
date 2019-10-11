@@ -125,6 +125,22 @@ class TaskModel extends CI_Model
         ]);
     }
 
+    public function getDashboardStatusCount()
+    {
+        $this->db->select("
+            COUNT(IF(status=0, 1, NULL)) as created,
+            COUNT(IF(status=1, 1, NULL)) as working,
+            COUNT(IF(status=2, 1, NULL)) as stuck,
+            COUNT(IF(status=3, 1, NULL)) as hold,
+            COUNT(IF(status=4, 1, NULL)) as completed
+        ", FALSE);
+		$this->db->from($this->table);
+        $this->db->where('is_deleted', FALSE);
+		$query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
+
     /**
      * Static Methods
      */

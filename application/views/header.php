@@ -74,7 +74,7 @@
                 </div>
                 <ul class="nav">
                     <?php if ($this->session->logoUrl != '') : ?>
-                        <li class="text-center" style="padding: 0 20px;">
+                        <li class="text-center" style="padding: 0 20px; margin-bottom: 20px;">
                             <img src="<?= base_url('assets/company_photo/' . $this->session->logoUrl) ?>">
                         </li>
                     <?php endif; ?>
