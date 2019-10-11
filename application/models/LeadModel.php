@@ -10,7 +10,7 @@ class LeadModel extends CI_Model
         1 => 'Appointment Scheduled',
         2 => 'Needs Follow Up Call',
         3 => 'Needs Site Visit',
-        4 => 'Needs Estimate/Bid',
+        4 => 'Needs Estimate / Bid',
         5 => 'Estimate Sent',
         6 => 'Ready to Sign / Verbal Go',
         7 => 'Signed Insurance Contract',
@@ -280,6 +280,30 @@ class LeadModel extends CI_Model
         return $this->update($id, [
             'is_deleted' => TRUE
         ]);
+    }
+
+    public function getDashboardStatusCount()
+    {
+        $this->db->select("
+            COUNT(IF(status=0, 1, NULL)) as new,
+            COUNT(IF(status=1, 1, NULL)) as appointment_scheduled,
+            COUNT(IF(status=2, 1, NULL)) as follow_up,
+            COUNT(IF(status=3, 1, NULL)) as needs_site_visit,
+            COUNT(IF(status=4, 1, NULL)) as needs_estimate,
+            COUNT(IF(status=5, 1, NULL)) as estimate_sent,
+            COUNT(IF(status=6, 1, NULL)) as ready_to_sign,
+            COUNT(IF(status=10, 1, NULL)) as worry_to_lose,
+            COUNT(IF(status=11, 1, NULL)) as postponed,
+            COUNT(IF(signed_stage=1, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 ELSE NULL END), NULL)) as production,
+            COUNT(IF(signed_stage=2, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 ELSE NULL END), NULL)) as completed,
+            COUNT(IF(signed_stage=3, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 ELSE NULL END), NULL)) as closed,
+            COUNT(IF(signed_stage=4, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 ELSE NULL END), NULL)) as archive
+        ", FALSE);
+		$this->db->from($this->table);
+        $this->db->where('is_deleted', FALSE);
+		$query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
     }
 
     /**

@@ -3,26 +3,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Closed_jobs extends CI_Controller
 {
-    private $title = 'Closed Jobs';
+	private $title = 'Closed Jobs';
 
-    public function __construct()
-    {
-        parent::__construct();
+	public function __construct()
+	{
+		parent::__construct();
 
-        $this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel']);
-        $this->load->library(['pagination', 'form_validation']);
+		$this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel']);
+		$this->load->library(['pagination', 'form_validation']);
 
-        $this->lead = new LeadModel();
+		$this->lead = new LeadModel();
 		$this->party = new PartyModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->team_job_track = new TeamJobTrackModel();
-    }
+	}
 
 	public function index($start = 0)
 	{
 		authAccess();
-		
+
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('lead/closed-jobs'),
@@ -45,7 +45,7 @@ class Closed_jobs extends CI_Controller
 	public function view($jobid)
 	{
 		authAccess();
-		
+
 		$job = $this->lead->getLeadById($jobid);
 		$add_info = $this->party->getPartyByLeadId($jobid);
 		$teams_detail = $this->team_job_track->getTeamName($jobid);
@@ -57,8 +57,8 @@ class Closed_jobs extends CI_Controller
 		}
 
 		$this->load->view('header', [
-            'title' => $this->title
-        ]);
+			'title' => $this->title
+		]);
 		$this->load->view('closed_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
@@ -73,7 +73,7 @@ class Closed_jobs extends CI_Controller
 	public function movePreviousStage($jobid)
 	{
 		authAccess();
-		
+
 		$this->lead->update($jobid, [
 			'signed_stage' => 2
 		]);
@@ -83,7 +83,7 @@ class Closed_jobs extends CI_Controller
 	public function moveNextStage($jobid)
 	{
 		authAccess();
-		
+
 		$this->lead->update($jobid, [
 			'signed_stage' => 4
 		]);
