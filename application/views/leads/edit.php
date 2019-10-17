@@ -224,7 +224,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
 
         <div class="col-md-4">
-            <?php if (in_array($lead->status, [7, 8, 9, 12])) : ?>
+            <?php if (in_array($lead->status, [7, 8, 9, 10, 13])) : ?>
                 <div class="card">
                     <div class="header">
                         <h4 class="title" style="float: left;">Team Detail</h4>

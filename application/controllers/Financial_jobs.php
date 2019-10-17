@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Labor_jobs extends CI_Controller
+class Financial_jobs extends CI_Controller
 {
-	private $title = 'Labor Only Jobs';
+	private $title = 'Financial Jobs';
 
 	public function __construct()
 	{
@@ -23,20 +23,19 @@ class Labor_jobs extends CI_Controller
 
 		$limit = 10;
 		$pagiConfig = [
-			'base_url' => base_url('lead/labor-jobs'),
-			'total_rows' => $this->lead->getLaborOnlyJobsCount(),
+			'base_url' => base_url('lead/financial-jobs'),
+			'total_rows' => $this->lead->getFinancialJobsCount(),
 			'per_page' => $limit
 		];
 		$this->pagination->initialize($pagiConfig);
-		$jobs = $this->lead->allLaborOnlyJobs($start, $limit);
+		$jobs = $this->lead->allFinancialJobs($start, $limit);
 		$this->load->view('header', ['title' => $this->title]);
-		$this->load->view('labor_jobs/index', [
+		$this->load->view('financial_jobs/index', [
 			'jobs' => $jobs,
 			'pagiLinks' => $this->pagination->create_links()
 		]);
 		$this->load->view('footer');
 	}
-
 
 	public function view($jobid)
 	{
@@ -48,7 +47,7 @@ class Labor_jobs extends CI_Controller
 		$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 
 		$this->load->view('header', ['title' => $this->title]);
-		$this->load->view('labor_jobs/show', [
+		$this->load->view('financial_jobs/show', [
 			'jobid' => $jobid,
 			'job' => $job,
 			'add_info' => $add_info,

@@ -212,6 +212,11 @@ $route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
 $route['lead/labor-job/(:num)/move-next-stage']['post'] = 'labor_jobs/moveNextStage/$1';
 
+$route['lead/financial-jobs'] = 'financial_jobs/index';
+$route['lead/financial-jobs/(:num)'] = 'financial_jobs/index/$1';
+$route['lead/financial-job/(:num)'] = 'financial_jobs/view/$1';
+$route['lead/financial-job/(:num)/move-next-stage']['post'] = 'financial_jobs/moveNextStage/$1';
+
 $route['lead/production-jobs'] = 'productions_jobs/index';
 $route['lead/production-jobs/(:num)'] = 'productions_jobs/index/$1';
 $route['lead/production-job/(:num)'] = 'productions_jobs/view/$1';

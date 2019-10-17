@@ -64,6 +64,10 @@ class Productions_jobs extends CI_Controller
 				$previous_status = 'Labor';
 				break;
 
+			case 10:
+				$previous_status = 'Financial';
+				break;
+
 			default:
 				$previous_status = 'Previous Status';
 				break;
@@ -100,6 +104,10 @@ class Productions_jobs extends CI_Controller
 
 			case 9:
 				$status_url = 'labor-job/';
+				break;
+
+			case 10:
+				$status_url = 'financial-job/';
 				break;
 
 			default:
