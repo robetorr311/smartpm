@@ -121,6 +121,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?= base_url('lead/financial-jobs') ?>">
+                            <i class="pe-7s-note"></i>
+                            <p>Financial Jobs</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= base_url('lead/production-jobs') ?>">
                             <i class="pe-7s-note"></i>
                             <p>Production Jobs</p>

@@ -113,7 +113,7 @@ class Leads extends CI_Controller
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$teams_detail = false;
 			$teams = [];
-			if (in_array($lead->status, [7, 8, 9, 12])) {
+			if (in_array($lead->status, [7, 8, 9, 10, 13])) {
 				$teams_detail = $this->team_job_track->getTeamName($jobid);
 				$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 			}
@@ -203,9 +203,9 @@ class Leads extends CI_Controller
 
 			if ($update) {
 				$lead = $this->lead->getLeadById($id);
-				if ($lead->signed_stage == 1 && ($lead->status == 7 || $lead->status == 8 || $lead->status == 9)) {
+				if ($lead->signed_stage == 1 && in_array($lead->status, [7, 8, 9, 10])) {
 					$sub_base_path = 'production-job/';
-				} else if ($lead->signed_stage == 2 && ($lead->status == 7 || $lead->status == 8 || $lead->status == 9)) {
+				} else if ($lead->signed_stage == 2 && in_array($lead->status, [7, 8, 9, 10])) {
 					$sub_base_path = 'completed-job/';
 				} else if ($lead->status == 7) {
 					$sub_base_path = 'insurance-job/';
@@ -213,6 +213,8 @@ class Leads extends CI_Controller
 					$sub_base_path = 'cash-job/';
 				} else if ($lead->status == 9) {
 					$sub_base_path = 'labor-job/';
+				} else if ($lead->status == 10) {
+					$sub_base_path = 'financial-job/';
 				} else {
 					$sub_base_path = '';
 				}
