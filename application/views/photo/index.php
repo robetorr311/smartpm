@@ -81,49 +81,49 @@ defined('BASEPATH') or exit('No direct script access allowed');
       var id = $(this).attr('id');
       var file_data = e.originalEvent.dataTransfer.files;
 
-      var form_data = new FormData();
-      578784
+      // var form_data = new FormData();
       var len_files = file_data.length;
       for (var i = 0; i < len_files; i++) {
+        var form_data = new FormData();
         form_data.append("photo[]", file_data[i]);
+        $.ajax({
+          url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/upload', // point to server-side PHP script     
+          dataType: 'text', // what to expect back from the PHP script, if anything
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          type: 'post',
+          success: function(php_script_response) {
+            var obj = JSON.parse(php_script_response)
+            if (obj.img && obj.img.length != 0) {
+              $.ajax({
+                type: 'POST',
+                url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
+                data: {
+                  id: id,
+                  name: JSON.stringify(obj.img)
+                },
+                success: function(photoid) {
+                  //alert(photoid);
+                  $('.image_div').append(photoid);
+                }
+              });
+            } else if (obj.error) {
+              alert(obj.error);
+            } else {
+              alert('Something went wrong!. File type not ok');
+            }
+          },
+          error: function(jqXHR) {
+            if (jqXHR.status == 413) {
+              alert('Large File, Max file size limit is 100MB.');
+            } else {
+              alert('Something went wrong!. File type not ok');
+            }
+          }
+        });
       }
-      $.ajax({
-        url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/upload', // point to server-side PHP script     
-        dataType: 'text', // what to expect back from the PHP script, if anything
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,
-        type: 'post',
-        success: function(php_script_response) {
-          var obj = JSON.parse(php_script_response)
-          if (obj.img && obj.img.length != 0) {
-            $.ajax({
-              type: 'POST',
-              url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
-              data: {
-                id: id,
-                name: JSON.stringify(obj.img)
-              },
-              success: function(photoid) {
-                //alert(photoid);
-                $('.image_div').append(photoid);
-              }
-            });
-          } else if (obj.error) {
-            alert(obj.error);
-          } else {
-            alert('Something went wrong!. File type not ok');
-          }
-        },
-        error: function(jqXHR) {
-          if (jqXHR.status == 413) {
-            alert('Large File, Max file size limit is 100MB.');
-          } else {
-            alert('Something went wrong!. File type not ok');
-          }
-        }
-      });
     });
 
     $(".upload-area").click(function() {
@@ -132,52 +132,53 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     $(".jobphoto").change(function() {
       var id = $(this).attr('id');
-      var form_data = new FormData();
+      // var form_data = new FormData();
       //alert(id);          
       len_files = $(".jobphoto").prop("files").length;
       for (var i = 0; i < len_files; i++) {
+        var form_data = new FormData();
         var file_data = $(".jobphoto").prop("files")[i];
         form_data.append("photo[]", file_data);
-      }
 
-      $.ajax({
-        url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/upload', // point to server-side PHP script     
-        dataType: 'text', // what to expect back from the PHP script, if anything
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,
-        type: 'post',
-        success: function(php_script_response) {
-          var obj = JSON.parse(php_script_response)
-          //alert(obj.length);
-          if (obj.img && obj.img.length != 0) {
-            $.ajax({
-              type: 'POST',
-              url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
-              data: {
-                id: id,
-                name: JSON.stringify(obj.img)
-              },
-              success: function(photoid) {
-                //alert(photoid);
-                $('.image_div').append(photoid);
-              }
-            });
-          } else if (obj.error) {
-            alert(obj.error);
-          } else {
-            alert('Something went wrong!. File type not ok');
+        $.ajax({
+          url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/upload', // point to server-side PHP script     
+          dataType: 'text', // what to expect back from the PHP script, if anything
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          type: 'post',
+          success: function(php_script_response) {
+            var obj = JSON.parse(php_script_response)
+            //alert(obj.length);
+            if (obj.img && obj.img.length != 0) {
+              $.ajax({
+                type: 'POST',
+                url: baseUrl + 'lead/<?= $sub_base_path ?><?= $jobid ?>/photo/save', // point to server-side PHP script     
+                data: {
+                  id: id,
+                  name: JSON.stringify(obj.img)
+                },
+                success: function(photoid) {
+                  //alert(photoid);
+                  $('.image_div').append(photoid);
+                }
+              });
+            } else if (obj.error) {
+              alert(obj.error);
+            } else {
+              alert('Something went wrong!. File type not ok');
+            }
+          },
+          error: function(jqXHR) {
+            if (jqXHR.status == 413) {
+              alert('Large File, Max file size limit is 100MB.');
+            } else {
+              alert('Something went wrong!. File type not ok');
+            }
           }
-        },
-        error: function(jqXHR) {
-          if (jqXHR.status == 413) {
-            alert('Large File, Max file size limit is 100MB.');
-          } else {
-            alert('Something went wrong!. File type not ok');
-          }
-        }
-      });
+        });
+      }
     });
     $(document).on('click', '.del-photo', function() {
       var id = $(this).attr('id');
