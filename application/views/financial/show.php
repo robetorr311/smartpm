@@ -85,7 +85,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>State</label>
-                                <p><?= $states[$financial->state] ?></p>
+                                <p><?= $financial->state_name ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">

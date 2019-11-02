@@ -9,7 +9,7 @@ class Financial extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel']);
+        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->financial = new FinancialModel();
@@ -20,6 +20,7 @@ class Financial extends CI_Controller
         $this->accCode = new FinancialAccCodesModel();
         $this->method = new FinancialMethodsModel();
         $this->bankAcc = new FinancialBankAccsModel();
+        $this->state = new StatesModel();
     }
 
     public function index()
@@ -60,11 +61,7 @@ class Financial extends CI_Controller
         $accountingCodes = $this->accCode->allAccCodes();
         $methods = $this->method->allMethods();
         $bankAccounts = $this->bankAcc->allBankAccs();
-        $states = [
-            1 => 'State 1',
-            2 => 'State 2',
-            3 => 'State 3'
-        ];
+        $states = $this->state->allStates();
 
         $this->load->view('header', [
             'title' => $this->title
@@ -86,12 +83,6 @@ class Financial extends CI_Controller
     {
         authAccess();
 
-        $states = [
-            1 => 'State 1',
-            2 => 'State 2',
-            3 => 'State 3'
-        ];
-
         $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
         $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
         $typeKeys = implode(',', array_column($this->type->allTypes(), 'id'));
@@ -99,7 +90,7 @@ class Financial extends CI_Controller
         $accountingCodeKeys = implode(',', array_column($this->accCode->allAccCodes(), 'id'));
         $methodKeys = implode(',', array_column($this->method->allMethods(), 'id'));
         $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
-        $stateKeys = implode(',', array_keys($states));
+        $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
         $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
         $this->form_validation->set_rules('transaction_number', 'Transaction Number', 'trim|required');
@@ -156,11 +147,7 @@ class Financial extends CI_Controller
             $accountingCodes = $this->accCode->allAccCodes();
             $methods = $this->method->allMethods();
             $bankAccounts = $this->bankAcc->allBankAccs();
-            $states = [
-                1 => 'State 1',
-                2 => 'State 2',
-                3 => 'State 3'
-            ];
+            $states = $this->state->allStates();
 
             $this->load->view('header', [
                 'title' => $this->title
@@ -189,11 +176,6 @@ class Financial extends CI_Controller
 
         $financial = $this->financial->getFinancialById($id);
         if ($financial) {
-            $states = [
-                1 => 'State 1',
-                2 => 'State 2',
-                3 => 'State 3'
-            ];
 
             $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
             $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
@@ -202,7 +184,7 @@ class Financial extends CI_Controller
             $accountingCodeKeys = implode(',', array_column($this->accCode->allAccCodes(), 'id'));
             $methodKeys = implode(',', array_column($this->method->allMethods(), 'id'));
             $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
-            $stateKeys = implode(',', array_keys($states));
+            $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
             $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
             $this->form_validation->set_rules('transaction_number', 'Transaction Number', 'trim|required');
@@ -256,18 +238,12 @@ class Financial extends CI_Controller
 
         $financial = $this->financial->getFinancialById($id);
         if ($financial) {
-            $states = [
-                1 => 'State 1',
-                2 => 'State 2',
-                3 => 'State 3'
-            ];
 
             $this->load->view('header', [
                 'title' => $this->title
             ]);
             $this->load->view('financial/show', [
-                'financial' => $financial,
-                'states' => $states
+                'financial' => $financial
             ]);
             $this->load->view('footer');
         } else {

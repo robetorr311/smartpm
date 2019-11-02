@@ -41,7 +41,8 @@ class FinancialModel extends CI_Model
             method.name as method_name,
             subtype.name as subtype_name,
             accounting_code.name as accounting_code_name,
-            bank_account.name as bank_account_name
+            bank_account.name as bank_account_name,
+            state.name as state_name
         ");
         $this->db->from($this->table);
         $this->db->join('users as users_sales_rep', 'financial.sales_rep=users_sales_rep.id', 'left');
@@ -52,6 +53,7 @@ class FinancialModel extends CI_Model
         $this->db->join('financial_subtypes as subtype', 'financial.subtype=subtype.id', 'left');
         $this->db->join('financial_acc_codes as accounting_code', 'financial.accounting_code=accounting_code.id', 'left');
         $this->db->join('financial_bank_accs as bank_account', 'financial.bank_account=bank_account.id', 'left');
+        $this->db->join('states as state', 'financial.state=state.id', 'left');
         $this->db->where([
             'financial.id' => $id,
             'financial.is_deleted' => FALSE

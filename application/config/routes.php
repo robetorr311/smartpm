@@ -280,5 +280,7 @@ $route['setting/financial-options/method/store']['post'] = 'FinancialOptions/ins
 $route['setting/financial-options/method/(:num)/delete']['post'] = 'FinancialOptions/deleteMethod/$1';
 $route['setting/financial-options/bankAcc/store']['post'] = 'FinancialOptions/insertBankAcc';
 $route['setting/financial-options/bankAcc/(:num)/delete']['post'] = 'FinancialOptions/deleteBankAcc/$1';
+$route['setting/financial-options/state/store']['post'] = 'FinancialOptions/insertState';
+$route['setting/financial-options/state/(:num)/delete']['post'] = 'FinancialOptions/deleteState/$1';
 
 $route['(.+)'] = 'errors/page_missing';
