@@ -9,13 +9,14 @@ class FinancialOptions extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel']);
+        $this->load->model(['FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
 
         $this->type = new FinancialTypesModel();
         $this->subtype = new FinancialSubtypesModel();
         $this->accCode = new FinancialAccCodesModel();
         $this->method = new FinancialMethodsModel();
         $this->bankAcc = new FinancialBankAccsModel();
+        $this->state = new StatesModel();
     }
 
     public function index()
@@ -27,6 +28,7 @@ class FinancialOptions extends CI_Controller
         $accCodes = $this->accCode->allAccCodes();
         $methods = $this->method->allMethods();
         $bankAccs = $this->bankAcc->allBankAccs();
+        $states = $this->state->allStates();
 
         $this->load->view('header', [
             'title' => $this->title
@@ -36,7 +38,8 @@ class FinancialOptions extends CI_Controller
             'subtypes' => $subtypes,
             'accCodes' => $accCodes,
             'methods' => $methods,
-            'bankAccs' => $bankAccs
+            'bankAccs' => $bankAccs,
+            'states' => $states
         ]);
         $this->load->view('footer');
     }
@@ -178,6 +181,34 @@ class FinancialOptions extends CI_Controller
         authAccess();
 
         $this->bankAcc->delete($id);
+        redirect('setting/financial-options');
+    }
+
+    public function insertState()
+    {
+        authAccess();
+
+        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+
+        if ($this->form_validation->run() == TRUE) {
+            $data = $this->input->post();
+            $insert = $this->state->insert([
+                'name' => $data['name']
+            ]);
+            if (!$insert) {
+                $this->session->set_flashdata('errors', '<p>Unable to Create Financial Option State.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', validation_errors());
+        }
+        redirect('setting/financial-options');
+    }
+
+    public function deleteState($id)
+    {
+        authAccess();
+
+        $this->state->delete($id);
         redirect('setting/financial-options');
     }
 }

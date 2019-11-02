@@ -116,8 +116,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>State<span class="red-mark">*</span></label>
                                     <select name="state" class="form-control">
                                         <option value="" disabled selected>Select State</option>
-                                        <?php foreach ($states as $id => $state) {
-                                            echo '<option value="' . $id . '">' . $state . '</option>';
+                                        <?php foreach ($states as $state) {
+                                            echo '<option value="' . $state->id . '">' . $state->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>
