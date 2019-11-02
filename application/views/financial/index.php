@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tr>
                                         <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
                                         <td><?= $financial->transaction_number ?></td>
-                                        <td><?= $financial->amount ?></td>
+                                        <td><?= number_format($financial->amount, 2) ?></td>
                                         <td><?= $financial->type_name ?></td>
                                         <td><?= $financial->method_name ?></td>
                                         <td><?= $financial->sales_rep_fullname ?></td>
