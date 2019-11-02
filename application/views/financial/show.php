@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Amount</label>
-                                <p><?= $financial->amount ?></p>
+                                <p><?= number_format($financial->amount, 2) ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
