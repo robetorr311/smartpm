@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Type</h4>
+                    <h4 class="title">Types</h4>
                 </div>
                 <div class="content">
                     <div class="insert-form">
@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Subtype</h4>
+                    <h4 class="title">Subtypes</h4>
                 </div>
                 <div class="content">
                     <div class="insert-form">
@@ -118,7 +118,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Accounting Code</h4>
+                    <h4 class="title">Accounting Codes</h4>
                 </div>
                 <div class="content">
                     <div class="insert-form">
@@ -171,7 +171,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Methods</h4>
+                    <h4 class="title">Methods of Payment</h4>
                 </div>
                 <div class="content">
                     <div class="insert-form">

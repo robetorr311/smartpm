@@ -132,7 +132,7 @@ class FinancialOptions extends CI_Controller
     {
         authAccess();
 
-        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+        $this->form_validation->set_rules('name', 'Method of Payment', 'trim|required');
 
         if ($this->form_validation->run() == TRUE) {
             $data = $this->input->post();
