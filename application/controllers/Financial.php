@@ -55,7 +55,6 @@ class Financial extends CI_Controller
         authAccess();
 
         $jobs = $this->lead->getLeadList();
-        $users = $this->user->getUserList();
         $types = $this->type->allTypes();
         $subTypes = $this->subtype->allSubtypes();
         $accountingCodes = $this->accCode->allAccCodes();
@@ -73,8 +72,7 @@ class Financial extends CI_Controller
             'accountingCodes' => $accountingCodes,
             'methods' => $methods,
             'bankAccounts' => $bankAccounts,
-            'states' => $states,
-            'users' => $users
+            'states' => $states
         ]);
         $this->load->view('footer');
     }
@@ -84,7 +82,6 @@ class Financial extends CI_Controller
         authAccess();
 
         $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
-        $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
         $typeKeys = implode(',', array_column($this->type->allTypes(), 'id'));
         $subtypeKeys = implode(',', array_column($this->subtype->allSubtypes(), 'id'));
         $accountingCodeKeys = implode(',', array_column($this->accCode->allAccCodes(), 'id'));
@@ -102,7 +99,6 @@ class Financial extends CI_Controller
         $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
         $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');
         $this->form_validation->set_rules('state', 'State', 'trim|required|numeric|in_list[' . $stateKeys . ']');
-        $this->form_validation->set_rules('sales_rep', 'Sales Representative', 'trim|required|numeric|in_list[' . $userKeys . ']');
         $this->form_validation->set_rules('notes', 'Notes', 'trim');
 
         if ($this->form_validation->run() == TRUE) {
@@ -118,7 +114,6 @@ class Financial extends CI_Controller
                 'method' => $financialData['method'],
                 'bank_account' => $financialData['bank_account'],
                 'state' => $financialData['state'],
-                'sales_rep' => $financialData['sales_rep'],
                 'notes' => $financialData['notes']
             ]);
 
@@ -141,7 +136,6 @@ class Financial extends CI_Controller
         $financial = $this->financial->getFinancialById($id);
         if ($financial) {
             $jobs = $this->lead->getLeadList();
-            $users = $this->user->getUserList();
             $types = $this->type->allTypes();
             $subTypes = $this->subtype->allSubtypes();
             $accountingCodes = $this->accCode->allAccCodes();
@@ -160,8 +154,7 @@ class Financial extends CI_Controller
                 'accountingCodes' => $accountingCodes,
                 'methods' => $methods,
                 'bankAccounts' => $bankAccounts,
-                'states' => $states,
-                'users' => $users
+                'states' => $states
             ]);
             $this->load->view('footer');
         } else {
@@ -178,7 +171,6 @@ class Financial extends CI_Controller
         if ($financial) {
 
             $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
-            $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
             $typeKeys = implode(',', array_column($this->type->allTypes(), 'id'));
             $subtypeKeys = implode(',', array_column($this->subtype->allSubtypes(), 'id'));
             $accountingCodeKeys = implode(',', array_column($this->accCode->allAccCodes(), 'id'));
@@ -196,7 +188,6 @@ class Financial extends CI_Controller
             $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
             $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');
             $this->form_validation->set_rules('state', 'State', 'trim|required|numeric|in_list[' . $stateKeys . ']');
-            $this->form_validation->set_rules('sales_rep', 'Sales Representative', 'trim|required|numeric|in_list[' . $userKeys . ']');
             $this->form_validation->set_rules('notes', 'Notes', 'trim');
 
             if ($this->form_validation->run() == TRUE) {
@@ -212,7 +203,6 @@ class Financial extends CI_Controller
                     'method' => $financialData['method'],
                     'bank_account' => $financialData['bank_account'],
                     'state' => $financialData['state'],
-                    'sales_rep' => $financialData['sales_rep'],
                     'notes' => $financialData['notes']
                 ]);
 

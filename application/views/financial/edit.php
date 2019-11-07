@@ -124,17 +124,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Sales Representative<span class="red-mark">*</span></label>
-                                    <select name="sales_rep" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->sales_rep) ? '' : ' selected') ?>>Select Sales Representative</option>
-                                        <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '"' . ($financial->sales_rep == $user->id ? ' selected' : '') . '>' . $user->name . ' (@' . $user->username . ')' . '</option>';
-                                        } ?>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">

@@ -107,12 +107,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Sales Representative</label>
-                                <p><?= $financial->sales_rep_fullname ?></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Created By</label>
                                 <p><?= $financial->created_user_fullname ?></p>
                             </div>
                         </div>

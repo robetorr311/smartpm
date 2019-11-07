@@ -21,6 +21,7 @@ class Migration_Update_financial_table extends CI_Migration
 
         $this->dbforge->add_column('financial', $fields);
         $this->dbforge->drop_column('financial', 'transaction_number');
+        $this->dbforge->drop_column('financial', 'sales_rep');
     }
 
     public function down()
@@ -30,6 +31,11 @@ class Migration_Update_financial_table extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 50,
                 'after' => 'transaction_date'
+            ],
+            'sales_rep' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'after' => 'week'
             ]
         ];
 
