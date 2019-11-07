@@ -30,8 +30,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Transaction Number</label>
-                                <p><?= $financial->transaction_number ?></p>
+                                <label>Transaction #</label>
+                                <p><?= (100 + $financial->id) ?></p>
                             </div>
                         </div>
                     </div>

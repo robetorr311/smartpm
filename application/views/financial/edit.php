@@ -21,19 +21,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <form action="<?= base_url('financial/record/' . $financial->id . '/update') ?>" method="post">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Transaction Date<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="Transaction Date" name="transaction_date" type="date" value="<?= $financial->transaction_date ?>">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Transaction Number<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Transaction Number" name="transaction_number" type="text" value="<?= $financial->transaction_number ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Job<span class="red-mark">*</span></label>
                                     <select name="job_id" class="form-control">

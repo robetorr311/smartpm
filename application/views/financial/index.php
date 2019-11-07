@@ -26,8 +26,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
+                            <th>Transaction #</th>
                             <th>Transaction Date</th>
-                            <th>Transaction Number</th>
                             <th>Amount</th>
                             <th>Type</th>
                             <th>Method</th>
@@ -40,8 +40,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php if (!empty($financials)) : ?>
                                 <?php foreach ($financials as $financial) : ?>
                                     <tr>
+                                        <td><?= (100 + $financial->id) ?></td>
                                         <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
-                                        <td><?= $financial->transaction_number ?></td>
                                         <td><?= number_format($financial->amount, 2) ?></td>
                                         <td><?= $financial->type_name ?></td>
                                         <td><?= $financial->method_name ?></td>

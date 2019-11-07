@@ -93,7 +93,6 @@ class Financial extends CI_Controller
         $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
         $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
-        $this->form_validation->set_rules('transaction_number', 'Transaction Number', 'trim|required');
         $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
         $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
@@ -109,7 +108,6 @@ class Financial extends CI_Controller
             $financialData = $this->input->post();
             $insert = $this->financial->insert([
                 'transaction_date' => $financialData['transaction_date'],
-                'transaction_number' => $financialData['transaction_number'],
                 'job_id' => $financialData['job_id'],
                 'amount' => $financialData['amount'],
                 'type' => $financialData['type'],
@@ -187,7 +185,6 @@ class Financial extends CI_Controller
             $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
             $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
-            $this->form_validation->set_rules('transaction_number', 'Transaction Number', 'trim|required');
             $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
@@ -203,7 +200,6 @@ class Financial extends CI_Controller
                 $financialData = $this->input->post();
                 $update = $this->financial->update($id, [
                     'transaction_date' => $financialData['transaction_date'],
-                    'transaction_number' => $financialData['transaction_number'],
                     'job_id' => $financialData['job_id'],
                     'amount' => $financialData['amount'],
                     'type' => $financialData['type'],
