@@ -92,6 +92,7 @@ class Financial extends CI_Controller
         $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
         $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
+        $this->form_validation->set_rules('vendor', 'Vendor / Payee', 'trim|required');
         $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
         $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
@@ -107,6 +108,7 @@ class Financial extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $financialData = $this->input->post();
             $insert = $this->financial->insert([
+                'vendor' => $financialData['vendor'],
                 'transaction_date' => $financialData['transaction_date'],
                 'job_id' => $financialData['job_id'],
                 'amount' => $financialData['amount'],
@@ -184,6 +186,7 @@ class Financial extends CI_Controller
             $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
             $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
+            $this->form_validation->set_rules('vendor', 'Vendor / Payee', 'trim|required');
             $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
             $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
@@ -199,6 +202,7 @@ class Financial extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $financialData = $this->input->post();
                 $update = $this->financial->update($id, [
+                    'vendor' => $financialData['vendor'],
                     'transaction_date' => $financialData['transaction_date'],
                     'job_id' => $financialData['job_id'],
                     'amount' => $financialData['amount'],

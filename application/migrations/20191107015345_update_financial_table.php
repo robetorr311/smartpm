@@ -11,6 +11,15 @@ class Migration_Update_financial_table extends CI_Migration
 
     public function up()
     {
+        $fields = [
+            'vendor' => [
+                'type' => 'VARCHAR',
+                'constraint' => 200,
+                'after' => 'transaction_date'
+            ]
+        ];
+
+        $this->dbforge->add_column('financial', $fields);
         $this->dbforge->drop_column('financial', 'transaction_number');
     }
 
@@ -25,5 +34,6 @@ class Migration_Update_financial_table extends CI_Migration
         ];
 
         $this->dbforge->add_column('financial', $fields);
+        $this->dbforge->drop_column('financial', 'vendor');
     }
 }

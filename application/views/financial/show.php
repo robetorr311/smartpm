@@ -22,6 +22,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card">
                 <div class="content view">
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Vendor / Payee</label>
+                                <p><?= $financial->vendor ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label style="line-height: 30px;">Transaction Date</label>
