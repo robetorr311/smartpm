@@ -282,5 +282,9 @@ $route['setting/financial-options/bankAcc/store']['post'] = 'FinancialOptions/in
 $route['setting/financial-options/bankAcc/(:num)/delete']['post'] = 'FinancialOptions/deleteBankAcc/$1';
 $route['setting/financial-options/state/store']['post'] = 'FinancialOptions/insertState';
 $route['setting/financial-options/state/(:num)/delete']['post'] = 'FinancialOptions/deleteState/$1';
+$route['setting/client-options'] = 'ClientOptions/index';
+$route['setting/client-options/lead-source/store']['post'] = 'ClientOptions/insertLeadSource';
+$route['setting/client-options/lead-source/(:num)/update']['post'] = 'ClientOptions/updateLeadSource/$1';
+$route['setting/client-options/lead-source/(:num)/delete']['post'] = 'ClientOptions/deleteLeadSource/$1';
 
 $route['(.+)'] = 'errors/page_missing';
