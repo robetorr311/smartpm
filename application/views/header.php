@@ -205,6 +205,11 @@
                                         <span class="sidebar-normal">Financial Options</span>
                                     </a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('setting/client-options') ?>">
+                                        <span class="sidebar-normal">Client Options</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

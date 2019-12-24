@@ -67,22 +67,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Cell Phone :</label>
                                 <p><?= $lead->phone1 ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Home Phone :</label>
                                 <p><?= $lead->phone2 ? $lead->phone2 : '-' ?></p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Email :</label>
                                 <p><?= $lead->email ? $lead->email : '-' ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Lead Source :</label>
+                                <p><?= $lead->lead_source_name ? $lead->lead_source_name : '-' ?></p>
                             </div>
                         </div>
                     </div>

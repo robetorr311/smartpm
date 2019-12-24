@@ -9,14 +9,12 @@ class FinancialModel extends CI_Model
     {
         $this->db->select("
             financial.*,
-            CONCAT(users_sales_rep.first_name, ' ', users_sales_rep.last_name, ' (@', users_sales_rep.username, ')') as sales_rep_fullname,
-            type.name as type_name,
-            method.name as method_name
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
+            type.name as type_name
         ");
         $this->db->from($this->table);
-        $this->db->join('users as users_sales_rep', 'financial.sales_rep=users_sales_rep.id', 'left');
+        $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
         $this->db->join('financial_types as type', 'financial.type=type.id', 'left');
-        $this->db->join('financial_methods as method', 'financial.method=method.id', 'left');
         $this->db->where('financial.is_deleted', FALSE);
         $this->db->order_by('financial.created_at', 'ASC');
         $this->db->limit($limit, $start);
@@ -34,7 +32,6 @@ class FinancialModel extends CI_Model
     {
         $this->db->select("
             financial.*,
-            CONCAT(users_sales_rep.first_name, ' ', users_sales_rep.last_name, ' (@', users_sales_rep.username, ')') as sales_rep_fullname,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
             CONCAT('RJOB',  jobs.id, ' - ', jobs.firstname, ' ', jobs.lastname) as job_fullname,
             type.name as type_name,
@@ -45,7 +42,6 @@ class FinancialModel extends CI_Model
             state.name as state_name
         ");
         $this->db->from($this->table);
-        $this->db->join('users as users_sales_rep', 'financial.sales_rep=users_sales_rep.id', 'left');
         $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
         $this->db->join('jobs as jobs', 'financial.job_id=jobs.id', 'left');
         $this->db->join('financial_types as type', 'financial.type=type.id', 'left');

@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class FinancialSubtypesModel extends CI_Model
+class ClientLeadSourceModel extends CI_Model
 {
-    private $table = 'financial_subtypes';
+    private $table = 'client_lead_source';
 
-    public function allSubtypes()
+    public function allLeadSource()
     {
         $this->db->from($this->table);
         $this->db->where('is_deleted', FALSE);

@@ -9,7 +9,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel']);
 		$this->load->library(['pagination', 'form_validation']);
 
 		$this->lead = new LeadModel();
@@ -21,6 +21,7 @@ class Leads extends CI_Controller
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
+		$this->leadSource = new ClientLeadSourceModel();
 	}
 
 	public function index($start = 0)
@@ -48,14 +49,20 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
+		$clientLeadSource = $this->leadSource->allLeadSource();
+
 		$this->load->view('header', ['title' => $this->title]);
-		$this->load->view('leads/create');
+		$this->load->view('leads/create', [
+			'leadSources' => $clientLeadSource
+		]);
 		$this->load->view('footer');
 	}
 
 	public function store()
 	{
 		authAccess();
+
+		$clientLeadSourceKeys = implode(',', array_column($this->leadSource->allLeadSource(), 'id'));
 
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
@@ -66,7 +73,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('phone1', 'Cell Phone', 'trim|required');
 		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
-		// $this->form_validation->set_rules('ap_firstname', 'Additional Party First Name', 'trim|required');
+		$this->form_validation->set_rules('lead_source', 'Lead Source', 'trim|numeric|in_list[' . $clientLeadSourceKeys . ']');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
@@ -80,6 +87,7 @@ class Leads extends CI_Controller
 				'phone1' => $posts['phone1'],
 				'phone2' => $posts['phone2'],
 				'email' => $posts['email'],
+				'lead_source' => $posts['lead_source'],
 				'entry_date' => date('Y-m-d h:i:s')
 			]);
 
@@ -125,6 +133,7 @@ class Leads extends CI_Controller
 			}
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
+			$clientLeadSource = $this->leadSource->allLeadSource();
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/edit', [
 				'job_type_tags' => $job_type_tags,
@@ -136,7 +145,8 @@ class Leads extends CI_Controller
 				'insurance_job_details' => $insurance_job_details,
 				'insurance_job_adjusters' => $insurance_job_adjusters,
 				'teams_detail' => $teams_detail,
-				'teams' => $teams
+				'teams' => $teams,
+				'leadSources' => $clientLeadSource
 			]);
 			$this->load->view('footer');
 		} else {
@@ -149,6 +159,8 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
+		$clientLeadSourceKeys = implode(',', array_column($this->leadSource->allLeadSource(), 'id'));
+
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
@@ -159,6 +171,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('phone1', 'Phone 1', 'trim|required');
 		$this->form_validation->set_rules('phone2', 'Phone 2', 'trim');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
+		$this->form_validation->set_rules('lead_source', 'Lead Source', 'trim|numeric|in_list[' . $clientLeadSourceKeys . ']');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
@@ -172,6 +185,7 @@ class Leads extends CI_Controller
 				'phone1' => $posts['phone1'],
 				'phone2' => $posts['phone2'],
 				'email' => $posts['email'],
+				'lead_source' => $posts['lead_source'],
 			]);
 			if ($update) {
 				redirect('lead/' . $sub_base_path . $id);

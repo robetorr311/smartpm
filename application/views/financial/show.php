@@ -22,6 +22,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card">
                 <div class="content view">
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Vendor / Payee</label>
+                                <p><?= $financial->vendor ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label style="line-height: 30px;">Transaction Date</label>
@@ -30,8 +38,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Transaction Number</label>
-                                <p><?= $financial->transaction_number ?></p>
+                                <label>Transaction #</label>
+                                <p><?= (100 + $financial->id) ?></p>
                             </div>
                         </div>
                     </div>
@@ -99,12 +107,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Sales Representative</label>
-                                <p><?= $financial->sales_rep_fullname ?></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Created By</label>
                                 <p><?= $financial->created_user_fullname ?></p>
                             </div>
                         </div>

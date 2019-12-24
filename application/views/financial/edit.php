@@ -21,19 +21,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <form action="<?= base_url('financial/record/' . $financial->id . '/update') ?>" method="post">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Vendor / Payee<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Vendor / Payee" name="vendor" type="text" value="<?= $financial->vendor ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Transaction Date<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="Transaction Date" name="transaction_date" type="date" value="<?= $financial->transaction_date ?>">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Transaction Number<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Transaction Number" name="transaction_number" type="text" value="<?= $financial->transaction_number ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Job<span class="red-mark">*</span></label>
                                     <select name="job_id" class="form-control">
@@ -118,17 +120,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <option value="" disabled<?= (empty($financial->state) ? '' : ' selected') ?>>Select State</option>
                                         <?php foreach ($states as $state) {
                                             echo '<option value="' . $state->id . '"' . ($financial->state == $state->id ? ' selected' : '') . '>' . $state->name . '</option>';
-                                        } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Sales Representative<span class="red-mark">*</span></label>
-                                    <select name="sales_rep" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->sales_rep) ? '' : ' selected') ?>>Select Sales Representative</option>
-                                        <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '"' . ($financial->sales_rep == $user->id ? ' selected' : '') . '>' . $user->name . ' (@' . $user->username . ')' . '</option>';
                                         } ?>
                                     </select>
                                 </div>

@@ -21,19 +21,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <form action="<?= base_url('financial/record/store') ?>" method="post">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Vendor / Payee<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Vendor / Payee" name="vendor" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Transaction Date<span class="red-mark">*</span></label>
                                     <input class="form-control" placeholder="Transaction Date" name="transaction_date" type="date">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Transaction Number<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Transaction Number" name="transaction_number" type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Job<span class="red-mark">*</span></label>
                                     <select name="job_id" class="form-control">
@@ -118,17 +120,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <option value="" disabled selected>Select State</option>
                                         <?php foreach ($states as $state) {
                                             echo '<option value="' . $state->id . '">' . $state->name . '</option>';
-                                        } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Sales Representative<span class="red-mark">*</span></label>
-                                    <select name="sales_rep" class="form-control">
-                                        <option value="" disabled selected>Select Sales Representative</option>
-                                        <?php foreach ($users as $user) {
-                                            echo '<option value="' . $user->id . '">' . $user->name . ' (@' . $user->username . ')' . '</option>';
                                         } ?>
                                     </select>
                                 </div>
