@@ -70,7 +70,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php foreach ($leadSource as $ls) : ?>
                                         <tr>
                                             <td><?= $ls->name ?></td>
-                                            <td class="text-center"><a onclick="editAction('<?= $ls->id ?>', '<?= $ls->name ?>', 'leadSource')" class="text-warning cursor-pointer" style="margin-right: 10px;"><i class="fa fa-pencil"></i></a><a href="<?= base_url('setting/client-options/lead-source/' . $ls->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="text-center"><a onclick="editAction('<?= $ls->id ?>', '<?= $ls->name ?>', 'leadSource', 'lead-source')" class="text-warning cursor-pointer" style="margin-right: 10px;"><i class="fa fa-pencil"></i></a><a href="<?= base_url('setting/client-options/lead-source/' . $ls->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
@@ -88,10 +88,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 <script>
-    function editAction(id, name, idPrefix) {
+    function editAction(id, name, idPrefix, optionName) {
         $('#' + idPrefix + 'Insert').hide();
         $('#' + idPrefix + 'Edit').show();
-        $('#' + idPrefix + 'Edit form').attr('action', '<?= base_url('setting/client-options/lead-source') ?>/' + id + '/update');
+        $('#' + idPrefix + 'Edit form').attr('action', '<?= base_url('setting/client-options') ?>/' + optionName + '/' + id + '/update');
         $('#' + idPrefix + 'Edit form input[name="name"]').val(name);
         $('#' + idPrefix + 'Edit form input[name="name"]').focus();
     }
