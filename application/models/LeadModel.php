@@ -52,6 +52,25 @@ class LeadModel extends CI_Model
         return $query->result();
     }
 
+    public function allLeadsByStatus($status, $start = 0, $limit = 10)
+    {
+        if (!isset(self::$status[$status])) {
+            show_404();
+        }
+
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => $status,
+            'signed_stage' => 0
+        ]);
+        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 12, 13]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function getLeadsCount()
     {
         $this->db->where([
