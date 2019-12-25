@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="row dashbord-box">
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/0') ?>">
 					<span><?= $newLeads ?></span>
 					<p>New</p>
 				</a>
@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/1') ?>">
 					<span><?= $appointmentScheduledLeads ?></span>
 					<p>Appointment<br>Scheduled</p>
 				</a>
@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/2') ?>">
 					<span><?= $followUpLeads ?></span>
 					<p>Needs Follow Up<br>Call</p>
 				</a>
@@ -33,7 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/3') ?>">
 					<span><?= $needsSiteVisitLeads ?></span>
 					<p>Needs Site<br>Visit</p>
 				</a>
@@ -41,7 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/4') ?>">
 					<span><?= $estimateBidLeads ?></span>
 					<p>Needs<br>Estimate / Bid</p>
 				</a>
@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/5') ?>">
 					<span><?= $estimateSentLeads ?></span>
 					<p>Estimate Sent</p>
 				</a>
@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/6') ?>">
 					<span><?= $readyToSignLeads ?></span>
 					<p>Ready to<br>Sign / Verbal Go</p>
 				</a>
@@ -65,7 +65,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/11') ?>">
 					<span><?= $worryToLoaseLeads ?></span>
 					<p>Worry to Lose</p>
 				</a>
@@ -73,7 +73,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads') ?>">
+				<a href="<?= base_url('leads/status/12') ?>">
 					<span><?= $postponedLeads ?></span>
 					<p>Postponed</p>
 				</a>

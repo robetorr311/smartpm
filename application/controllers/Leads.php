@@ -45,6 +45,27 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
+	public function status($status, $start = 0)
+	{
+		authAccess();
+
+		$limit = 10;
+		$pagiConfig = [
+			'base_url' => base_url('leads'),
+			'total_rows' => $this->lead->getLeadsCount(),
+			'per_page' => $limit
+		];
+		$this->pagination->initialize($pagiConfig);
+
+		$leads = $this->lead->allLeadsByStatus($status, $start, $limit);
+		$this->load->view('header', ['title' => $this->title]);
+		$this->load->view('leads/index', [
+			'leads' => $leads,
+			'pagiLinks' => $this->pagination->create_links()
+		]);
+		$this->load->view('footer');
+	}
+
 	public function create()
 	{
 		authAccess();

@@ -112,6 +112,8 @@ $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
 $route['leads/(:num)'] = 'leads/index/$1';
+$route['leads/status/(:num)'] = 'leads/status/$1';
+$route['leads/status/(:num)/(:num)'] = 'leads/status/$1/$2';
 $route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
 $route['lead/(:num)'] = 'leads/show/$1';
