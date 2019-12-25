@@ -210,6 +210,11 @@
                                         <span class="sidebar-normal">Client Options</span>
                                     </a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('setting/task-options') ?>">
+                                        <span class="sidebar-normal">Task Options</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

@@ -9,7 +9,7 @@ class Tasks extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel']);
+        $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel', 'TaskTypeModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->task = new TaskModel();
@@ -18,6 +18,7 @@ class Tasks extends CI_Controller
         $this->task_user_tags = new TaskUserTagsModel();
         $this->task_predecessor = new TaskPredecessorModel();
         $this->task_job_tags = new TaskJobTagsModel();
+        $this->taskType = new TaskTypeModel();
     }
 
     public function index($start = 0)
@@ -46,16 +47,16 @@ class Tasks extends CI_Controller
     {
         authAccess();
 
-        $types = TaskModel::getTypes();
         $levels = TaskModel::getLevels();
         $tasks = $this->task->getTaskList();
         $users = $this->user->getUserList();
+        $taskTypes = $this->taskType->allTypes();
 
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('tasks/create', [
-            'types' => $types,
+            'types' => $taskTypes,
             'levels' => $levels,
             'tasks' => $tasks,
             'users' => $users
@@ -67,7 +68,7 @@ class Tasks extends CI_Controller
     {
         authAccess();
 
-        $typeKeys = implode(',', array_keys(TaskModel::getTypes()));
+        $typeKeys = implode(',', array_column($this->taskType->allTypes(), 'id'));
         $levelKeys = implode(',', array_keys(TaskModel::getLevels()));
         $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
 
@@ -179,11 +180,11 @@ class Tasks extends CI_Controller
         $task = $this->task->getTaskById($id);
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
-            $types = TaskModel::getTypes();
             $levels = TaskModel::getLevels();
             $status = TaskModel::getStatus();
             $tasks = $this->task->getTaskListExcept($id);
             $users = $this->user->getUserList();
+            $taskTypes = $this->taskType->allTypes();
             // $jobs = false;
             $tag_users = $this->task_user_tags->getUsersByTaskId($id);
             $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
@@ -192,7 +193,7 @@ class Tasks extends CI_Controller
             ]);
             $this->load->view('tasks/edit', [
                 'task' => $task,
-                'types' => $types,
+                'types' => $taskTypes,
                 'levels' => $levels,
                 'tasks' => $tasks,
                 'users' => $users,
@@ -215,7 +216,7 @@ class Tasks extends CI_Controller
         if ($task) {
             // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
 
-            $typeKeys = implode(',', array_keys(TaskModel::getTypes()));
+            $typeKeys = implode(',', array_column($this->taskType->allTypes(), 'id'));
             $levelKeys = implode(',', array_keys(TaskModel::getLevels()));
             $userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
             $statusKeys = implode(',', array_keys(TaskModel::getStatus()));

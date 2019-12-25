@@ -5,14 +5,6 @@ class TaskModel extends CI_Model
 {
     private $table = 'tasks';
 
-    private static $type = [
-        0 => 'Call',
-        1 => 'Meeting',
-        2 => 'Bid/Estimate',
-        3 => 'Site Visit',
-        4 => 'Follow Up',
-        5 => 'Send Document'
-    ];
     private static $level = [
         0 => 'Low',
         1 => 'Normal',
@@ -28,10 +20,16 @@ class TaskModel extends CI_Model
 
     public function allTasks($start = 0, $limit = 10)
     {
-        $this->db->select("tasks.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname, CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname");
+        $this->db->select("
+            tasks.*,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
+            CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname,
+            task_types.name as type_name
+        ");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
         $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
+        $this->db->join('task_types', 'tasks.type=task_types.id', 'left');
         $this->db->where('tasks.is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
         $this->db->limit($limit, $start);
@@ -47,10 +45,16 @@ class TaskModel extends CI_Model
 
     public function getTaskById($id)
     {
-        $this->db->select("tasks.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname, CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname");
+        $this->db->select("
+            tasks.*,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
+            CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname,
+            task_types.name as type_name
+        ");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
         $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
+        $this->db->join('task_types', 'tasks.type=task_types.id', 'left');
         $this->db->where([
             'tasks.id' => $id,
             'tasks.is_deleted' => FALSE
@@ -144,16 +148,6 @@ class TaskModel extends CI_Model
     /**
      * Static Methods
      */
-    public static function typeToStr($id)
-    {
-        return isset(self::$type[$id]) ? self::$type[$id] : $id;
-    }
-
-    public static function getTypes()
-    {
-        return self::$type;
-    }
-
     public static function levelToStr($id)
     {
         return isset(self::$level[$id]) ? self::$level[$id] : $id;

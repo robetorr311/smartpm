@@ -81,7 +81,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <label>Type</label>
-                            <p><?= TaskModel::typeToStr($task->type) ?></p>
+                            <p><?= $task->type_name ?></p>
                         </div>
                     </div>
                     <div class="row">
