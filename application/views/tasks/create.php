@@ -34,8 +34,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Type<span class="red-mark">*</span></label>
                                     <select name="type" class="form-control">
                                         <option value="" disabled selected>Select Type</option>
-                                        <?php foreach ($types as $id => $type) {
-                                            echo '<option value="' . $id . '">' . $type . '</option>';
+                                        <?php foreach ($types as $type) {
+                                            echo '<option value="' . $type->id . '">' . $type->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>

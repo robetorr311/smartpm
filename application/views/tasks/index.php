@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tr>
                                         <td><?= $task->id ?></td>
                                         <td><?= $task->name ?></td>
-                                        <td><?= TaskModel::typeToStr($task->type) ?></td>
+                                        <td><?= $task->type_name ?></td>
                                         <td><?= TaskModel::levelToStr($task->level) ?></td>
                                         <td><?= TaskModel::statusToStr($task->status) ?></td>
                                         <td><?= $task->assigned_user_fullname ?></td>

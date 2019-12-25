@@ -294,5 +294,9 @@ $route['setting/client-options'] = 'ClientOptions/index';
 $route['setting/client-options/lead-source/store']['post'] = 'ClientOptions/insertLeadSource';
 $route['setting/client-options/lead-source/(:num)/update']['post'] = 'ClientOptions/updateLeadSource/$1';
 $route['setting/client-options/lead-source/(:num)/delete']['post'] = 'ClientOptions/deleteLeadSource/$1';
+$route['setting/task-options'] = 'TaskOptions/index';
+$route['setting/task-options/type/store']['post'] = 'TaskOptions/insertType';
+$route['setting/task-options/type/(:num)/update']['post'] = 'TaskOptions/updateType/$1';
+$route['setting/task-options/type/(:num)/delete']['post'] = 'TaskOptions/deleteType/$1';
 
 $route['(.+)'] = 'errors/page_missing';
