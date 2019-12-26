@@ -10,7 +10,7 @@ class Tasks extends CI_Controller
         parent::__construct();
 
         $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel', 'TaskTypeModel']);
-        $this->load->library(['pagination', 'form_validation']);
+        $this->load->library(['pagination', 'form_validation', 'notify']);
 
         $this->task = new TaskModel();
         $this->user = new UserModel();
@@ -125,6 +125,11 @@ class Tasks extends CI_Controller
                     $usersInsert = $this->task_user_tags->insertByUserArr($users, $insert);
                     if (!$usersInsert) {
                         $errors .= '<p>Unable to tag Users.</p>';
+                    }
+
+                    $userEmailIds = $this->user->getEmailIdArrByUserIds($users);
+                    foreach ($userEmailIds as $userEmailId) {
+                        $this->notify->sendTaskTagNotification($userEmailId, $insert, $taskData['name']);
                     }
                 }
 
@@ -266,6 +271,11 @@ class Tasks extends CI_Controller
                         if (!$usersInsert) {
                             $errors .= '<p>Unable to tag new Users.</p>';
                         }
+
+                        $userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
+                        foreach ($userEmailIds as $userEmailId) {
+                            $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name);
+                        }
                     }
                     $users_remove = array_diff($old_tag_users, $users);
                     if (count($users_remove)) {
@@ -373,6 +383,11 @@ class Tasks extends CI_Controller
                         $usersInsert = $this->task_user_tags->insertByUserArr($users_insert, $id);
                         if (!$usersInsert) {
                             $this->session->set_flashdata('errors', '<p>Unable to tag new Users.</p>');
+                        }
+
+                        $userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
+                        foreach ($userEmailIds as $userEmailId) {
+                            $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name);
                         }
                     }
                 } else {
