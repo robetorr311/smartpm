@@ -64,4 +64,28 @@ class Notify
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
+
+    public function sendTaskTagNotification($email, $task_id, $task_name)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('You have been tagged in a Task - SmartPM');
+        $html_message = $this->CI->load->view('template/email/task-tag-notification.php', [
+            'task_id' => $task_id,
+            'task_name' => $task_name
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
+    public function sendTaskAssignNotification($email, $task_id, $task_name)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('A Task has been assign to You - SmartPM');
+        $html_message = $this->CI->load->view('template/email/task-assign-notification.php', [
+            'task_id' => $task_id,
+            'task_name' => $task_name
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
 }

@@ -194,6 +194,15 @@ class UserModel extends CI_Model
 		return array_column($query->result_array(), 'id');
 	}
 
+	public function getEmailIdArrByUserIds($userIds)
+	{
+		$this->db->select('email_id');
+		$this->db->where_in('id', $userIds);
+		$this->db->from($this->table);
+		$query = $this->db->get();
+		return array_column($query->result_array(), 'email_id');
+	}
+
 	public function get_crm_data($table, $cols, $condition)
 	{
 		return $this->db->select($cols)
