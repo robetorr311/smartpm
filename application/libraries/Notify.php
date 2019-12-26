@@ -33,7 +33,7 @@ class Notify
     public function createPassword($email, $token, $logoUrl)
     {
         $this->CI->email->to($email);
-        $this->CI->email->subject('Welcome to SmartPM');
+        $this->CI->email->subject('Create Password - SmartPM');
         $html_message = $this->CI->load->view('template/email/create-password.php', [
             'token' => $token,
             'logoUrl' => $logoUrl
@@ -84,6 +84,18 @@ class Notify
         $html_message = $this->CI->load->view('template/email/task-assign-notification.php', [
             'task_id' => $task_id,
             'task_name' => $task_name
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
+    public function sendWelcomeUserNotification($email, $name, $logoUrl = false)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('Welcome to SmartPM');
+        $html_message = $this->CI->load->view('template/email/welcome-user-notification.php', [
+            'name' => $name,
+            'logoUrl' => $logoUrl
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
