@@ -352,6 +352,7 @@ class Auth extends CI_Controller
 						if ($signup) {
 							$user = $this->user->getUserById($signup);
 							$token = $this->user->setVerificationToken($user);
+							$this->notify->sendWelcomeUserNotification($user->email_id, ($userData['first_name'] . ' ' . $userData['last_name']));
 							$this->notify->emailVerification($user->email_id, $company_code, $token);
 							$message .= '<div class="error" title="Error:" style="color:white;background-color: green;border: green;">Registered Successfully. Check your email for email verification!</div>';
 							$this->session->set_flashdata('errors', $message);
