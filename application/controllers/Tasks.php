@@ -90,6 +90,9 @@ class Tasks extends CI_Controller
                 'assigned_to' => $taskData['assigned_to']
             ]);
             if ($insert) {
+                $assignedUser = $this->user->getUserById($taskData['assigned_to']);
+                $this->notify->sendTaskAssignNotification($assignedUser->email_id, $insert, $taskData['name']);
+
                 $errors = '';
                 $note = $taskData['note'];
 
@@ -245,6 +248,11 @@ class Tasks extends CI_Controller
                     'status' => $taskData['status']
                 ]);
                 if ($update) {
+                    if ($task->assigned_to != $taskData['assigned_to']) {
+                        $assignedUser = $this->user->getUserById($taskData['assigned_to']);
+                        $this->notify->sendTaskAssignNotification($assignedUser->email_id, $task->id, $task->name);
+                    }
+
                     $errors = '';
 
                     // $jobs = $taskData['tag_clients'];
