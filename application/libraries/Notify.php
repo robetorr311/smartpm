@@ -16,11 +16,11 @@ class Notify
         }
         $this->CI->email->initialize([
             'protocol' => 'smtp',
-            'smtp_crypto' => (isset($smtpSettings) && !empty($smtpSettings['smtp_host'])) ? $smtpSettings['smtp_crypto'] : getenv('EMAIL_SMTP_CRYPTO'),
-            'smtp_host' => (isset($smtpSettings) && !empty($smtpSettings['smtp_host'])) ? $smtpSettings['smtp_host'] : getenv('EMAIL_SMTP_HOST'),
-            'smtp_port' => intval((isset($smtpSettings) && $smtpSettings['smtp_port'] != 0) ? $smtpSettings['smtp_port'] : getenv('EMAIL_SMTP_PORT')),
-            'smtp_user' => (isset($smtpSettings) && !empty($smtpSettings['smtp_user'])) ? $smtpSettings['smtp_user'] : getenv('EMAIL_SMTP_USER'),
-            'smtp_pass' => (isset($smtpSettings) && !empty($smtpSettings['smtp_pass'])) ? $smtpSettings['smtp_pass'] : getenv('EMAIL_SMTP_PASS'),
+            'smtp_crypto' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_crypto : getenv('EMAIL_SMTP_CRYPTO'),
+            'smtp_host' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_host : getenv('EMAIL_SMTP_HOST'),
+            'smtp_port' => intval((isset($smtpSettings) && $smtpSettings->smtp_port != 0) ? $smtpSettings->smtp_port : getenv('EMAIL_SMTP_PORT')),
+            'smtp_user' => (isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER'),
+            'smtp_pass' => (isset($smtpSettings) && !empty($smtpSettings->smtp_pass)) ? $smtpSettings->smtp_pass : getenv('EMAIL_SMTP_PASS'),
             'mailtype' => 'html'
         ]);
         $this->CI->email->set_newline("\r\n");
