@@ -215,6 +215,11 @@
                                         <span class="sidebar-normal">Task Options</span>
                                     </a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('setting/smtp-settings') ?>">
+                                        <span class="sidebar-normal">SMTP Settings</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

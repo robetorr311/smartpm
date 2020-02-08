@@ -298,5 +298,7 @@ $route['setting/task-options'] = 'TaskOptions/index';
 $route['setting/task-options/type/store']['post'] = 'TaskOptions/insertType';
 $route['setting/task-options/type/(:num)/update']['post'] = 'TaskOptions/updateType/$1';
 $route['setting/task-options/type/(:num)/delete']['post'] = 'TaskOptions/deleteType/$1';
+$route['setting/smtp-settings'] = 'SMTPSettings/index';
+$route['setting/smtp-settings/update']['post'] = 'SMTPSettings/updateSMTPSettings';
 
 $route['(.+)'] = 'errors/page_missing';

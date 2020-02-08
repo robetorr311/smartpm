@@ -76,7 +76,6 @@ class Tasks extends CI_Controller
         $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
         $this->form_validation->set_rules('level', 'Importance Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
         $this->form_validation->set_rules('assigned_to', 'Assigned To', 'trim|required|numeric|in_list[' . $userKeys . ']');
-        $this->form_validation->set_rules('note', 'Note', 'trim|required');
         $this->form_validation->set_rules('tag_clients', 'Tag Clients', 'is_own_ids[jobs, Clients]');
         $this->form_validation->set_rules('tag_users', 'Tag Users', 'is_own_ids[users, Users]');
         $this->form_validation->set_rules('predecessor_tasks', 'Predecessor Tasks', 'is_own_ids[tasks, Tasks]');
@@ -94,14 +93,16 @@ class Tasks extends CI_Controller
                 $this->notify->sendTaskAssignNotification($assignedUser->email_id, $insert, $taskData['name']);
 
                 $errors = '';
-                $note = $taskData['note'];
+                if (!empty(trim($taskData['note']))) {
+                    $note = $taskData['note'];
 
-                $noteInsert = $this->task_notes->insert([
-                    'note' => nl2br($note),
-                    'task_id' => $insert
-                ]);
-                if (!$noteInsert) {
-                    $errors .= '<p>Unable to add Note.</p>';
+                    $noteInsert = $this->task_notes->insert([
+                        'note' => nl2br($note),
+                        'task_id' => $insert
+                    ]);
+                    if (!$noteInsert) {
+                        $errors .= '<p>Unable to add Note.</p>';
+                    }
                 }
 
                 // $jobs = $taskData['tag_clients'];
