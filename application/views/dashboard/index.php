@@ -143,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="row dashbord-box">
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('tasks') ?>">
+				<a href="<?= base_url('tasks/status/0') ?>">
 					<span><?= $createdTasks ?></span>
 					<p>Created</p>
 				</a>
@@ -151,7 +151,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('tasks') ?>">
+				<a href="<?= base_url('tasks/status/1') ?>">
 					<span><?= $workingTasks ?></span>
 					<p>Working</p>
 				</a>
@@ -159,7 +159,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('tasks') ?>">
+				<a href="<?= base_url('tasks/status/2') ?>">
 					<span><?= $stuckTasks ?></span>
 					<p>Stuck</p>
 				</a>
@@ -167,7 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('tasks') ?>">
+				<a href="<?= base_url('tasks/status/3') ?>">
 					<span><?= $holdTasks ?></span>
 					<p>Hold</p>
 				</a>
@@ -175,7 +175,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('tasks') ?>">
+				<a href="<?= base_url('tasks/status/4') ?>">
 					<span><?= $completedTasks ?></span>
 					<p>Completed</p>
 				</a>

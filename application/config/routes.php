@@ -100,6 +100,8 @@ $route['user/(:num)/delete']['post'] = 'users/delete/$1';
 
 $route['tasks'] = 'tasks/index';
 $route['tasks/(:num)'] = 'tasks/index/$1';
+$route['tasks/status/(:num)'] = 'tasks/status/$1';
+$route['tasks/status/(:num)/(:num)'] = 'tasks/status/$1/$2';
 $route['task/create'] = 'tasks/create';
 $route['task/store']['post'] = 'tasks/store';
 $route['task/(:num)'] = 'tasks/show/$1';

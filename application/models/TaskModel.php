@@ -37,6 +37,26 @@ class TaskModel extends CI_Model
         return $query->result();
     }
 
+    public function allTasksByStatus($status, $start = 0, $limit = 10)
+    {
+        $this->db->select("
+            tasks.*,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
+            CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname,
+            task_types.name as type_name
+        ");
+        $this->db->from($this->table);
+        $this->db->join('users as users_created_by', 'tasks.created_by=users_created_by.id', 'left');
+        $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
+        $this->db->join('task_types', 'tasks.type=task_types.id', 'left');
+        $this->db->where('tasks.status', $status);
+        $this->db->where('tasks.is_deleted', FALSE);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function getCount()
     {
         $this->db->where('is_deleted', FALSE);
@@ -111,13 +131,12 @@ class TaskModel extends CI_Model
     }
 
 
-     public function getTasksByAssignedTo($id)
+    public function getTasksByAssignedTo($id)
     {
         $this->db->where('assigned_to', $id);
         $query = $this->db->get($this->table);
         return $result = $query->result();
-        
-}
+    }
     public function complete($id)
     {
         $this->db->where([
@@ -138,9 +157,9 @@ class TaskModel extends CI_Model
             COUNT(IF(status=3, 1, NULL)) as hold,
             COUNT(IF(status=4, 1, NULL)) as completed
         ", FALSE);
-		$this->db->from($this->table);
+        $this->db->from($this->table);
         $this->db->where('is_deleted', FALSE);
-		$query = $this->db->get();
+        $query = $this->db->get();
         $result = $query->first_row();
         return $result ? $result : false;
     }
