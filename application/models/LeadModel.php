@@ -101,6 +101,28 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
+    public function allSignedJobs($start = 0, $limit = 10)
+    {
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        $this->db->where_in('status', [7, 8, 9, 10]);
+        $this->db->order_by('created_at', 'ASC');
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getSignedJobsCount()
+    {
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        $this->db->where_in('status', [7, 8, 9, 10]);
+        return $this->db->count_all_results($this->table);
+    }
+
     public function allCashJobs($start = 0, $limit = 10)
     {
         $this->db->from($this->table);
@@ -347,6 +369,8 @@ class LeadModel extends CI_Model
             COUNT(IF(status=6, 1, NULL)) as ready_to_sign,
             COUNT(IF(status=11, 1, NULL)) as worry_to_lose,
             COUNT(IF(status=12, 1, NULL)) as postponed,
+            COUNT(IF(status=13, 1, NULL)) as lostLeads,
+            COUNT(CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END) as signed,
             COUNT(IF(signed_stage=1, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END), NULL)) as production,
             COUNT(IF(signed_stage=2, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END), NULL)) as completed,
             COUNT(IF(signed_stage=3, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END), NULL)) as closed,

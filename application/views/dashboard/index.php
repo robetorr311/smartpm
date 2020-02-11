@@ -79,6 +79,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</a>
 			</div>
 		</div>
+		<div class="col-md-2">
+			<div class="box gray-box">
+				<a href="<?= base_url('leads/status/13') ?>">
+					<span><?= $lostLeads ?></span>
+					<p>Lost</p>
+				</a>
+			</div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
@@ -88,13 +96,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="row dashbord-box">
 		<div class="col-md-2">
 			<div class="box gray-box">
+				<a href="<?= base_url('lead/signed-jobs') ?>">
+					<span><?= $signedJobs ?></span>
+					<p>Signed</p>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-2 pull-right">
+			<div class="box gray-box">
 				<a href="<?= base_url('lead/production-jobs') ?>">
 					<span><?= $productionJobs ?></span>
 					<p>Production</p>
 				</a>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-2 pull-right">
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/completed-jobs') ?>">
 					<span><?= $completedJobs ?></span>
@@ -102,7 +118,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</a>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-2 pull-right">
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/closed-jobs') ?>">
 					<span><?= $closedJobs ?></span>
@@ -110,7 +126,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</a>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-2 pull-right">
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/archive-jobs') ?>">
 					<span><?= $archiveJobs ?></span>
