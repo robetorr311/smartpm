@@ -1046,6 +1046,7 @@ input[type="button"] {
 
 .sidebar .sidebar-wrapper {
 	padding-bottom: 0;
+	overflow-y: scroll;
 }
 .sidebar .nav i {
 	margin-right: 10px;
