@@ -1062,3 +1062,13 @@ input[type="button"] {
 .sidebar .nav li li:hover > a {
 	background-color: transparent;
 }
+
+#edit-section,
+#show-section {
+	display: none;
+}
+
+#edit-section.show-edit-visible,
+#show-section.show-edit-visible {
+	display: block;
+}
