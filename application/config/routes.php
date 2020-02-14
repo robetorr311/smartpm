@@ -100,6 +100,8 @@ $route['user/(:num)/delete']['post'] = 'users/delete/$1';
 
 $route['tasks'] = 'tasks/index';
 $route['tasks/(:num)'] = 'tasks/index/$1';
+$route['tasks/status/(:num)'] = 'tasks/status/$1';
+$route['tasks/status/(:num)/(:num)'] = 'tasks/status/$1/$2';
 $route['task/create'] = 'tasks/create';
 $route['task/store']['post'] = 'tasks/store';
 $route['task/(:num)'] = 'tasks/show/$1';
@@ -193,6 +195,9 @@ $route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
 $route['lead/all-status'] = 'all_status/index';
 $route['lead/all-status/(:num)'] = 'all_status/index/$1';
+
+$route['lead/signed-jobs'] = 'signed_jobs/index';
+$route['lead/signed-jobs/(:num)'] = 'signed_jobs/index/$1';
 
 $route['lead/cash-jobs'] = 'cash_jobs/index';
 $route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
@@ -298,5 +303,7 @@ $route['setting/task-options'] = 'TaskOptions/index';
 $route['setting/task-options/type/store']['post'] = 'TaskOptions/insertType';
 $route['setting/task-options/type/(:num)/update']['post'] = 'TaskOptions/updateType/$1';
 $route['setting/task-options/type/(:num)/delete']['post'] = 'TaskOptions/deleteType/$1';
+$route['setting/smtp-settings'] = 'SMTPSettings/index';
+$route['setting/smtp-settings/update']['post'] = 'SMTPSettings/updateSMTPSettings';
 
 $route['(.+)'] = 'errors/page_missing';

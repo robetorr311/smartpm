@@ -33,8 +33,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Type</th>
                             <th>Sales Representative</th>
                             <th class="text-center">View</th>
-                            <th class="text-center">Edit</th>
-                            <th class="text-center">Delete</th>
+                            <!-- <th class="text-center">Edit</th>
+                            <th class="text-center">Delete</th> -->
                         </thead>
                         <tbody>
                             <?php if (!empty($financials)) : ?>
@@ -47,8 +47,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $financial->type_name ?></td>
                                         <td><?= $financial->created_user_fullname ?></td>
                                         <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                        <!-- <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

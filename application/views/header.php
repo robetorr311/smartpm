@@ -49,10 +49,16 @@
     <!-- At.js JS -->
     <script src="<?= base_url('assets/js/jquery.caret.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery.atwho.js') ?>"></script>
+    <!-- moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <!-- validate.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <!-- Others -->
     <script src="<?= base_url('assets/js/light-bootstrap-dashboard.js?v=1.4.0') ?>"></script>
     <script src="<?= base_url('assets/js/demo.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery.fancybox.js') ?>"></script>
+    <script src="<?= base_url('assets/js/validate-support.js') ?>"></script>
+    <script src="<?= base_url('assets/js/show-edit-section.js') ?>"></script>
 
 </head>
 
@@ -213,6 +219,11 @@
                                 <li class="nav-item ">
                                     <a class="nav-link" href="<?= base_url('setting/task-options') ?>">
                                         <span class="sidebar-normal">Task Options</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('setting/smtp-settings') ?>">
+                                        <span class="sidebar-normal">SMTP Settings</span>
                                     </a>
                                 </li>
                             </ul>

@@ -206,16 +206,13 @@ class Financial extends CI_Controller
                     'notes' => $financialData['notes']
                 ]);
 
-                if ($update) {
-                    redirect('financial/record/' . $id);
-                } else {
+                if (!$update) {
                     $this->session->set_flashdata('errors', '<p>Unable to Update Financial Record.</p>');
-                    redirect('financial/record/' . $id . '/edit');
                 }
             } else {
                 $this->session->set_flashdata('errors', validation_errors());
-                redirect('financial/record/' . $id . '/edit');
             }
+            redirect('financial/record/' . $id);
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('financial/records');
@@ -228,12 +225,26 @@ class Financial extends CI_Controller
 
         $financial = $this->financial->getFinancialById($id);
         if ($financial) {
+            $jobs = $this->lead->getLeadList();
+            $types = $this->type->allTypes();
+            $subTypes = $this->subtype->allSubtypes();
+            $accountingCodes = $this->accCode->allAccCodes();
+            $methods = $this->method->allMethods();
+            $bankAccounts = $this->bankAcc->allBankAccs();
+            $states = $this->state->allStates();
 
             $this->load->view('header', [
                 'title' => $this->title
             ]);
             $this->load->view('financial/show', [
-                'financial' => $financial
+                'financial' => $financial,
+                'jobs' => $jobs,
+                'types' => $types,
+                'subTypes' => $subTypes,
+                'accountingCodes' => $accountingCodes,
+                'methods' => $methods,
+                'bankAccounts' => $bankAccounts,
+                'states' => $states
             ]);
             $this->load->view('footer');
         } else {
