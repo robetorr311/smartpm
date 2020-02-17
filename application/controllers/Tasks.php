@@ -342,16 +342,14 @@ class Tasks extends CI_Controller
                     redirect('task/' . $id);
                 } else {
                     $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-                    redirect('task/' . $id . '/edit');
                 }
             } else {
                 $this->session->set_flashdata('errors', validation_errors());
-                redirect('task/' . $id . '/edit');
             }
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-            redirect('tasks');
         }
+        redirect('tasks');
     }
 
     public function show($id)
@@ -365,10 +363,20 @@ class Tasks extends CI_Controller
             $users = $this->user->getUserList();
             $tag_users = $this->task_user_tags->getUsersByTaskId($id);
             $predec_tasks = $this->task_predecessor->getTasksByTaskId($id);
+            // >>>>> TEAM CHANGES >>>>> check if current user has access to this task
+            $levels = TaskModel::getLevels();
+            $status = TaskModel::getStatus();
+            $tasks = $this->task->getTaskListExcept($id);
+            $taskTypes = $this->taskType->allTypes();
+            // $jobs = false;
             $this->load->view('header', [
                 'title' => $this->title
             ]);
             $this->load->view('tasks/show', [
+                'types' => $taskTypes,
+                'levels' => $levels,
+                'tasks' => $tasks,
+                'status' => $status,
                 'task' => $task,
                 'notes' => $notes,
                 'jobs' => $jobs,

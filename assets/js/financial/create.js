@@ -5,7 +5,7 @@ var aliases = {
     job_id: 'Job',
     amount: 'Amount',
     type: 'Type',
-    subtype: 'Type',
+    subtype: 'Sub Type',
     accounting_code: 'Accounting Code',
     method: 'Method',
     bank_account: 'Bank Account',

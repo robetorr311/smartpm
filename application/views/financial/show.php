@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<div id="edit-section" class="container-fluid show-edit-visible">
+<div id="show-section" class="container-fluid show-edit-visible">
     <div class="row page-header-buttons">
         <div class="col-md-12">
             <a href="<?= base_url('financial/records') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
@@ -129,7 +129,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 <!-- Edit Section -->
-<div id="show-section" class="container-fluid">
+<div id="edit-section" class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
             <a href="#" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
