@@ -94,7 +94,7 @@ class Financial extends CI_Controller
         $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
         $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
-        $this->form_validation->set_rules('subtype', 'Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
+        $this->form_validation->set_rules('subtype', 'Sub Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
         $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|required|numeric|in_list[' . $accountingCodeKeys . ']');
         $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
         $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');
@@ -183,7 +183,7 @@ class Financial extends CI_Controller
             $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
-            $this->form_validation->set_rules('subtype', 'Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
+            $this->form_validation->set_rules('subtype', 'Sub Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
             $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|required|numeric|in_list[' . $accountingCodeKeys . ']');
             $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
             $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');

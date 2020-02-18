@@ -34,8 +34,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<th>Level</th>
 							<th>Status</th>
 							<th class="text-center">View</th>
-							<th class="text-center">Edit</th>
-							<th class="text-center">Delete</th>
+							<!-- <th class="text-center">Edit</th>
+							<th class="text-center">Delete</th> -->
 						</thead>
 						<tbody>
 							<?php if (!empty($users)) : ?>
@@ -49,8 +49,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										<td><?= UserModel::levelToStr($user->level) ?></td>
 										<td><?= UserModel::activeToStr($user->is_active) ?></td>
 										<td class="text-center"><a href="<?= base_url('user/' . $user->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-										<td class="text-center"><a href="<?= base_url('user/' . $user->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-										<td class="text-center"><a href="<?= base_url('user/' . $user->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+										<!-- <td class="text-center"><a href="<?= base_url('user/' . $user->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
+										<td class="text-center"><a href="<?= base_url('user/' . $user->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td> -->
 									</tr>
 								<?php endforeach; ?>
 							<?php else : ?>

@@ -8,13 +8,13 @@ validate.extend(validate.validators.datetime, {
     }
 });
 
-function displayValidationError(errors) {
+function displayValidationError(errors, errDiv = 'validation-errors') {
     var htmlErrors = "";
     htmlErrors += '<div class="alert alert-danger fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
     errors.forEach(error => {
         htmlErrors += '<p>' + error + '</p>';
     });
     htmlErrors += '</div>';
-    document.getElementById('validation-errors').innerHTML = htmlErrors;
-    document.getElementById('validation-errors').scrollIntoView();
+    document.getElementById(errDiv).innerHTML = htmlErrors;
+    document.getElementById(errDiv).scrollIntoView();
 }

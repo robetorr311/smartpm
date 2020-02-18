@@ -169,20 +169,16 @@ class Users extends CI_Controller
 					'is_active' => $userData['is_active']
 				]);
 	
-				if ($update) {
-					redirect('user/' . $id);
-				} else {
+				if (!$update) {
 					$this->session->set_flashdata('errors', '<p>Unable to Update User.</p>');
-					redirect('user/' . $id . '/edit');
 				}
 			} else {
 				$this->session->set_flashdata('errors', validation_errors());
-				redirect('user/' . $id . '/edit');
 			}
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('users');
 		}
+		redirect('user/' . $id);
 	}
 
 	public function show($id)
@@ -191,11 +187,16 @@ class Users extends CI_Controller
 
 		$user = $this->user->getUserById($id);
 		if ($user) {
+			$levels = UserModel::getLevels();
+			$notifications = UserModel::getNotifications();
+
 			$this->load->view('header', [
 				'title' => $this->title
 			]);
 			$this->load->view('users/show', [
-				'user' => $user
+				'user' => $user,
+				'levels' => $levels,
+				'notifications' => $notifications
 			]);
 			$this->load->view('footer');
 		} else {

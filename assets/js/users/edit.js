@@ -1,74 +1,62 @@
-var form = document.querySelector('form#financial_create');
+var form = document.querySelector('form#user_edit');
 var aliases = {
-    vendor: 'Vendor / Payee',
-    transaction_date: 'Transaction Date',
-    job_id: 'Job',
-    amount: 'Amount',
-    type: 'Type',
-    subtype: 'Sub Type',
-    accounting_code: 'Accounting Code',
-    method: 'Method',
-    bank_account: 'Bank Account',
-    state: 'State'
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    level: 'Level',
+    office_phone: 'Office Phone',
+    home_phone: 'Home Phone',
+    cell_1: 'Cell 1',
+    cell_2: 'Cell 2',
+    notifications: 'Notifications',
+    is_active: 'Status'
 };
 form.addEventListener("submit", function (e) {
     var values = validate.collectFormValues(form);
     var errors = validate(values, {
-        vendor: {
+        first_name: {
             presence: true
         },
-        transaction_date: {
-            presence: true,
-            date: true
+        last_name: {
+            presence: true
         },
-        job_id: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
-        },
-        amount: {
+        level: {
             presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
-        type: {
+        office_phone: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        home_phone: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        cell_1: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        cell_2: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        notifications: {
             presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
-        subtype: {
+        is_active: {
             presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
-        },
-        accounting_code: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
-        },
-        method: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
-        },
-        bank_account: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
-        },
-        state: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
-        },
+        }
     }, {
         format: 'flat',
         prettify: function prettify(string) {
