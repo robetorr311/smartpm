@@ -169,9 +169,7 @@ class Users extends CI_Controller
 					'is_active' => $userData['is_active']
 				]);
 	
-				if ($update) {
-					redirect('user/' . $id);
-				} else {
+				if (!$update) {
 					$this->session->set_flashdata('errors', '<p>Unable to Update User.</p>');
 				}
 			} else {

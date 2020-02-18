@@ -338,8 +338,6 @@ class Tasks extends CI_Controller
                     if (!empty($errors)) {
                         $this->session->set_flashdata('errors', $errors);
                     }
-
-                    redirect('task/' . $id);
                 } else {
                     $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
                 }

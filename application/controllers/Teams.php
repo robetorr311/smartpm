@@ -104,7 +104,7 @@ class Teams extends CI_Controller
 	public function edit($id)
 	{
 		authAccess();
-		
+
 		$team = $this->team->getTeamById($id);
 		if ($team) {
 			$members = $this->team_user_map->getUsersByTeamId($id);
@@ -128,7 +128,7 @@ class Teams extends CI_Controller
 	public function update($id)
 	{
 		authAccess();
-		
+
 		$team = $this->team->getTeamById($id);
 		if ($team) {
 			$userKeys = implode(',', array_column($this->user->getUserList(), 'id'));
@@ -171,34 +171,33 @@ class Teams extends CI_Controller
 					if (!empty($errors)) {
 						$this->session->set_flashdata('errors', $errors);
 					}
-
-					redirect('team/' . $id);
 				} else {
 					$this->session->set_flashdata('errors', '<p>Unable to Update Team.</p>');
-					redirect('user/' . $id . '/edit');
 				}
 			} else {
 				$this->session->set_flashdata('errors', validation_errors());
-				redirect('team/' . $id . '/edit');
 			}
 		} else {
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-			redirect('teams');
 		}
+		redirect('team/' . $id);
 	}
 
 	public function show($id)
 	{
 		authAccess();
-		
+
 		$team = $this->team->getTeamById($id);
 		if ($team) {
+			$users = $this->user->getUserList();
 			$members = $this->team_user_map->getUsersByTeamId($id);
+
 			$this->load->view('header', [
 				'title' => $this->title
 			]);
 			$this->load->view('teams/show', [
 				'team' => $team,
+				'users' => $users,
 				'members' => $members
 			]);
 			$this->load->view('footer');
@@ -211,7 +210,7 @@ class Teams extends CI_Controller
 	public function delete($id)
 	{
 		authAccess();
-		
+
 		$team = $this->team->getTeamById($id);
 		if ($team) {
 			$this->team_user_map->deleteRelated($id);
