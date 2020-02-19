@@ -47,6 +47,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</a>
 			</div>
 		</div>
+	</div>
+	<div class="row dashbord-box">
 		<div class="col-md-2">
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/5') ?>">
