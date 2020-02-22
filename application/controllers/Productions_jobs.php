@@ -9,13 +9,15 @@ class Productions_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'TeamModel', 'ClientLeadSourceModel']);
 		$this->load->library(['pagination', 'form_validation']);
 		$this->lead = new LeadModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->party = new PartyModel();
+		$this->team = new TeamModel();
+		$this->leadSource = new ClientLeadSourceModel();
 	}
 
 	public function index($start = 0)
@@ -43,47 +45,60 @@ class Productions_jobs extends CI_Controller
 		authAccess();
 
 		$job = $this->lead->getLeadById($jobid);
-		$add_info = $this->party->getPartyByLeadId($jobid);
-		$teams_detail = $this->team_job_track->getTeamName($jobid);
-		$previous_status = '';
-		$insurance_job_details = false;
-		$insurance_job_adjusters = false;
+		if ($job) {
+			$add_info = $this->party->getPartyByLeadId($jobid);
+			$teams_detail = $this->team_job_track->getTeamName($jobid);
+			$previous_status = '';
+			$insurance_job_details = false;
+			$insurance_job_adjusters = false;
+			$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
+			$job_type_tags = LeadModel::getType();
+			$lead_status_tags = LeadModel::getStatus();
+			$clientLeadSource = $this->leadSource->allLeadSource();
 
-		switch ($job->status) {
-			case 7:
-				$previous_status = 'Insurance';
-				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
-				$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
-				break;
+			switch ($job->status) {
+				case 7:
+					$previous_status = 'Insurance';
+					$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
+					$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
+					break;
 
-			case 8:
-				$previous_status = 'Cash';
-				break;
+				case 8:
+					$previous_status = 'Cash';
+					break;
 
-			case 9:
-				$previous_status = 'Labor';
-				break;
+				case 9:
+					$previous_status = 'Labor';
+					break;
 
-			case 10:
-				$previous_status = 'Financial';
-				break;
+				case 10:
+					$previous_status = 'Financial';
+					break;
 
-			default:
-				$previous_status = 'Previous Status';
-				break;
+				default:
+					$previous_status = 'Previous Status';
+					break;
+			}
+
+			$this->load->view('header', ['title' => $this->title]);
+			$this->load->view('productions_jobs/show', [
+				'jobid' => $jobid,
+				'job' => $job,
+				'add_info' => $add_info,
+				'teams_detail' => $teams_detail,
+				'previous_status' => $previous_status,
+				'insurance_job_details' => $insurance_job_details,
+				'insurance_job_adjusters' => $insurance_job_adjusters,
+				'teams' => $teams,
+				'job_type_tags' => $job_type_tags,
+				'lead_status_tags' => $lead_status_tags,
+				'leadSources' => $clientLeadSource
+			]);
+			$this->load->view('footer');
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect('lead/productions-jobs');
 		}
-
-		$this->load->view('header', ['title' => $this->title]);
-		$this->load->view('productions_jobs/show', [
-			'jobid' => $jobid,
-			'job' => $job,
-			'add_info' => $add_info,
-			'teams_detail' => $teams_detail,
-			'previous_status' => $previous_status,
-			'insurance_job_details' => $insurance_job_details,
-			'insurance_job_adjusters' => $insurance_job_adjusters
-		]);
-		$this->load->view('footer');
 	}
 
 	public function movePreviousStage($jobid)
