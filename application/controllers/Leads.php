@@ -213,11 +213,11 @@ class Leads extends CI_Controller
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
 
-				redirect('lead/' . $sub_base_path . $id . '/edit');
+				redirect('lead/' . $sub_base_path . $id);
 			}
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
-			redirect('lead/' . $sub_base_path . $id . '/edit');
+			redirect('lead/' . $sub_base_path . $id);
 		}
 	}
 
@@ -256,19 +256,17 @@ class Leads extends CI_Controller
 				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
-				redirect('lead/' . $sub_base_path . $id . '/edit');
+				redirect('lead/' . $sub_base_path . $id);
 			}
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
-			redirect('lead/' . $sub_base_path . $id . '/edit');
+			redirect('lead/' . $sub_base_path . $id);
 		}
 	}
 
 	public function show($jobid)
 	{
 		authAccess();
-
-		$sub_base_path = '';
 
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
@@ -288,6 +286,7 @@ class Leads extends CI_Controller
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
 			$clientLeadSource = $this->leadSource->allLeadSource();
+			
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/show', [
 				'lead' => $lead,
@@ -295,7 +294,6 @@ class Leads extends CI_Controller
 				'jobid' => $jobid,
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
-				'sub_base_path' => $sub_base_path,
 				'insurance_job_details' => $insurance_job_details,
 				'insurance_job_adjusters' => $insurance_job_adjusters,
 				'teams_detail' => $teams_detail,
@@ -518,7 +516,7 @@ class Leads extends CI_Controller
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
 		}
-		redirect('lead/' . $sub_base_path . $jobid . '/edit');
+		redirect('lead/' . $sub_base_path . $jobid);
 	}
 
 	public function removeTeam($jobid, $sub_base_path = '')
@@ -527,6 +525,6 @@ class Leads extends CI_Controller
 
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->team_job_track->remove_team($jobid);
-		redirect('lead/' . $sub_base_path . $jobid . '/edit');
+		redirect('lead/' . $sub_base_path . $jobid);
 	}
 }

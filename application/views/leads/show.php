@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div id="show-section" class="container-fluid show-edit-visible">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url($sub_base_path != '' ? ('lead/' . rtrim($sub_base_path, '/') . 's') : 'leads') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
+            <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
             <a href="#" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Edit</a>
         </div>
     </div>
@@ -188,7 +188,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div id="validation-errors" class="col-md-12">
                         </div>
                     </div>
-                    <?= form_open('lead/' . $sub_base_path . $lead->id . '/update', array('id' => 'lead_edit', 'method' => 'post', 'novalidate' => true)) ?>
+                    <?= form_open('lead/' . $lead->id . '/update', array('id' => 'lead_edit', 'method' => 'post', 'novalidate' => true)) ?>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -286,7 +286,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="content">
                     <?php if (!empty($add_info)) : ?>
-                        <?= form_open('lead/' . $sub_base_path . $jobid . '/party/update', array('method' => 'post')) ?>
+                        <?= form_open('lead/' . $lead->id . '/party/update', array('method' => 'post')) ?>
 
                         <div class="row">
                             <div class="col-md-6">
@@ -324,7 +324,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                         <?= form_close() ?>
                     <?php else : ?>
-                        <?= form_open('lead/' . $sub_base_path . $jobid . '/party/add', array('method' => 'post')) ?>
+                        <?= form_open('lead/' . $lead->id . '/party/add', array('method' => 'post')) ?>
 
                         <div class="row">
                             <div class="col-md-6">
@@ -366,7 +366,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="card">
-                <?= form_open('lead/' . $sub_base_path . $jobid . '/updatestatus', array('method' => 'post')) ?>
+                <?= form_open('lead/' . $lead->id . '/updatestatus', array('method' => 'post')) ?>
                 <div class="header">
                     <h4 class="title" style="float: left;">Contract Status</h4>
                     <span class="status">
@@ -411,13 +411,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div style="float: right;text-align: right;">
                                     <p><?= $data->name ?></p>
                                     <p><?= $data->assign_date ?></p>
-                                    <a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/remove-team') ?>" data-method="POST">Remove</a>
+                                    <a href="<?= base_url('lead/' . $lead->id . '/remove-team') ?>" data-method="POST">Remove</a>
                                 </div>
                             <?php endforeach; ?>
                         <?php else : ?>
                             <p style="float: right;color: red;margin-bottom: 20px;"> No Team Assigned!</p>
                             <div class="content team-block">
-                                <?= form_open('lead/' . $sub_base_path . $jobid . '/add-team', array('method' => 'post')) ?>
+                                <?= form_open('lead/' . $lead->id . '/add-team', array('method' => 'post')) ?>
                                 <select name="team_id" class="form-control team_assign">
                                     <option value="">Select Team</option>
                                     <?php foreach ($teams as $team) : ?>
@@ -438,7 +438,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <h4 class="title">Insurance Details</h4>
                         </div>
                         <div class="content">
-                            <?= form_open('lead/' . $sub_base_path . $jobid . '/update-insurance-details', array('method' => 'post')) ?>
+                            <?= form_open('lead/' . $lead->id . '/update-insurance-details', array('method' => 'post')) ?>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -475,7 +475,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <h4 class="title">Insurance Details</h4>
                         </div>
                         <div class="content">
-                            <?= form_open('lead/' . $sub_base_path . $jobid . '/insert-insurance-details', array('method' => 'post')) ?>
+                            <?= form_open('lead/' . $lead->id . '/insert-insurance-details', array('method' => 'post')) ?>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -526,7 +526,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <td><?= $insurance_job_adjuster->adjuster ?></td>
                                             <td><?= $insurance_job_adjuster->adjuster_phone ?></td>
                                             <td><?= $insurance_job_adjuster->adjuster_email ?></td>
-                                            <td><a href="<?= base_url('lead/' . $sub_base_path . $jobid . '/delete-adjuster/' . $insurance_job_adjuster->id) ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                            <td><a href="<?= base_url('lead/' . $lead->id . '/delete-adjuster/' . $insurance_job_adjuster->id) ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
@@ -536,7 +536,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php endif; ?>
                             </table>
                         </div>
-                        <?= form_open('lead/' . $sub_base_path . $jobid . '/insert-adjuster', array('method' => 'post')) ?>
+                        <?= form_open('lead/' . $lead->id . '/insert-adjuster', array('method' => 'post')) ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
