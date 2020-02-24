@@ -29,12 +29,6 @@ form.addEventListener("submit", function (e) {
             numericality: {
                 notValid: ' contains invalid value'
             }
-        },
-        status: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
         }
     }, {
         format: 'flat',
