@@ -52,7 +52,7 @@ class Leads extends CI_Controller
 		$limit = 10;
 		$pagiConfig = [
 			'base_url' => base_url('leads'),
-			'total_rows' => $this->lead->getLeadsCount(),
+			'total_rows' => $this->lead->getLeadsByStatusCount($status),
 			'per_page' => $limit
 		];
 		$this->pagination->initialize($pagiConfig);

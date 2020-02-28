@@ -81,6 +81,17 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
+    public function getLeadsByStatusCount($status)
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => $status,
+            'signed_stage' => 0
+        ]);
+        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 11, 12]);
+        return $this->db->count_all_results($this->table);
+    }
+
     public function allJobs($start = 0, $limit = 10)
     {
         $this->db->from($this->table);
