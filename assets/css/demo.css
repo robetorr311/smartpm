@@ -1072,3 +1072,24 @@ input[type="button"] {
 #show-section.show-edit-visible {
 	display: block;
 }
+
+.search-box {
+	margin: 10px 3px;
+	padding: 6px 5px;
+	background-color: #ffffff;
+	border: solid 1px #cccccc;
+	border-radius: 5px;
+	display: inline-block;
+	color: #000000;
+	cursor: text;
+}
+.search-box i.fa {
+	font-size: 16px;
+	margin-right: 0;
+	line-height: normal;
+}
+.search-box input {
+	box-sizing: content-box;
+	width: 200px;
+	border-width: 0;
+}

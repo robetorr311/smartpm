@@ -288,4 +288,6 @@ $route['setting/task-options/type/(:num)/delete']['post'] = 'TaskOptions/deleteT
 $route['setting/smtp-settings'] = 'SMTPSettings/index';
 $route['setting/smtp-settings/update']['post'] = 'SMTPSettings/updateSMTPSettings';
 
+$route['search']['post'] = 'Search/search';
+
 $route['(.+)'] = 'errors/page_missing';
