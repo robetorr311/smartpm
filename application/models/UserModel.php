@@ -91,12 +91,11 @@ class UserModel extends CI_Model
 		]);
 	}
 
-	public function allUsers($start = 0, $limit = 10)
+	public function allUsers()
 	{
 		$this->db->from($this->table);
 		$this->db->where('is_deleted', FALSE);
 		$this->db->order_by('id', 'ASC');
-		$this->db->limit($limit, $start);
 		$query = $this->db->get();
 		return $query->result();
 	}

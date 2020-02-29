@@ -10,30 +10,22 @@ class Users extends CI_Controller
 		parent::__construct();
 		
 		$this->load->model(['UserModel', 'AdminSettingModel']);
-		$this->load->library(['pagination', 'form_validation', 'notify']);
+		$this->load->library(['form_validation', 'notify']);
 
 		$this->user = new UserModel();
 		$this->admin_setting = new AdminSettingModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess([UserModel::$level_admin]);
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('users'),
-			'total_rows' => $this->user->getCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$users = $this->user->allUsers($start, $limit);
+		$users = $this->user->allUsers();
 		$this->load->view('header', [
 			'title' => $this->title
 		]);
 		$this->load->view('users/index', [
-			'users' => $users,
-			'pagiLinks' => $this->pagination->create_links()
+			'users' => $users
 		]);
 		$this->load->view('footer');
 	}

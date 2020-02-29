@@ -90,7 +90,6 @@ $route['migrate/(:num)/reset_migration'] = 'migrate_company/reset_migration/$1';
 $route['dashboard'] = 'dashboard/index';
 
 $route['users'] = 'users/index';
-$route['users/(:num)'] = 'users/index/$1';
 $route['user/create'] = 'users/create';
 $route['user/store']['post'] = 'users/store';
 $route['user/(:num)'] = 'users/show/$1';
@@ -99,9 +98,7 @@ $route['user/(:num)/update']['post'] = 'users/update/$1';
 $route['user/(:num)/delete']['post'] = 'users/delete/$1';
 
 $route['tasks'] = 'tasks/index';
-$route['tasks/(:num)'] = 'tasks/index/$1';
 $route['tasks/status/(:num)'] = 'tasks/status/$1';
-$route['tasks/status/(:num)/(:num)'] = 'tasks/status/$1/$2';
 $route['task/create'] = 'tasks/create';
 $route['task/store']['post'] = 'tasks/store';
 $route['task/(:num)'] = 'tasks/show/$1';
@@ -113,9 +110,7 @@ $route['task/(:num)/update']['post'] = 'tasks/update/$1';
 $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
-$route['leads/(:num)'] = 'leads/index/$1';
 $route['leads/status/(:num)'] = 'leads/status/$1';
-$route['leads/status/(:num)/(:num)'] = 'leads/status/$1/$2';
 $route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
 $route['lead/(:num)'] = 'leads/show/$1';
@@ -194,18 +189,14 @@ $route['lead/(:any)/(:num)/party/add']['post'] = 'party/add/$2/$1';
 $route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
 $route['lead/all-status'] = 'all_status/index';
-$route['lead/all-status/(:num)'] = 'all_status/index/$1';
 
 $route['lead/signed-jobs'] = 'signed_jobs/index';
-$route['lead/signed-jobs/(:num)'] = 'signed_jobs/index/$1';
 
 $route['lead/cash-jobs'] = 'cash_jobs/index';
-$route['lead/cash-jobs/(:num)'] = 'cash_jobs/index/$1';
 $route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
 $route['lead/cash-job/(:num)/move-next-stage']['post'] = 'cash_jobs/moveNextStage/$1';
 
 $route['lead/insurance-jobs'] = 'insurance_jobs/index';
-$route['lead/insurance-jobs/(:num)'] = 'insurance_jobs/index/$1';
 $route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
 $route['lead/insurance-job/(:num)/move-next-stage']['post'] = 'insurance_jobs/moveNextStage/$1';
 
@@ -215,41 +206,34 @@ $route['lead/(:any)/(:num)/insert-adjuster']['post'] = 'insurance_jobs/insertAdj
 $route['lead/(:any)/(:num)/delete-adjuster/(:num)']['post'] = 'insurance_jobs/deleteAdjuster/$2/$3/$1';
 
 $route['lead/labor-jobs'] = 'labor_jobs/index';
-$route['lead/labor-jobs/(:num)'] = 'labor_jobs/index/$1';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
 $route['lead/labor-job/(:num)/move-next-stage']['post'] = 'labor_jobs/moveNextStage/$1';
 
 $route['lead/financial-jobs'] = 'financial_jobs/index';
-$route['lead/financial-jobs/(:num)'] = 'financial_jobs/index/$1';
 $route['lead/financial-job/(:num)'] = 'financial_jobs/view/$1';
 $route['lead/financial-job/(:num)/move-next-stage']['post'] = 'financial_jobs/moveNextStage/$1';
 
 $route['lead/production-jobs'] = 'productions_jobs/index';
-$route['lead/production-jobs/(:num)'] = 'productions_jobs/index/$1';
 $route['lead/production-job/(:num)'] = 'productions_jobs/view/$1';
 $route['lead/production-job/(:num)/move-previous-stage']['post'] = 'productions_jobs/movePreviousStage/$1';
 $route['lead/production-job/(:num)/move-next-stage']['post'] = 'productions_jobs/moveNextStage/$1';
 
 $route['lead/completed-jobs'] = 'completed_jobs/index';
-$route['lead/completed-jobs/(:num)'] = 'completed_jobs/index/$1';
 $route['lead/completed-job/(:num)'] = 'completed_jobs/view/$1';
 $route['lead/completed-job/(:num)/move-previous-stage']['post'] = 'completed_jobs/movePreviousStage/$1';
 $route['lead/completed-job/(:num)/move-next-stage']['post'] = 'completed_jobs/moveNextStage/$1';
 
 $route['lead/closed-jobs'] = 'closed_jobs/index';
-$route['lead/closed-jobs/(:num)'] = 'closed_jobs/index/$1';
 $route['lead/closed-job/(:num)'] = 'closed_jobs/view/$1';
 $route['lead/closed-job/(:num)/move-previous-stage']['post'] = 'closed_jobs/movePreviousStage/$1';
 $route['lead/closed-job/(:num)/move-next-stage']['post'] = 'closed_jobs/moveNextStage/$1';
 
 $route['lead/archive-jobs'] = 'archive_jobs/index';
-$route['lead/archive-jobs/(:num)'] = 'archive_jobs/index/$1';
 $route['lead/archive-job/(:num)'] = 'archive_jobs/view/$1';
 $route['lead/archive-job/(:num)/move-previous-stage']['post'] = 'archive_jobs/movePreviousStage/$1';
 
 $route['financial'] = 'financial/index';
 $route['financial/records'] = 'financial/records';
-$route['financial/records/(:num)'] = 'financial/records/$1';
 $route['financial/record/create'] = 'financial/create';
 $route['financial/record/store']['post'] = 'financial/store';
 $route['financial/record/(:num)'] = 'financial/show/$1';
@@ -258,7 +242,6 @@ $route['financial/record/(:num)/update']['post'] = 'financial/update/$1';
 $route['financial/record/(:num)/delete']['post'] = 'financial/delete/$1';
 
 $route['teams'] = 'teams/index';
-$route['teams/(:num)'] = 'teams/index/$1';
 $route['team/create'] = 'teams/create';
 $route['team/store']['post'] = 'teams/store';
 $route['team/(:num)'] = 'teams/show/$1';
@@ -267,7 +250,6 @@ $route['team/(:num)/update']['post'] = 'teams/update/$1';
 $route['team/(:num)/delete']['post'] = 'teams/delete/$1';
 
 $route['company-docs'] = 'company_docs/index';
-$route['company-docs/(:num)'] = 'company_docs/index/$1';
 $route['company-docs/upload']['post'] = 'company_docs/upload';
 $route['company-doc/(:num)/download'] = 'company_docs/download/$1';
 $route['company-doc/(:num)/delete']['post'] = 'company_docs/delete/$1';

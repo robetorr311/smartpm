@@ -38,7 +38,7 @@ class LeadModel extends CI_Model
         5 => 'Repair'
     ];
 
-    public function allLeads($start = 0, $limit = 10)
+    public function allLeads()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -47,12 +47,11 @@ class LeadModel extends CI_Model
         ]);
         $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 12, 13]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function allLeadsByStatus($status, $start = 0, $limit = 10)
+    public function allLeadsByStatus($status)
     {
         if (!isset(self::$status[$status])) {
             show_404();
@@ -66,7 +65,6 @@ class LeadModel extends CI_Model
         ]);
         $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 12, 13]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -81,14 +79,24 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allJobs($start = 0, $limit = 10)
+    public function getLeadsByStatusCount($status)
+    {
+        $this->db->where([
+            'is_deleted' => FALSE,
+            'status' => $status,
+            'signed_stage' => 0
+        ]);
+        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 11, 12]);
+        return $this->db->count_all_results($this->table);
+    }
+
+    public function allJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE
         ]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -101,7 +109,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allSignedJobs($start = 0, $limit = 10)
+    public function allSignedJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -109,7 +117,6 @@ class LeadModel extends CI_Model
         ]);
         $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -123,7 +130,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allCashJobs($start = 0, $limit = 10)
+    public function allCashJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -132,7 +139,6 @@ class LeadModel extends CI_Model
             'status' => 8
         ]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -147,7 +153,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allInsuranceJobs($start = 0, $limit = 10)
+    public function allInsuranceJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -156,7 +162,6 @@ class LeadModel extends CI_Model
             'status' => 7
         ]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -171,7 +176,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allLaborOnlyJobs($start = 0, $limit = 10)
+    public function allLaborOnlyJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -180,7 +185,6 @@ class LeadModel extends CI_Model
             'status' => 9
         ]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -195,7 +199,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allFinancialJobs($start = 0, $limit = 10)
+    public function allFinancialJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -204,7 +208,6 @@ class LeadModel extends CI_Model
             'status' => 10
         ]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -219,7 +222,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allProductionJobs($start = 0, $limit = 10)
+    public function allProductionJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -228,7 +231,6 @@ class LeadModel extends CI_Model
         ]);
         $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -243,7 +245,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allCompletedJobs($start = 0, $limit = 10)
+    public function allCompletedJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -252,7 +254,6 @@ class LeadModel extends CI_Model
         ]);
         $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -267,7 +268,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allClosedJobs($start = 0, $limit = 10)
+    public function allClosedJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -276,7 +277,6 @@ class LeadModel extends CI_Model
         ]);
         $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
@@ -291,7 +291,7 @@ class LeadModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allArchivedJobs($start = 0, $limit = 10)
+    public function allArchivedJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
@@ -300,7 +300,6 @@ class LeadModel extends CI_Model
         ]);
         $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }

@@ -5,7 +5,7 @@ class TeamModel extends CI_Model
 {
     private $table = 'teams';
 
-    public function allTeams($start, $limit)
+    public function allTeams()
     {
         $this->db->select("teams.*, (SELECT count(id) FROM team_user_map WHERE team_user_map.team_id = teams.id AND is_deleted = FALSE) as total_members, CONCAT(users_manager.first_name, ' ', users_manager.last_name, ' (@', users_manager.username, ')') as manager_fullname, CONCAT(users_team_leader.first_name, ' ', users_team_leader.last_name, ' (@', users_team_leader.username, ')') as team_leader_fullname");
         $this->db->from($this->table);
@@ -13,7 +13,6 @@ class TeamModel extends CI_Model
         $this->db->join('users as users_team_leader', 'teams.team_leader=users_team_leader.id', 'left');
         $this->db->where('teams.is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }

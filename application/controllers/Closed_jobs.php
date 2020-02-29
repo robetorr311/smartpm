@@ -10,7 +10,7 @@ class Closed_jobs extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
 		$this->party = new PartyModel();
@@ -21,25 +21,16 @@ class Closed_jobs extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('lead/closed-jobs'),
-			'total_rows' => $this->lead->getClosedJobsCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-
-		$leads = $this->lead->allClosedJobs($start, $limit);
+		$leads = $this->lead->allClosedJobs();
 		$this->load->view('header', [
 			'title' => $this->title
 		]);
 		$this->load->view('closed_jobs/index', [
-			'leads' => $leads,
-			'pagiLinks' => $this->pagination->create_links()
+			'leads' => $leads
 		]);
 		$this->load->view('footer');
 	}

@@ -11,31 +11,23 @@ class Teams extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['TeamModel', 'UserModel', 'TeamUserMapModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 
 		$this->team = new TeamModel();
 		$this->user = new UserModel();
 		$this->team_user_map = new TeamUserMapModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('teams'),
-			'total_rows' => $this->team->getCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$teams = $this->team->allTeams($start, $limit);
+		$teams = $this->team->allTeams();
 		$this->load->view('header', [
 			'title' => $this->title
 		]);
 		$this->load->view('teams/index', [
-			'teams' => $teams,
-			'pagiLinks' => $this->pagination->create_links()
+			'teams' => $teams
 		]);
 		$this->load->view('footer');
 	}

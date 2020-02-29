@@ -28,24 +28,16 @@ class Financial extends CI_Controller
         redirect('financial/records');
     }
 
-    public function records($start = 0)
+    public function records()
     {
         authAccess();
 
-        $limit = 10;
-        $pagiConfig = [
-            'base_url' => base_url('financial'),
-            'total_rows' => $this->financial->getCount(),
-            'per_page' => $limit
-        ];
-        $this->pagination->initialize($pagiConfig);
-        $financials = $this->financial->allFinancialWithLeads($start, $limit);
+        $financials = $this->financial->allFinancialWithLeads();
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('financial/index', [
-            'financials' => $financials,
-            'pagiLinks' => $this->pagination->create_links()
+            'financials' => $financials
         ]);
         $this->load->view('footer');
     }

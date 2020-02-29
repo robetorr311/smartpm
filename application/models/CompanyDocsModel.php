@@ -5,14 +5,13 @@ class CompanyDocsModel extends CI_Model
 {
     private $table = 'company_docs';
 
-    public function allCompanyDocs($start = 0, $limit = 10)
+    public function allCompanyDocs()
     {
         $this->db->select("company_docs.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'company_docs.created_by=users_created_by.id', 'left');
         $this->db->where('company_docs.is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }

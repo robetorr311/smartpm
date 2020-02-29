@@ -10,7 +10,7 @@ class Cash_jobs extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
@@ -18,22 +18,14 @@ class Cash_jobs extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('lead/cash-jobs'),
-			'total_rows' => $this->lead->getCashJobsCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$jobs = $this->lead->allCashJobs($start, $limit);
+		$jobs = $this->lead->allCashJobs();
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('cash_job/index', [
-			'jobs' => $jobs,
-			'pagiLinks' => $this->pagination->create_links()
+			'jobs' => $jobs
 		]);
 		$this->load->view('footer');
 	}
