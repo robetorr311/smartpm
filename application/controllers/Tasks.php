@@ -10,7 +10,7 @@ class Tasks extends CI_Controller
         parent::__construct();
 
         $this->load->model(['TaskModel', 'UserModel', 'TaskNotesModel', 'TaskUserTagsModel', 'TaskPredecessorModel', 'TaskJobTagsModel', 'TaskTypeModel']);
-        $this->load->library(['pagination', 'form_validation', 'notify']);
+        $this->load->library(['form_validation', 'notify']);
 
         $this->task = new TaskModel();
         $this->user = new UserModel();
@@ -21,46 +21,30 @@ class Tasks extends CI_Controller
         $this->taskType = new TaskTypeModel();
     }
 
-    public function index($start = 0)
+    public function index()
     {
         authAccess();
 
-        $limit = 10;
-        $pagiConfig = [
-            'base_url' => base_url('tasks'),
-            'total_rows' => $this->task->getCount(),
-            'per_page' => $limit
-        ];
-        $this->pagination->initialize($pagiConfig);
-        $tasks = $this->task->allTasks($start, $limit);
+        $tasks = $this->task->allTasks();
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('tasks/index', [
-            'tasks' => $tasks,
-            'pagiLinks' => $this->pagination->create_links()
+            'tasks' => $tasks
         ]);
         $this->load->view('footer');
     }
 
-    public function status($status, $start = 0)
+    public function status($status)
     {
         authAccess();
 
-        $limit = 10;
-        $pagiConfig = [
-            'base_url' => base_url('tasks'),
-            'total_rows' => $this->task->getCount(),
-            'per_page' => $limit
-        ];
-        $this->pagination->initialize($pagiConfig);
-        $tasks = $this->task->allTasksByStatus($status, $start, $limit);
+        $tasks = $this->task->allTasksByStatus($status);
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('tasks/index', [
-            'tasks' => $tasks,
-            'pagiLinks' => $this->pagination->create_links()
+            'tasks' => $tasks
         ]);
         $this->load->view('footer');
     }

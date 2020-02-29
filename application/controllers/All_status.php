@@ -14,22 +14,14 @@ class All_status extends CI_Controller
 		$this->lead = new LeadModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('lead/all-status'),
-			'total_rows' => $this->lead->getJobsCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$jobs = $this->lead->allJobs($start, $limit);
+		$jobs = $this->lead->allJobs();
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('all_status/index', [
-			'jobs' => $jobs,
-			'pagiLinks' => $this->pagination->create_links()
+			'jobs' => $jobs
 		]);
 		$this->load->view('footer');
 	}

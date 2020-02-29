@@ -10,7 +10,7 @@ class Leads extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
 		$this->lead_note = new LeadNoteModel();
@@ -24,44 +24,26 @@ class Leads extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('leads'),
-			'total_rows' => $this->lead->getLeadsCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-
-		$leads = $this->lead->allLeads($start, $limit);
+		$leads = $this->lead->allLeads();
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/index', [
-			'leads' => $leads,
-			'pagiLinks' => $this->pagination->create_links()
+			'leads' => $leads
 		]);
 		$this->load->view('footer');
 	}
 
-	public function status($status, $start = 0)
+	public function status($status)
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('leads'),
-			'total_rows' => $this->lead->getLeadsByStatusCount($status),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-
-		$leads = $this->lead->allLeadsByStatus($status, $start, $limit);
+		$leads = $this->lead->allLeadsByStatus($status);
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/index', [
-			'leads' => $leads,
-			'pagiLinks' => $this->pagination->create_links()
+			'leads' => $leads
 		]);
 		$this->load->view('footer');
 	}

@@ -10,7 +10,7 @@ class Archive_jobs extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
 		$this->party = new PartyModel();
@@ -21,25 +21,16 @@ class Archive_jobs extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('lead/archive-jobs'),
-			'total_rows' => $this->lead->getArchivedJobsCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-
-		$leads = $this->lead->allArchivedJobs($start, $limit);
+		$leads = $this->lead->allArchivedJobs();
 		$this->load->view('header', [
 			'title' => $this->title
 		]);
 		$this->load->view('archive_jobs/index', [
-			'leads' => $leads,
-			'pagiLinks' => $this->pagination->create_links()
+			'leads' => $leads
 		]);
 		$this->load->view('footer');
 	}

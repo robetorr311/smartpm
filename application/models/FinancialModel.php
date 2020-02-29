@@ -5,7 +5,7 @@ class FinancialModel extends CI_Model
 {
     private $table = 'financial';
 
-    public function allFinancialWithLeads($start = 0, $limit = 10)
+    public function allFinancialWithLeads()
     {
         $this->db->select("
             financial.*,
@@ -17,7 +17,6 @@ class FinancialModel extends CI_Model
         $this->db->join('financial_types as type', 'financial.type=type.id', 'left');
         $this->db->where('financial.is_deleted', FALSE);
         $this->db->order_by('financial.created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }

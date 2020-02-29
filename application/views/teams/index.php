@@ -56,9 +56,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php endif; ?>
                         </tbody>
                     </table>
-                    <div class="pagination">
-                        <?= $pagiLinks ?>
-                    </div>
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@ class TaskModel extends CI_Model
         4 => 'Completed'
     ];
 
-    public function allTasks($start = 0, $limit = 10)
+    public function allTasks()
     {
         $this->db->select("
             tasks.*,
@@ -32,12 +32,11 @@ class TaskModel extends CI_Model
         $this->db->join('task_types', 'tasks.type=task_types.id', 'left');
         $this->db->where('tasks.is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function allTasksByStatus($status, $start = 0, $limit = 10)
+    public function allTasksByStatus($status)
     {
         $this->db->select("
             tasks.*,
@@ -52,7 +51,6 @@ class TaskModel extends CI_Model
         $this->db->where('tasks.status', $status);
         $this->db->where('tasks.is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
-        $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query->result();
     }

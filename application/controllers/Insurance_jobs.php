@@ -10,7 +10,7 @@ class Insurance_jobs extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'ClientLeadSourceModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
@@ -20,22 +20,14 @@ class Insurance_jobs extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('lead/insurance-jobs'),
-			'total_rows' => $this->lead->getInsuranceJobsCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$jobs = $this->lead->allInsuranceJobs($start, $limit);
+		$jobs = $this->lead->allInsuranceJobs();
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('insurance_job/index', [
-			'jobs' => $jobs,
-			'pagiLinks' => $this->pagination->create_links()
+			'jobs' => $jobs
 		]);
 		$this->load->view('footer');
 	}

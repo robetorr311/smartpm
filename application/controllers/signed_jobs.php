@@ -10,26 +10,18 @@ class Signed_jobs extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['LeadModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('lead/all-status'),
-			'total_rows' => $this->lead->getSignedJobsCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$jobs = $this->lead->allSignedJobs($start, $limit);
+		$jobs = $this->lead->allSignedJobs();
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('signed_job/index', [
-			'jobs' => $jobs,
-			'pagiLinks' => $this->pagination->create_links()
+			'jobs' => $jobs
 		]);
 		$this->load->view('footer');
 	}

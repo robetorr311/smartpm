@@ -10,29 +10,21 @@ class Company_docs extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['CompanyDocsModel']);
-		$this->load->library(['pagination', 'form_validation']);
+		$this->load->library(['form_validation']);
 
 		$this->company_docs = new CompanyDocsModel();
 	}
 
-	public function index($start = 0)
+	public function index()
 	{
 		authAccess();
 
-		$limit = 10;
-		$pagiConfig = [
-			'base_url' => base_url('company-docs'),
-			'total_rows' => $this->company_docs->getCount(),
-			'per_page' => $limit
-		];
-		$this->pagination->initialize($pagiConfig);
-		$docs = $this->company_docs->allCompanyDocs($start, $limit);
+		$docs = $this->company_docs->allCompanyDocs();
 		$this->load->view('header', [
 			'title' => $this->title
 		]);
 		$this->load->view('company_docs/index', [
-			'docs' => $docs,
-			'pagiLinks' => $this->pagination->create_links()
+			'docs' => $docs
 		]);
 		$this->load->view('footer');
 	}
