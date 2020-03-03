@@ -35,17 +35,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php foreach ($jobs as $job) : ?>
                                     <?php
                                     $sub_base_path = '';
-                                    if ($job->signed_stage == 1 && in_array($job->status, [7, 8, 9, 10])) {
+                                    if ($job->status === '8') {
                                         $sub_base_path = 'production-job/';
-                                    } else if ($job->signed_stage == 2 && in_array($job->status, [7, 8, 9, 10])) {
+                                    } else if ($job->status === '9') {
                                         $sub_base_path = 'completed-job/';
-                                    } else if ($job->status == 7) {
+                                    } else if ($job->category === '0') {
                                         $sub_base_path = 'insurance-job/';
-                                    } else if ($job->status == 8) {
+                                    } else if ($job->category === '1') {
                                         $sub_base_path = 'cash-job/';
-                                    } else if ($job->status == 9) {
+                                    } else if ($job->category === '2') {
                                         $sub_base_path = 'labor-job/';
-                                    } else if ($job->status == 10) {
+                                    } else if ($job->category === '3') {
                                         $sub_base_path = 'financial-job/';
                                     } else {
                                         $sub_base_path = '';

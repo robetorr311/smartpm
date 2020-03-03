@@ -59,6 +59,7 @@
     <script src="<?= base_url('assets/js/jquery.fancybox.js') ?>"></script>
     <script src="<?= base_url('assets/js/validate-support.js') ?>"></script>
     <script src="<?= base_url('assets/js/show-edit-section.js') ?>"></script>
+    <script src="<?= base_url('assets/js/search-box.js') ?>"></script>
 
 </head>
 
@@ -255,6 +256,13 @@
 
 
                         <ul class="nav navbar-nav navbar-right">
+
+                            <li>
+                                <div class="search-box">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    <input type="search" name="search" id="search" autocomplete="off">
+                                </div>
+                            </li>
 
                             <li>
                                 <a href="">Welcome <strong><?= ($admin['first_name'] . ' ' . $admin['last_name']) ?></strong></a>

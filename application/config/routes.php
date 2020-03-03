@@ -194,11 +194,9 @@ $route['lead/signed-jobs'] = 'signed_jobs/index';
 
 $route['lead/cash-jobs'] = 'cash_jobs/index';
 $route['lead/cash-job/(:num)'] = 'cash_jobs/view/$1';
-$route['lead/cash-job/(:num)/move-next-stage']['post'] = 'cash_jobs/moveNextStage/$1';
 
 $route['lead/insurance-jobs'] = 'insurance_jobs/index';
 $route['lead/insurance-job/(:num)'] = 'insurance_jobs/view/$1';
-$route['lead/insurance-job/(:num)/move-next-stage']['post'] = 'insurance_jobs/moveNextStage/$1';
 
 $route['lead/(:any)/(:num)/update-insurance-details']['post'] = 'insurance_jobs/updateInsuranceDetails/$2/$1';
 $route['lead/(:any)/(:num)/insert-insurance-details']['post'] = 'insurance_jobs/insertInsuranceDetails/$2/$1';
@@ -207,30 +205,21 @@ $route['lead/(:any)/(:num)/delete-adjuster/(:num)']['post'] = 'insurance_jobs/de
 
 $route['lead/labor-jobs'] = 'labor_jobs/index';
 $route['lead/labor-job/(:num)'] = 'labor_jobs/view/$1';
-$route['lead/labor-job/(:num)/move-next-stage']['post'] = 'labor_jobs/moveNextStage/$1';
 
 $route['lead/financial-jobs'] = 'financial_jobs/index';
 $route['lead/financial-job/(:num)'] = 'financial_jobs/view/$1';
-$route['lead/financial-job/(:num)/move-next-stage']['post'] = 'financial_jobs/moveNextStage/$1';
 
 $route['lead/production-jobs'] = 'productions_jobs/index';
 $route['lead/production-job/(:num)'] = 'productions_jobs/view/$1';
-$route['lead/production-job/(:num)/move-previous-stage']['post'] = 'productions_jobs/movePreviousStage/$1';
-$route['lead/production-job/(:num)/move-next-stage']['post'] = 'productions_jobs/moveNextStage/$1';
 
 $route['lead/completed-jobs'] = 'completed_jobs/index';
 $route['lead/completed-job/(:num)'] = 'completed_jobs/view/$1';
-$route['lead/completed-job/(:num)/move-previous-stage']['post'] = 'completed_jobs/movePreviousStage/$1';
-$route['lead/completed-job/(:num)/move-next-stage']['post'] = 'completed_jobs/moveNextStage/$1';
 
 $route['lead/closed-jobs'] = 'closed_jobs/index';
 $route['lead/closed-job/(:num)'] = 'closed_jobs/view/$1';
-$route['lead/closed-job/(:num)/move-previous-stage']['post'] = 'closed_jobs/movePreviousStage/$1';
-$route['lead/closed-job/(:num)/move-next-stage']['post'] = 'closed_jobs/moveNextStage/$1';
 
 $route['lead/archive-jobs'] = 'archive_jobs/index';
 $route['lead/archive-job/(:num)'] = 'archive_jobs/view/$1';
-$route['lead/archive-job/(:num)/move-previous-stage']['post'] = 'archive_jobs/movePreviousStage/$1';
 
 $route['financial'] = 'financial/index';
 $route['financial/records'] = 'financial/records';
@@ -287,5 +276,7 @@ $route['setting/task-options/type/(:num)/update']['post'] = 'TaskOptions/updateT
 $route['setting/task-options/type/(:num)/delete']['post'] = 'TaskOptions/deleteType/$1';
 $route['setting/smtp-settings'] = 'SMTPSettings/index';
 $route['setting/smtp-settings/update']['post'] = 'SMTPSettings/updateSMTPSettings';
+
+$route['search']['post'] = 'Search/search';
 
 $route['(.+)'] = 'errors/page_missing';

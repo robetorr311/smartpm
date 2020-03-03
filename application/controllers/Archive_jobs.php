@@ -45,7 +45,7 @@ class Archive_jobs extends CI_Controller
 			$teams_detail = $this->team_job_track->getTeamName($jobid);
 			$insurance_job_details = false;
 			$insurance_job_adjusters = false;
-			if ($job->status == 7) {
+			if ($job->category === '0') {
 				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
 				$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 			}
@@ -53,6 +53,7 @@ class Archive_jobs extends CI_Controller
 			$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
+			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 
 			$this->load->view('header', [
@@ -69,6 +70,7 @@ class Archive_jobs extends CI_Controller
 				'teams' => $teams,
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
+				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource
 			]);
 			$this->load->view('footer');
@@ -76,15 +78,5 @@ class Archive_jobs extends CI_Controller
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
 			redirect('lead/productions-jobs');
 		}
-	}
-
-	public function movePreviousStage($jobid)
-	{
-		authAccess();
-
-		$this->lead->update($jobid, [
-			'signed_stage' => 3
-		]);
-		redirect('lead/closed-job/' . $jobid);
 	}
 }

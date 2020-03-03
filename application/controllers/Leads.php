@@ -124,23 +124,25 @@ class Leads extends CI_Controller
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$teams_detail = false;
 			$teams = [];
-			if (in_array($lead->status, [7, 8, 9, 10, 13])) {
+			if (in_array($lead->status, [7, 14])) {
 				$teams_detail = $this->team_job_track->getTeamName($jobid);
 				$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 			}
 			$insurance_job_details = false;
 			$insurance_job_adjusters = false;
-			if ($lead->status == 7) {
+			if ($lead->category === '0') {
 				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
 				$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 			}
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
+			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/edit', [
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
+				'lead_category_tags' => $lead_category_tags,
 				'lead' => $lead,
 				'add_info' => $add_info,
 				'jobid' => $jobid,
@@ -209,28 +211,31 @@ class Leads extends CI_Controller
 
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
+		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
 			$update = $this->lead->update($id, [
 				'status' => $posts['status'],
+				'category' => $posts['category'],
 				'type' => $posts['type']
 			]);
 
 			if ($update) {
 				$lead = $this->lead->getLeadById($id);
-				if ($lead->signed_stage == 1 && in_array($lead->status, [7, 8, 9, 10])) {
+				$sub_base_path = '';
+				if ($lead->status === '8') {
 					$sub_base_path = 'production-job/';
-				} else if ($lead->signed_stage == 2 && in_array($lead->status, [7, 8, 9, 10])) {
+				} else if ($lead->status === '9') {
 					$sub_base_path = 'completed-job/';
-				} else if ($lead->status == 7) {
+				} else if ($lead->category === '0') {
 					$sub_base_path = 'insurance-job/';
-				} else if ($lead->status == 8) {
+				} else if ($lead->category === '1') {
 					$sub_base_path = 'cash-job/';
-				} else if ($lead->status == 9) {
+				} else if ($lead->category === '2') {
 					$sub_base_path = 'labor-job/';
-				} else if ($lead->status == 10) {
+				} else if ($lead->category === '3') {
 					$sub_base_path = 'financial-job/';
 				} else {
 					$sub_base_path = '';
@@ -255,18 +260,19 @@ class Leads extends CI_Controller
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$teams_detail = false;
 			$teams = [];
-			if (in_array($lead->status, [7, 8, 9, 10, 13])) {
+			if (in_array($lead->status, [7, 14])) {
 				$teams_detail = $this->team_job_track->getTeamName($jobid);
 				$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 			}
 			$insurance_job_details = false;
 			$insurance_job_adjusters = false;
-			if ($lead->status == 7) {
+			if ($lead->category === '0') {
 				$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
 				$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 			}
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
+			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			
 			$this->load->view('header', ['title' => $this->title]);
@@ -276,6 +282,7 @@ class Leads extends CI_Controller
 				'jobid' => $jobid,
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
+				'lead_category_tags' => $lead_category_tags,
 				'insurance_job_details' => $insurance_job_details,
 				'insurance_job_adjusters' => $insurance_job_adjusters,
 				'teams_detail' => $teams_detail,

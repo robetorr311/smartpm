@@ -13,13 +13,14 @@ class LeadModel extends CI_Model
         4 => 'Needs Estimate / Bid',
         5 => 'Estimate Sent',
         6 => 'Ready to Sign / Verbal Go',
-        7 => 'Signed Insurance Contract',
-        8 => 'Signed Cash Contract',
-        9 => 'Signed Labor Only',
-        10 => 'Signed Finance Job',
-        11 => 'Worry to Lose',
-        12 => 'Postponed',
-        13 => 'Dead / Lost'
+        7 => 'Signed',
+        8 => 'In Production',
+        9 => 'Completed',
+        10 => 'Closed',
+        11 => 'Archive',
+        12 => 'Worry to Lose',
+        13 => 'Postponed',
+        14 => 'Dead / Lost'
     ];
     // private static $signedStage = [
     //     0 => 'Ordering / Buy Out',
@@ -37,15 +38,20 @@ class LeadModel extends CI_Model
         4 => 'Industrial',
         5 => 'Repair'
     ];
+    private static $category = [
+        0 => 'Insurance Jobs',
+        1 => 'Cash Jobs',
+        2 => 'Labor Only Jobs',
+        3 => 'Financial Jobs'
+    ];
 
     public function allLeads()
     {
         $this->db->from($this->table);
         $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 0
+            'is_deleted' => FALSE
         ]);
-        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 12, 13]);
+        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 13, 14]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
@@ -60,34 +66,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'status' => $status,
-            'signed_stage' => 0
+            'status' => $status
         ]);
-        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 12, 13]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getLeadsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 0
-        ]);
-        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 11, 12]);
-        return $this->db->count_all_results($this->table);
-    }
-
-    public function getLeadsByStatusCount($status)
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'status' => $status,
-            'signed_stage' => 0
-        ]);
-        $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 11, 12]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allJobs()
@@ -101,33 +84,16 @@ class LeadModel extends CI_Model
         return $query->result();
     }
 
-    public function getJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE
-        ]);
-        return $this->db->count_all_results($this->table);
-    }
-
     public function allSignedJobs()
     {
         $this->db->from($this->table);
         $this->db->where([
+            'status' => 7,
             'is_deleted' => FALSE
         ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getSignedJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE
-        ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allCashJobs()
@@ -135,22 +101,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 8
+            'category' => 1
         ]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getCashJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 8
-        ]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allInsuranceJobs()
@@ -158,22 +113,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 7
+            'category' => 0
         ]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getInsuranceJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 7
-        ]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allLaborOnlyJobs()
@@ -181,22 +125,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 9
+            'category' => 2
         ]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getLaborOnlyJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 9
-        ]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allFinancialJobs()
@@ -204,22 +137,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 10
+            'category' => 3
         ]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getFinancialJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 0,
-            'status' => 10
-        ]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allProductionJobs()
@@ -227,22 +149,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 1
+            'status' => 8
         ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getProductionJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 1
-        ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allCompletedJobs()
@@ -250,22 +161,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 2
+            'status' => 9
         ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getCompletedJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 2
-        ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allClosedJobs()
@@ -273,22 +173,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 3
+            'status' => 10
         ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getClosedJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 3
-        ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function allArchivedJobs()
@@ -296,22 +185,11 @@ class LeadModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where([
             'is_deleted' => FALSE,
-            'signed_stage' => 4
+            'status' => 11
         ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }
-
-    public function getArchivedJobsCount()
-    {
-        $this->db->where([
-            'is_deleted' => FALSE,
-            'signed_stage' => 4
-        ]);
-        $this->db->where_in('status', [7, 8, 9, 10]);
-        return $this->db->count_all_results($this->table);
     }
 
     public function getLeadList($select = "id, CONCAT(firstname, ' ', lastname) AS name")
@@ -366,14 +244,14 @@ class LeadModel extends CI_Model
             COUNT(IF(status=4, 1, NULL)) as needs_estimate,
             COUNT(IF(status=5, 1, NULL)) as estimate_sent,
             COUNT(IF(status=6, 1, NULL)) as ready_to_sign,
-            COUNT(IF(status=11, 1, NULL)) as worry_to_lose,
-            COUNT(IF(status=12, 1, NULL)) as postponed,
-            COUNT(IF(status=13, 1, NULL)) as lostLeads,
-            COUNT(CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END) as signed,
-            COUNT(IF(signed_stage=1, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END), NULL)) as production,
-            COUNT(IF(signed_stage=2, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END), NULL)) as completed,
-            COUNT(IF(signed_stage=3, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END), NULL)) as closed,
-            COUNT(IF(signed_stage=4, (CASE WHEN status=7 THEN 1 WHEN status=8 THEN 1 WHEN status=9 THEN 1 WHEN status=10 THEN 1 ELSE NULL END), NULL)) as archive
+            COUNT(IF(status=7, 1, NULL)) as signed,
+            COUNT(IF(status=8, 1, NULL)) as production,
+            COUNT(IF(status=9, 1, NULL)) as completed,
+            COUNT(IF(status=10, 1, NULL)) as closed,
+            COUNT(IF(status=11, 1, NULL)) as archive,
+            COUNT(IF(status=12, 1, NULL)) as worry_to_lose,
+            COUNT(IF(status=13, 1, NULL)) as postponed,
+            COUNT(IF(status=14, 1, NULL)) as lostLeads
         ", FALSE);
 		$this->db->from($this->table);
         $this->db->where('is_deleted', FALSE);
@@ -403,5 +281,15 @@ class LeadModel extends CI_Model
     public static function getType()
     {
         return self::$type;
+    }
+
+    public static function categoryToStr($id)
+    {
+        return isset(self::$category[$id]) ? self::$category[$id] : $id;
+    }
+
+    public static function getCategory()
+    {
+        return self::$category;
     }
 }

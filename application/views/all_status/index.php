@@ -34,23 +34,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php if (!empty($jobs)) : ?>
                                 <?php foreach ($jobs as $job) : ?>
                                     <?php
-                                            $sub_base_path = '';
-                                            if ($job->signed_stage == 1 && in_array($job->status, [7, 8, 9, 10])) {
-                                                $sub_base_path = 'production-job/';
-                                            } else if ($job->signed_stage == 2 && in_array($job->status, [7, 8, 9, 10])) {
-                                                $sub_base_path = 'completed-job/';
-                                            } else if ($job->status == 7) {
-                                                $sub_base_path = 'insurance-job/';
-                                            } else if ($job->status == 8) {
-                                                $sub_base_path = 'cash-job/';
-                                            } else if ($job->status == 9) {
-                                                $sub_base_path = 'labor-job/';
-                                            } else if ($job->status == 10) {
-                                                $sub_base_path = 'financial-job/';
-                                            } else {
-                                                $sub_base_path = '';
-                                            }
-                                            ?>
+                                    $sub_base_path = '';
+                                    if ($job->status === '8') {
+                                        $sub_base_path = 'production-job/';
+                                    } else if ($job->status === '9') {
+                                        $sub_base_path = 'completed-job/';
+                                    } else if ($job->category === '0') {
+                                        $sub_base_path = 'insurance-job/';
+                                    } else if ($job->category === '1') {
+                                        $sub_base_path = 'cash-job/';
+                                    } else if ($job->category === '2') {
+                                        $sub_base_path = 'labor-job/';
+                                    } else if ($job->category === '3') {
+                                        $sub_base_path = 'financial-job/';
+                                    } else {
+                                        $sub_base_path = '';
+                                    }
+                                    ?>
                                     <tr>
                                         <td><?= ('RJOB' . $job->id); ?></td>
                                         <td><?= $job->firstname ?></td>
