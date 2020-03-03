@@ -157,7 +157,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::statusToStr($job->status) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
-                    <?php if($job->category) { ?>
+                    <?php if($job->category !== null) { ?>
                     <h4 class="title" style="float: left;">Category</h4>
                     <span class="status">
                         <?= LeadModel::categoryToStr($job->category); ?>
@@ -405,7 +405,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="header">
                     <h4 class="title" style="float: left;">Category</h4>
-                    <?php if ($job->category) { ?>
+                    <?php if ($job->category !== null) { ?>
                         <span class="status">
                             <?= LeadModel::categoryToStr($job->category) ?>
                         </span>
