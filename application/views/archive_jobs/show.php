@@ -157,16 +157,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::statusToStr($job->status) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+                    <?php if($job->category) { ?>
+                    <h4 class="title" style="float: left;">Category</h4>
+                    <span class="status">
+                        <?= LeadModel::categoryToStr($job->category); ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
                     <h4 class="title" style="float: left;">Job Type</h4>
                     <span class="status">
                         <?= LeadModel::typeToStr($job->type) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/move-previous-stage') ?>" class="btn btn-info btn-fill full-width  lead-move-btn" data-method="POST"><i class="pe-7s-angle-left"></i>&nbsp;Move to Closed</a>
                 </div>
             </div>
         </div>
@@ -468,6 +470,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control" id="lead" name="status">
                             <?php foreach ($lead_status_tags as $s_id => $s_tags) : ?>
                                 <option value="<?= $s_id ?>" <?= ($s_id == $job->status) ? 'selected' : '' ?>><?= $s_tags ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Category</h4>
+                    <?php if ($job->category) { ?>
+                        <span class="status">
+                            <?= LeadModel::categoryToStr($job->category) ?>
+                        </span>
+                    <?php } ?>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <select class="form-control" id="category" name="category">
+                            <?php foreach ($lead_category_tags as $s_id => $s_tags) : ?>
+                                <option value="<?= $s_id ?>" <?= ($s_id === intval($job->category)) ? 'selected' : '' ?>><?= $s_tags ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

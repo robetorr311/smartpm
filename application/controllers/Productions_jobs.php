@@ -46,24 +46,25 @@ class Productions_jobs extends CI_Controller
 			$teams = $this->team->getTeamOnly(['is_deleted' => 0]);
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
+			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 
-			switch ($job->status) {
-				case 7:
+			switch ($job->category) {
+				case '0':
 					$previous_status = 'Insurance';
 					$insurance_job_details = $this->insurance_job_details->getInsuranceJobDetailsByLeadId($jobid);
 					$insurance_job_adjusters = $this->insurance_job_adjuster->allAdjusters($jobid);
 					break;
 
-				case 8:
+				case '1':
 					$previous_status = 'Cash';
 					break;
 
-				case 9:
+				case '2':
 					$previous_status = 'Labor';
 					break;
 
-				case 10:
+				case '3':
 					$previous_status = 'Financial';
 					break;
 
@@ -84,6 +85,7 @@ class Productions_jobs extends CI_Controller
 				'teams' => $teams,
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
+				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource
 			]);
 			$this->load->view('footer');
@@ -91,50 +93,5 @@ class Productions_jobs extends CI_Controller
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
 			redirect('lead/productions-jobs');
 		}
-	}
-
-	public function movePreviousStage($jobid)
-	{
-		authAccess();
-
-		$job = $this->lead->getLeadById($jobid);
-		$status_url = '';
-
-		switch ($job->status) {
-			case 7:
-				$status_url = 'insurance-job/';
-				break;
-
-			case 8:
-				$status_url = 'cash-job/';
-				break;
-
-			case 9:
-				$status_url = 'labor-job/';
-				break;
-
-			case 10:
-				$status_url = 'financial-job/';
-				break;
-
-			default:
-				$status_url = '';
-				break;
-		}
-
-		$this->lead->update($jobid, [
-			'signed_stage' => 0
-		]);
-		redirect('lead/' . $status_url . $jobid);
-	}
-
-	public function moveNextStage($jobid)
-	{
-		authAccess();
-
-		$this->lead->update($jobid, [
-			'signed_stage' => 2
-		]);
-		redirect('lead/completed-job/' . $jobid);
 	}
 }

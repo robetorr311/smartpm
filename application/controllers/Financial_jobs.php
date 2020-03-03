@@ -43,6 +43,7 @@ class Financial_jobs extends CI_Controller
 			$insurance_job_adjusters = false;
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
+			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 
 			$this->load->view('header', ['title' => $this->title]);
@@ -56,6 +57,7 @@ class Financial_jobs extends CI_Controller
 				'insurance_job_adjusters' => $insurance_job_adjusters,
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
+				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource
 			]);
 			$this->load->view('footer');
@@ -63,15 +65,5 @@ class Financial_jobs extends CI_Controller
 			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
 			redirect('lead/financial-jobs');
 		}
-	}
-
-	public function moveNextStage($jobid)
-	{
-		authAccess();
-
-		$this->lead->update($jobid, [
-			'signed_stage' => 1
-		]);
-		redirect('lead/production-job/' . $jobid);
 	}
 }

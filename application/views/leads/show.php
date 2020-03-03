@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row">
@@ -159,6 +162,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::statusToStr($lead->status); ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+                    <?php if ($lead->category) { ?>
+                        <h4 class="title" style="float: left;">Category</h4>
+                        <span class="status">
+                            <?= LeadModel::categoryToStr($lead->category); ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
                     <h4 class="title" style="float: left;">Job Type</h4>
                     <span class="status">
                         <?= LeadModel::typeToStr($lead->type) ?>
@@ -377,6 +387,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control" id="lead" name="status">
                             <?php foreach ($lead_status_tags as $s_id => $s_tags) : ?>
                                 <option value="<?= $s_id ?>" <?= ($s_id == $lead->status) ? 'selected' : '' ?>><?= $s_tags ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Category</h4>
+                    <?php if ($lead->category) { ?>
+                        <span class="status">
+                            <?= LeadModel::categoryToStr($lead->category) ?>
+                        </span>
+                    <?php } ?>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <select class="form-control" id="category" name="category">
+                            <?php foreach ($lead_category_tags as $s_id => $s_tags) : ?>
+                                <option value="<?= $s_id ?>" <?= ($s_id === intval($lead->category)) ? 'selected' : '' ?>><?= $s_tags ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
