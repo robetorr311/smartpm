@@ -52,7 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="job_id" class="form-control">
                                         <option value="" disabled selected>Select Job</option>
                                         <?php foreach ($jobs as $job) {
-                                            echo '<option value="' . $job->id . '">' . 'RJOB' . $job->id . ' - ' . $job->name . '</option>';
+                                            echo '<option value="' . $job->id . '">' . (1600 + $job->id) . ' - ' . $job->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>

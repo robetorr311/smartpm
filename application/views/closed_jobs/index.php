@@ -34,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<?php if (!empty($leads)) : ?>
 								<?php foreach ($leads as $lead) : ?>
 									<tr>
-										<td><?= ('RJOB' . $lead->id); ?></td>
+										<td><?= (1600 + $lead->id); ?></td>
 										<td><?= $lead->firstname ?></td>
 										<td><?= $lead->lastname ?></td>
 										<td><?= LeadModel::statusToStr($lead->status) ?></td>

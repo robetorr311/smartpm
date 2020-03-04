@@ -32,7 +32,7 @@ class FinancialModel extends CI_Model
         $this->db->select("
             financial.*,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
-            CONCAT('RJOB',  jobs.id, ' - ', jobs.firstname, ' ', jobs.lastname) as job_fullname,
+            CONCAT((1600 + jobs.id), ' - ', jobs.firstname, ' ', jobs.lastname) as job_fullname,
             type.name as type_name,
             method.name as method_name,
             subtype.name as subtype_name,
