@@ -52,7 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     }
                                     ?>
                                     <tr>
-                                        <td><?= ('RJOB' . $job->id); ?></td>
+                                        <td><?= (1600 + $job->id); ?></td>
                                         <td><?= $job->firstname ?></td>
                                         <td><?= $job->lastname ?></td>
                                         <td><?= LeadModel::statusToStr($job->status) ?></td>
