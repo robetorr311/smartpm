@@ -68,8 +68,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="col-md-2">
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/11') ?>">
-					<span><?= $worryToLoaseLeads ?></span>
-					<p>Worry to Lose</p>
+					<span><?= $coldLeads ?></span>
+					<p>Cold</p>
 				</a>
 			</div>
 		</div>

@@ -18,7 +18,7 @@ class LeadModel extends CI_Model
         9 => 'Completed',
         10 => 'Closed',
         11 => 'Archive',
-        12 => 'Worry to Lose',
+        12 => 'Cold',
         13 => 'Postponed',
         14 => 'Dead / Lost'
     ];
@@ -249,7 +249,7 @@ class LeadModel extends CI_Model
             COUNT(IF(status=9, 1, NULL)) as completed,
             COUNT(IF(status=10, 1, NULL)) as closed,
             COUNT(IF(status=11, 1, NULL)) as archive,
-            COUNT(IF(status=12, 1, NULL)) as worry_to_lose,
+            COUNT(IF(status=12, 1, NULL)) as cold,
             COUNT(IF(status=13, 1, NULL)) as postponed,
             COUNT(IF(status=14, 1, NULL)) as lostLeads
         ", FALSE);
