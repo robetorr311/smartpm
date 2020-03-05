@@ -28,7 +28,7 @@ class Dashboard extends CI_Controller
 			'estimateBidLeads' => $leadStatusCount->needs_estimate,
 			'estimateSentLeads' => $leadStatusCount->estimate_sent,
 			'readyToSignLeads' => $leadStatusCount->ready_to_sign,
-			'worryToLoaseLeads' => $leadStatusCount->worry_to_lose,
+			'coldLeads' => $leadStatusCount->cold,
 			'postponedLeads' => $leadStatusCount->postponed,
 			'lostLeads' => $leadStatusCount->lostLeads,
 			'signedJobs' => $leadStatusCount->signed,
