@@ -103,7 +103,7 @@
                             <p>All Statuses</p>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="<?= base_url('lead/cash-jobs') ?>">
                             <i class="pe-7s-user"></i>
                             <p>Cash Jobs</p>
@@ -156,7 +156,7 @@
                             <i class="pe-7s-note"></i>
                             <p>Archive Jobs</p>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a class="nav-link" data-toggle="collapse" href="#financialCollapse">
                             <i class="pe-7s-graph"></i>
