@@ -260,6 +260,35 @@ class LeadModel extends CI_Model
         return $result ? $result : false;
     }
 
+    public function search($keywords)
+    {
+        if (count($keywords) <= 0) {
+            return [];
+        }
+        $this->db->select("id, firstname, lastname, address, city, state, zip, phone1, phone2, email, status, category");
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        $this->db->group_start();
+        foreach ($keywords as $k) {
+            $this->db->or_like('id', $k);
+            $this->db->or_like('firstname', $k);
+            $this->db->or_like('lastname', $k);
+            $this->db->or_like('address', $k);
+            $this->db->or_like('city', $k);
+            $this->db->or_like('state', $k);
+            $this->db->or_like('zip', $k);
+            $this->db->or_like('phone1', $k);
+            $this->db->or_like('phone2', $k);
+            $this->db->or_like('email', $k);
+        }
+        $this->db->group_end();
+        $this->db->order_by('created_at', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     /**
      * Static Methods
      */

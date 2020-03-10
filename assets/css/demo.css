@@ -1082,6 +1082,7 @@ input[type="button"] {
 	display: inline-block;
 	color: #000000;
 	cursor: text;
+	position: relative;
 }
 .search-box i.fa {
 	font-size: 16px;
@@ -1092,4 +1093,64 @@ input[type="button"] {
 	box-sizing: content-box;
 	width: 200px;
 	border-width: 0;
+}
+.search-box .search-result {
+	position: absolute;
+	width: 100%;
+	top: 100%;
+	left: 0;
+	background-color: #ffffff;
+	display: none;
+	margin-top: 2px;
+	border: solid 1px #ccc;
+	z-index: 999;
+}
+.search-box .search-result:hover,
+.search-box .search-result:hover .leads-search-result,
+.search-box .search-result:hover .tasks-search-result,
+.search-box .search-result:hover .users-search-result {
+	display: initial;
+}
+.search-box .search-result .no-result {
+	display: none;
+}
+.search-box .search-result.result-loading,
+.search-box .search-result.result-empty,
+.search-box .search-result.result-empty .no-result,
+.search-box .search-result.result-available {
+	display: initial;
+}
+.search-box .search-result .leads-search-result,
+.search-box .search-result .tasks-search-result,
+.search-box .search-result .users-search-result,
+.search-box .search-result .loading-sign {
+	display: none;
+}
+.search-box .search-result.result-loading .loading-sign {
+	display: initial;
+}
+.search-box .search-result .leads-search-result.result-available,
+.search-box .search-result .tasks-search-result.result-available,
+.search-box .search-result .users-search-result.result-available {
+	display: initial;
+}
+.search-box .search-result .title-result {
+	font-size: 10px;
+	padding: 1px 3px;
+	font-weight: bold;
+	color: #fff;
+	background-color: #9A9A9A;
+	display: block;
+}
+.search-box .search-result .result-item {
+	display: block;
+	padding: 5px;
+	font-size: 13px;
+	border-bottom: solid 1px #ccc;
+}
+.search-box .search-result .result-item:hover {
+	background-color: #eee;
+}
+.search-box .search-result .result-item:last-child {
+	border-bottom-width: 0;
 }

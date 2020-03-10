@@ -162,6 +162,32 @@ class TaskModel extends CI_Model
         return $result ? $result : false;
     }
 
+    public function search($keywords)
+    {
+        if (count($keywords) <= 0) {
+            return [];
+        }
+        $this->db->select("
+            tasks.id,
+            tasks.name,
+            CONCAT(users_assigned_to.first_name, ' ', users_assigned_to.last_name, ' (@', users_assigned_to.username, ')') as assigned_user_fullname
+        ");
+        $this->db->from($this->table);
+        $this->db->join('users as users_assigned_to', 'tasks.assigned_to=users_assigned_to.id', 'left');
+        $this->db->where([
+            'tasks.is_deleted' => FALSE
+        ]);
+        $this->db->group_start();
+        foreach ($keywords as $k) {
+            $this->db->or_like('name', $k);
+            $this->db->or_where("assigned_to IN (SELECT id FROM users WHERE first_name LIKE '%" . $k . "%' OR last_name LIKE '%" . $k . "%' OR username LIKE '%" . $k . "%')");
+        }
+        $this->db->group_end();
+        $this->db->order_by('tasks.created_at', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     /**
      * Static Methods
      */
