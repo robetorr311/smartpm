@@ -209,6 +209,33 @@ class UserModel extends CI_Model
 			->row_array();
 	}
 
+    public function search($keywords)
+    {
+        if (count($keywords) <= 0) {
+            return [];
+		}
+		$this->db->select("id, first_name, last_name, username, email_id, office_phone, home_phone, cell_1, cell_2");
+        $this->db->from($this->table);
+        $this->db->where([
+            'is_deleted' => FALSE
+        ]);
+        $this->db->group_start();
+        foreach ($keywords as $k) {
+            $this->db->or_like('first_name', $k);
+            $this->db->or_like('last_name', $k);
+            $this->db->or_like('username', $k);
+            $this->db->or_like('email_id', $k);
+            $this->db->or_like('office_phone', $k);
+            $this->db->or_like('home_phone', $k);
+            $this->db->or_like('cell_1', $k);
+            $this->db->or_like('cell_2', $k);
+        }
+        $this->db->group_end();
+        $this->db->order_by('created_at', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 	/**
 	 * Private Methods
 	 */

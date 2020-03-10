@@ -261,6 +261,24 @@
                                 <div class="search-box">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     <input type="search" name="search" id="search" autocomplete="off">
+                                    <div class="search-result">
+                                        <div class="leads-search-result">
+                                        </div>
+                                        <div class="tasks-search-result">
+                                        </div>
+                                        <div class="users-search-result">
+                                        </div>
+                                        <div class="loading-sign">
+                                            <div class="text-center">
+                                                <small>Loading...</small>
+                                            </div>
+                                        </div>
+                                        <div class="no-result">
+                                            <div class="text-center">
+                                                <small>No Result Found!</small>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
 
