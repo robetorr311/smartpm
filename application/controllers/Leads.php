@@ -52,10 +52,16 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
+		$job_type_tags = LeadModel::getType();
+		$lead_status_tags = LeadModel::getStatus();
+		$lead_category_tags = LeadModel::getCategory();
 		$clientLeadSource = $this->leadSource->allLeadSource();
 
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/create', [
+			'job_type_tags' => $job_type_tags,
+			'lead_status_tags' => $lead_status_tags,
+			'lead_category_tags' => $lead_category_tags,
 			'leadSources' => $clientLeadSource
 		]);
 		$this->load->view('footer');
@@ -77,6 +83,9 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
 		$this->form_validation->set_rules('lead_source', 'Lead Source', 'trim|numeric|in_list[' . $clientLeadSourceKeys . ']');
+		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
+		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
+		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
@@ -91,6 +100,9 @@ class Leads extends CI_Controller
 				'phone2' => $posts['phone2'],
 				'email' => $posts['email'],
 				'lead_source' => $posts['lead_source'],
+				'status' => $posts['status'],
+				'category' => $posts['category'],
+				'type' => $posts['type'],
 				'entry_date' => date('Y-m-d h:i:s')
 			]);
 

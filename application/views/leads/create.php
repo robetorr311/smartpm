@@ -152,6 +152,55 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <div class="row">
                         <div class="col-md-12">
+                            <div>
+                                <h4 class="title" style="float: left;">Contract Status</h4>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <select class="form-control" id="lead" name="status">
+                                        <?php foreach ($lead_status_tags as $s_id => $s_tags) : ?>
+                                            <option value="<?= $s_id ?>"><?= $s_tags ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h4 class="title" style="float: left;">Category</h4>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <select class="form-control" id="category" name="category">
+                                        <?php foreach ($lead_category_tags as $s_id => $s_tags) : ?>
+                                            <option value="<?= $s_id ?>"><?= $s_tags ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h4 class="title" style="float: left;">Job Type</h4>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <select class="form-control lead-status" id="job" name="type">
+                                        <?php foreach ($job_type_tags as $j_id => $job) : ?>
+                                            <option value="<?= $j_id ?>"><?= $job ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="clearfix" style="padding: 10px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-info btn-fill pull-right">Create</button>
                             </div>

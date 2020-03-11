@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads/status/11') ?>">
+				<a href="<?= base_url('leads/status/12') ?>">
 					<span><?= $coldLeads ?></span>
 					<p><?= $boxNames[7]->label ?? 'Cold' ?></p>
 				</a>
@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads/status/12') ?>">
+				<a href="<?= base_url('leads/status/13') ?>">
 					<span><?= $postponedLeads ?></span>
 					<p><?= $boxNames[8]->label ?? 'Postponed' ?></p>
 				</a>
@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="col-md-2">
 			<div class="box gray-box">
-				<a href="<?= base_url('leads/status/13') ?>">
+				<a href="<?= base_url('leads/status/14') ?>">
 					<span><?= $lostLeads ?></span>
 					<p><?= $boxNames[9]->label ?? 'Lost' ?></p>
 				</a>
