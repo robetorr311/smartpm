@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/0') ?>">
 					<span><?= $newLeads ?></span>
-					<p>New</p>
+					<p><?= $boxNames[0]->label ?? 'New' ?></p>
 				</a>
 			</div>
 		</div>
@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/1') ?>">
 					<span><?= $appointmentScheduledLeads ?></span>
-					<p>Appointment<br>Scheduled</p>
+					<p><?= $boxNames[1]->label ?? 'Appointment<br>Scheduled' ?></p>
 				</a>
 			</div>
 		</div>
@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/2') ?>">
 					<span><?= $followUpLeads ?></span>
-					<p>Needs Follow Up<br>Call</p>
+					<p><?= $boxNames[2]->label ?? 'Needs Follow Up<br>Call' ?></p>
 				</a>
 			</div>
 		</div>
@@ -35,7 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/3') ?>">
 					<span><?= $needsSiteVisitLeads ?></span>
-					<p>Needs Site<br>Visit</p>
+					<p><?= $boxNames[3]->label ?? 'Needs Site<br>Visit' ?></p>
 				</a>
 			</div>
 		</div>
@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/4') ?>">
 					<span><?= $estimateBidLeads ?></span>
-					<p>Needs<br>Estimate / Bid</p>
+					<p><?= $boxNames[4]->label ?? 'Needs<br>Estimate / Bid' ?></p>
 				</a>
 			</div>
 		</div>
@@ -53,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/5') ?>">
 					<span><?= $estimateSentLeads ?></span>
-					<p>Estimate Sent</p>
+					<p><?= $boxNames[5]->label ?? 'Estimate Sent' ?></p>
 				</a>
 			</div>
 		</div>
@@ -61,7 +61,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/6') ?>">
 					<span><?= $readyToSignLeads ?></span>
-					<p>Ready to<br>Sign / Verbal Go</p>
+					<p><?= $boxNames[6]->label ?? 'Ready to<br>Sign / Verbal Go' ?></p>
 				</a>
 			</div>
 		</div>
@@ -69,7 +69,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/11') ?>">
 					<span><?= $coldLeads ?></span>
-					<p>Cold</p>
+					<p><?= $boxNames[7]->label ?? 'Cold' ?></p>
 				</a>
 			</div>
 		</div>
@@ -77,7 +77,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/12') ?>">
 					<span><?= $postponedLeads ?></span>
-					<p>Postponed</p>
+					<p><?= $boxNames[8]->label ?? 'Postponed' ?></p>
 				</a>
 			</div>
 		</div>
@@ -85,7 +85,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('leads/status/13') ?>">
 					<span><?= $lostLeads ?></span>
-					<p>Lost</p>
+					<p><?= $boxNames[9]->label ?? 'Lost' ?></p>
 				</a>
 			</div>
 		</div>
@@ -100,7 +100,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/signed-jobs') ?>">
 					<span><?= $signedJobs ?></span>
-					<p>Signed</p>
+					<p><?= $boxNames[10]->label ?? 'Signed' ?></p>
 				</a>
 			</div>
 		</div>
@@ -108,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/production-jobs') ?>">
 					<span><?= $productionJobs ?></span>
-					<p>Production</p>
+					<p><?= $boxNames[11]->label ?? 'Production' ?></p>
 				</a>
 			</div>
 		</div>
@@ -116,7 +116,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/completed-jobs') ?>">
 					<span><?= $completedJobs ?></span>
-					<p>Completed</p>
+					<p><?= $boxNames[12]->label ?? 'Completed' ?></p>
 				</a>
 			</div>
 		</div>
@@ -124,7 +124,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/closed-jobs') ?>">
 					<span><?= $closedJobs ?></span>
-					<p>Closed</p>
+					<p><?= $boxNames[13]->label ?? 'Closed' ?></p>
 				</a>
 			</div>
 		</div>
@@ -132,7 +132,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('lead/archive-jobs') ?>">
 					<span><?= $archiveJobs ?></span>
-					<p>Archive</p>
+					<p><?= $boxNames[14]->label ?? 'Archive' ?></p>
 				</a>
 			</div>
 		</div>
@@ -147,7 +147,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('tasks/status/0') ?>">
 					<span><?= $createdTasks ?></span>
-					<p>Created</p>
+					<p><?= $boxNames[15]->label ?? 'Created' ?></p>
 				</a>
 			</div>
 		</div>
@@ -155,7 +155,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('tasks/status/1') ?>">
 					<span><?= $workingTasks ?></span>
-					<p>Working</p>
+					<p><?= $boxNames[16]->label ?? 'Working' ?></p>
 				</a>
 			</div>
 		</div>
@@ -163,7 +163,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('tasks/status/2') ?>">
 					<span><?= $stuckTasks ?></span>
-					<p>Stuck</p>
+					<p><?= $boxNames[17]->label ?? 'Stuck' ?></p>
 				</a>
 			</div>
 		</div>
@@ -171,7 +171,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('tasks/status/3') ?>">
 					<span><?= $holdTasks ?></span>
-					<p>Hold</p>
+					<p><?= $boxNames[18]->label ?? 'Hold' ?></p>
 				</a>
 			</div>
 		</div>
@@ -179,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="box gray-box">
 				<a href="<?= base_url('tasks/status/4') ?>">
 					<span><?= $completedTasks ?></span>
-					<p>Completed</p>
+					<p><?= $boxNames[19]->label ?? 'Completed' ?></p>
 				</a>
 			</div>
 		</div>

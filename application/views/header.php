@@ -227,6 +227,11 @@
                                         <span class="sidebar-normal">SMTP Settings</span>
                                     </a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('setting/dashboard-options') ?>">
+                                        <span class="sidebar-normal">Dashboard Options</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>
