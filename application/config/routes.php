@@ -276,6 +276,8 @@ $route['setting/task-options/type/(:num)/update']['post'] = 'taskOptions/updateT
 $route['setting/task-options/type/(:num)/delete']['post'] = 'taskOptions/deleteType/$1';
 $route['setting/smtp-settings'] = 'smtpsettings/index';
 $route['setting/smtp-settings/update']['post'] = 'smtpsettings/updateSMTPSettings';
+$route['setting/dashboard-options'] = 'dashboardOptions/index';
+$route['setting/dashboard-options/update']['post'] = 'dashboardOptions/updateBoxName';
 
 $route['search/leads']['post'] = 'search/leads';
 $route['search/tasks']['post'] = 'search/tasks';
