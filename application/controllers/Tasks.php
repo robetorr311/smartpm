@@ -396,10 +396,11 @@ class Tasks extends CI_Controller
                         $userIds = $this->user->getUserIdArrByUserNames($usernames);
                     }
 
-                    $old_tag_users = $this->task_user_tags->getUsersByTaskId($id);
-                    $old_tag_users = ($old_tag_users) ? array_column($old_tag_users, 'id') : [];
-                    $users = array_unique(array_merge($old_tag_users, $userIds));
-                    $users_insert = array_diff($users, $old_tag_users);
+                    // $old_tag_users = $this->task_user_tags->getUsersByTaskId($id);
+                    // $old_tag_users = ($old_tag_users) ? array_column($old_tag_users, 'id') : [];
+                    // $users = array_unique(array_merge($old_tag_users, $userIds));
+                    // $users_insert = array_diff($users, $old_tag_users);
+                    $users_insert = $userIds;
                     if (count($users_insert)) {
                         $usersInsert = $this->task_user_tags->insertByUserArr($users_insert, $id);
                         if (!$usersInsert) {
