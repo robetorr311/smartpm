@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
+    <div class="row page-header-buttons">
+        <div class="col-md-12">
+            <a href="<?= base_url('lead/create') ?>" class="btn btn-info btn-fill">New Lead / Client</a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <?php
