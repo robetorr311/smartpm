@@ -25,6 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             echo '<label>' . $note->created_user_fullname . '</label>';
                             echo '<a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';
+                            echo '<small class="date-created">' . $note->created_at . '</small>';
                             echo '<div style="text-align: right;">';
                             echo '<small><a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/replies') . '">Thread Details</a></small>';
                             echo '</div>';
