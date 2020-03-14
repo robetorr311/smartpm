@@ -17,8 +17,91 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			?>
 		</div>
 	</div>
+
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-8">
+			<div class="card">
+				<div class="header">
+					<h4 class="title">Leads / Clients Detail</h4>
+				</div>
+				<div class="content view">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>First Name :</label>
+								<p><?= $lead->firstname ?></p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Last Name :</label>
+								<p><?= $lead->lastname ?></p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Address :</label>
+								<p><?= $lead->address ?></p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>City :</label>
+								<p><?= $lead->city ?></p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>State :</label>
+								<p><?= $lead->state ?></p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Postal Code :</label>
+								<p><?= $lead->zip ?></p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Cell Phone :</label>
+								<p><?= $lead->phone1 ?></p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Home Phone :</label>
+								<p><?= $lead->phone2 ? $lead->phone2 : '-' ?></p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Email :</label>
+								<p><?= $lead->email ? $lead->email : '-' ?></p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Lead Source :</label>
+								<p><?= $lead->lead_source_name ? $lead->lead_source_name : '-' ?></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">
 			<div class="card">
 				<div class="header">
 					<h4 class="title">Photo Report</h4>

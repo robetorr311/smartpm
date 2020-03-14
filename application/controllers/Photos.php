@@ -9,7 +9,8 @@ class Photos extends CI_Controller
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['form_validation', 'email', 'user_agent', 'session', 'image_lib']);
-		$this->load->model(['JobsPhotoModel']);
+		$this->load->model(['JobsPhotoModel', 'LeadModel']);
+		$this->lead = new LeadModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -17,6 +18,7 @@ class Photos extends CI_Controller
 		authAccess();
 		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$lead = $this->lead->getLeadById($job_id);
 		$params = array();
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
@@ -24,6 +26,7 @@ class Photos extends CI_Controller
 		$imgs  = $this->JobsPhotoModel->allPhoto($params);
 		$this->load->view('header', ['title' => 'Add Photo']);
 		$this->load->view('photo/index', [
+			'lead' => $lead,
 			'count' => $count,
 			'imgs' => $imgs,
 			'jobid' => $job_id,
