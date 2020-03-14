@@ -11,7 +11,92 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
             ?>
         </div>
-        <div class="col-lg-9">
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Leads / Clients Detail</h4>
+                </div>
+                <div class="content view">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name :</label>
+                                <p><?= $lead->firstname ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Name :</label>
+                                <p><?= $lead->lastname ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address :</label>
+                                <p><?= $lead->address ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>City :</label>
+                                <p><?= $lead->city ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>State :</label>
+                                <p><?= $lead->state ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Postal Code :</label>
+                                <p><?= $lead->zip ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Cell Phone :</label>
+                                <p><?= $lead->phone1 ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Home Phone :</label>
+                                <p><?= $lead->phone2 ? $lead->phone2 : '-' ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email :</label>
+                                <p><?= $lead->email ? $lead->email : '-' ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Lead Source :</label>
+                                <p><?= $lead->lead_source_name ? $lead->lead_source_name : '-' ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
             <div class="card lead-notes-card">
                 <div class="header">
                     <h4 class="title">Note Thread</h4>
@@ -39,8 +124,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             echo '<label>' . $note_reply->created_user_fullname . '</label>';
                             echo '<a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/reply/' . $note_reply->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
                             echo '<p>' . $note_reply->reply . '</p>';
-                            echo '<div style="text-align: right;">';
-                            echo '</div>';
+                            echo '<small class="date-created">' . $note->created_at . '</small>';
                             echo '</div>';
                             echo '</div>';
                         }

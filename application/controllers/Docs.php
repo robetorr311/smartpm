@@ -9,8 +9,9 @@ class Docs extends CI_Controller
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['session', 'image_lib']);
-		$this->load->model(['JobsDocModel', 'Common_model']);
+		$this->load->model(['JobsDocModel', 'Common_model', 'LeadModel']);
 		$this->doc = new JobsDocModel();
+		$this->lead = new LeadModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -18,12 +19,14 @@ class Docs extends CI_Controller
 		authAccess();
 		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$lead = $this->lead->getLeadById($job_id);
 		$params = array();
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
 		$docs = $this->Common_model->get_all_where('jobs_doc', $params);
 		$this->load->view('header', ['title' => 'Add Doucment']);
 		$this->load->view('doc/index', [
+			'lead' => $lead,
 			'docs' => $docs,
 			'jobid' => $job_id,
 			'sub_base_path' => $sub_base_path
