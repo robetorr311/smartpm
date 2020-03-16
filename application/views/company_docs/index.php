@@ -33,6 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>File Name</th>
                             <th>Created By</th>
                             <th class="text-center">Download</th>
+                            <th class="text-center">View</th>
                             <th class="text-center">Delete</th>
                         </thead>
                         <tbody>
@@ -42,7 +43,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $doc->id ?></td>
                                         <td><?= $doc->doc_name ?></td>
                                         <td><?= $doc->created_user_fullname ?></td>
-                                        <td class="text-center"><a target="_blank" href="<?= base_url('company-doc/' . $doc->id . '/download') ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td class="text-center"><a target="_blank" href="<?= base_url('company-doc/' . $doc->id . '/download') ?>" class="text-primary"><i class="fa fa-download"></i></a></td>
+                                        <?php if (substr($doc->doc_name, -4) === ".pdf") { ?>
+                                            <td class="text-center"><a target="_blank" href="<?= base_url('assets/company_doc/' . $doc->doc_name) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <?php } else { ?>
+                                            <td class="text-center">-</td>
+                                        <?php } ?>
                                         <td class="text-center"><a href="<?= base_url('company-doc/' . $doc->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
