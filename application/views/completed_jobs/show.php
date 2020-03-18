@@ -30,9 +30,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<div class="row">
 						<div class="col-md-12">
 						<?= $job->firstname ?> <?= $job->lastname ?><br />
-						<?= $job->city ?>, <?= $job->state ?> <?= $job->zip ?><br />
+						<?= $job->address ?><br />
+						<?= $job->city ?>, <?= $job->state ?><br />
 						C - <?= $job->phone1 ?><br />
-						<?= $job->address ?>
+						<?= $job->email ?>
 						</div>
 					</div>
 				</div>

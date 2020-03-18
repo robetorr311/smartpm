@@ -33,9 +33,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<div class="row">
 						<div class="col-md-12">
 						<?= $lead->firstname ?> <?= $lead->lastname ?><br />
-						<?= $lead->city ?>, <?= $lead->state ?> <?= $lead->zip ?><br />
+						<?= $lead->address ?><br />
+						<?= $lead->city ?>, <?= $lead->state ?><br />
 						C - <?= $lead->phone1 ?><br />
-						<?= $lead->address ?>
+						<?= $lead->email ?>
 						</div>
 					</div>
 				</div>
@@ -157,7 +158,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Address<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Address" name="address" value="<?= $lead->address ?>" type="text">
+                                <input class="form-control" placeholder="Address" name="address" value="<?= $lead->email ?>" type="text">
                             </div>
                         </div>
                     </div>
