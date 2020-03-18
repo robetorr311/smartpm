@@ -17,9 +17,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<div class="row">
 						<div class="col-md-12">
 						<?= $lead->firstname ?> <?= $lead->lastname ?><br />
-						<?= $lead->city ?>, <?= $lead->state ?> <?= $lead->zip ?><br />
+						<?= $lead->address ?><br />
+						<?= $lead->city ?>, <?= $lead->state ?><br />
 						C - <?= $lead->phone1 ?><br />
-						<?= $lead->address ?>
+						<?= $lead->email ?>
 						</div>
 					</div>
 				</div>
