@@ -9,8 +9,9 @@ class Photos extends CI_Controller
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['form_validation', 'email', 'user_agent', 'session', 'image_lib']);
-		$this->load->model(['JobsPhotoModel', 'LeadModel']);
+		$this->load->model(['JobsPhotoModel', 'LeadModel', 'ActivityLogsModel']);
 		$this->lead = new LeadModel();
+		$this->activityLogs = new ActivityLogsModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -206,6 +207,11 @@ class Photos extends CI_Controller
 			$params['is_active'] 		= TRUE;
 			$this->db->insert('jobs_photo', $params);
 			$insertId = $this->db->insert_id();
+			$al_insert = $this->activityLogs->insert([
+				'module' => 0,
+				'module_id' => $posts['id'],
+				'type' => 2
+			]);
 			echo '<div id="ph' . $insertId . '" class="col-md-2"><i class="del-photo pe-7s-close" id="' . $insertId . '"></i><a alt="' . $insertId . '"  href="' . base_url() . 'assets/job_photo/' . $data[$i] . '" data-fancybox="photo" data-caption="' . $data[$i] . '"><img id="img' . $insertId . '" src="' . base_url() . 'assets/job_photo/' . $data[$i] . '"  /></a></div>';
 			$this->thumbnail($data[$i]);
 		}

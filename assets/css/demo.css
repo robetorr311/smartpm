@@ -1158,3 +1158,11 @@ input[type="button"] {
 .search-box .search-result .result-item:last-child {
 	border-bottom-width: 0;
 }
+.activity-logs p {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: solid 1px #cccccc;
+}
+.activity-logs p:last-child {
+	border-bottom-width: 0;
+}

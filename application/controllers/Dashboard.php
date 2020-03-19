@@ -7,10 +7,11 @@ class Dashboard extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TaskModel', 'DashboardBoxNameModel']);
+		$this->load->model(['LeadModel', 'TaskModel', 'DashboardBoxNameModel', 'ActivityLogsModel']);
 		$this->lead = new LeadModel();
 		$this->task = new TaskModel();
 		$this->dashboardBoxName = new DashboardBoxNameModel();
+		$this->activityLogs = new ActivityLogsModel();
 	}
 
 	public function index()
@@ -43,7 +44,8 @@ class Dashboard extends CI_Controller
 			'stuckTasks' => $taskStatusCount->stuck,
 			'holdTasks' => $taskStatusCount->hold,
 			'completedTasks' => $taskStatusCount->completed,
-			'boxNames' => $boxNames
+			'boxNames' => $boxNames,
+			'aLogs' => $this->activityLogs->getLast10()
 		]);
 		$this->load->view('footer');
 	}

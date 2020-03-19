@@ -9,7 +9,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
@@ -22,6 +22,7 @@ class Leads extends CI_Controller
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->leadSource = new ClientLeadSourceModel();
+		$this->activityLogs = new ActivityLogsModel();
 	}
 
 	public function index()
@@ -107,6 +108,11 @@ class Leads extends CI_Controller
 			]);
 
 			if ($insert) {
+				$al_insert = $this->activityLogs->insert([
+					'module' => 0,
+					'module_id' => $insert,
+					'type' => 0
+				]);
 				$ap_insert = $this->party->insert([
 					'job_id' => $insert,
 					'fname' => $posts['ap_firstname'],
@@ -227,6 +233,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
+			$_lead = $this->lead->getLeadById($id);
 			$posts = $this->input->post();
 			$update = $this->lead->update($id, [
 				'status' => $posts['status'],
@@ -236,6 +243,16 @@ class Leads extends CI_Controller
 
 			if ($update) {
 				$lead = $this->lead->getLeadById($id);
+				if ($_lead->status != $lead->status) {
+					$al_insert = $this->activityLogs->insert([
+						'module' => 0,
+						'module_id' => $id,
+						'type' => 4,
+						'activity_data' => json_encode([
+							'status' => $lead->status
+						])
+					]);
+				}
 				$sub_base_path = '';
 				if ($lead->status === '8') {
 					$sub_base_path = 'production-job/';
@@ -286,7 +303,7 @@ class Leads extends CI_Controller
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
-			
+
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/show', [
 				'lead' => $lead,
@@ -356,6 +373,14 @@ class Leads extends CI_Controller
 				$insert = $this->lead_note->insert([
 					'note' => nl2br($noteData['note']),
 					'job_id' => $leadId
+				]);
+				$al_insert = $this->activityLogs->insert([
+					'module' => 0,
+					'module_id' => $leadId,
+					'type' => 1,
+					'activity_data' => json_encode([
+						'note' => nl2br($noteData['note'])
+					])
 				]);
 				if ($insert) {
 					$userIds = [];
@@ -447,6 +472,14 @@ class Leads extends CI_Controller
 					$insert = $this->lead_note_reply->insert([
 						'reply' => nl2br($replyData['reply']),
 						'note_id' => $noteId
+					]);
+					$al_insert = $this->activityLogs->insert([
+						'module' => 0,
+						'module_id' => $leadId,
+						'type' => 1,
+						'activity_data' => json_encode([
+							'note' => nl2br($replyData['reply'])
+						])
 					]);
 					if ($insert) {
 						$userIds = [];
