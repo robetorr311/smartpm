@@ -45,7 +45,7 @@ class Dashboard extends CI_Controller
 			'holdTasks' => $taskStatusCount->hold,
 			'completedTasks' => $taskStatusCount->completed,
 			'boxNames' => $boxNames,
-			'aLogs' => $this->activityLogs->getLast10()
+			'aLogs' => $this->activityLogs->getLast50()
 		]);
 		$this->load->view('footer');
 	}
