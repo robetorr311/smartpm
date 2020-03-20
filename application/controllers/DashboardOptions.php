@@ -29,7 +29,7 @@ class DashboardOptions extends CI_Controller
         $this->load->view('footer');
     }
 
-    public function updateBoxName($id)
+    public function updateBoxName()
     {
         authAccess();
 
