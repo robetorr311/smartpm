@@ -17,7 +17,7 @@ class ActivityLogsModel extends CI_Model
 	// 	4 => 'change_status'
 	// ];
 
-	public function getLast10()
+	public function getLast50()
 	{
 		$this->db->select("
             activity_logs.*,
