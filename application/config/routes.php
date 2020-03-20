@@ -274,8 +274,8 @@ $route['setting/task-options'] = 'taskOptions/index';
 $route['setting/task-options/type/store']['post'] = 'taskOptions/insertType';
 $route['setting/task-options/type/(:num)/update']['post'] = 'taskOptions/updateType/$1';
 $route['setting/task-options/type/(:num)/delete']['post'] = 'taskOptions/deleteType/$1';
-$route['setting/smtp-settings'] = 'smtpsettings/index';
-$route['setting/smtp-settings/update']['post'] = 'smtpsettings/updateSMTPSettings';
+$route['setting/smtp-settings'] = 'smtpSettings/index';
+$route['setting/smtp-settings/update']['post'] = 'smtpSettings/updateSMTPSettings';
 $route['setting/dashboard-options'] = 'dashboardOptions/index';
 $route['setting/dashboard-options/update']['post'] = 'dashboardOptions/updateBoxName';
 
