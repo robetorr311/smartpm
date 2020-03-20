@@ -29,7 +29,7 @@ class ActivityLogsModel extends CI_Model
 		$this->db->join('jobs as client', 'activity_logs.module_id=client.id', 'left');
 		$this->db->where('activity_logs.is_deleted', FALSE);
 		$this->db->order_by('created_at', 'DESC');
-		$this->db->limit(10);
+		$this->db->limit(50);
 		$query = $this->db->get();
 		return $query->result();
 	}
