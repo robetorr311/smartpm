@@ -278,6 +278,10 @@ $route['setting/smtp-settings'] = 'smtpSettings/index';
 $route['setting/smtp-settings/update']['post'] = 'smtpSettings/updateSMTPSettings';
 $route['setting/dashboard-options'] = 'dashboardOptions/index';
 $route['setting/dashboard-options/update']['post'] = 'dashboardOptions/updateBoxName';
+$route['setting/user-options'] = 'userOptions/index';
+$route['setting/user-options/cell-notif-suffix/store']['post'] = 'userOptions/insertCellNotifSuffix';
+$route['setting/user-options/cell-notif-suffix/(:num)/update']['post'] = 'userOptions/updateCellNotifSuffix/$1';
+$route['setting/user-options/cell-notif-suffix/(:num)/delete']['post'] = 'userOptions/deleteCellNotifSuffix/$1';
 
 $route['search/leads']['post'] = 'search/leads';
 $route['search/tasks']['post'] = 'search/tasks';

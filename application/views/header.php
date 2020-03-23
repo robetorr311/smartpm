@@ -223,6 +223,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('setting/user-options') ?>">
+                                        <span class="sidebar-normal">User Options</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
                                     <a class="nav-link" href="<?= base_url('setting/smtp-settings') ?>">
                                         <span class="sidebar-normal">SMTP Settings</span>
                                     </a>

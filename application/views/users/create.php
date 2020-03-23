@@ -95,6 +95,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label>Cell 1 Provider</label>
+                                    <select name="cell_1_provider" class="form-control">
+                                        <option value="" disabled selected>Select Cell 1 Provider</option>
+                                        <?php foreach ($cellNotifSuffix as $cellProvider) {
+                                            echo '<option value="' . $cellProvider->id . '">' . $cellProvider->cell_provider . '</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Notifications<span class="red-mark">*</span></label>
                                     <select name="notifications" class="form-control">
                                         <option value="" disabled selected>Select Notifications</option>
