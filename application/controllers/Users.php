@@ -9,11 +9,12 @@ class Users extends CI_Controller
 	{
 		parent::__construct();
 		
-		$this->load->model(['UserModel', 'AdminSettingModel']);
+		$this->load->model(['UserModel', 'AdminSettingModel', 'UserCellNotifSuffixModel']);
 		$this->load->library(['form_validation', 'notify']);
 
 		$this->user = new UserModel();
 		$this->admin_setting = new AdminSettingModel();
+		$this->userCellNotifSuffix = new UserCellNotifSuffixModel();
 	}
 
 	public function index()
@@ -36,13 +37,15 @@ class Users extends CI_Controller
 
 		$levels = UserModel::getLevels();
 		$notifications = UserModel::getNotifications();
+		$cellNotifSuffix = $this->userCellNotifSuffix->allCellNotifSuffix();
 
 		$this->load->view('header', [
 			'title' => $this->title
 		]);
 		$this->load->view('users/create', [
 			'levels' => $levels,
-			'notifications' => $notifications
+			'notifications' => $notifications,
+			'cellNotifSuffix' => $cellNotifSuffix
 		]);
 		$this->load->view('footer');
 	}
@@ -53,6 +56,7 @@ class Users extends CI_Controller
 
 		$levelKeys = implode(',', array_keys(UserModel::getLevels()));
 		$notificationKeys = implode(',', array_keys(UserModel::getNotifications()));
+		$cellNotifSuffixKeys = implode(',', array_column($this->userCellNotifSuffix->allCellNotifSuffix(), 'id'));
 
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
@@ -63,6 +67,7 @@ class Users extends CI_Controller
 		$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
 		$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
 		$this->form_validation->set_rules('cell_1', 'Cell 1', 'trim|numeric');
+		$this->form_validation->set_rules('cell_1_provider', 'Cell 1 Provider', 'trim|numeric|in_list[' . $cellNotifSuffixKeys . ']');
 		$this->form_validation->set_rules('cell_2', 'Cell 2', 'trim|numeric');
 		$this->form_validation->set_rules('notifications', 'Notifications', 'trim|required|numeric|in_list[' . $notificationKeys . ']');
 		$this->form_validation->set_rules('is_active', 'Status', 'trim|required|numeric|in_list[0,1]');
@@ -78,6 +83,7 @@ class Users extends CI_Controller
 				'office_phone' => $userData['office_phone'],
 				'home_phone' => $userData['home_phone'],
 				'cell_1' => $userData['cell_1'],
+				'cell_1_provider' => $userData['cell_1_provider'],
 				'cell_2' => $userData['cell_2'],
 				'notifications' => $userData['notifications'],
 				'company_id' => $this->session->company_id,
@@ -136,6 +142,7 @@ class Users extends CI_Controller
 		if ($user) {
 			$levelKeys = implode(',', array_keys(UserModel::getLevels()));
 			$notificationKeys = implode(',', array_keys(UserModel::getNotifications()));
+			$cellNotifSuffixKeys = implode(',', array_column($this->userCellNotifSuffix->allCellNotifSuffix(), 'id'));
 
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
@@ -143,6 +150,7 @@ class Users extends CI_Controller
 			$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
 			$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
 			$this->form_validation->set_rules('cell_1', 'Cell 1', 'trim|numeric');
+			$this->form_validation->set_rules('cell_1_provider', 'Cell 1 Provider', 'trim|numeric|in_list[' . $cellNotifSuffixKeys . ']');
 			$this->form_validation->set_rules('cell_2', 'Cell 2', 'trim|numeric');
 			$this->form_validation->set_rules('notifications', 'Notifications', 'trim|required|numeric|in_list[' . $notificationKeys . ']');
 			$this->form_validation->set_rules('is_active', 'Status', 'trim|required|numeric|in_list[0,1]');
@@ -156,6 +164,7 @@ class Users extends CI_Controller
 					'office_phone' => $userData['office_phone'],
 					'home_phone' => $userData['home_phone'],
 					'cell_1' => $userData['cell_1'],
+					'cell_1_provider' => $userData['cell_1_provider'],
 					'cell_2' => $userData['cell_2'],
 					'notifications' => $userData['notifications'],
 					'is_active' => $userData['is_active']
@@ -181,6 +190,7 @@ class Users extends CI_Controller
 		if ($user) {
 			$levels = UserModel::getLevels();
 			$notifications = UserModel::getNotifications();
+			$cellNotifSuffix = $this->userCellNotifSuffix->allCellNotifSuffix();
 
 			$this->load->view('header', [
 				'title' => $this->title
@@ -188,7 +198,8 @@ class Users extends CI_Controller
 			$this->load->view('users/show', [
 				'user' => $user,
 				'levels' => $levels,
-				'notifications' => $notifications
+				'notifications' => $notifications,
+				'cellNotifSuffix' => $cellNotifSuffix
 			]);
 			$this->load->view('footer');
 		} else {

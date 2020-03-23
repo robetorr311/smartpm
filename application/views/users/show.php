@@ -95,6 +95,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label>Cell 1 Provider</label>
+                                    <p><?= $user->cell_1_provider_name ? $user->cell_1_provider_name : '-' ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Notifications</label>
                                     <p><?= UserModel::notificationsToStr($user->notifications) ?></p>
                                 </div>
@@ -191,6 +199,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Cell 2</label>
                                     <input class="form-control" placeholder="Cell 2" name="cell_2" type="text" value="<?= $user->cell_2 ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Cell 1 Provider</label>
+                                    <select name="cell_1_provider" class="form-control">
+                                        <option value="" disabled<?= $user->cell_1_provider == '' ? ' selected' : '' ?>>Select Cell 1 Provider</option>
+                                        <?php foreach ($cellNotifSuffix as $cellProvider) {
+                                            echo '<option value="' . $cellProvider->id . '"' . ($cellProvider->id == $user->cell_1_provider ? ' selected' : '') . '>' . $cellProvider->cell_provider . '</option>';
+                                        } ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>

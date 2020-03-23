@@ -93,9 +93,14 @@ class UserModel extends CI_Model
 
 	public function allUsers()
 	{
+		$this->db->select("
+			users.*,
+			user_cell_notif_suffixs.cell_provider as cell_1_provider_name
+		");
 		$this->db->from($this->table);
-		$this->db->where('is_deleted', FALSE);
-		$this->db->order_by('id', 'ASC');
+		$this->db->join('user_cell_notif_suffixs', 'users.cell_1_provider=user_cell_notif_suffixs.id', 'left');
+		$this->db->where('users.is_deleted', FALSE);
+		$this->db->order_by('users.id', 'ASC');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -108,10 +113,15 @@ class UserModel extends CI_Model
 
 	public function getUserById($id)
 	{
+		$this->db->select("
+			users.*,
+			user_cell_notif_suffixs.cell_provider as cell_1_provider_name
+		");
 		$this->db->from($this->table);
+		$this->db->join('user_cell_notif_suffixs', 'users.cell_1_provider=user_cell_notif_suffixs.id', 'left');
 		$this->db->where([
-			'id' => $id,
-			'is_deleted' => FALSE
+			'users.id' => $id,
+			'users.is_deleted' => FALSE
 		]);
 		$query = $this->db->get();
 		$result = $query->first_row();
