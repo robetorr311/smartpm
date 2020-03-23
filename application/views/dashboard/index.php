@@ -196,7 +196,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="col-md-3">
 			<div class="row">
 				<div class="col-md-12">
-					<h3>Activity Logs</h3>
+					<h3>Activity Log</h3>
 				</div>
 			</div>
 			<div class="row activity-logs">
