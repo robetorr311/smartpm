@@ -95,7 +95,8 @@ class UserModel extends CI_Model
 	{
 		$this->db->select("
 			users.*,
-			user_cell_notif_suffixs.cell_provider as cell_1_provider_name
+			user_cell_notif_suffixs.cell_provider as cell_1_provider_name,
+			user_cell_notif_suffixs.suffix as cell_1_provider_suffix
 		");
 		$this->db->from($this->table);
 		$this->db->join('user_cell_notif_suffixs', 'users.cell_1_provider=user_cell_notif_suffixs.id', 'left');
@@ -115,7 +116,8 @@ class UserModel extends CI_Model
 	{
 		$this->db->select("
 			users.*,
-			user_cell_notif_suffixs.cell_provider as cell_1_provider_name
+			user_cell_notif_suffixs.cell_provider as cell_1_provider_name,
+			user_cell_notif_suffixs.suffix as cell_1_provider_suffix
 		");
 		$this->db->from($this->table);
 		$this->db->join('user_cell_notif_suffixs', 'users.cell_1_provider=user_cell_notif_suffixs.id', 'left');
@@ -210,6 +212,20 @@ class UserModel extends CI_Model
 		$this->db->from($this->table);
 		$query = $this->db->get();
 		return array_column($query->result_array(), 'email_id');
+	}
+
+	public function getMobEmailIdArrByUserIds($userIds)
+	{
+		$this->db->select("CONCAT(user_cell_notif_suffixs.cell_provider, user_cell_notif_suffixs.suffix) AS mob_email_id");
+		$this->db->from($this->table);
+		$this->db->join('user_cell_notif_suffixs', 'users.cell_1_provider=user_cell_notif_suffixs.id', 'left');
+		$this->db->where_in('users.id', $userIds);
+		$this->db->where('users.cell_1 !=', null);
+		$this->db->where('users.cell_1 !=', '');
+		$this->db->where('users.cell_1_provider !=', null);
+		$this->db->where('users.cell_1_provider !=', '');
+		$query = $this->db->get();
+		return array_column($query->result_array(), 'mob_email_id');
 	}
 
 	public function get_crm_data($table, $cols, $condition)
