@@ -10,7 +10,7 @@ class Leads extends CI_Controller
 		parent::__construct();
 
 		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel', 'ActivityLogsModel']);
-		$this->load->library(['form_validation']);
+		$this->load->library(['form_validation', 'notify']);
 
 		$this->lead = new LeadModel();
 		$this->lead_note = new LeadNoteModel();
@@ -391,6 +391,18 @@ class Leads extends CI_Controller
 						$userIds = $this->user->getUserIdArrByUserNames($usernames);
 					}
 					// use userIds to send emails to those users
+					$users_insert = $userIds;
+					if (count($users_insert)) {
+						$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
+						foreach ($userEmailIds as $userEmailId) {
+							$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
+						}
+
+						$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
+						foreach ($userMobEmailIds as $userMobEmailId) {
+							$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
+						}
+					}
 				} else {
 					$this->session->set_flashdata('errors', '<p>Unable to add Note.</p>');
 				}
@@ -490,6 +502,18 @@ class Leads extends CI_Controller
 							$userIds = $this->user->getUserIdArrByUserNames($usernames);
 						}
 						// use userIds to send emails to those users
+						$users_insert = $userIds;
+						if (count($users_insert)) {
+							$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
+							foreach ($userEmailIds as $userEmailId) {
+								$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
+							}
+
+							$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
+							foreach ($userMobEmailIds as $userMobEmailId) {
+								$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
+							}
+						}
 					} else {
 						$this->session->set_flashdata('errors', '<p>Unable to add Note.</p>');
 					}

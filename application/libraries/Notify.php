@@ -73,6 +73,26 @@ class Notify
         $this->CI->email->send();
     }
 
+    public function sendNoteTagNotification($email, $task_name)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('You have been tagged in a Note - SmartPM');
+        $html_message = $this->CI->load->view('template/email/note-tag-notification.php', [
+            'task_name' => $task_name
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
+    public function sendNoteTagNotificationMob($email, $task_name)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('You have been tagged in a Note - SmartPM');
+        $text_message = 'You have been tagged in a Note of client ' . $task_name;
+        $this->CI->email->message($text_message);
+        $this->CI->email->send();
+    }
+
     public function sendTaskTagNotification($email, $task_id, $task_name)
     {
         $this->CI->email->to($email);
@@ -82,6 +102,15 @@ class Notify
             'task_name' => $task_name
         ], true);
         $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
+    public function sendTaskTagNotificationMob($email, $task_id, $task_name)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('You have been tagged in a Task - SmartPM');
+        $text_message = 'You have been tagged in Task #' . $task_id . ' ' . $task_name;
+        $this->CI->email->message($text_message);
         $this->CI->email->send();
     }
 
