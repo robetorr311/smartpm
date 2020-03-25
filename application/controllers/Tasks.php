@@ -96,6 +96,7 @@ class Tasks extends CI_Controller
             ]);
             if ($insert) {
                 $assignedUser = $this->user->getUserById($taskData['assigned_to']);
+                $this->notify = new Notify();
                 $this->notify->sendTaskAssignNotification($assignedUser->email_id, $insert, $taskData['name']);
 
                 $errors = '';
@@ -139,11 +140,13 @@ class Tasks extends CI_Controller
 
                     $userEmailIds = $this->user->getEmailIdArrByUserIds($users);
                     foreach ($userEmailIds as $userEmailId) {
+                        $this->notify = new Notify();
                         $this->notify->sendTaskTagNotification($userEmailId, $insert, $taskData['name']);
                     }
 
                     $userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users);
                     foreach ($userMobEmailIds as $userMobEmailId) {
+                        $this->notify = new Notify();
                         $this->notify->sendTaskTagNotificationMob($userMobEmailId, $insert, $taskData['name']);
                     }
                 }
@@ -262,6 +265,7 @@ class Tasks extends CI_Controller
                 if ($update) {
                     if ($task->assigned_to != $taskData['assigned_to']) {
                         $assignedUser = $this->user->getUserById($taskData['assigned_to']);
+                        $this->notify = new Notify();
                         $this->notify->sendTaskAssignNotification($assignedUser->email_id, $task->id, $task->name);
                     }
 
@@ -294,6 +298,7 @@ class Tasks extends CI_Controller
 
                         $userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
                         foreach ($userEmailIds as $userEmailId) {
+                            $this->notify = new Notify();
                             $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name);
                         }
                     }
@@ -414,11 +419,13 @@ class Tasks extends CI_Controller
 
                         $userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
                         foreach ($userEmailIds as $userEmailId) {
+                            $this->notify = new Notify();
                             $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name);
                         }
 
                         $userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
                         foreach ($userMobEmailIds as $userMobEmailId) {
+                            $this->notify = new Notify();
                             $this->notify->sendTaskTagNotificationMob($userMobEmailId, $task->id, $task->name);
                         }
                     }
