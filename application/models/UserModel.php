@@ -216,7 +216,7 @@ class UserModel extends CI_Model
 
 	public function getMobEmailIdArrByUserIds($userIds)
 	{
-		$this->db->select("CONCAT(user_cell_notif_suffixs.cell_provider, user_cell_notif_suffixs.suffix) AS mob_email_id");
+		$this->db->select("CONCAT(users.cell_1, user_cell_notif_suffixs.suffix) AS mob_email_id");
 		$this->db->from($this->table);
 		$this->db->join('user_cell_notif_suffixs', 'users.cell_1_provider=user_cell_notif_suffixs.id', 'left');
 		$this->db->where_in('users.id', $userIds);
