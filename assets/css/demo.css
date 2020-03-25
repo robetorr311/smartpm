@@ -324,7 +324,7 @@ img {
 .dashbord-box .box {
 	padding: 15px 15px;
 	color: white;
-	min-height: 190px;
+	min-height: 160px;
 }
 .dashbord-box .box.gray-box {
 	background-color: #aaa;
@@ -336,9 +336,8 @@ img {
 	font-weight: bold;
 	text-align: center;
 	color: darkolivegreen;
-	padding: 15px 15px;
 	color: white;
-	min-height: 130px;
+	min-height: 100px;
 }
 .box span {
 	font-size: 43px;

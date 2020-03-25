@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</div>
 			</div>
 			<div class="row dashbord-box">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/0') ?>">
 							<span><?= $newLeads ?></span>
@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/1') ?>">
 							<span><?= $appointmentScheduledLeads ?></span>
@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/2') ?>">
 							<span><?= $followUpLeads ?></span>
@@ -33,7 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/3') ?>">
 							<span><?= $needsSiteVisitLeads ?></span>
@@ -41,9 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-			</div>
-			<div class="row dashbord-box">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/4') ?>">
 							<span><?= $estimateBidLeads ?></span>
@@ -51,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/5') ?>">
 							<span><?= $estimateSentLeads ?></span>
@@ -59,7 +57,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+			</div>
+			<div class="row dashbord-box">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/6') ?>">
 							<span><?= $readyToSignLeads ?></span>
@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/12') ?>">
 							<span><?= $coldLeads ?></span>
@@ -75,9 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-			</div>
-			<div class="row dashbord-box">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/13') ?>">
 							<span><?= $postponedLeads ?></span>
@@ -85,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/14') ?>">
 							<span><?= $lostLeads ?></span>
@@ -100,7 +98,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</div>
 			</div>
 			<div class="row dashbord-box">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('lead/signed-jobs') ?>">
 							<span><?= $signedJobs ?></span>
@@ -108,7 +106,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('lead/production-jobs') ?>">
 							<span><?= $productionJobs ?></span>
@@ -116,7 +114,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('lead/completed-jobs') ?>">
 							<span><?= $completedJobs ?></span>
@@ -124,7 +122,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('lead/closed-jobs') ?>">
 							<span><?= $closedJobs ?></span>
@@ -132,9 +130,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-			</div>
-			<div class="row dashbord-box">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('lead/archive-jobs') ?>">
 							<span><?= $archiveJobs ?></span>
@@ -149,7 +145,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</div>
 			</div>
 			<div class="row dashbord-box">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('tasks/status/0') ?>">
 							<span><?= $createdTasks ?></span>
@@ -157,7 +153,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('tasks/status/1') ?>">
 							<span><?= $workingTasks ?></span>
@@ -165,7 +161,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('tasks/status/2') ?>">
 							<span><?= $stuckTasks ?></span>
@@ -173,7 +169,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('tasks/status/3') ?>">
 							<span><?= $holdTasks ?></span>
@@ -181,9 +177,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</a>
 					</div>
 				</div>
-			</div>
-			<div class="row dashbord-box">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="box gray-box">
 						<a href="<?= base_url('tasks/status/4') ?>">
 							<span><?= $completedTasks ?></span>
