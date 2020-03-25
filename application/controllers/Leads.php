@@ -395,11 +395,13 @@ class Leads extends CI_Controller
 					if (count($users_insert)) {
 						$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
 						foreach ($userEmailIds as $userEmailId) {
+							$this->notify = new Notify();
 							$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
 						}
 
 						$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
 						foreach ($userMobEmailIds as $userMobEmailId) {
+							$this->notify = new Notify();
 							$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
 						}
 					}
@@ -506,11 +508,13 @@ class Leads extends CI_Controller
 						if (count($users_insert)) {
 							$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
 							foreach ($userEmailIds as $userEmailId) {
+								$this->notify = new Notify();
 								$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
 							}
 
 							$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
 							foreach ($userMobEmailIds as $userMobEmailId) {
+								$this->notify = new Notify();
 								$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
 							}
 						}
