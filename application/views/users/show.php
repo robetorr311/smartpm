@@ -159,7 +159,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email ID<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Email ID" name="email_id" type="email" value="<?= $user->email_id ?>" readonly>
+                                    <input class="form-control" placeholder="Email ID" name="email_id" type="email" value="<?= $user->email_id ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
