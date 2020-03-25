@@ -146,6 +146,9 @@ class Users extends CI_Controller
 
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
+			$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]', [
+				'is_unique' => 'The user with this Email ID is already exist.'
+			]);
 			$this->form_validation->set_rules('level', 'Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
 			$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
 			$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
@@ -160,6 +163,7 @@ class Users extends CI_Controller
 				$update = $this->user->update($id, [
 					'first_name' => $userData['first_name'],
 					'last_name' => $userData['last_name'],
+					'email_id' => $userData['email_id'],
 					'level' => $userData['level'],
 					'office_phone' => $userData['office_phone'],
 					'home_phone' => $userData['home_phone'],
