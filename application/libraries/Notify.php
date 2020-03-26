@@ -24,7 +24,7 @@ class Notify
             'mailtype' => 'html'
         ]);
         $this->CI->email->set_newline("\r\n");
-        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
+        $this->CI->email->from(((isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER')), 'SmartPM Notification');
     }
 
     public function resetPassword($email, $token)
