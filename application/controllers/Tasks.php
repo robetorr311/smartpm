@@ -442,6 +442,59 @@ class Tasks extends CI_Controller
         }
     }
 
+    public function updateNote($id, $noteId)
+    {
+        authAccess();
+
+        $task = $this->task->getTaskById($id);
+        if ($task) {
+            $this->form_validation->set_rules('note', 'Note', 'trim|required');
+
+            if ($this->form_validation->run() == TRUE) {
+                $noteData = $this->input->post();
+                $update = $this->task_notes->update($noteId, [
+                    'note' => nl2br($noteData['note'])
+                ]);
+                if ($update) {
+                    // $userIds = [];
+                    // if (preg_match_all('~(@\w+)~', $noteData['note'], $matches, PREG_PATTERN_ORDER)) {
+                    //     $usernames = array_map(function ($val) {
+                    //         return ltrim($val, '@');
+                    //     }, $matches[1]);
+                    //     $userIds = $this->user->getUserIdArrByUserNames($usernames);
+                    // }
+                    // $users_insert = $userIds;
+                    // if (count($users_insert)) {
+                    //     $usersInsert = $this->task_user_tags->insertByUserArr($users_insert, $id);
+                    //     if (!$usersInsert) {
+                    //         $this->session->set_flashdata('errors', '<p>Unable to tag new Users.</p>');
+                    //     }
+
+                    //     $userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
+                    //     foreach ($userEmailIds as $userEmailId) {
+                    //         $this->notify = new Notify();
+                    //         $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name);
+                    //     }
+
+                    //     $userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
+                    //     foreach ($userMobEmailIds as $userMobEmailId) {
+                    //         $this->notify = new Notify();
+                    //         $this->notify->sendTaskTagNotificationMob($userMobEmailId, $task->id, $task->name);
+                    //     }
+                    // }
+                } else {
+                    $this->session->set_flashdata('errors', '<p>Unable to Update Note.</p>');
+                }
+            } else {
+                $this->session->set_flashdata('errors', validation_errors());
+            }
+            redirect('task/' . $id);
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('tasks');
+        }
+    }
+
     public function deleteNote($id, $note_id)
     {
         authAccess();

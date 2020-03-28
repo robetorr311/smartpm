@@ -466,11 +466,19 @@ span.info-tag {
 .card.add-note-card .content.view .add-note-form {
 	border-top: solid 1px rgba(63, 63, 68, 0.15);
 }
+.card.lead-notes-card .note-item .note-item-edit,
+.card.task-notes-card .note-item .note-item-edit {
+	display: none;
+}
+.card.lead-notes-card .note-item .note-item-edit.visible,
+.card.task-notes-card .note-item .note-item-edit.visible {
+	display: initial;
+}
+
 .status-box .card {
 	min-height: 303px;
 	position: relative;
 }
-
 .status-box button {
 	position: absolute;
 	bottom: 15px;

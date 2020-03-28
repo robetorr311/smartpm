@@ -104,6 +104,7 @@ $route['task/store']['post'] = 'tasks/store';
 $route['task/(:num)'] = 'tasks/show/$1';
 $route['task/(:num)/complete']['post'] = 'tasks/complete/$1';
 $route['task/(:num)/add-note']['post'] = 'tasks/addNote/$1';
+$route['task/(:num)/note/(:num)/update']['post'] = 'tasks/updateNote/$1/$2';
 $route['task/(:num)/note/(:num)/delete']['post'] = 'tasks/deleteNote/$1/$2';
 $route['task/(:num)/edit'] = 'tasks/edit/$1';
 $route['task/(:num)/update']['post'] = 'tasks/update/$1';
@@ -128,16 +129,20 @@ $route['lead/(:any)/(:num)/remove-team']['post'] = 'leads/removeTeam/$2/$1';
 
 $route['lead/(:num)/notes'] = 'leads/notes/$1';
 $route['lead/(:num)/add-note']['post'] = 'leads/addNote/$1';
+$route['lead/(:num)/note/(:num)/update']['post'] = 'leads/updateNote/$1/$2';
 $route['lead/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$1/$2';
 $route['lead/(:num)/note/(:num)/replies'] = 'leads/replies/$1/$2';
 $route['lead/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$1/$2';
+$route['lead/(:num)/note/(:num)/reply/(:num)/update']['post'] = 'leads/updateNoteReply/$1/$2/$3';
 $route['lead/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$1/$2/$3';
 
 $route['lead/(:any)/(:num)/notes'] = 'leads/notes/$2/$1';
 $route['lead/(:any)/(:num)/add-note']['post'] = 'leads/addNote/$2/$1';
+$route['lead/(:any)/(:num)/note/(:num)/update']['post'] = 'leads/updateNote/$2/$3/$1';
 $route['lead/(:any)/(:num)/note/(:num)/delete']['post'] = 'leads/deleteNote/$2/$3/$1';
 $route['lead/(:any)/(:num)/note/(:num)/replies'] = 'leads/replies/$2/$3/$1';
 $route['lead/(:any)/(:num)/note/(:num)/reply']['post'] = 'leads/addNoteReply/$2/$3/$1';
+$route['lead/(:any)/(:num)/note/(:num)/reply/(:num)/update']['post'] = 'leads/updateNoteReply/$2/$3/$4/$1';
 $route['lead/(:any)/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/deleteNoteReply/$2/$3/$4/$1';
 
 $route['lead/(:num)/photos'] = 'photos/index/$1';

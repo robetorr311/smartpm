@@ -418,6 +418,66 @@ class Leads extends CI_Controller
 		}
 	}
 
+	public function updateNote($leadId, $noteId, $sub_base_path = '')
+	{
+		authAccess();
+
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$lead = $this->lead->getLeadById($leadId);
+		if ($lead) {
+			$this->form_validation->set_rules('note', 'Note', 'trim|required');
+
+			if ($this->form_validation->run() == TRUE) {
+				$noteData = $this->input->post();
+				$update = $this->lead_note->update($noteId, [
+					'note' => nl2br($noteData['note'])
+				]);
+				// ======================== change to update log ========================
+				// $al_insert = $this->activityLogs->insert([
+				// 	'module' => 0,
+				// 	'module_id' => $leadId,
+				// 	'type' => 1,
+				// 	'activity_data' => json_encode([
+				// 		'note' => nl2br($noteData['note'])
+				// 	])
+				// ]);
+				if ($update) {
+					// $userIds = [];
+					// ======================== delete if not need to send notification ========================
+					// if (preg_match_all('~(@\w+)~', $noteData['note'], $matches, PREG_PATTERN_ORDER)) {
+					// 	$usernames = array_map(function ($val) {
+					// 		return ltrim($val, '@');
+					// 	}, $matches[1]);
+					// 	$userIds = $this->user->getUserIdArrByUserNames($usernames);
+					// }
+					// $users_insert = $userIds;
+					// if (count($users_insert)) {
+					// 	$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
+					// 	foreach ($userEmailIds as $userEmailId) {
+					// 		$this->notify = new Notify();
+					// 		$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
+					// 	}
+
+					// 	$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
+					// 	foreach ($userMobEmailIds as $userMobEmailId) {
+					// 		$this->notify = new Notify();
+					// 		$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
+					// 	}
+					// }
+				} else {
+					$this->session->set_flashdata('errors', '<p>Unable to Update Note.</p>');
+				}
+			} else {
+				$this->session->set_flashdata('errors', validation_errors());
+			}
+			redirect('lead/' . $sub_base_path . $leadId . '/notes');
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+		}
+	}
+
 	public function deleteNote($leadId, $noteId, $sub_base_path = '')
 	{
 		authAccess();
@@ -520,6 +580,71 @@ class Leads extends CI_Controller
 						}
 					} else {
 						$this->session->set_flashdata('errors', '<p>Unable to add Note.</p>');
+					}
+				} else {
+					$this->session->set_flashdata('errors', validation_errors());
+				}
+				redirect('lead/' . $sub_base_path . $leadId . '/note/' . $noteId . '/replies');
+			} else {
+				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+				redirect('lead/' . $sub_base_path . $leadId . '/notes');
+			}
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+		}
+	}
+
+	public function updateNoteReply($leadId, $noteId, $replyId, $sub_base_path = '')
+	{
+		authAccess();
+
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$lead = $this->lead->getLeadById($leadId);
+		if ($lead) {
+			$note = $this->lead_note->getNoteById($noteId, $leadId);
+			if ($note) {
+				$this->form_validation->set_rules('reply', 'Reply', 'trim|required');
+
+				if ($this->form_validation->run() == TRUE) {
+					$replyData = $this->input->post();
+					$update = $this->lead_note_reply->update($replyId, [
+						'reply' => nl2br($replyData['reply'])
+					]);
+					// $al_insert = $this->activityLogs->insert([
+					// 	'module' => 0,
+					// 	'module_id' => $leadId,
+					// 	'type' => 1,
+					// 	'activity_data' => json_encode([
+					// 		'note' => nl2br($replyData['reply'])
+					// 	])
+					// ]);
+					if ($update) {
+						// $userIds = [];
+						// if (preg_match_all('~(@\w+)~', $replyData['reply'], $matches, PREG_PATTERN_ORDER)) {
+						// 	$usernames = array_map(function ($val) {
+						// 		return ltrim($val, '@');
+						// 	}, $matches[1]);
+						// 	$userIds = $this->user->getUserIdArrByUserNames($usernames);
+						// }
+						// // use userIds to send emails to those users
+						// $users_insert = $userIds;
+						// if (count($users_insert)) {
+						// 	$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
+						// 	foreach ($userEmailIds as $userEmailId) {
+						// 		$this->notify = new Notify();
+						// 		$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
+						// 	}
+
+						// 	$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
+						// 	foreach ($userMobEmailIds as $userMobEmailId) {
+						// 		$this->notify = new Notify();
+						// 		$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
+						// 	}
+						// }
+					} else {
+						$this->session->set_flashdata('errors', '<p>Unable to Update Note.</p>');
 					}
 				} else {
 					$this->session->set_flashdata('errors', validation_errors());
