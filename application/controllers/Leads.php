@@ -396,13 +396,13 @@ class Leads extends CI_Controller
 						$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
 						foreach ($userEmailIds as $userEmailId) {
 							$this->notify = new Notify();
-							$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
+							$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname), $noteData['note'], base_url('lead/' . $sub_base_path . $leadId . '/notes'));
 						}
 
 						$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
 						foreach ($userMobEmailIds as $userMobEmailId) {
 							$this->notify = new Notify();
-							$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
+							$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname), $noteData['note'], base_url('lead/' . $sub_base_path . $leadId . '/notes'));
 						}
 					}
 				} else {
@@ -569,13 +569,13 @@ class Leads extends CI_Controller
 							$userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
 							foreach ($userEmailIds as $userEmailId) {
 								$this->notify = new Notify();
-								$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname));
+								$this->notify->sendNoteTagNotification($userEmailId, ($lead->firstname . ' ' . $lead->lastname), $replyData['reply'], base_url('lead/' . $sub_base_path . $leadId . '/note/' . $noteId . '/replies'));
 							}
 
 							$userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
 							foreach ($userMobEmailIds as $userMobEmailId) {
 								$this->notify = new Notify();
-								$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname));
+								$this->notify->sendNoteTagNotificationMob($userMobEmailId, ($lead->firstname . ' ' . $lead->lastname), $replyData['reply'], base_url('lead/' . $sub_base_path . $leadId . '/note/' . $noteId . '/replies'));
 							}
 						}
 					} else {

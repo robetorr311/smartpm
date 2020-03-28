@@ -37,7 +37,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tbody>
                       <tr>
                         <td style="border-collapse: collapse; mso-line-height-rule: exactly; font-family: 'Open Sans', Arial, sans-serif; font-size: 16px; line-height: 20px; color: #333333;" valign="top" align="left">
-                          <p>You have been tagged in Task <b>#<?= $task_id ?> <?= $task_name ?></b></p>
+                          <p>Smartpm.app: You have been tagged in a note on Task <b>#<?= $task_id ?> <?= $task_name ?></b></p>
+                          <p>"<?= $note ?>"</p>
                         </td>
                       </tr>
                     </tbody>

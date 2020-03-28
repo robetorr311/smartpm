@@ -73,43 +73,49 @@ class Notify
         $this->CI->email->send();
     }
 
-    public function sendNoteTagNotification($email, $task_name)
+    public function sendNoteTagNotification($email, $task_name, $note, $link)
     {
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Note - SmartPM');
         $html_message = $this->CI->load->view('template/email/note-tag-notification.php', [
-            'task_name' => $task_name
+            'task_name' => $task_name,
+            'note' => $note,
+            'link' => $link
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
 
-    public function sendNoteTagNotificationMob($email, $task_name)
+    public function sendNoteTagNotificationMob($email, $task_name, $note, $link)
     {
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Note - SmartPM');
-        $text_message = 'You have been tagged in a Note of client ' . $task_name;
+        $text_message = 'You have been tagged in a Note of client ' . $task_name . ' (' . $link . ')
+"' . $note . '"';
         $this->CI->email->message($text_message);
         $this->CI->email->send();
     }
 
-    public function sendTaskTagNotification($email, $task_id, $task_name)
+    public function sendTaskTagNotification($email, $task_id, $task_name, $note, $link)
     {
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Task - SmartPM');
         $html_message = $this->CI->load->view('template/email/task-tag-notification.php', [
             'task_id' => $task_id,
-            'task_name' => $task_name
+            'task_name' => $task_name,
+            'note' => $note,
+            'link' => $link
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
 
-    public function sendTaskTagNotificationMob($email, $task_id, $task_name)
+    public function sendTaskTagNotificationMob($email, $task_id, $task_name, $note, $link)
     {
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Task - SmartPM');
-        $text_message = 'You have been tagged in Task #' . $task_id . ' ' . $task_name;
+        $text_message = 'You have been tagged in Task #' . $task_id . ' ' . $task_name . ' (' . $link . ')
+"' . $note . '"';
         $this->CI->email->message($text_message);
         $this->CI->email->send();
     }
