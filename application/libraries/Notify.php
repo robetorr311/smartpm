@@ -90,8 +90,7 @@ class Notify
     {
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Note - SmartPM');
-        $text_message = 'You have been tagged in a Note of client ' . $task_name . ' (' . $link . ')
-"' . $note . '"';
+        $text_message = 'Smartpm.app: ' . $task_name . ' (' . $link . ') "' . $note . '"';
         $this->CI->email->message($text_message);
         $this->CI->email->send();
     }
@@ -114,8 +113,7 @@ class Notify
     {
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Task - SmartPM');
-        $text_message = 'You have been tagged in Task #' . $task_id . ' ' . $task_name . ' (' . $link . ')
-"' . $note . '"';
+        $text_message = 'Smartpm.app: #' . $task_id . ' ' . $task_name . ' (' . $link . ') "' . $note . '"';
         $this->CI->email->message($text_message);
         $this->CI->email->send();
     }
