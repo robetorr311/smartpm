@@ -19,18 +19,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title">Leads / Clients Detail</h4>
                 </div>
-				<div class="content view">
-					<div class="row">
-						<div class="col-md-12">
-                        #<?= (1600 + $lead->id); ?><br />
-						<?= $lead->firstname ?> <?= $lead->lastname ?><br />
-						<?= $lead->address ?><br />
-						<?= $lead->city ?>, <?= $lead->state ?><br />
-						C - <?= $lead->phone1 ?><br />
-						<?= $lead->email ?>
-						</div>
-					</div>
-				</div>
+                <div class="content view">
+                    <div class="row">
+                        <div class="col-md-12">
+                            #<?= (1600 + $lead->id); ?><br />
+                            <?= $lead->firstname ?> <?= $lead->lastname ?><br />
+                            <?= $lead->address ?><br />
+                            <?= $lead->city ?>, <?= $lead->state ?><br />
+                            C - <?= $lead->phone1 ?><br />
+                            <?= $lead->email ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -49,11 +49,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             echo '<div class="col-md-12">';
                             echo '<label>' . $note->created_user_fullname . '</label>';
                             echo '<a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
+                            echo '<a href="#" data-noteid="' . $note->id . '" class="edit-note text-info pull-right"><i class="fa fa-pencil"></i></a></a>';
                             echo '<p>' . $note->note . '</p>';
                             echo '<small class="date-created">' . $note->created_at . '</small>';
                             echo '<div style="text-align: right;">';
                             echo '<small><a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/replies') . '">Thread Details</a></small>';
                             echo '</div>';
+                            echo '</div>';
+                            echo '<div id="note-item-edit-' . $note->id . '" class="note-item-edit col-md-12">';
+                            echo '<form action="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/update') . '" method="post">';
+                            echo '<div class="row">';
+                            echo '<div class="col-md-12">';
+                            echo '<div class="form-group">';
+                            echo '<label>Your Note<span class="red-mark">*</span></label>';
+                            echo '<textarea class="form-control note-input" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit>' . str_replace('<br />', '', $note->note) . '</textarea>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '<div class="row">';
+                            echo '<div class="col-md-12">';
+                            echo '<div class="form-group">';
+                            echo '<a href="#" data-noteid="' . $note->id . '" class="note-item-edit-cancel btn btn-info btn-fill">Cancel</a>';
+                            echo '<button type="submit" class="btn btn-info btn-fill pull-right">Update</button>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</form>';
                             echo '</div>';
                             echo '</div>';
                         }
@@ -75,7 +96,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Your Note<span class="red-mark">*</span></label>
-                                            <textarea id="note-input" class="form-control" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
+                                            <textarea class="form-control note-input" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +118,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 <script>
     $(document).ready(function() {
-        $('#note-input').atwho({
+        $('.note-item-edit-cancel, .edit-note').click(function(e) {
+            e.preventDefault();
+            var noteId = $(this).data('noteid');
+            $('#note-item-edit-' + noteId).toggleClass('visible');
+        });
+
+        $('.note-input').atwho({
             at: '@',
             data: <?= json_encode($users) ?>,
             headerTpl: '<div class="atwho-header">User List:</div>',
