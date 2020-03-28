@@ -37,8 +37,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tbody>
                       <tr>
                         <td style="border-collapse: collapse; mso-line-height-rule: exactly; font-family: 'Open Sans', Arial, sans-serif; font-size: 16px; line-height: 20px; color: #333333;" valign="top" align="left">
-                          <p>Smartpm.app: You have been tagged in a note on Client <a target="_blank" href="<?= $link ?>"><b><?= $task_name ?></b></a></p>
-                          <p>"<?= $note ?>"</p>
+                          <p>Smartpm.app: <a target="_blank" href="<?= $link ?>"><b><?= $task_name ?></b></a> "<?= $note ?>"</p>
                         </td>
                       </tr>
                     </tbody>
