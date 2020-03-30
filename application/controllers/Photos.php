@@ -17,7 +17,7 @@ class Photos extends CI_Controller
 	public function index($job_id, $sub_base_path = '')
 	{
 		authAccess();
-		
+
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($job_id);
 		$params = array();
@@ -72,10 +72,38 @@ class Photos extends CI_Controller
 		}
 	}
 
+	function newImageRotation($image)
+	{
+		$exif = exif_read_data($_SERVER['DOCUMENT_ROOT'] . "/assets/job_photo/" . $image);
+		if (!empty($exif['Orientation'])) {
+			$this->image_lib->clear();
+			$config = array();
+			$config['image_library']   = 'gd2';
+			$config['source_image'] = $_SERVER['DOCUMENT_ROOT'] . "/assets/job_photo/" . $image;
+			switch ($exif['Orientation']) {
+				case 8:
+					$config['rotation_angle'] = '90';
+					break;
+				case 3:
+					$config['rotation_angle'] = '180';
+					break;
+				case 6:
+					$config['rotation_angle'] = '270';
+					break;
+				default:
+					return;
+			}
+			$this->image_lib->initialize($config);
+			if (!$this->image_lib->rotate()) {
+				echo $this->image_lib->display_errors();
+			}
+		}
+	}
+
 	public function ajaxupload_jobphoto()
 	{
 		authAccess();
-		
+
 		if (is_array($_FILES) && !empty($_FILES['photo'])) {
 			$img = array();
 			$i = 0;
@@ -109,6 +137,7 @@ class Photos extends CI_Controller
 							$tmp_i++;
 						}
 						move_uploaded_file($sourcePath, $targetPath);
+						$this->newImageRotation($new_name);
 						$img[$i] = $new_name;
 						$i++;
 					} else {
@@ -145,6 +174,7 @@ class Photos extends CI_Controller
 											unlink($targetPath . "/" . $file_name_only . '/' . $file);
 										}
 										if ($new_name != '') {
+											$this->newImageRotation($new_name);
 											$img[$i] = $new_name;
 											$i++;
 										}
@@ -174,6 +204,7 @@ class Photos extends CI_Controller
 											unlink($targetPath . $dir . '/' . $file);
 										}
 										if ($new_name != '') {
+											$this->newImageRotation($new_name);
 											$img[$i] = $new_name;
 											$i++;
 										}
@@ -195,7 +226,7 @@ class Photos extends CI_Controller
 	public function ajaxsave_jobphoto()
 	{
 		authAccess();
-		
+
 		$posts = $this->input->post();
 		$data = json_decode($posts['name'], true);
 
@@ -220,7 +251,7 @@ class Photos extends CI_Controller
 	public function imagerotate()
 	{
 		authAccess();
-		
+
 		$posts = $this->input->post();
 		$this->image_lib->clear();
 		$config = array();
@@ -239,7 +270,7 @@ class Photos extends CI_Controller
 	public function thumbnail_all()
 	{
 		authAccess();
-		
+
 		$this->db->select('image_name');
 		$this->db->where(['is_active' => 1]);
 		$query = $this->db->get('jobs_photo');
@@ -258,7 +289,7 @@ class Photos extends CI_Controller
 	public function deletephoto($job_id, $photo_id)
 	{
 		authAccess();
-		
+
 		$this->db->query("UPDATE jobs_photo SET is_active=0 WHERE id='" . $photo_id . "' AND job_id='" . $job_id . "'");
 		return true;
 	}
