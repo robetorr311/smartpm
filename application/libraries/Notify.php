@@ -89,7 +89,7 @@ class Notify
     public function sendNoteTagNotificationMob($email, $task_name, $note, $link)
     {
         $this->CI->email->to($email);
-        $this->CI->email->subject('You have been tagged in a Note - SmartPM');
+        $this->CI->email->subject('');
         $text_message = 'Smartpm.app: ' . $task_name . ' (' . $link . ') "' . $note . '"';
         $this->CI->email->message($text_message);
         $this->CI->email->send();
@@ -112,7 +112,7 @@ class Notify
     public function sendTaskTagNotificationMob($email, $task_id, $task_name, $note, $link)
     {
         $this->CI->email->to($email);
-        $this->CI->email->subject('You have been tagged in a Task - SmartPM');
+        $this->CI->email->subject('');
         $text_message = 'Smartpm.app: #' . $task_id . ' ' . $task_name . ' (' . $link . ') "' . $note . '"';
         $this->CI->email->message($text_message);
         $this->CI->email->send();
