@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
   <div class="row page-header-buttons">
     <div class="col-md-12">
-      <a href="<?= base_url('lead/' . $sub_base_path . $jobid) ?>" class="btn btn-info btn-fill">Back</a>
+      <a href="<?= base_url('lead/' . $sub_base_path . $jobid) ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
     </div>
   </div>
 
