@@ -141,13 +141,13 @@ class Tasks extends CI_Controller
                     $userEmailIds = $this->user->getEmailIdArrByUserIds($users);
                     foreach ($userEmailIds as $userEmailId) {
                         $this->notify = new Notify();
-                        $this->notify->sendTaskTagNotification($userEmailId, $insert, $taskData['name']);
+                        $this->notify->sendTaskTagNotification($userEmailId, $insert, $taskData['name'], $taskData['note'], base_url('task/' . $insert));
                     }
 
                     $userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users);
                     foreach ($userMobEmailIds as $userMobEmailId) {
                         $this->notify = new Notify();
-                        $this->notify->sendTaskTagNotificationMob($userMobEmailId, $insert, $taskData['name']);
+                        $this->notify->sendTaskTagNotificationMob($userMobEmailId, $insert, $taskData['name'], $taskData['note'], base_url('task/' . $insert));
                     }
                 }
 
@@ -299,7 +299,7 @@ class Tasks extends CI_Controller
                         $userEmailIds = $this->user->getEmailIdArrByUserIds($users_insert);
                         foreach ($userEmailIds as $userEmailId) {
                             $this->notify = new Notify();
-                            $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name);
+                            $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name, '', base_url('task/' . $id));
                         }
                     }
                     $users_remove = array_diff($old_tag_users, $users);
@@ -332,6 +332,7 @@ class Tasks extends CI_Controller
                     if (!empty($errors)) {
                         $this->session->set_flashdata('errors', $errors);
                     }
+                    redirect('task/' . $id);
                 } else {
                     $this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
                 }
