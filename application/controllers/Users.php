@@ -8,7 +8,7 @@ class Users extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->load->model(['UserModel', 'AdminSettingModel', 'UserCellNotifSuffixModel']);
 		$this->load->library(['form_validation', 'notify']);
 
@@ -137,7 +137,7 @@ class Users extends CI_Controller
 	public function update($id)
 	{
 		authAccess([UserModel::$level_admin]);
-		
+
 		$user = $this->user->getUserById($id);
 		if ($user) {
 			$levelKeys = implode(',', array_keys(UserModel::getLevels()));
@@ -146,9 +146,11 @@ class Users extends CI_Controller
 
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-			$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]', [
-				'is_unique' => 'The user with this Email ID is already exist.'
-			]);
+			if ($user->email_id != $this->input->post('email_id')) {
+				$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email|is_unique[users.email_id]', [
+					'is_unique' => 'The user with this Email ID is already exist.'
+				]);
+			}
 			$this->form_validation->set_rules('level', 'Level', 'trim|required|numeric|in_list[' . $levelKeys . ']');
 			$this->form_validation->set_rules('office_phone', 'Office Phone', 'trim|numeric');
 			$this->form_validation->set_rules('home_phone', 'Home Phone', 'trim|numeric');
@@ -160,10 +162,9 @@ class Users extends CI_Controller
 
 			if ($this->form_validation->run() == TRUE) {
 				$userData = $this->input->post();
-				$update = $this->user->update($id, [
+				$_userData = [
 					'first_name' => $userData['first_name'],
 					'last_name' => $userData['last_name'],
-					'email_id' => $userData['email_id'],
 					'level' => $userData['level'],
 					'office_phone' => $userData['office_phone'],
 					'home_phone' => $userData['home_phone'],
@@ -172,8 +173,12 @@ class Users extends CI_Controller
 					'cell_2' => $userData['cell_2'],
 					'notifications' => $userData['notifications'],
 					'is_active' => $userData['is_active']
-				]);
-	
+				];
+				if ($user->email_id != $userData['email_id']) {
+					$_userData['email_id'] = $userData['email_id'];
+				}
+				$update = $this->user->update($id, $_userData);
+
 				if (!$update) {
 					$this->session->set_flashdata('errors', '<p>Unable to Update User.</p>');
 				}
@@ -215,7 +220,7 @@ class Users extends CI_Controller
 	public function delete($id)
 	{
 		authAccess([UserModel::$level_admin]);
-		
+
 		$user = $this->user->getUserById($id);
 		if ($user) {
 			$delete = $this->user->delete($id);
