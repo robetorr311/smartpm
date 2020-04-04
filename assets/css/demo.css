@@ -136,6 +136,9 @@ img {
 .jobphoto {
 	display: none !important;
 }
+.jobpublicfolderfile {
+	display: none !important;
+}
 .jobdoc {
 	display: none !important;
 }
