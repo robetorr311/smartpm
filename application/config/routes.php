@@ -148,6 +148,11 @@ $route['lead/(:any)/(:num)/note/(:num)/reply/(:num)/delete']['post'] = 'leads/de
 $route['lead/(:num)/public-folder'] = 'PublicFolder/index/$1';
 $route['lead/(:num)/public-folder/upload']['post'] = 'PublicFolder/upload/$1';
 $route['lead/(:num)/public-folder/(:num)/delete']['post'] = 'PublicFolder/deleteFile/$1/$2';
+
+$route['lead/(:any)/(:num)/public-folder'] = 'PublicFolder/index/$2/$1';
+$route['lead/(:any)/(:num)/public-folder/upload']['post'] = 'PublicFolder/upload/$2/$1';
+$route['lead/(:any)/(:num)/public-folder/(:num)/delete']['post'] = 'PublicFolder/deleteFile/$2/$3/$1';
+
 $route['public-folder/download/(:num)/(:any)']['post'] = 'PublicFolder/download/$1/$2';
 $route['public-folder/(:num)/(:any)'] = 'PublicFolder/file/$1/$2';
 
