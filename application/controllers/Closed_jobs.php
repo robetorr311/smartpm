@@ -9,7 +9,7 @@ class Closed_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel']);
+		$this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
@@ -19,6 +19,7 @@ class Closed_jobs extends CI_Controller
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->team = new TeamModel();
 		$this->leadSource = new ClientLeadSourceModel();
+		$this->activityLogs = new ActivityLogsModel();
 	}
 
 	public function index()
@@ -55,6 +56,7 @@ class Closed_jobs extends CI_Controller
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
+			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 
 			$this->load->view('header', [
 				'title' => $this->title
@@ -71,7 +73,8 @@ class Closed_jobs extends CI_Controller
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
 				'lead_category_tags' => $lead_category_tags,
-				'leadSources' => $clientLeadSource
+				'leadSources' => $clientLeadSource,
+				'aLogs' => $aLogs
 			]);
 			$this->load->view('footer');
 		} else {
