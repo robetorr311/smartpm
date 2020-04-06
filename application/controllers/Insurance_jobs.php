@@ -9,7 +9,7 @@ class Insurance_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'ClientLeadSourceModel']);
+		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'ClientLeadSourceModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
@@ -18,6 +18,7 @@ class Insurance_jobs extends CI_Controller
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->party = new PartyModel();
 		$this->leadSource = new ClientLeadSourceModel();
+		$this->activityLogs = new ActivityLogsModel();
 	}
 
 	public function index()
@@ -51,6 +52,7 @@ class Insurance_jobs extends CI_Controller
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
+			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('insurance_job/show', [
@@ -64,7 +66,8 @@ class Insurance_jobs extends CI_Controller
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,
 				'lead_category_tags' => $lead_category_tags,
-				'leadSources' => $clientLeadSource
+				'leadSources' => $clientLeadSource,
+				'aLogs' => $aLogs
 			]);
 			$this->load->view('footer');
 		} else {

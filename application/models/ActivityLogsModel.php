@@ -34,6 +34,25 @@ class ActivityLogsModel extends CI_Model
 		return $query->result();
 	}
 
+	public function getLogsByLeadId($lead_id)
+	{
+		$this->db->select("
+            activity_logs.*,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
+            CONCAT(client.firstname, ' ', client.lastname) as client_name
+        ");
+		$this->db->from($this->table);
+		$this->db->join('users as users_created_by', 'activity_logs.created_by=users_created_by.id', 'left');
+		$this->db->join('jobs as client', 'activity_logs.module_id=client.id', 'left');
+		$this->db->where('activity_logs.is_deleted', FALSE);
+		$this->db->where('activity_logs.module_id', $lead_id);
+		$this->db->where('activity_logs.module', 0);
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(50);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function insert($data)
 	{
 		$data['created_by'] = $this->session->id;
