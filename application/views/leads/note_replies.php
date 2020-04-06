@@ -24,18 +24,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title">Leads / Clients Detail</h4>
                 </div>
-				<div class="content view">
-					<div class="row">
-						<div class="col-md-12">
-                        #<?= (1600 + $lead->id); ?><br />
-						<?= $lead->firstname ?> <?= $lead->lastname ?><br />
-						<?= $lead->address ?><br />
-						<?= $lead->city ?>, <?= $lead->state ?><br />
-						C - <?= $lead->phone1 ?><br />
-						<?= $lead->email ?>
-						</div>
-					</div>
-				</div>
+                <div class="content view">
+                    <div class="row">
+                        <div class="col-md-12">
+                            #<?= (1600 + $lead->id); ?><br />
+                            <?= $lead->firstname ?> <?= $lead->lastname ?><br />
+                            <?= $lead->address ?><br />
+                            <?= $lead->city ?>, <?= $lead->state ?><br />
+                            C - <?= $lead->phone1 ?><br />
+                            <?= $lead->email ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/photos'); ?>" class="btn btn-fill">Photos</a>
+                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/reports'); ?>" class="btn btn-fill">Photo Report</a>
+                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
+                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/notes'); ?>" class="btn btn-fill">Notes</a>
+                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/public-folder'); ?>" class="btn btn-fill">Public Folder</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -134,12 +145,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 <script>
     $(document).ready(function() {
-        $('.note-item-edit-cancel, .edit-note').click(function (e) {
+        $('.note-item-edit-cancel, .edit-note').click(function(e) {
             e.preventDefault();
             var noteId = $(this).data('noteid');
             $('#note-item-edit-' + noteId).toggleClass('visible');
         });
-        
+
         $('.note-input').atwho({
             at: '@',
             data: <?= json_encode($users) ?>,

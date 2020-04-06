@@ -1,7 +1,4 @@
 <?php
-
-use function PHPSTORM_META\type;
-
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row">
@@ -29,18 +26,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title">Leads / Clients Detail</h4>
                 </div>
-				<div class="content view">
-					<div class="row">
-						<div class="col-md-12">
-						#<?= (1600 + $lead->id); ?><br />
-						<?= $lead->firstname ?> <?= $lead->lastname ?><br />
-						<?= $lead->address ?><br />
-						<?= $lead->city ?>, <?= $lead->state ?><br />
-						C - <?= $lead->phone1 ?><br />
-						<?= $lead->email ?>
-						</div>
-					</div>
-				</div>
+                <div class="content view">
+                    <div class="row">
+                        <div class="col-md-12">
+                            #<?= (1600 + $lead->id); ?><br />
+                            <?= $lead->firstname ?> <?= $lead->lastname ?><br />
+                            <?= $lead->address ?><br />
+                            <?= $lead->city ?>, <?= $lead->state ?><br />
+                            C - <?= $lead->phone1 ?><br />
+                            <?= $lead->email ?>
+                        </div>
+                    </div>
+                </div>
                 <div class="footer">
                     <div class="row">
                         <div class="col-md-12">
@@ -48,6 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <a href="<?= base_url('lead/' . $lead->id . '/reports'); ?>" class="btn btn-fill">Photo Report</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/notes'); ?>" class="btn btn-fill">Notes</a>
+                            <a href="<?= base_url('lead/' . $lead->id . '/public-folder'); ?>" class="btn btn-fill">Public Folder</a>
                         </div>
                     </div>
                 </div>
