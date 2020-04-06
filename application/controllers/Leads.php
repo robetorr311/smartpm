@@ -303,6 +303,7 @@ class Leads extends CI_Controller
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
+			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/show', [
@@ -316,7 +317,8 @@ class Leads extends CI_Controller
 				'insurance_job_adjusters' => $insurance_job_adjusters,
 				'teams_detail' => $teams_detail,
 				'teams' => $teams,
-				'leadSources' => $clientLeadSource
+				'leadSources' => $clientLeadSource,
+				'aLogs' => $aLogs
 			]);
 			$this->load->view('footer');
 		} else {

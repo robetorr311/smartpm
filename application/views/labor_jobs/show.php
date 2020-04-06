@@ -129,6 +129,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Activity Log</h3>
+				</div>
+			</div>
+			<div class="row activity-logs">
+				<div class="col-md-12">
+					<?php
+					foreach ($aLogs as $aLog) {
+						echo '<p>' . ActivityLogsModel::stringifyLog($aLog) . '</p>';
+					}
+					?>
+				</div>
+			</div>
+        </div>
     </div>
 </div>
 <!-- Edit Section -->
