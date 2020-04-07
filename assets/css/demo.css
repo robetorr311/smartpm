@@ -324,23 +324,29 @@ img {
 	border: 2px solid gray;
 	margin-bottom: 20px;
 }
+.dashbord-box .box-container {
+	display: inline-block;
+	height: 220px;
+	width: 233px;
+	padding: 0 15px;
+	padding-bottom: 30px;
+	vertical-align: middle;
+}
 .dashbord-box .box {
 	padding: 15px 15px;
 	color: white;
-	min-height: 160px;
+	min-height: 190px;
 }
 .dashbord-box .box.gray-box {
 	background-color: #aaa;
-	margin-bottom: 30px;
 }
-
 .box p {
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
 	color: darkolivegreen;
 	color: white;
-	min-height: 100px;
+	min-height: 130px;
 }
 .box span {
 	font-size: 43px;
@@ -354,6 +360,11 @@ img {
 	font-weight: bold;
 	text-align: center;
 	color: #333;
+}
+@media (max-width: 500px) {
+	.dashbord-box .box-container {
+		width: 100%;
+	}
 }
 
 .user th {
