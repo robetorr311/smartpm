@@ -109,8 +109,6 @@ class PublicFolder extends CI_Controller
 
 	public function download($company_code, $public_key)
 	{
-		authAccess();
-
 		$file = $this->publicFolder->getFileByPublicKey($company_code, $public_key);
 		if ($file) {
 			$_file = urldecode($file->saved_file_name);
