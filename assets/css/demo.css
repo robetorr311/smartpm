@@ -1187,3 +1187,17 @@ input[type="button"] {
 .activity-logs p:last-child {
 	border-bottom-width: 0;
 }
+.camera-button{
+	margin-bottom: 0px !important;
+	text-transform: capitalize !important;
+}
+.col-md-12.camera-files-status div{
+	display: none;
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+@media (min-width: 769px) {
+ .camera-button{
+   display : none;
+ }
+}
