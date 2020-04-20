@@ -190,6 +190,12 @@
                             <p>Company Documents</p>
                         </a>
                     </li>
+                    <li>
+                        <a href="<?= base_url('company-photos') ?>">
+                            <i class="pe-7s-note"></i>
+                            <p>Company Photos</p>
+                        </a>
+                    </li>
                     <li class="">
                         <a class="nav-link" data-toggle="collapse" href="#componentsCollapse">
                             <i class="pe-7s-graph"></i>

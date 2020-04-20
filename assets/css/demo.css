@@ -133,6 +133,30 @@ img {
 	font-size: 20px;
 }
 
+.upload-photos-area {
+	width: 100%;
+	border: 2px solid aliceblue;
+	border-radius: 3px;
+	margin: 0 auto;
+	text-align: center;
+	overflow: auto;
+	background: rgba(199, 199, 199, 0.4);
+	margin-bottom: 30px;
+}
+
+.upload-photos-area:hover {
+	cursor: pointer;
+}
+
+.upload-photos-area h1 {
+	text-align: center;
+	font-weight: normal;
+	font-family: sans-serif;
+	line-height: 31px;
+	color: darkslategray;
+	font-size: 20px;
+}
+
 .jobphoto {
 	display: none !important;
 }
@@ -143,6 +167,9 @@ img {
 	display: none !important;
 }
 .companydoc {
+	display: none !important;
+}
+.companyphotos {
 	display: none !important;
 }
 #wait {
