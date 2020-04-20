@@ -265,11 +265,14 @@ $route['company-photos/create-folder'] = 'company_photos/createFolder';
 $route['company-photos/upload'] = 'company_photos/upload';
 $route['company-photos/(:num)/generate-public-key']['post'] = 'company_photos/generatePublicKey/$1';
 $route['company-photos/(:num)/delete']['post'] = 'company_photos/delete/$1';
+$route['company-photos/public/(:num)/(:any)'] = 'company_photos/sharedFolder/$1/$2';
 $route['company-photos/(:num)'] = 'company_photos/index/$1';
 $route['company-photos/(:num)/create-folder'] = 'company_photos/createFolder/$1';
 $route['company-photos/(:num)/upload'] = 'company_photos/upload/$1';
 $route['company-photos/(:num)/(:num)/generate-public-key']['post'] = 'company_photos/generatePublicKey/$2/$1';
 $route['company-photos/(:num)/(:num)/delete']['post'] = 'company_photos/delete/$2/$1';
+$route['company-photos/public/(:num)/(:any)/(:num)'] = 'company_photos/sharedFolder/$1/$2/$3';
+$route['company-photos/public/download/(:num)/(:any)/(:num)']['post'] = 'company_photos/download/$1/$2/$3';
 
 $route['setting'] = 'setting/index';
 $route['setting/ajaxupload'] = 'setting/ajaxupload';

@@ -163,12 +163,34 @@ class Company_photos extends CI_Controller
 		die();
 	}
 
-	public function download($id)
+	public function sharedFolder($company_code, $public_key, $id = false)
 	{
-		$doc = $this->company_docs->getCompanyDocById($id);
-		if ($doc) {
-			$file = urldecode($doc->doc_name);
-			$filepath = "assets/company_doc/" . $file;
+		$currentDirRecord = $this->company_photos->getByPublicKey($company_code, $public_key);
+		$path = $currentDirRecord->path . $currentDirRecord->name . '/';
+
+		if ($id) {
+			$currentDirRecord = $this->company_photos->getByIdAndPathCompanyCode($company_code, $path, $id);
+			$path = $currentDirRecord->path . $currentDirRecord->name . '/';
+		}
+		
+		$ffList = $this->company_photos->allFilesFoldersOfCompany($company_code, $currentDirRecord->id);
+		
+		$this->load->view('company_photos/shared-folder', [
+			'ffList' => $ffList,
+			'path' => ($id ? ('/' . $id . '/') : '/'),
+			'company_code' => $company_code,
+			'public_key' => $public_key
+		]);
+	}
+
+	public function download($company_code, $public_key, $id)
+	{
+		$currentDirRecord = $this->company_photos->getByPublicKey($company_code, $public_key);
+		$path = $currentDirRecord->path . $currentDirRecord->name . '/';
+		$file = $this->company_photos->getFileByIdAndPathCompanyCode($company_code, $path, $id);
+
+		if ($file) {
+			$filepath = "assets/company_photos/" . $company_code . $file->path . '/' . urldecode($file->name);
 
 			if (file_exists($filepath)) {
 				header('Content-Description: File Transfer');
@@ -201,7 +223,7 @@ class Company_photos extends CI_Controller
 			$company_code = $this->session->userdata('company_code');
 			$companyDir = 'assets/company_photos/' . $company_code;
 			if ($ff->type == 0) {
-				if(!unlink($companyDir . $ff->path . $ff->name)) {
+				if (!unlink($companyDir . $ff->path . $ff->name)) {
 					$this->session->set_flashdata('errors', '<p>Unable to delete file.</p>');
 				} else {
 					$delete = $this->company_photos->delete($ff_id);
@@ -212,7 +234,7 @@ class Company_photos extends CI_Controller
 				$delete = $this->company_photos->delete($ff_id);
 			}
 
-			
+
 			if (!$delete) {
 				$this->session->set_flashdata('errors', '<p>Unable to delete document.</p>');
 			}
@@ -225,7 +247,8 @@ class Company_photos extends CI_Controller
 	/**
 	 * Private Methods
 	 */
-	private function removeDirectory($path) {
+	private function removeDirectory($path)
+	{
 		$files = glob($path . '/*');
 		foreach ($files as $file) {
 			is_dir($file) ? $this->removeDirectory($file) : unlink($file);

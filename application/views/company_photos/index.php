@@ -44,6 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
+                            <th width="50px"></th>
                             <th>File Name</th>
                             <th>Shared URL</th>
                             <th>Date Time Uploaded</th>
@@ -54,14 +55,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php foreach ($ffList as $ff) : ?>
                                     <tr>
                                         <?php if ($ff->type == 1) { ?>
+                                            <td><i class="fa fa-folder" aria-hidden="true"></i></td>
+                                        <?php } else { ?>
+                                            <td><i class="fa fa-file" aria-hidden="true"></i></td>
+                                        <?php } ?>
+                                        <?php if ($ff->type == 1) { ?>
                                             <td><a href="<?= base_url('company-photos/' . $ff->id) ?>"><?= $ff->name ?></a></td>
                                         <?php } else { ?>
                                             <td><?= $ff->name ?></td>
                                         <?php } ?>
-                                        <?php if ($ff->public_key == '') { ?>
+                                        <?php if ($ff->public_key == '' && $ff->type == 1) { ?>
                                             <td><a href="<?= base_url('company-photos' . $path . $ff->id . '/generate-public-key') ?>" data-method="POST"><i class="fa fa-link" aria-hidden="true" style="font-size: 14px;"></i> Genrate</a></td>
+                                        <?php } else if ($ff->type == 1) { ?>
+                                            <td><input id="publicUrl<?= $ff->id ?>" type="text" value="<?= base_url('company-photos/public/' . $company_code . '/' . $ff->public_key) ?>" readonly> &nbsp; <i class="fa fa-files-o text-info" style="cursor: pointer;" onclick="copyToClipboard(<?= $ff->id ?>)" aria-hidden="true"></i></td>
                                         <?php } else { ?>
-                                            <td><input id="publicUrl<?= $ff->id ?>" type="text" value="<?= base_url('public/company/' . $company_code . '/' . $ff->public_key) ?>" readonly> &nbsp; <i class="fa fa-files-o text-info" style="cursor: pointer;" onclick="copyToClipboard(<?= $ff->id ?>)" aria-hidden="true"></i></td>
+                                            <td>-</td>
                                         <?php } ?>
                                         <td><?= $ff->created_at ?></td>
                                         <td class="text-center"><a href="<?= base_url('company-photos' . $path . $ff->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
@@ -69,7 +77,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php endforeach; ?>
                             <?php else : ?>
                                 <tr>
-                                    <td colspan="4" class="text-center">No Record Found!</td>
+                                    <td colspan="5" class="text-center">No Record Found!</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
