@@ -240,12 +240,15 @@ $route['lead/archive-job/(:num)'] = 'archive_jobs/view/$1';
 
 $route['financial'] = 'financial/index';
 $route['financial/records'] = 'financial/records';
+$route['financial/estimate'] = 'financial/estimate';
+$route['financial/downloadestimate'] = 'financial/downloadestimate';
 $route['financial/record/create'] = 'financial/create';
 $route['financial/record/store']['post'] = 'financial/store';
 $route['financial/record/(:num)'] = 'financial/show/$1';
 $route['financial/record/(:num)/edit'] = 'financial/edit/$1';
 $route['financial/record/(:num)/update']['post'] = 'financial/update/$1';
 $route['financial/record/(:num)/delete']['post'] = 'financial/delete/$1';
+
 
 $route['teams'] = 'teams/index';
 $route['team/create'] = 'teams/create';
