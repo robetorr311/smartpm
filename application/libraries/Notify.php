@@ -11,8 +11,8 @@ class Notify
 
         $this->m_emailCred = new M_EmailCredModel();
 
-        if (isset($this->CI->session->company_id)) {
-            $smtpSettings = $this->m_emailCred->getSMTPSettings($this->CI->session->company_id);
+        if (isset($this->CI->session->company_code)) {
+            $smtpSettings = $this->m_emailCred->getSMTPSettings($this->CI->session->company_code);
         }
         $this->CI->email->initialize([
             'protocol' => 'smtp',
@@ -35,7 +35,10 @@ class Notify
             'token' => $token
         ], true);
         $this->CI->email->message($html_message);
-        $this->CI->email->send();
+        if (!$this->CI->email->send(false)) {
+            $this->CI->email->print_debugger();
+            die();
+        }
     }
 
     public function createPassword($email, $token, $logoUrl)
