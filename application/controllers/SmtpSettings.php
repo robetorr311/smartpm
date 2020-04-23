@@ -18,7 +18,7 @@ class SMTPSettings extends CI_Controller
     {
         authAccess();
 
-        $smtpSettings= $this->m_emailCred->getSMTPSettings($this->session->company_id);
+        $smtpSettings= $this->m_emailCred->getSMTPSettings($this->session->company_code);
 
         $this->load->view('header', [
             'title' => $this->title
@@ -40,7 +40,7 @@ class SMTPSettings extends CI_Controller
 
         if ($this->form_validation->run() == TRUE) {
             $data = $this->input->post();
-            $update = $this->m_emailCred->update($this->session->company_id, [
+            $update = $this->m_emailCred->update($this->session->company_code, [
                 'smtp_crypto' => $data['smtp_crypto'],
                 'smtp_host' => $data['smtp_host'],
                 'smtp_port' => $data['smtp_port'],
