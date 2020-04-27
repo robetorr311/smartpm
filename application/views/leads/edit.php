@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Address<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Address" name="address" value="<?= $lead->email ?>" type="text">
+                                <input class="form-control" placeholder="Address" name="address" value="<?= $lead->address ?>" type="text">
                             </div>
                         </div>
                     </div>
