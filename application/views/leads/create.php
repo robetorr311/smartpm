@@ -157,9 +157,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="clearfix"></div>
                                 <div>
                                     <select class="form-control" id="lead" name="status">
-                                        <?php foreach ($lead_status_tags as $s_id => $s_tags) : ?>
-                                            <option value="<?= $s_id ?>"><?= $s_tags ?></option>
-                                        <?php endforeach; ?>
+                            <optgroup label="Leads">
+                                <option value="0">New</option>
+                                <option value="1">Appointment Scheduled</option>
+                                <option value="2">Needs Follow Up Call</option>
+                                <option value="3">Needs Site Visit</option>
+                                <option value="4">Needs Estimate / Bid</option>
+                            </optgroup>
+                            <optgroup label="Prospects">
+                                <option value="5">Estimate Sent</option>
+                                <option value="6">Ready to Sign / Verbal Go</option>
+                                <option value="12">Cold</option>
+                                <option value="13">Postponed</option>
+                                <option value="14">Dead / Lost</option>
+                            </optgroup>
+                            <optgroup label="Prospects">
+                                <option value="7">Signed</option>
+                                <option value="8">In Production</option>
+                                <option value="9">Completed</option>
+                                <option value="10">Closed</option>
+                                <option value="11">Archive</option>
+                            </optgroup>
                                     </select>
                                 </div>
                             </div>
