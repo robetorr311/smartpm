@@ -55,6 +55,8 @@ form.addEventListener("submit", function (e) {
 });
 $('#camera-uploads').change(function (){
     var file_data = $(this)[0].files;
+    var jobid = $(this).attr("jobid");
+    var baseUrl = $(this).attr("baseUrl");
     /*var len_files = file_data.length;
     var form_data = new FormData();
     for (var i = 0; i < len_files; i++) {
@@ -83,8 +85,6 @@ $('#camera-uploads').change(function (){
                   name: JSON.stringify(obj.img)
                 },
                 success: function(photoid) {
-                  //alert(photoid);
-                  console.log("DDDDD")
                   $('.camera-files-status div').show();
                 }
               });

@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div>Files uploaded succfully !!</div>
                         </div>
                         <div class="col-md-12">
-                            <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" style="display: none;" multiple /></label>
+                        <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" baseUrl="<?= base_url(); ?>" jobid="<?php echo $jobid; ?>" style="display: none;" multiple /></label>
                             <a href="<?= base_url('lead/' . $lead->id . '/photos'); ?>" class="btn btn-fill">Photos</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/reports'); ?>" class="btn btn-fill">Photo Report</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
@@ -177,7 +177,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Address<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Address" name="address" value="<?= $lead->email ?>" type="text">
+                                <input class="form-control" placeholder="Address" name="address" value="<?= $lead->address ?>" type="text">
                             </div>
                         </div>
                     </div>
@@ -547,8 +547,5 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    var baseUrl = '<?= base_url(); ?>';
-    var jobid = "<?php echo $jobid; ?>";
-</script>
+
 <script src="<?= base_url('assets/js/leads/edit.js') ?>"></script>
