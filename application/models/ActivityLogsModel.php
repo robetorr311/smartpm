@@ -28,7 +28,7 @@ class ActivityLogsModel extends CI_Model
 		$this->db->join('users as users_created_by', 'activity_logs.created_by=users_created_by.id', 'left');
 		$this->db->join('jobs as client', 'activity_logs.module_id=client.id', 'left');
 		$this->db->where('activity_logs.is_deleted', FALSE);
-		$this->db->where('jobs.is_deleted', FALSE);
+		$this->db->where('client.is_deleted', FALSE);
 		$this->db->order_by('created_at', 'DESC');
 		$this->db->limit(50);
 		$query = $this->db->get();
@@ -46,7 +46,7 @@ class ActivityLogsModel extends CI_Model
 		$this->db->join('users as users_created_by', 'activity_logs.created_by=users_created_by.id', 'left');
 		$this->db->join('jobs as client', 'activity_logs.module_id=client.id', 'left');
 		$this->db->where('activity_logs.is_deleted', FALSE);
-		$this->db->where('jobs.is_deleted', FALSE);
+		$this->db->where('client.is_deleted', FALSE);
 		$this->db->where('activity_logs.module_id', $lead_id);
 		$this->db->where('activity_logs.module', 0);
 		$this->db->order_by('created_at', 'DESC');
