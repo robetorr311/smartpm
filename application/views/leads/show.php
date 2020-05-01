@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div>Files uploaded succfully !!</div>
                         </div>
                         <div class="col-md-12">
-                        <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" baseUrl="<?= base_url(); ?>" jobid="<?php echo $jobid; ?>" style="display: none;" multiple /></label>
+                        <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" data-base-url="<?= base_url(); ?>" data-jobid="<?php echo $jobid; ?>" style="display: none;" multiple /></label>
                             <a href="<?= base_url('lead/' . $lead->id . '/photos'); ?>" class="btn btn-fill">Photos</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/reports'); ?>" class="btn btn-fill">Photo Report</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
