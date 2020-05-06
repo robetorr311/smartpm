@@ -140,9 +140,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <!-- Edit Section -->
 <div id="edit-section" class="container-fluid">
     <div class="row page-header-buttons">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <a href="#" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
-            <a href="<?= base_url('lead/' . $lead->id . '/delete') ?>" data-method="POST" class="btn btn-danger btn-fill show-edit-toggler"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp; Delete</a>
+            <a href="<?= base_url('lead/' . $lead->id . '/delete') ?>" data-method="POST" class="btn btn-danger btn-fill show-edit-toggler pull-right"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp; Delete</a>
         </div>
     </div>
     <div class="row">
