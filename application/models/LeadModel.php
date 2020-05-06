@@ -52,7 +52,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE
         ]);
         $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 13, 14]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -68,7 +68,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'status' => $status
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -79,7 +79,7 @@ class LeadModel extends CI_Model
         $this->db->where([
             'is_deleted' => FALSE
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -91,7 +91,7 @@ class LeadModel extends CI_Model
             'status' => 7,
             'is_deleted' => FALSE
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -103,7 +103,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'category' => 1
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -115,7 +115,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'category' => 0
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -127,7 +127,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'category' => 2
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -139,7 +139,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'category' => 3
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -151,7 +151,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'status' => 8
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -163,7 +163,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'status' => 9
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -175,7 +175,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'status' => 10
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -187,7 +187,7 @@ class LeadModel extends CI_Model
             'is_deleted' => FALSE,
             'status' => 11
         ]);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -284,7 +284,7 @@ class LeadModel extends CI_Model
             $this->db->or_like('email', $k);
         }
         $this->db->group_end();
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
