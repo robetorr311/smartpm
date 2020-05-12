@@ -42,15 +42,15 @@ form.addEventListener("submit", function (e) {
                 notValid: ' contains invalid value'
             }
         },
-        status: {
-            presence: true
-        },
-        category: {
-            presence: true
-        },
-        type: {
-            presence: true
-        }
+        // status: {
+        //     presence: true
+        // },
+        // category: {
+        //     presence: true
+        // },
+        // type: {
+        //     presence: true
+        // }
     }, {
         format: 'flat',
         prettify: function prettify(string) {
