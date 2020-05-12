@@ -343,7 +343,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                     <div class="content">
                         <select class="form-control" id="lead" name="status">
-                            <option value="" disabled <?= ("" === $lead->status) ? 'selected' : '' ?>>Select Contract Status</option>
+                            <option value="" disabled <?= is_null($lead->status) ? 'selected' : '' ?>>Select Contract Status</option>
                             <optgroup label="Leads">
                                 <option value="0" <?= ("0" == $lead->status) ? 'selected' : '' ?>>New</option>
                                 <option value="1" <?= ("1" == $lead->status) ? 'selected' : '' ?>>Appointment Scheduled</option>
@@ -378,7 +378,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                     <div class="content">
                         <select class="form-control" id="category" name="category">
-                            <option value="" disabled <?= ("" === $lead->category) ? 'selected' : '' ?>>Select Category</option>
+                            <option value="" disabled <?= is_null($lead->category) ? 'selected' : '' ?>>Select Category</option>
                             <?php foreach ($lead_category_tags as $s_id => $s_tags) : ?>
                                 <option value="<?= $s_id ?>" <?= ($s_id === intval($lead->category)) ? 'selected' : '' ?>><?= $s_tags ?></option>
                             <?php endforeach; ?>
@@ -393,7 +393,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                     <div class="content">
                         <select class="form-control lead-status" id="job" name="type">
-                            <option value="" disabled <?= ("" === $lead->type) ? 'selected' : '' ?>>Select Job Type</option>
+                            <option value="" disabled <?= is_null($lead->type) ? 'selected' : '' ?>>Select Job Type</option>
                             <?php foreach ($job_type_tags as $j_id => $job) : ?>
                                 <option value="<?= $j_id ?>" <?= ($j_id == $lead->type) ? 'selected' : '' ?>><?= $job ?></option>
                             <?php endforeach; ?>
