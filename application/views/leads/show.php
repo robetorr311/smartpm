@@ -380,7 +380,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control" id="category" name="category">
                             <option value="" disabled <?= is_null($lead->category) ? 'selected' : '' ?>>Select Category</option>
                             <?php foreach ($lead_category_tags as $s_id => $s_tags) : ?>
-                                <option value="<?= $s_id ?>" <?= ($s_id === intval($lead->category)) ? 'selected' : '' ?>><?= $s_tags ?></option>
+                                <option value="<?= $s_id ?>" <?= ((!is_null($lead->category)) && $s_id === intval($lead->category)) ? 'selected' : '' ?>><?= $s_tags ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -395,7 +395,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control lead-status" id="job" name="type">
                             <option value="" disabled <?= is_null($lead->type) ? 'selected' : '' ?>>Select Job Type</option>
                             <?php foreach ($job_type_tags as $j_id => $job) : ?>
-                                <option value="<?= $j_id ?>" <?= ($j_id == $lead->type) ? 'selected' : '' ?>><?= $job ?></option>
+                                <option value="<?= $j_id ?>" <?= ((!is_null($lead->type)) && $j_id == intval($lead->type)) ? 'selected' : '' ?>><?= $job ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
