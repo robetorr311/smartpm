@@ -41,6 +41,15 @@ form.addEventListener("submit", function (e) {
             numericality: {
                 notValid: ' contains invalid value'
             }
+        },
+        status: {
+            presence: true
+        },
+        category: {
+            presence: true
+        },
+        type: {
+            presence: true
         }
     }, {
         format: 'flat',

@@ -167,7 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Job<span class="red-mark">*</span></label>
                                     <select name="job_id" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->job_id) ? '' : ' selected') ?>>Select Job</option>
+                                        <option value="" disabled<?= (empty($financial->job_id) ? ' selected' : '') ?>>Select Job</option>
                                         <?php foreach ($jobs as $job) {
                                             echo '<option value="' . $job->id . '"' . ($financial->job_id == $job->id ? ' selected' : '') . '>' . (1600 + $job->id) . ' - ' . $job->name . '</option>';
                                         } ?>
@@ -186,7 +186,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Type<span class="red-mark">*</span></label>
                                     <select name="type" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->type) ? '' : ' selected') ?>>Select Type</option>
+                                        <option value="" disabled<?= (empty($financial->type) ? ' selected' : '') ?>>Select Type</option>
                                         <?php foreach ($types as $type) {
                                             echo '<option value="' . $type->id . '"' . ($financial->type == $type->id ? ' selected' : '') . '>' . $type->name . '</option>';
                                         } ?>
@@ -197,7 +197,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Sub Type<span class="red-mark">*</span></label>
                                     <select name="subtype" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->subtype) ? '' : ' selected') ?>>Select Sub Type</option>
+                                        <option value="" disabled<?= (empty($financial->subtype) ? ' selected' : '') ?>>Select Sub Type</option>
                                         <?php foreach ($subTypes as $subType) {
                                             echo '<option value="' . $subType->id . '"' . ($financial->subtype == $subType->id ? ' selected' : '') . '>' . $subType->name . '</option>';
                                         } ?>
@@ -210,7 +210,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Accounting Code<span class="red-mark">*</span></label>
                                     <select name="accounting_code" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->accounting_code) ? '' : ' selected') ?>>Select Accounting Code</option>
+                                        <option value="" disabled<?= (empty($financial->accounting_code) ? ' selected' : '') ?>>Select Accounting Code</option>
                                         <?php foreach ($accountingCodes as $accountingCode) {
                                             echo '<option value="' . $accountingCode->id . '"' . ($financial->accounting_code == $accountingCode->id ? ' selected' : '') . '>' . $accountingCode->name . '</option>';
                                         } ?>
@@ -221,7 +221,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Method<span class="red-mark">*</span></label>
                                     <select name="method" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->method) ? '' : ' selected') ?>>Select Method</option>
+                                        <option value="" disabled<?= (empty($financial->method) ? ' selected' : '') ?>>Select Method</option>
                                         <?php foreach ($methods as $method) {
                                             echo '<option value="' . $method->id . '"' . ($financial->method == $method->id ? ' selected' : '') . '>' . $method->name . '</option>';
                                         } ?>
@@ -232,7 +232,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Bank Account<span class="red-mark">*</span></label>
                                     <select name="bank_account" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->bank_account) ? '' : ' selected') ?>>Select Bank Account</option>
+                                        <option value="" disabled<?= (empty($financial->bank_account) ? ' selected' : '') ?>>Select Bank Account</option>
                                         <?php foreach ($bankAccounts as $bankAccount) {
                                             echo '<option value="' . $bankAccount->id . '"' . ($financial->bank_account == $bankAccount->id ? ' selected' : '') . '>' . $bankAccount->name . '</option>';
                                         } ?>
@@ -245,7 +245,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>State<span class="red-mark">*</span></label>
                                     <select name="state" class="form-control">
-                                        <option value="" disabled<?= (empty($financial->state) ? '' : ' selected') ?>>Select State</option>
+                                        <option value="" disabled<?= (empty($financial->state) ? ' selected' : '') ?>>Select State</option>
                                         <?php foreach ($states as $state) {
                                             echo '<option value="' . $state->id . '"' . ($financial->state == $state->id ? ' selected' : '') . '>' . $state->name . '</option>';
                                         } ?>

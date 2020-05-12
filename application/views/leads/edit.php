@@ -97,7 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-group">
                                 <label>Lead Source</label>
                                 <select name="lead_source" class="form-control">
-                                    <option value="" disabled<?= (empty($lead->lead_source) ? '' : ' selected') ?>>Select Lead Source</option>
+                                    <option value="" disabled<?= (empty($lead->lead_source) ? ' selected' : '') ?>>Select Lead Source</option>
                                     <?php foreach ($leadSources as $leadSource) {
                                         echo '<option value="' . $leadSource->id . '"' . ($lead->lead_source == $leadSource->id ? ' selected' : '') . '>' . $leadSource->name . '</option>';
                                     } ?>
