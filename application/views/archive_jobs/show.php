@@ -310,7 +310,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-group">
                                 <label>Lead Source</label>
                                 <select name="lead_source" class="form-control">
-                                    <option value="" disabled<?= (empty($job->lead_source) ? '' : ' selected') ?>>Select Lead Source</option>
+                                    <option value="" disabled<?= (empty($job->lead_source) ? ' selected' : '') ?>>Select Lead Source</option>
                                     <?php foreach ($leadSources as $leadSource) {
                                         echo '<option value="' . $leadSource->id . '"' . ($job->lead_source == $leadSource->id ? ' selected' : '') . '>' . $leadSource->name . '</option>';
                                     } ?>
@@ -424,6 +424,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                     <div class="content">
                         <select class="form-control" id="lead" name="status">
+                            <option value="" disabled <?= ("" === $job->status) ? 'selected' : '' ?>>Select Contract Status</option>
                             <optgroup label="Leads">
                                 <option value="0" <?= ("0" == $job->status) ? 'selected' : '' ?>>New</option>
                                 <option value="1" <?= ("1" == $job->status) ? 'selected' : '' ?>>Appointment Scheduled</option>
@@ -458,6 +459,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                     <div class="content">
                         <select class="form-control" id="category" name="category">
+                            <option value="" disabled <?= ("" === $job->category) ? 'selected' : '' ?>>Select Category</option>
                             <?php foreach ($lead_category_tags as $s_id => $s_tags) : ?>
                                 <option value="<?= $s_id ?>" <?= ($s_id === intval($job->category)) ? 'selected' : '' ?>><?= $s_tags ?></option>
                             <?php endforeach; ?>
@@ -472,6 +474,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix"></div>
                     <div class="content">
                         <select class="form-control lead-status" id="job" name="type">
+                            <option value="" disabled <?= ("" === $job->type) ? 'selected' : '' ?>>Select Job Type</option>
                             <?php foreach ($job_type_tags as $j_id => $j) : ?>
                                 <option value="<?= $j_id ?>" <?= ($j_id == $job->type) ? 'selected' : '' ?>><?= $j ?></option>
                             <?php endforeach; ?>

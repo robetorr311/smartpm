@@ -153,31 +153,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <h4 class="title" style="float: left;">Contract Status</h4>
+                                <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                                 <div class="clearfix"></div>
                                 <div>
                                     <select class="form-control" id="lead" name="status">
-                            <optgroup label="Leads">
-                                <option value="0">New</option>
-                                <option value="1">Appointment Scheduled</option>
-                                <option value="2">Needs Follow Up Call</option>
-                                <option value="3">Needs Site Visit</option>
-                                <option value="4">Needs Estimate / Bid</option>
-                            </optgroup>
-                            <optgroup label="Prospects">
-                                <option value="5">Estimate Sent</option>
-                                <option value="6">Ready to Sign / Verbal Go</option>
-                                <option value="12">Cold</option>
-                                <option value="13">Postponed</option>
-                                <option value="14">Dead / Lost</option>
-                            </optgroup>
-                            <optgroup label="Prospects">
-                                <option value="7">Signed</option>
-                                <option value="8">In Production</option>
-                                <option value="9">Completed</option>
-                                <option value="10">Closed</option>
-                                <option value="11">Archive</option>
-                            </optgroup>
+                                        <option value="" disabled selected>Select Contract Status</option>
+                                        <optgroup label="Leads">
+                                            <option value="0">New</option>
+                                            <option value="1">Appointment Scheduled</option>
+                                            <option value="2">Needs Follow Up Call</option>
+                                            <option value="3">Needs Site Visit</option>
+                                            <option value="4">Needs Estimate / Bid</option>
+                                        </optgroup>
+                                        <optgroup label="Prospects">
+                                            <option value="5">Estimate Sent</option>
+                                            <option value="6">Ready to Sign / Verbal Go</option>
+                                            <option value="12">Cold</option>
+                                            <option value="13">Postponed</option>
+                                            <option value="14">Dead / Lost</option>
+                                        </optgroup>
+                                        <optgroup label="Prospects">
+                                            <option value="7">Signed</option>
+                                            <option value="8">In Production</option>
+                                            <option value="9">Completed</option>
+                                            <option value="10">Closed</option>
+                                            <option value="11">Archive</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                             </div>
@@ -187,10 +188,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <h4 class="title" style="float: left;">Category</h4>
+                                <h4 class="title" style="float: left;">Category<span class="red-mark">*</span></h4>
                                 <div class="clearfix"></div>
                                 <div>
                                     <select class="form-control" id="category" name="category">
+                                        <option value="" disabled selected>Select Category</option>
                                         <?php foreach ($lead_category_tags as $s_id => $s_tags) : ?>
                                             <option value="<?= $s_id ?>"><?= $s_tags ?></option>
                                         <?php endforeach; ?>
@@ -199,14 +201,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <h4 class="title" style="float: left;">Job Type</h4>
+                                <h4 class="title" style="float: left;">Job Type<span class="red-mark">*</span></h4>
                                 <div class="clearfix"></div>
                                 <div>
                                     <select class="form-control lead-status" id="job" name="type">
+                                        <option value="" disabled selected>Select Job Type</option>
                                         <?php foreach ($job_type_tags as $j_id => $job) : ?>
                                             <option value="<?= $j_id ?>"><?= $job ?></option>
                                         <?php endforeach; ?>
