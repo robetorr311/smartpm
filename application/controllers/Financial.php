@@ -9,8 +9,8 @@ class Financial extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
-        $this->load->library(['pagination', 'form_validation']);
+        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel','ItemsModel']);
+        $this->load->library(['pagination', 'form_validation','Pdf']);
 
         $this->financial = new FinancialModel();
         $this->user = new UserModel();
@@ -21,6 +21,7 @@ class Financial extends CI_Controller
         $this->method = new FinancialMethodsModel();
         $this->bankAcc = new FinancialBankAccsModel();
         $this->state = new StatesModel();
+        $this->items = new ItemsModel();
     }
 
     public function index()
@@ -30,6 +31,7 @@ class Financial extends CI_Controller
 
     public function records()
     {
+        
         authAccess();
 
         $financials = $this->financial->allFinancialWithLeads();
@@ -259,5 +261,60 @@ class Financial extends CI_Controller
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
         redirect('financial/records');
+    }
+    
+    public function itemindex()
+    {
+        authAccess();
+        $items = $this->items->allItems();
+        $this->load->view('header', ['title' => $this->title]);
+        $this->load->view('financial/items', [
+            'items' => $items
+        ]);
+        $this->load->view('footer');
+    }
+
+    public function createitem()
+    {
+        authAccess();
+        $this->load->view('header', [
+            'title' => $this->title
+        ]);
+        $this->load->view('financial/itemcreate');
+        $this->load->view('footer');
+    }
+
+    public function storeitem()
+    {   
+        authAccess();
+
+        $this->form_validation->set_rules('item_name', 'Item Display Name', 'trim|required');
+        $this->form_validation->set_rules('item_line', 'Item Line/ Style / Type', 'trim|required');
+        $this->form_validation->set_rules('internal_parts', 'Internal Part', 'trim|required');
+        $this->form_validation->set_rules('quantity_units', 'Quantity Units', 'trim|required|numeric');
+        $this->form_validation->set_rules('unit_price', 'Unit Price', 'trim|required|numeric');
+        $this->form_validation->set_rules('item_desc', 'item_desc', 'trim');
+
+        if ($this->form_validation->run() == TRUE) {
+            $itemsData = $this->input->post();
+            $insert = $this->items->insert([
+                'item_name' => $itemsData['item_name'],
+                'item_type' => $itemsData['item_line'],
+                'internal_part' => $itemsData['internal_parts'],
+                'quantity_units' => $itemsData['quantity_units'],
+                'unit_price' => $itemsData['unit_price'],
+                'item_description' => $itemsData['item_desc']
+            ]);
+
+            if ($insert) {
+                redirect('financial/items');
+            } else {
+                $this->session->set_flashdata('errors', '<p>Unable to Create items.</p>');
+                redirect('financial/items/create');
+            }
+        } else {
+            $this->session->set_flashdata('errors', validation_errors());
+            redirect('financial/items/create');
+        }
     }
 }

@@ -247,6 +247,10 @@ $route['financial/record/(:num)/edit'] = 'financial/edit/$1';
 $route['financial/record/(:num)/update']['post'] = 'financial/update/$1';
 $route['financial/record/(:num)/delete']['post'] = 'financial/delete/$1';
 
+$route['financial/items'] = 'financial/itemindex';
+$route['financial/items/create'] = 'financial/createitem';
+$route['financial/items/store']['post'] = 'financial/storeitem';
+
 $route['teams'] = 'teams/index';
 $route['team/create'] = 'teams/create';
 $route['team/store']['post'] = 'teams/store';
@@ -259,20 +263,6 @@ $route['company-docs'] = 'company_docs/index';
 $route['company-docs/upload']['post'] = 'company_docs/upload';
 $route['company-doc/(:num)/download'] = 'company_docs/download/$1';
 $route['company-doc/(:num)/delete']['post'] = 'company_docs/delete/$1';
-
-$route['company-photos'] = 'company_photos/index';
-$route['company-photos/create-folder'] = 'company_photos/createFolder';
-$route['company-photos/upload'] = 'company_photos/upload';
-$route['company-photos/(:num)/generate-public-key']['post'] = 'company_photos/generatePublicKey/$1';
-$route['company-photos/(:num)/delete']['post'] = 'company_photos/delete/$1';
-$route['company-photos/public/(:num)/(:any)'] = 'company_photos/sharedFolder/$1/$2';
-$route['company-photos/(:num)'] = 'company_photos/index/$1';
-$route['company-photos/(:num)/create-folder'] = 'company_photos/createFolder/$1';
-$route['company-photos/(:num)/upload'] = 'company_photos/upload/$1';
-$route['company-photos/(:num)/(:num)/generate-public-key']['post'] = 'company_photos/generatePublicKey/$2/$1';
-$route['company-photos/(:num)/(:num)/delete']['post'] = 'company_photos/delete/$2/$1';
-$route['company-photos/public/(:num)/(:any)/(:num)'] = 'company_photos/sharedFolder/$1/$2/$3';
-$route['company-photos/public/download/(:num)/(:any)/(:num)']['post'] = 'company_photos/download/$1/$2/$3';
 
 $route['setting'] = 'setting/index';
 $route['setting/ajaxupload'] = 'setting/ajaxupload';

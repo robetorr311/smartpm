@@ -170,9 +170,16 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav">
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('financial/items') ?>">
+                                        <span class="sidebar-normal">Items</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </li>
-                    <li>
+                        <li>
                         <a href="<?= base_url('users') ?>">
                             <i class="pe-7s-note2"></i>
                             <p>Users</p>
@@ -191,11 +198,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url('company-photos') ?>">
-                            <i class="pe-7s-note"></i>
-                            <p>Company Photos</p>
-                        </a>
-                    </li>
+-                        <a href="<?= base_url('company-photos') ?>">
+-                            <i class="pe-7s-note"></i>
+-                            <p>Company Photos</p>
+-                        </a>
+-                   </li>
                     <li class="">
                         <a class="nav-link" data-toggle="collapse" href="#componentsCollapse">
                             <i class="pe-7s-graph"></i>
