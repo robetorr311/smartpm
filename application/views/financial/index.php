@@ -26,29 +26,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
+                            <th class="text-center">View</th>
                             <th>Transaction #</th>
                             <th>Vendor / Payee</th>
                             <th>Transaction Date</th>
                             <th>Amount</th>
                             <th>Type</th>
                             <th>Sales Representative</th>
-                            <th class="text-center">View</th>
-                            <!-- <th class="text-center">Edit</th>
-                            <th class="text-center">Delete</th> -->
                         </thead>
                         <tbody>
                             <?php if (!empty($financials)) : ?>
                                 <?php foreach ($financials as $financial) : ?>
                                     <tr>
+                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td><?= (100 + $financial->id) ?></td>
                                         <td><?= $financial->vendor ?></td>
                                         <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
                                         <td><?= number_format($financial->amount, 2) ?></td>
                                         <td><?= $financial->type_name ?></td>
                                         <td><?= $financial->created_user_fullname ?></td>
-                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                        <!-- <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

@@ -26,14 +26,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
+                            <th class="text-center">View</th>
                             <th>Job Number</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Status</th>
                             <th>Type</th>
-                            <th class="text-center">View</th>
-                            <!-- <th class="text-center">Edit</th>
-                            <th class="text-center">Delete</th> -->
                         </thead>
                         <tbody>
                             <?php if (!empty($jobs)) : ?>
@@ -57,14 +55,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     }
                                     ?>
                                     <tr>
+                                        <td class="text-center"><a href="<?= base_url('lead/' . $sub_base_path . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td><?= (1600 + $job->id); ?></td>
                                         <td><?= $job->firstname ?></td>
                                         <td><?= $job->lastname ?></td>
                                         <td><?= LeadModel::statusToStr($job->status) ?></td>
                                         <td><?= LeadModel::typeToStr($job->type) ?></td>
-                                        <td class="text-center"><a href="<?= base_url('lead/' . $sub_base_path . $job->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                        <!-- <td class="text-center"><a href="<?= base_url('lead/' . $sub_base_path . $job->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('lead/' . $sub_base_path . $job->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>
