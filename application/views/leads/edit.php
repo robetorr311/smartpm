@@ -202,7 +202,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="card">
-                <?= form_open('lead/' . $sub_base_path . $jobid . '/updatestatus', array('method' => 'post')) ?>
+                <?= form_open('lead/' . $sub_base_path . $jobid . '/updatestatus', array('id' => 'lead_edit_status', 'method' => 'post')) ?>
                 <div class="header">
                     <h4 class="title" style="float: left;">Contract Status</h4>
                     <span class="status">

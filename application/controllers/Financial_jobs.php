@@ -9,13 +9,14 @@ class Financial_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->party = new PartyModel();
 		$this->leadSource = new ClientLeadSourceModel();
+		$this->classification = new ClientClassificationModel();
 		$this->activityLogs = new ActivityLogsModel();
 	}
 
@@ -46,6 +47,7 @@ class Financial_jobs extends CI_Controller
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
+			$classification = $this->classification->allClassification();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
@@ -61,6 +63,7 @@ class Financial_jobs extends CI_Controller
 				'lead_status_tags' => $lead_status_tags,
 				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource,
+				'classification' => $classification,
 				'aLogs' => $aLogs
 			]);
 			$this->load->view('footer');

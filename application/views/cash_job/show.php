@@ -26,18 +26,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title">Job Details</h4>
                 </div>
-				<div class="content view">
-					<div class="row">
-						<div class="col-md-12">
-                        #<?= (1600 + $job->id); ?><br />
-						<?= $job->firstname ?> <?= $job->lastname ?><br />
-						<?= $job->address ?><br />
-						<?= $job->city ?>, <?= $job->state ?><br />
-						C - <?= $job->phone1 ?><br />
-						<?= $job->email ?>
-						</div>
-					</div>
-				</div>
+                <div class="content view">
+                    <div class="row">
+                        <div class="col-md-12">
+                            #<?= (1600 + $job->id); ?><br />
+                            <?= $job->firstname ?> <?= $job->lastname ?><br />
+                            <?= $job->address ?><br />
+                            <?= $job->city ?>, <?= $job->state ?><br />
+                            C - <?= $job->phone1 ?><br />
+                            <?= $job->email ?>
+                        </div>
+                    </div>
+                </div>
                 <div class="footer">
                     <a href="<?= base_url('lead/cash-job/' . $job->id . '/photos') ?>" class="btn btn-fill">Photos</a>
                     <a href="<?= base_url('lead/cash-job/' . $job->id . '/reports') ?>" class="btn btn-fill">Photo Report</a>
@@ -97,16 +97,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::statusToStr($job->status) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
-                    <?php if($job->category !== null) { ?>
-                    <h4 class="title" style="float: left;">Category</h4>
-                    <span class="status">
-                        <?= LeadModel::categoryToStr($job->category); ?>
-                    </span>
-                    <div class="clearfix" style="padding: 10px;"></div>
+                    <?php if ($job->category !== null) { ?>
+                        <h4 class="title" style="float: left;">Category</h4>
+                        <span class="status">
+                            <?= LeadModel::categoryToStr($job->category); ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
                     <?php } ?>
                     <h4 class="title" style="float: left;">Job Type</h4>
                     <span class="status">
                         <?= LeadModel::typeToStr($job->type) ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
+                    <h4 class="title" style="float: left;">Classification</h4>
+                    <span class="status">
+                        <?= $job->classification_name ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
                 </div>
@@ -128,20 +133,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
-			<div class="row">
-				<div class="col-md-12">
-					<h3>Activity Log</h3>
-				</div>
-			</div>
-			<div class="row activity-logs">
-				<div class="col-md-12">
-					<?php
-					foreach ($aLogs as $aLog) {
-						echo '<p>' . ActivityLogsModel::stringifyLog($aLog) . '</p>';
-					}
-					?>
-				</div>
-			</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Activity Log</h3>
+                </div>
+            </div>
+            <div class="row activity-logs">
+                <div class="col-md-12">
+                    <?php
+                    foreach ($aLogs as $aLog) {
+                        echo '<p>' . ActivityLogsModel::stringifyLog($aLog) . '</p>';
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -342,9 +347,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="card">
-                <?= form_open('lead/cash-job/' . $job->id . '/updatestatus', array('method' => 'post')) ?>
+                <div class="content">
+                    <div class="row">
+                        <div id="validation-errors-status" class="col-md-12">
+                        </div>
+                    </div>
+                </div>
+                <?= form_open('lead/cash-job/' . $job->id . '/updatestatus', array('id' => 'lead_edit_status', 'method' => 'post')) ?>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Contract Status</h4>
+                    <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($job->status) ?>
                     </span>
@@ -377,7 +388,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Category</h4>
+                    <h4 class="title" style="float: left;">Category<span class="red-mark">*</span></h4>
                     <?php if ($job->category !== null) { ?>
                         <span class="status">
                             <?= LeadModel::categoryToStr($job->category) ?>
@@ -394,7 +405,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Job Type</h4>
+                    <h4 class="title" style="float: left;">Job Type<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= LeadModel::typeToStr($job->type) ?>
                     </span>
@@ -403,7 +414,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control lead-status" id="job" name="type">
                             <option value="" disabled <?= is_null($job->type) ? 'selected' : '' ?>>Select Job Type</option>
                             <?php foreach ($job_type_tags as $j_id => $j) : ?>
-                                <option value="<?= $j_id ?>" <?= ((!is_null($job->type)) && $j_id == intval($job->type)) ? 'selected' : '' ?>><?= $j ?></option>
+                                <option value="<?= $j_id ?>" <?= ((!is_null($job->type)) && $j_id === intval($job->type)) ? 'selected' : '' ?>><?= $j ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Classification<span class="red-mark">*</span></h4>
+                    <span class="status">
+                        <?= $job->classification_name ?>
+                    </span>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <select class="form-control lead-status" id="job" name="classification">
+                            <option value="" disabled <?= empty($job->classification) ? 'selected' : '' ?>>Select Classification</option>
+                            <?php foreach ($classification as $clsf) : ?>
+                                <option value="<?= $clsf->id ?>" <?= ((!empty($job->classification)) && $clsf->id == $job->classification) ? 'selected' : '' ?>><?= $clsf->name ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

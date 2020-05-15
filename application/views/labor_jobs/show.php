@@ -109,6 +109,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::typeToStr($job->type) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+                    <h4 class="title" style="float: left;">Classification</h4>
+                    <span class="status">
+                        <?= $job->classification_name ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
                 </div>
             </div>
         </div>
@@ -344,9 +349,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="card">
-                <?= form_open('lead/labor-job/' . $job->id . '/updatestatus', array('method' => 'post')) ?>
+                <div class="content">
+                    <div class="row">
+                        <div id="validation-errors-status" class="col-md-12">
+                        </div>
+                    </div>
+                </div>
+                <?= form_open('lead/labor-job/' . $job->id . '/updatestatus', array('id' => 'lead_edit_status', 'method' => 'post')) ?>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Contract Status</h4>
+                    <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($job->status) ?>
                     </span>
@@ -379,7 +390,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Category</h4>
+                    <h4 class="title" style="float: left;">Category<span class="red-mark">*</span></h4>
                     <?php if ($job->category !== null) { ?>
                         <span class="status">
                             <?= LeadModel::categoryToStr($job->category) ?>
@@ -396,7 +407,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Job Type</h4>
+                    <h4 class="title" style="float: left;">Job Type<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= LeadModel::typeToStr($job->type) ?>
                     </span>
@@ -405,7 +416,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control lead-status" id="job" name="type">
                             <option value="" disabled <?= is_null($job->type) ? 'selected' : '' ?>>Select Job Type</option>
                             <?php foreach ($job_type_tags as $j_id => $j) : ?>
-                                <option value="<?= $j_id ?>" <?= ((!is_null($job->type)) && $j_id == intval($job->type)) ? 'selected' : '' ?>><?= $j ?></option>
+                                <option value="<?= $j_id ?>" <?= ((!is_null($job->type)) && $j_id === intval($job->type)) ? 'selected' : '' ?>><?= $j ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Classification<span class="red-mark">*</span></h4>
+                    <span class="status">
+                        <?= $job->classification_name ?>
+                    </span>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <select class="form-control lead-status" id="job" name="classification">
+                            <option value="" disabled <?= empty($job->classification) ? 'selected' : '' ?>>Select Classification</option>
+                            <?php foreach ($classification as $clsf) : ?>
+                                <option value="<?= $clsf->id ?>" <?= ((!empty($job->classification)) && $clsf->id == $job->classification) ? 'selected' : '' ?>><?= $clsf->name ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
