@@ -41,16 +41,7 @@ form.addEventListener("submit", function (e) {
             numericality: {
                 notValid: ' contains invalid value'
             }
-        },
-        // status: {
-        //     presence: true
-        // },
-        // category: {
-        //     presence: true
-        // },
-        // type: {
-        //     presence: true
-        // }
+        }
     }, {
         format: 'flat',
         prettify: function prettify(string) {
@@ -62,6 +53,34 @@ form.addEventListener("submit", function (e) {
         displayValidationError(errors);
     }
 });
+var form_status = document.querySelector('form#lead_edit_status');
+form_status.addEventListener("submit", function (e) {
+  var values = validate.collectFormValues(form_status);
+  var errors = validate(values, {
+      status: {
+          presence: true
+      },
+      category: {
+          presence: true
+      },
+      type: {
+          presence: true
+      },
+      classification: {
+          presence: true
+      }
+  }, {
+      format: 'flat',
+      prettify: function prettify(string) {
+          return aliases[string] || validate.prettify(string);
+      }
+  });
+  if (errors) {
+      e.preventDefault();
+      displayValidationError(errors, 'validation-errors-status');
+  }
+});
+
 $('#camera-uploads').change(function (){
     var file_data = $(this)[0].files;
     var jobid = $(this).data("jobid");

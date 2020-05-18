@@ -9,7 +9,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel', 'ClientClassificationModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation', 'notify']);
 
 		$this->lead = new LeadModel();
@@ -22,6 +22,7 @@ class Leads extends CI_Controller
 		$this->team = new TeamModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->leadSource = new ClientLeadSourceModel();
+		$this->classification = new ClientClassificationModel();
 		$this->activityLogs = new ActivityLogsModel();
 	}
 
@@ -57,13 +58,15 @@ class Leads extends CI_Controller
 		$lead_status_tags = LeadModel::getStatus();
 		$lead_category_tags = LeadModel::getCategory();
 		$clientLeadSource = $this->leadSource->allLeadSource();
+		$classification = $this->classification->allClassification();
 
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/create', [
 			'job_type_tags' => $job_type_tags,
 			'lead_status_tags' => $lead_status_tags,
 			'lead_category_tags' => $lead_category_tags,
-			'leadSources' => $clientLeadSource
+			'leadSources' => $clientLeadSource,
+            'classification' => $classification
 		]);
 		$this->load->view('footer');
 	}
@@ -87,6 +90,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
+		$this->form_validation->set_rules('classification', 'Classification', 'trim|required|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
@@ -104,6 +108,7 @@ class Leads extends CI_Controller
 				'status' => $posts['status'],
 				'category' => $posts['category'],
 				'type' => $posts['type'],
+				'classification' => $posts['classification'],
 				'entry_date' => date('Y-m-d h:i:s')
 			]);
 
@@ -231,6 +236,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
+		$this->form_validation->set_rules('classification', 'Classification', 'trim|required|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$_lead = $this->lead->getLeadById($id);
@@ -238,7 +244,8 @@ class Leads extends CI_Controller
 			$update = $this->lead->update($id, [
 				'status' => $posts['status'],
 				'category' => $posts['category'],
-				'type' => $posts['type']
+				'type' => $posts['type'],
+				'classification' => $posts['classification']
 			]);
 
 			if ($update) {
@@ -303,6 +310,7 @@ class Leads extends CI_Controller
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
+			$classification = $this->classification->allClassification();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
@@ -318,6 +326,7 @@ class Leads extends CI_Controller
 				'teams_detail' => $teams_detail,
 				'teams' => $teams,
 				'leadSources' => $clientLeadSource,
+				'classification' => $classification,
 				'aLogs' => $aLogs
 			]);
 			$this->load->view('footer');

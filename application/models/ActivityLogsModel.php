@@ -15,6 +15,7 @@ class ActivityLogsModel extends CI_Model
 	// 	2 => 'new_photos',
 	// 	3 => 'new_documents',
 	// 	4 => 'change_status'
+	//  5 => 'delete_photo'
 	// ];
 
 	public function getLast50()
@@ -90,6 +91,9 @@ class ActivityLogsModel extends CI_Model
 			} else if ($log->type == 4) {
 				$activity_data = json_decode($log->activity_data);
 				return $log->created_user_fullname . ' - Updated Client <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> status to "' . LeadModel::statusToStr($activity_data->status) . '" - ' . $log->created_at;
+			} else if ($log->type == 5) {
+				$activity_data = json_decode($log->activity_data);
+				return $log->created_user_fullname . ' - Deleted a Photo from <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> - ' . $log->created_at;
 			}
 		}
 

@@ -203,7 +203,7 @@ class LeadModel extends CI_Model
 
     public function getLeadById($id)
     {
-        $this->db->select("jobs.*, (SELECT name FROM client_lead_source WHERE id=jobs.lead_source) AS lead_source_name");
+        $this->db->select("jobs.*, (SELECT name FROM client_lead_source WHERE id=jobs.lead_source) AS lead_source_name, (SELECT name FROM client_classification WHERE id=jobs.classification) AS classification_name");
         $this->db->where([
             'id' => $id
         ]);

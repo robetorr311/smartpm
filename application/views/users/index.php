@@ -26,6 +26,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<div class="content table-responsive table-full-width">
 					<table class="table table-hover table-striped">
 						<thead>
+							<th class="text-center">View</th>
 							<th>ID</th>
 							<th>First Name</th>
 							<th>Last Name</th>
@@ -33,14 +34,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<th>Email ID</th>
 							<th>Level</th>
 							<th>Status</th>
-							<th class="text-center">View</th>
-							<!-- <th class="text-center">Edit</th>
-							<th class="text-center">Delete</th> -->
 						</thead>
 						<tbody>
 							<?php if (!empty($users)) : ?>
 								<?php foreach ($users as $user) : ?>
 									<tr>
+										<td class="text-center"><a href="<?= base_url('user/' . $user->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
 										<td><?= $user->id ?></td>
 										<td><?= $user->first_name ?></td>
 										<td><?= $user->last_name ?></td>
@@ -48,9 +47,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										<td><?= $user->email_id ?></td>
 										<td><?= UserModel::levelToStr($user->level) ?></td>
 										<td><?= UserModel::activeToStr($user->is_active) ?></td>
-										<td class="text-center"><a href="<?= base_url('user/' . $user->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-										<!-- <td class="text-center"><a href="<?= base_url('user/' . $user->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-										<td class="text-center"><a href="<?= base_url('user/' . $user->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td> -->
 									</tr>
 								<?php endforeach; ?>
 							<?php else : ?>

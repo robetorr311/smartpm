@@ -291,6 +291,11 @@ class Photos extends CI_Controller
 		authAccess();
 
 		$this->db->query("UPDATE jobs_photo SET is_active=0 WHERE id='" . $photo_id . "' AND job_id='" . $job_id . "'");
+		$al_insert = $this->activityLogs->insert([
+			'module' => 0,
+			'module_id' => $job_id,
+			'type' => 5
+		]);
 		return true;
 	}
 }

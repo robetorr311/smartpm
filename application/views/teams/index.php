@@ -26,27 +26,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
+                            <th class="text-center">View</th>
                             <th>ID</th>
                             <th>Name</th>
                             <th>Team Leader</th>
                             <th>Manager</th>
                             <th class="text-center">Members</th>
-                            <th class="text-center">View</th>
-                            <!-- <th class="text-center">Edit</th>
-                            <th class="text-center">Delete</th> -->
                         </thead>
                         <tbody>
                             <?php if (!empty($teams)) : ?>
                                 <?php foreach ($teams as $team) : ?>
                                     <tr>
+                                        <td class="text-center"><a href="<?= base_url('team/' . $team->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td><?= $team->id ?></td>
                                         <td><?= $team->team_name ?></td>
                                         <td><?= $team->manager_fullname ?></td>
                                         <td><?= $team->team_leader_fullname ?></td>
                                         <td class="text-center"><?= $team->total_members ?></td>
-                                        <td class="text-center"><a href="<?= base_url('team/' . $team->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                        <!-- <td class="text-center"><a href="<?= base_url('team/' . $team->id . '/edit') ?>" class="text-warning"><i class="fa fa-pencil"></i></a></td>
-                                        <td class="text-center"><a href="<?= base_url('team/' . $team->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

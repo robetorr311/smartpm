@@ -215,6 +215,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h4 class="title" style="float: left;">Classification<span class="red-mark">*</span></h4>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <select class="form-control lead-status" id="job" name="classification">
+                                        <option value="" disabled selected>Select Classification</option>
+                                        <?php foreach ($classification as $clsf) : ?>
+                                            <option value="<?= $clsf->id ?>"><?= $clsf->name ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                                 <div class="clearfix" style="padding: 10px;"></div>
                             </div>
                         </div>

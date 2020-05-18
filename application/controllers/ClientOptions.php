@@ -9,9 +9,10 @@ class ClientOptions extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['ClientLeadSourceModel']);
+        $this->load->model(['ClientLeadSourceModel', 'ClientClassificationModel']);
 
         $this->leadSource = new ClientLeadSourceModel();
+        $this->classification = new ClientClassificationModel();
     }
 
     public function index()
@@ -19,12 +20,14 @@ class ClientOptions extends CI_Controller
         authAccess();
 
         $leadSource = $this->leadSource->allLeadSource();
+        $classification = $this->classification->allClassification();
 
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('setting/client-options', [
-            'leadSource' => $leadSource
+            'leadSource' => $leadSource,
+            'classification' => $classification
         ]);
         $this->load->view('footer');
     }
@@ -75,6 +78,55 @@ class ClientOptions extends CI_Controller
         authAccess();
 
         $this->leadSource->delete($id);
+        redirect('setting/client-options');
+    }
+
+    public function insertClassification()
+    {
+        authAccess();
+
+        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+
+        if ($this->form_validation->run() == TRUE) {
+            $data = $this->input->post();
+            $insert = $this->classification->insert([
+                'name' => $data['name']
+            ]);
+            if (!$insert) {
+                $this->session->set_flashdata('errors', '<p>Unable to Create Client Option Classification.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', validation_errors());
+        }
+        redirect('setting/client-options');
+    }
+
+    public function updateClassification($id)
+    {
+        authAccess();
+
+        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+
+        if ($this->form_validation->run() == TRUE) {
+            $data = $this->input->post();
+            $update = $this->classification->update($id, [
+                'name' => $data['name']
+            ]);
+            if (!$update) {
+                $this->session->set_flashdata('errors', '<p>Unable to Update Client Option Classification.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', validation_errors());
+        }
+
+        redirect('setting/client-options');
+    }
+
+    public function deleteClassification($id)
+    {
+        authAccess();
+
+        $this->classification->delete($id);
         redirect('setting/client-options');
     }
 }

@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div>Files uploaded succfully !!</div>
                         </div>
                         <div class="col-md-12">
-                        <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" data-base-url="<?= base_url(); ?>" data-jobid="<?php echo $jobid; ?>" style="display: none;" multiple /></label>
+                            <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" data-base-url="<?= base_url(); ?>" data-jobid="<?php echo $jobid; ?>" style="display: none;" multiple /></label>
                             <a href="<?= base_url('lead/' . $lead->id . '/photos'); ?>" class="btn btn-fill">Photos</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/reports'); ?>" class="btn btn-fill">Photo Report</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
@@ -116,24 +116,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::typeToStr($lead->type) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+                    <h4 class="title" style="float: left;">Classification</h4>
+                    <span class="status">
+                        <?= $lead->classification_name ?>
+                    </span>
+                    <div class="clearfix" style="padding: 10px;"></div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-			<div class="row">
-				<div class="col-md-12">
-					<h3>Activity Log</h3>
-				</div>
-			</div>
-			<div class="row activity-logs">
-				<div class="col-md-12">
-					<?php
-					foreach ($aLogs as $aLog) {
-						echo '<p>' . ActivityLogsModel::stringifyLog($aLog) . '</p>';
-					}
-					?>
-				</div>
-			</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Activity Log</h3>
+                </div>
+            </div>
+            <div class="row activity-logs">
+                <div class="col-md-12">
+                    <?php
+                    foreach ($aLogs as $aLog) {
+                        echo '<p>' . ActivityLogsModel::stringifyLog($aLog) . '</p>';
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -334,7 +339,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
             <div class="card">
-                <?= form_open('lead/' . $lead->id . '/updatestatus', array('method' => 'post')) ?>
+                <div class="content">
+                    <div class="row">
+                        <div id="validation-errors-status" class="col-md-12">
+                        </div>
+                    </div>
+                </div>
+                <?= form_open('lead/' . $lead->id . '/updatestatus', array('id' => 'lead_edit_status', 'method' => 'post')) ?>
                 <div class="header">
                     <h4 class="title" style="float: left;">Contract Status</h4>
                     <span class="status">
@@ -395,10 +406,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control lead-status" id="job" name="type">
                             <option value="" disabled <?= is_null($lead->type) ? 'selected' : '' ?>>Select Job Type</option>
                             <?php foreach ($job_type_tags as $j_id => $job) : ?>
-                                <option value="<?= $j_id ?>" <?= ((!is_null($lead->type)) && $j_id == intval($lead->type)) ? 'selected' : '' ?>><?= $job ?></option>
+                                <option value="<?= $j_id ?>" <?= ((!is_null($lead->type)) && $j_id === intval($lead->type)) ? 'selected' : '' ?>><?= $job ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Classification</h4>
+                    <span class="status">
+                        <?= $lead->classification_name ?>
+                    </span>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <select class="form-control lead-status" id="job" name="classification">
+                            <option value="" disabled <?= empty($lead->classification) ? 'selected' : '' ?>>Select Classification</option>
+                            <?php foreach ($classification as $clsf) : ?>
+                                <option value="<?= $clsf->id ?>" <?= ((!empty($lead->classification)) && $clsf->id == $lead->classification) ? 'selected' : '' ?>><?= $clsf->name ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="clearfix" style="padding: 10px;"></div>
                     <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                     <div class="clearfix" style="padding: 10px;"></div>
                 </div>

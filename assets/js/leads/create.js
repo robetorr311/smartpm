@@ -50,6 +50,9 @@ form.addEventListener("submit", function (e) {
         },
         type: {
             presence: true
+        },
+        classification: {
+            presence: true
         }
     }, {
         format: 'flat',
