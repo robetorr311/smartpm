@@ -123,6 +123,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix" style="padding: 10px;"></div>
                 </div>
             </div>
+            <div class="clearfix"></div>
         </div>
         <div class="col-md-4">
             <div class="row">
