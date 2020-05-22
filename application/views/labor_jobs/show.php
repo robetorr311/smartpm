@@ -116,6 +116,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="clearfix" style="padding: 10px;"></div>
                 </div>
             </div>
+            <div class="clearfix"></div>
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -133,8 +134,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
 			<div class="row">
 				<div class="col-md-12">
 					<h3>Activity Log</h3>
