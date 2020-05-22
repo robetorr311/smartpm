@@ -173,6 +173,12 @@
                         </div>
                     </li>
                     <li>
+                        <a href="<?= base_url('vendors') ?>">
+                            <i class="pe-7s-note2"></i>
+                            <p>Vendors</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= base_url('users') ?>">
                             <i class="pe-7s-note2"></i>
                             <p>Users</p>
