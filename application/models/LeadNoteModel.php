@@ -47,6 +47,7 @@ class LeadNoteModel extends CI_Model
             'jobs_note.job_id' => $id,
             'jobs_note.is_deleted' => FALSE
         ]);
+        $this->db->order_by('jobs_note.created_at', 'DESC');
         $query = $this->db->get();
         $result = $query->result();
         return (count($result) > 0) ? $result : false;
