@@ -53,6 +53,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <div class="row">
         <div class="col-md-8">
+            <div class="card add-note-card">
+                <div class="header">
+                    <h4 class="title">Add Note</h4>
+                </div>
+                <div class="content view">
+                    <div class="row add-note-form">
+                        <div class="col-md-12">
+                            <form action="<?= base_url('lead/' . $sub_base_path . $lead->id . '/add-note') ?>" method="post">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Your Note<span class="red-mark">*</span></label>
+                                            <textarea class="form-control note-input" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card lead-notes-card">
                 <div class="header">
                     <h4 class="title">Leads / Clients Notes</h4>
@@ -98,34 +126,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         echo '<p>-</p>';
                     }
                     ?>
-                </div>
-            </div>
-            <div class="card add-note-card">
-                <div class="header">
-                    <h4 class="title">Add Note</h4>
-                </div>
-                <div class="content view">
-                    <div class="row add-note-form">
-                        <div class="col-md-12">
-                            <form action="<?= base_url('lead/' . $sub_base_path . $lead->id . '/add-note') ?>" method="post">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Your Note<span class="red-mark">*</span></label>
-                                            <textarea class="form-control note-input" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
