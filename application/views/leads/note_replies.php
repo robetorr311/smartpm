@@ -72,7 +72,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <a href="<?= base_url('lead/' . $sub_base_path . $lead->id . '/notes') ?>" class="btn btn-info btn-fill">Back</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
                                         </div>
                                     </div>
