@@ -265,6 +265,12 @@ $route['vendor/(:num)/delete']['post'] = 'vendors/delete/$1';
 $route['vendor/(:num)/create-contact'] = 'vendors/createContact/$1';
 $route['vendor/(:num)/delete-contact/(:num)'] = 'vendors/deleteContact/$1/$2';
 
+$route['vendor/(:num)/docs'] = 'vendor_docs/index/$1';
+$route['vendor/(:num)/doc/upload']['post'] = 'vendor_docs/ajaxupload_vendordoc';
+$route['vendor/(:num)/doc/save']['post'] = 'vendor_docs/ajaxsave_vendordoc';
+$route['vendor/(:num)/doc/delete']['post'] = 'vendor_docs/deletedoc';
+$route['vendor/(:num)/doc/update']['post'] = 'vendor_docs/updatedocname';
+
 $route['company-docs'] = 'company_docs/index';
 $route['company-docs/upload']['post'] = 'company_docs/upload';
 $route['company-doc/(:num)/download'] = 'company_docs/download/$1';

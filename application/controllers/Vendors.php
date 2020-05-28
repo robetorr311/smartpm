@@ -46,14 +46,7 @@ class Vendors extends CI_Controller
 		authAccess();
 
 		$this->form_validation->set_rules('name', 'Name', 'trim|required');
-		$this->form_validation->set_rules('address', 'Address', 'trim|required');
-		$this->form_validation->set_rules('city', 'City', 'trim|required');
-		$this->form_validation->set_rules('state', 'State', 'trim|required');
-		$this->form_validation->set_rules('zip', 'Postal Code', 'trim|required');
-		$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
-		$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email');
-		$this->form_validation->set_rules('tax_id', 'Tax ID', 'trim|required');
-		$this->form_validation->set_rules('credit_line', 'Credit Line', 'trim|required');
+		$this->form_validation->set_rules('email_id', 'Email ID', 'valid_email');
 
 		if ($this->form_validation->run() == TRUE) {
 			$vendorData = $this->input->post();
@@ -88,14 +81,7 @@ class Vendors extends CI_Controller
 		$vendor = $this->vendor->getVendorById($id);
 		if ($vendor) {
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
-			$this->form_validation->set_rules('address', 'Address', 'trim|required');
-			$this->form_validation->set_rules('city', 'City', 'trim|required');
-			$this->form_validation->set_rules('state', 'State', 'trim|required');
-			$this->form_validation->set_rules('zip', 'Postal Code', 'trim|required');
-			$this->form_validation->set_rules('phone', 'Phone', 'trim|required');
-			$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email');
-			$this->form_validation->set_rules('tax_id', 'Tax ID', 'trim|required');
-			$this->form_validation->set_rules('credit_line', 'Credit Line', 'trim|required');
+			$this->form_validation->set_rules('email_id', 'Email ID', 'valid_email');
 
 			if ($this->form_validation->run() == TRUE) {
 				$vendorData = $this->input->post();
@@ -167,8 +153,7 @@ class Vendors extends CI_Controller
 		$vendor = $this->vendor->getVendorById($id);
 		if ($vendor) {
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
-			$this->form_validation->set_rules('cell', 'Cell', 'trim|required');
-			$this->form_validation->set_rules('email_id', 'Email ID', 'trim|required|valid_email');
+			$this->form_validation->set_rules('email_id', 'Email ID', 'valid_email');
 			if ($this->form_validation->run() == TRUE) {
 				$vendorContactData = $this->input->post();
 				$insert = $this->vendor_contact->insert([

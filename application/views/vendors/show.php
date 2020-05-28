@@ -43,6 +43,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="clearfix"></div>
                     </div>
                 </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?= base_url('vendor/' . $vendor->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <div class="header">
