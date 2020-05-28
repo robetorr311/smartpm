@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Address<span class="red-mark">*</span></label>
+                                    <label>Address</label>
                                     <input class="form-control" placeholder="Address" name="address" type="text">
                                 </div>
                             </div>
@@ -50,19 +50,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>City<span class="red-mark">*</span></label>
+                                    <label>City</label>
                                     <input class="form-control" placeholder="City" name="city" type="text">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>State<span class="red-mark">*</span></label>
+                                    <label>State</label>
                                     <input class="form-control" placeholder="State" Name="state" type="text">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Postal Code<span class="red-mark">*</span></label>
+                                    <label>Postal Code</label>
                                     <input class="form-control" placeholder="ZIP Code" name="zip" type="text">
                                 </div>
                             </div>
@@ -70,13 +70,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Phone<span class="red-mark">*</span></label>
+                                    <label>Phone</label>
                                     <input class="form-control" placeholder="Phone" name="phone" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Email ID<span class="red-mark">*</span></label>
+                                    <label>Email ID</label>
                                     <input class="form-control" placeholder="Email ID" name="email_id" type="email">
                                 </div>
                             </div>
@@ -84,13 +84,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Tax ID<span class="red-mark">*</span></label>
+                                    <label>Tax ID</label>
                                     <input class="form-control" placeholder="Tax ID" name="tax_id" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Credit Line<span class="red-mark">*</span></label>
+                                    <label>Credit Line</label>
                                     <input class="form-control" placeholder="Credit Line" name="credit_line" type="text">
                                 </div>
                             </div>

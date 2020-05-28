@@ -145,6 +145,9 @@ img {
 .companydoc {
 	display: none !important;
 }
+.vendordoc {
+	display: none !important;
+}
 #wait {
 	display: none;
 	width: 69px;

@@ -30,69 +30,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <p><?= $vendor->name ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Address</label>
-                                    <p><?= $vendor->address ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>City</label>
-                                    <p><?= $vendor->city ?></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>State</label>
-                                    <p><?= $vendor->state ?></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Postal Code</label>
-                                    <p><?= $vendor->zip ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <p><?= $vendor->phone ?></p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Email ID</label>
-                                    <p><?= $vendor->email_id ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tax ID</label>
-                                    <p><?= $vendor->tax_id ?></p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Credit Line</label>
-                                    <p><?= $vendor->credit_line ?></p>
-                                </div>
+                                #<?= $vendor->id ?><br />
+                                <?= $vendor->name ?><br />
+                                <?= empty($vendor->address) ? '-' : $vendor->address ?><br />
+                                <?= empty($vendor->city) ? '-' : $vendor->city ?>, <?= empty($vendor->state) ? '-' : $vendor->state ?> - <?= empty($vendor->zip) ? '-' : $vendor->zip ?><br />
+                                <?= empty($vendor->phone) ? '-' : ('C - ' . $vendor->phone) ?><br />
+                                <?= empty($vendor->email_id) ? '-' : $vendor->email_id ?><br />
+                                <?= empty($vendor->tax_id) ? '-' : ('<b>Tax ID: </b>' . $vendor->tax_id) ?><br />
+                                <?= empty($vendor->credit_line) ? '-' : ('<b>Credit Line: </b>' . $vendor->credit_line) ?>
                             </div>
                         </div>
                         <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?= base_url('vendor/' . $vendor->id . '/docs'); ?>" class="btn btn-fill">Docs</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,8 +67,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php foreach ($vednor_contacts as $vednor_contact) : ?>
                                     <tr>
                                         <td><?= $vednor_contact->name ?></td>
-                                        <td><?= $vednor_contact->cell ?></td>
-                                        <td><?= $vednor_contact->email_id ?></td>
+                                        <td><?= empty($vednor_contact->cell) ? '-' : $vednor_contact->cell ?></td>
+                                        <td><?= empty($vednor_contact->email_id) ? '-' : $vednor_contact->email_id ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>
@@ -159,7 +114,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Address<span class="red-mark">*</span></label>
+                                    <label>Address</label>
                                     <input class="form-control" placeholder="Address" name="address" type="text" value="<?= $vendor->address ?>">
                                 </div>
                             </div>
@@ -167,19 +122,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>City<span class="red-mark">*</span></label>
+                                    <label>City</label>
                                     <input class="form-control" placeholder="City" name="city" type="text" value="<?= $vendor->city ?>">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>State<span class="red-mark">*</span></label>
+                                    <label>State</label>
                                     <input class="form-control" placeholder="State" Name="state" type="text" value="<?= $vendor->state ?>">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Postal Code<span class="red-mark">*</span></label>
+                                    <label>Postal Code</label>
                                     <input class="form-control" placeholder="ZIP Code" name="zip" type="text" value="<?= $vendor->zip ?>">
                                 </div>
                             </div>
@@ -187,13 +142,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Phone<span class="red-mark">*</span></label>
+                                    <label>Phone</label>
                                     <input class="form-control" placeholder="Phone" name="phone" type="text" value="<?= $vendor->phone ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Email ID<span class="red-mark">*</span></label>
+                                    <label>Email ID</label>
                                     <input class="form-control" placeholder="Email ID" name="email_id" type="email" value="<?= $vendor->email_id ?>">
                                 </div>
                             </div>
@@ -201,13 +156,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Tax ID<span class="red-mark">*</span></label>
+                                    <label>Tax ID</label>
                                     <input class="form-control" placeholder="Tax ID" name="tax_id" type="text" value="<?= $vendor->tax_id ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Credit Line<span class="red-mark">*</span></label>
+                                    <label>Credit Line</label>
                                     <input class="form-control" placeholder="Credit Line" name="credit_line" type="text" value="<?= $vendor->credit_line ?>">
                                 </div>
                             </div>
@@ -264,11 +219,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <input class="form-control" placeholder="Name" name="name" type="text">
                             </div>
                             <div class="form-group">
-                                <label>Cell<span class="red-mark">*</span></label>
+                                <label>Cell</label>
                                 <input class="form-control" placeholder="Cell" name="cell" type="text">
                             </div>
                             <div class="form-group">
-                                <label>Email ID<span class="red-mark">*</span></label>
+                                <label>Email ID</label>
                                 <input class="form-control" placeholder="Email ID" name="email_id" type="text">
                             </div>
                             <div class="form-group">

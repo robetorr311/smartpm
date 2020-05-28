@@ -1,6 +1,5 @@
 var form = document.querySelector('form#vendor_edit');
 var aliases = {
-    zip: 'Postal Code',
     email_id: 'Email ID'
 };
 form.addEventListener("submit", function (e) {
@@ -9,30 +8,8 @@ form.addEventListener("submit", function (e) {
         name: {
             presence: true
         },
-        address: {
-            presence: true
-        },
-        city: {
-            presence: true
-        },
-        state: {
-            presence: true
-        },
-        zip: {
-            presence: true
-        },
-        phone: {
-            presence: true
-        },
         email_id: {
-            presence: true,
             email: true
-        },
-        tax_id: {
-            presence: true
-        },
-        credit_line: {
-            presence: true
         }
     }, {
         format: 'flat',
@@ -53,11 +30,7 @@ form_contact.addEventListener("submit", function (e) {
         name: {
             presence: true
         },
-        cell: {
-            presence: true
-        },
         email_id: {
-            presence: true,
             email: true
         }
     }, {
