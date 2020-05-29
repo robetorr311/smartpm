@@ -17,7 +17,7 @@ class Notify
         if (isset($this->CI->session->company_code)) {
             $smtpSettings = $this->m_emailCred->getSMTPSettings($this->CI->session->company_code);
             $twilioSettings = $this->m_twilioCred->getTwilioSettings($this->CI->session->company_code);
-            if ($twilioSettings) {
+            if ($twilioSettings && empty($twilioSettings->account_sid) && empty($twilioSettings->auth_token)) {
                 $this->twilioClient = new Twilio\Rest\Client($twilioSettings->account_sid, $twilioSettings->auth_token);
                 $this->twilio_number = $twilioSettings->twilio_number;
             }

@@ -7,10 +7,11 @@ class Auth extends CI_Controller
 		parent::__construct();
 		
 		$this->load->library(['new_company', 'notify']);
-		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_DatabaseModel', 'AdminSettingModel']);
+		$this->load->model(['UserModel', 'CompanyModel', 'M_CompanyModel', 'M_EmailCredModel', 'M_TwilioCredModel', 'M_DatabaseModel', 'AdminSettingModel']);
 		$this->m_company = new M_CompanyModel();
 		$this->m_emailCred = new M_EmailCredModel();
 		$this->m_database = new M_DatabaseModel();
+		$this->m_twilioCred = new M_TwilioCredModel();
 	}
 
 	public function index()
@@ -310,6 +311,12 @@ class Auth extends CI_Controller
 					'smtp_user' => '',
 					'smtp_pass' => '',
 					'smtp_crypto' => '',
+					'company_id' => $m_companyInsert
+				]);
+				$this->m_twilioCred->insert([
+					'account_sid' => '',
+					'auth_token' => '',
+					'twilio_number' => '',
 					'company_id' => $m_companyInsert
 				]);
 				$this->m_database->insert([
