@@ -7,13 +7,22 @@ class Notify
     {
         $this->CI = &get_instance();
         $this->CI->load->library('email');
-        $this->CI->load->model(['M_EmailCredModel']);
+        $this->CI->load->model(['M_EmailCredModel', 'M_TwilioCredModel']);
 
         $this->m_emailCred = new M_EmailCredModel();
+        $this->m_twilioCred = new M_TwilioCredModel();
+
+        $this->twilioClient = false;
 
         if (isset($this->CI->session->company_code)) {
             $smtpSettings = $this->m_emailCred->getSMTPSettings($this->CI->session->company_code);
+            $twilioSettings = $this->m_twilioCred->getTwilioSettings($this->CI->session->company_code);
+            if ($twilioSettings) {
+                $this->twilioClient = new Twilio\Rest\Client($twilioSettings->account_sid, $twilioSettings->auth_token);
+                $this->twilio_number = $twilioSettings->twilio_number;
+            }
         }
+
         $this->CI->email->initialize([
             'protocol' => 'smtp',
             'smtp_crypto' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_crypto : getenv('EMAIL_SMTP_CRYPTO'),
@@ -89,13 +98,15 @@ class Notify
         $this->CI->email->send();
     }
 
-    public function sendNoteTagNotificationMob($email, $task_name, $note, $link)
+    public function sendNoteTagNotificationMob($phone, $task_name, $note, $link)
     {
-        $this->CI->email->to($email);
-        $this->CI->email->subject('');
-        $text_message = 'Smartpm.app: ' . $task_name . ' (' . $link . ') "' . $note . '"';
-        $this->CI->email->message($text_message);
-        $this->CI->email->send();
+        $this->twilioClient->messages->create(
+            $phone,
+            [
+                'from' => $this->twilio_number,
+                'body' => 'Smartpm.app: ' . $task_name . ' (' . $link . ') "' . $note . '"'
+            ]
+        );
     }
 
     public function sendTaskTagNotification($email, $task_id, $task_name, $note, $link)
@@ -112,13 +123,15 @@ class Notify
         $this->CI->email->send();
     }
 
-    public function sendTaskTagNotificationMob($email, $task_id, $task_name, $note, $link)
+    public function sendTaskTagNotificationMob($phone, $task_id, $task_name, $note, $link)
     {
-        $this->CI->email->to($email);
-        $this->CI->email->subject('');
-        $text_message = 'Smartpm.app: #' . $task_id . ' ' . $task_name . ' (' . $link . ') "' . $note . '"';
-        $this->CI->email->message($text_message);
-        $this->CI->email->send();
+        $this->twilioClient->messages->create(
+            $phone,
+            [
+                'from' => $this->twilio_number,
+                'body' => 'Smartpm.app: #' . $task_id . ' ' . $task_name . ' (' . $link . ') "' . $note . '"'
+            ]
+        );
     }
 
     public function sendTaskAssignNotification($email, $task_id, $task_name)

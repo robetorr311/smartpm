@@ -228,6 +228,17 @@ class UserModel extends CI_Model
 		return array_column($query->result_array(), 'mob_email_id');
 	}
 
+	public function getPhoneArrByUserIds($userIds)
+	{
+		$this->db->select("cell_1 AS phone");
+		$this->db->from($this->table);
+		$this->db->where_in('id', $userIds);
+		$this->db->where('cell_1 !=', null);
+		$this->db->where('cell_1 !=', '');
+		$query = $this->db->get();
+		return array_column($query->result_array(), 'phone');
+	}
+
 	public function get_crm_data($table, $cols, $condition)
 	{
 		return $this->db->select($cols)
