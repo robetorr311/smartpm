@@ -245,6 +245,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('setting/twilio-settings') ?>">
+                                        <span class="sidebar-normal">Twilio Settings</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
                                     <a class="nav-link" href="<?= base_url('setting/dashboard-options') ?>">
                                         <span class="sidebar-normal">Dashboard Options</span>
                                     </a>

@@ -144,10 +144,10 @@ class Tasks extends CI_Controller
                         $this->notify->sendTaskTagNotification($userEmailId, $insert, $taskData['name'], $taskData['note'], base_url('task/' . $insert));
                     }
 
-                    $userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users);
-                    foreach ($userMobEmailIds as $userMobEmailId) {
+                    $phoneNos = $this->user->getPhoneArrByUserIds($users);
+                    foreach ($phoneNos as $phoneNo) {
                         $this->notify = new Notify();
-                        $this->notify->sendTaskTagNotificationMob($userMobEmailId, $insert, $taskData['name'], $taskData['note'], base_url('task/' . $insert));
+                        $this->notify->sendTaskTagNotificationMob($phoneNo, $insert, $taskData['name'], $taskData['note'], base_url('task/' . $insert));
                     }
                 }
 
@@ -424,10 +424,10 @@ class Tasks extends CI_Controller
                             $this->notify->sendTaskTagNotification($userEmailId, $task->id, $task->name, $noteData['note'], base_url('task/' . $id));
                         }
 
-                        $userMobEmailIds = $this->user->getMobEmailIdArrByUserIds($users_insert);
-                        foreach ($userMobEmailIds as $userMobEmailId) {
+                        $phoneNos = $this->user->getPhoneArrByUserIds($users_insert);
+                        foreach ($phoneNos as $phoneNo) {
                             $this->notify = new Notify();
-                            $this->notify->sendTaskTagNotificationMob($userMobEmailId, $task->id, $task->name, $noteData['note'], base_url('task/' . $id));
+                            $this->notify->sendTaskTagNotificationMob($phoneNo, $task->id, $task->name, $noteData['note'], base_url('task/' . $id));
                         }
                     }
                 } else {
