@@ -9,10 +9,12 @@ class FinancialModel extends CI_Model
     {
         $this->db->select("
             financial.*,
+            vendors.name as vendor_name,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
             type.name as type_name
         ");
         $this->db->from($this->table);
+        $this->db->join('vendors as vendors', 'financial.vendor_id=vendors.id', 'left');
         $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
         $this->db->join('financial_types as type', 'financial.type=type.id', 'left');
         $this->db->where('financial.is_deleted', FALSE);
@@ -31,6 +33,7 @@ class FinancialModel extends CI_Model
     {
         $this->db->select("
             financial.*,
+            vendors.name as vendor_name,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
             CONCAT((1600 + jobs.id), ' - ', jobs.firstname, ' ', jobs.lastname) as job_fullname,
             type.name as type_name,
@@ -41,6 +44,7 @@ class FinancialModel extends CI_Model
             state.name as state_name
         ");
         $this->db->from($this->table);
+        $this->db->join('vendors as vendors', 'financial.vendor_id=vendors.id', 'left');
         $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
         $this->db->join('jobs as jobs', 'financial.job_id=jobs.id', 'left');
         $this->db->join('financial_types as type', 'financial.type=type.id', 'left');

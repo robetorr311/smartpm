@@ -34,8 +34,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Vendor / Payee<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Vendor / Payee" name="vendor" type="text">
+                                    <label>Party Name<span class="red-mark">*</span></label>
+                                    <select id="vendor_id" name="vendor_id" class="form-control">
+                                        <option value="" disabled selected>Select Vendor</option>
+                                        <?php foreach ($vendors as $vendor) {
+                                            echo '<option value="' . $vendor->id . '">' . $vendor->name . '</option>';
+                                        } ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -43,13 +48,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Transaction Date<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Transaction Date" name="transaction_date" type="date">
+                                    <input class="form-control" placeholder="Transaction Date" name="transaction_date" type="date" value="<?= date('Y-m-d') ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Job<span class="red-mark">*</span></label>
-                                    <select name="job_id" class="form-control">
+                                    <select id="job_id" name="job_id" class="form-control">
                                         <option value="" disabled selected>Select Job</option>
                                         <?php foreach ($jobs as $job) {
                                             echo '<option value="' . $job->id . '">' . (1600 + $job->id) . ' - ' . $job->name . '</option>';

@@ -9,12 +9,13 @@ class Financial extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
+        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'VendorModel', 'FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->financial = new FinancialModel();
         $this->user = new UserModel();
         $this->lead = new LeadModel();
+        $this->vendor = new VendorModel();
         $this->type = new FinancialTypesModel();
         $this->subtype = new FinancialSubtypesModel();
         $this->accCode = new FinancialAccCodesModel();
@@ -47,6 +48,7 @@ class Financial extends CI_Controller
         authAccess();
 
         $jobs = $this->lead->getLeadList();
+        $vendors = $this->vendor->getVendorList();
         $types = $this->type->allTypes();
         $subTypes = $this->subtype->allSubtypes();
         $accountingCodes = $this->accCode->allAccCodes();
@@ -59,6 +61,7 @@ class Financial extends CI_Controller
         ]);
         $this->load->view('financial/create', [
             'jobs' => $jobs,
+            'vendors' => $vendors,
             'types' => $types,
             'subTypes' => $subTypes,
             'accountingCodes' => $accountingCodes,
@@ -81,7 +84,7 @@ class Financial extends CI_Controller
         $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
         $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
-        $this->form_validation->set_rules('vendor', 'Vendor / Payee', 'trim|required');
+        $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|required|numeric');
         $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
         $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
@@ -170,7 +173,7 @@ class Financial extends CI_Controller
             $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
             $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
-            $this->form_validation->set_rules('vendor', 'Vendor / Payee', 'trim|required');
+            $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|required|numeric');
             $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
             $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
@@ -185,7 +188,7 @@ class Financial extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $financialData = $this->input->post();
                 $update = $this->financial->update($id, [
-                    'vendor' => $financialData['vendor'],
+                    'vendor_id' => $financialData['vendor_id'],
                     'transaction_date' => $financialData['transaction_date'],
                     'job_id' => $financialData['job_id'],
                     'amount' => $financialData['amount'],
@@ -218,6 +221,7 @@ class Financial extends CI_Controller
         $financial = $this->financial->getFinancialById($id);
         if ($financial) {
             $jobs = $this->lead->getLeadList();
+            $vendors = $this->vendor->getVendorList();
             $types = $this->type->allTypes();
             $subTypes = $this->subtype->allSubtypes();
             $accountingCodes = $this->accCode->allAccCodes();
@@ -231,6 +235,7 @@ class Financial extends CI_Controller
             $this->load->view('financial/show', [
                 'financial' => $financial,
                 'jobs' => $jobs,
+                'vendors' => $vendors,
                 'types' => $types,
                 'subTypes' => $subTypes,
                 'accountingCodes' => $accountingCodes,

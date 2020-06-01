@@ -23,8 +23,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Vendor / Payee<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Vendor / Payee" name="vendor" type="text" value="<?= $financial->vendor ?>">
+                                    <label>Party Name<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Party Name" name="vendor" type="text" value="<?= $financial->vendor ?>">
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 var form = document.querySelector('form#financial_edit');
 var aliases = {
-    vendor: 'Vendor / Payee',
+    vendor_id: 'Party Name',
     transaction_date: 'Transaction Date',
     job_id: 'Job',
     amount: 'Amount',
@@ -14,8 +14,11 @@ var aliases = {
 form.addEventListener("submit", function (e) {
     var values = validate.collectFormValues(form);
     var errors = validate(values, {
-        vendor: {
-            presence: true
+        vendor_id: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
         },
         transaction_date: {
             presence: true,
@@ -79,4 +82,13 @@ form.addEventListener("submit", function (e) {
         e.preventDefault();
         displayValidationError(errors);
     }
+});
+
+$(document).ready(function() {
+    $('form#financial_edit #vendor_id').select2({
+        width: '100%'
+    });
+    $('form#financial_edit #job_id').select2({
+        width: '100%'
+    });
 });
