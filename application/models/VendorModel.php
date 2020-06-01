@@ -14,6 +14,15 @@ class VendorModel extends CI_Model
 		return $query->result();
 	}
 
+    public function getVendorList($select = "id, name")
+    {
+		$this->db->select($select);
+		$this->db->from($this->table);
+        $this->db->where('is_deleted', FALSE);
+		$query = $this->db->get();
+		return $query->result();
+    }
+
 	public function getVendorById($id)
 	{
 		$this->db->from($this->table);

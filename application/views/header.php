@@ -33,6 +33,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?= base_url('assets/css/pe-icon-7-stroke.css') ?>" rel="stylesheet" />
+    <!-- select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Others -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/jquery.fancybox.min.css') ?>">
 
@@ -53,6 +55,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <!-- validate.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+    <!-- select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <!-- Others -->
     <script src="<?= base_url('assets/js/light-bootstrap-dashboard.js?v=1.4.0') ?>"></script>
     <script src="<?= base_url('assets/js/demo.js') ?>"></script>

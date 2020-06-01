@@ -28,7 +28,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <thead>
                             <th class="text-center">View</th>
                             <th>Transaction #</th>
-                            <th>Vendor / Payee</th>
+                            <th>Party Name</th>
                             <th>Transaction Date</th>
                             <th>Amount</th>
                             <th>Type</th>
@@ -40,7 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tr>
                                         <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td><?= (100 + $financial->id) ?></td>
-                                        <td><?= $financial->vendor ?></td>
+                                        <td><?= $financial->vendor_name ?></td>
                                         <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
                                         <td><?= number_format($financial->amount, 2) ?></td>
                                         <td><?= $financial->type_name ?></td>

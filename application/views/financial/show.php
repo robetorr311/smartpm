@@ -27,8 +27,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Vendor / Payee</label>
-                                <p><?= $financial->vendor ?></p>
+                                <label>Party Name</label>
+                                <p><?= $financial->vendor_name ?></p>
                             </div>
                         </div>
                     </div>
@@ -151,8 +151,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Vendor / Payee<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Vendor / Payee" name="vendor" type="text" value="<?= $financial->vendor ?>">
+                                    <label>Party Name<span class="red-mark">*</span></label>
+                                    <select id="vendor_id" name="vendor_id" class="form-control">
+                                        <option value="" disabled<?= (empty($financial->vendor_id) ? ' selected' : '') ?>>Select Vendor</option>
+                                        <?php foreach ($vendors as $vendor) {
+                                            echo '<option value="' . $vendor->id . '"' . ($financial->vendor_id == $vendor->id ? ' selected' : '') . '>' . $vendor->name . '</option>';
+                                        } ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +171,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Job<span class="red-mark">*</span></label>
-                                    <select name="job_id" class="form-control">
+                                    <select id="job_id" name="job_id" class="form-control">
                                         <option value="" disabled<?= (empty($financial->job_id) ? ' selected' : '') ?>>Select Job</option>
                                         <?php foreach ($jobs as $job) {
                                             echo '<option value="' . $job->id . '"' . ($financial->job_id == $job->id ? ' selected' : '') . '>' . (1600 + $job->id) . ' - ' . $job->name . '</option>';
