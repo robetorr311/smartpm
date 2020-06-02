@@ -27,6 +27,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Last Name</th>
                             <th>Status</th>
                             <th>Type</th>
+                            <th class="text-center">Dumpster</th>
+                            <th class="text-center">Materials</th>
+                            <th class="text-center">Labor</th>
                         </thead>
                         <tbody>
                             <?php if (!empty($jobs)) : ?>
@@ -38,6 +41,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $job->lastname ?></td>
                                         <td><?= LeadModel::statusToStr($job->status) ?></td>
                                         <td><?= LeadModel::typeToStr($job->type) ?></td>
+                                        <td class="text-center"><i class="fa fa-square-o" aria-hidden="true"></i></td>
+                                        <td class="text-center"><i class="fa fa-square" aria-hidden="true"></i></td>
+                                        <td class="text-center"><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>
