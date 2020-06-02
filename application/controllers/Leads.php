@@ -66,7 +66,7 @@ class Leads extends CI_Controller
 			'lead_status_tags' => $lead_status_tags,
 			'lead_category_tags' => $lead_category_tags,
 			'leadSources' => $clientLeadSource,
-            'classification' => $classification
+			'classification' => $classification
 		]);
 		$this->load->view('footer');
 	}
@@ -237,16 +237,25 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 		$this->form_validation->set_rules('classification', 'Classification', 'trim|required|numeric');
+		$this->form_validation->set_rules('dumpster_status', 'Dumpster', 'trim|numeric');
+		$this->form_validation->set_rules('materials_status', 'Materials', 'trim|numeric');
+		$this->form_validation->set_rules('labor_status', 'Labor', 'trim|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$_lead = $this->lead->getLeadById($id);
 			$posts = $this->input->post();
-			$update = $this->lead->update($id, [
+			$updateData = [
 				'status' => $posts['status'],
 				'category' => $posts['category'],
 				'type' => $posts['type'],
 				'classification' => $posts['classification']
-			]);
+			];
+			if ($_lead->status === '8') {
+				$updateData['dumpster_status'] = $posts['dumpster_status'];
+				$updateData['materials_status'] = $posts['materials_status'];
+				$updateData['labor_status'] = $posts['labor_status'];
+			}
+			$update = $this->lead->update($id, $updateData);
 
 			if ($update) {
 				$lead = $this->lead->getLeadById($id);
@@ -257,6 +266,36 @@ class Leads extends CI_Controller
 						'type' => 4,
 						'activity_data' => json_encode([
 							'status' => $lead->status
+						])
+					]);
+				}
+				if ($_lead->dumpster_status != $lead->dumpster_status) {
+					$al_insert = $this->activityLogs->insert([
+						'module' => 0,
+						'module_id' => $id,
+						'type' => 6,
+						'activity_data' => json_encode([
+							'dumpster_status' => $lead->dumpster_status
+						])
+					]);
+				}
+				if ($_lead->materials_status != $lead->materials_status) {
+					$al_insert = $this->activityLogs->insert([
+						'module' => 0,
+						'module_id' => $id,
+						'type' => 7,
+						'activity_data' => json_encode([
+							'materials_status' => $lead->materials_status
+						])
+					]);
+				}
+				if ($_lead->labor_status != $lead->labor_status) {
+					$al_insert = $this->activityLogs->insert([
+						'module' => 0,
+						'module_id' => $id,
+						'type' => 8,
+						'activity_data' => json_encode([
+							'labor_status' => $lead->labor_status
 						])
 					]);
 				}

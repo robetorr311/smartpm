@@ -41,9 +41,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $job->lastname ?></td>
                                         <td><?= LeadModel::statusToStr($job->status) ?></td>
                                         <td><?= LeadModel::typeToStr($job->type) ?></td>
-                                        <td class="text-center"><i class="fa fa-square-o" aria-hidden="true"></i></td>
-                                        <td class="text-center"><i class="fa fa-square" aria-hidden="true"></i></td>
-                                        <td class="text-center"><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
+                                        <td class="text-center"><?php
+                                                                if ($job->dumpster_status == 1) {
+                                                                    echo '<i class="fa fa-square-o" aria-hidden="true"></i>';
+                                                                } else if ($job->dumpster_status == 2) {
+                                                                    echo '<i class="fa fa-square" aria-hidden="true"></i>';
+                                                                } else if ($job->dumpster_status == 3) {
+                                                                    echo '<i class="fa fa-check-square" aria-hidden="true"></i>';
+                                                                } else {
+                                                                    echo '-';
+                                                                }
+                                                                ?></td>
+                                        <td class="text-center"><?php
+                                                                if ($job->materials_status == 1) {
+                                                                    echo '<i class="fa fa-square-o" aria-hidden="true"></i>';
+                                                                } else if ($job->materials_status == 2) {
+                                                                    echo '<i class="fa fa-square" aria-hidden="true"></i>';
+                                                                } else if ($job->materials_status == 3) {
+                                                                    echo '<i class="fa fa-check-square" aria-hidden="true"></i>';
+                                                                } else {
+                                                                    echo '-';
+                                                                }
+                                                                ?></td>
+                                        <td class="text-center"><?php
+                                                                if ($job->labor_status == 1) {
+                                                                    echo '<i class="fa fa-square-o" aria-hidden="true"></i>';
+                                                                } else if ($job->labor_status == 2) {
+                                                                    echo '<i class="fa fa-square" aria-hidden="true"></i>';
+                                                                } else if ($job->labor_status == 3) {
+                                                                    echo '<i class="fa fa-check-square" aria-hidden="true"></i>';
+                                                                } else {
+                                                                    echo '-';
+                                                                }
+                                                                ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

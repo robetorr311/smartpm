@@ -44,6 +44,21 @@ class LeadModel extends CI_Model
         2 => 'Labor Only Jobs',
         3 => 'Financial Jobs'
     ];
+    private static $dumpsterStatus = [
+        1 => 'Ordered',
+        2 => 'Delivered',
+        3 => 'Removed'
+    ];
+    private static $materialStatus = [
+        1 => 'Ordered',
+        2 => 'Delivered',
+        3 => 'Removed'
+    ];
+    private static $laborStatus = [
+        1 => 'Scheduled',
+        2 => 'Complete',
+        3 => 'Approved'
+    ];
 
     public function allLeads()
     {
@@ -320,5 +335,35 @@ class LeadModel extends CI_Model
     public static function getCategory()
     {
         return self::$category;
+    }
+
+    public static function dumpsterStatusToStr($id)
+    {
+        return isset(self::$dumpsterStatus[$id]) ? self::$dumpsterStatus[$id] : $id;
+    }
+
+    public static function getDumpsterStatus()
+    {
+        return self::$dumpsterStatus;
+    }
+
+    public static function materialStatusToStr($id)
+    {
+        return isset(self::$materialStatus[$id]) ? self::$materialStatus[$id] : $id;
+    }
+
+    public static function getMaterialStatus()
+    {
+        return self::$materialStatus;
+    }
+
+    public static function laborStatusToStr($id)
+    {
+        return isset(self::$laborStatus[$id]) ? self::$laborStatus[$id] : $id;
+    }
+
+    public static function getLaborStatus()
+    {
+        return self::$laborStatus;
     }
 }
