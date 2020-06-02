@@ -114,6 +114,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= $job->classification_name ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+                    <?php if ($job->dumpster_status) { ?>
+                        <h4 class="title" style="float: left;">Dumpster</h4>
+                        <span class="status">
+                            <?= LeadModel::dumpsterStatusToStr($job->dumpster_status) ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
+                    <?php if ($job->materials_status) { ?>
+                        <h4 class="title" style="float: left;">Materials</h4>
+                        <span class="status">
+                            <?= LeadModel::materialStatusToStr($job->materials_status) ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
+                    <?php if ($job->labor_status) { ?>
+                        <h4 class="title" style="float: left;">Labor</h4>
+                        <span class="status">
+                            <?= LeadModel::laborStatusToStr($job->labor_status) ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -504,6 +525,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <option value="<?= $clsf->id ?>" <?= ((!empty($job->classification)) && $clsf->id == $job->classification) ? 'selected' : '' ?>><?= $clsf->name ?></option>
                             <?php endforeach; ?>
                         </select>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Dumpster</h4>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <?php
+                        foreach (LeadModel::getDumpsterStatus() as $key => $value) {
+                            echo '<label><input type="radio" name="dumpster_status" value="' . $key . '"' . (($key == $job->dumpster_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp;';
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Materials</h4>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <?php
+                        foreach (LeadModel::getMaterialStatus() as $key => $value) {
+                            echo '<label><input type="radio" name="materials_status" value="' . $key . '"' . (($key == $job->materials_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp;';
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Labor</h4>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <?php
+                        foreach (LeadModel::getLaborStatus() as $key => $value) {
+                            echo '<label><input type="radio" name="labor_status" value="' . $key . '"' . (($key == $job->labor_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp;';
+                        }
+                        ?>
                     </div>
                     <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                     <div class="clearfix" style="padding: 10px;"></div>

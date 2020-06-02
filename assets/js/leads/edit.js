@@ -41,6 +41,21 @@ form.addEventListener("submit", function (e) {
             numericality: {
                 notValid: ' contains invalid value'
             }
+        },
+        dumpster_status: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        materials_status: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        labor_status: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
         }
     }, {
         format: 'flat',
