@@ -1,6 +1,7 @@
 var form = document.querySelector('form#financial_edit');
 var aliases = {
     vendor_id: 'Party Name',
+    client_id: 'Party Name',
     transaction_date: 'Transaction Date',
     job_id: 'Job',
     amount: 'Amount',
@@ -13,11 +14,12 @@ var aliases = {
 };
 form.addEventListener("submit", function (e) {
     var values = validate.collectFormValues(form);
-    var errors = validate(values, {
-        vendor_id: {
+    var validationJson = {
+        party: {
             presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
+            inclusion: {
+                within: ['1', '2'],
+                message: ' contains invalid value'
             }
         },
         transaction_date: {
@@ -72,7 +74,24 @@ form.addEventListener("submit", function (e) {
                 notValid: ' contains invalid value'
             }
         },
-    }, {
+    };
+    if ($('form#financial_edit #party_vendor').is(':checked')) {
+        validationJson['vendor_id'] = {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        };
+    }
+    if ($('form#financial_edit #party_client').is(':checked')) {
+        validationJson['client_id'] = {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        };
+    }
+    var errors = validate(values, validationJson, {
         format: 'flat',
         prettify: function prettify(string) {
             return aliases[string] || validate.prettify(string);
@@ -85,7 +104,28 @@ form.addEventListener("submit", function (e) {
 });
 
 $(document).ready(function() {
+    if ($('form#financial_edit #party_vendor').is(':checked')) {
+        $('form#financial_edit #vendor_id_row').show();
+        $('form#financial_edit #client_id_row').hide();
+    }
+    if ($('form#financial_edit #party_client').is(':checked')) {
+        $('form#financial_edit #client_id_row').show();
+        $('form#financial_edit #vendor_id_row').hide();
+    }
+
+    $('form#financial_edit #party_vendor').change(function () {
+        $('form#financial_edit #vendor_id_row').show();
+        $('form#financial_edit #client_id_row').hide();
+    });
+    $('form#financial_edit #party_client').change(function () {
+        $('form#financial_edit #client_id_row').show();
+        $('form#financial_edit #vendor_id_row').hide();
+    });
+
     $('form#financial_edit #vendor_id').select2({
+        width: '100%'
+    });
+    $('form#financial_edit #client_id').select2({
         width: '100%'
     });
     $('form#financial_edit #job_id').select2({

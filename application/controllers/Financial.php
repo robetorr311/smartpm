@@ -62,6 +62,7 @@ class Financial extends CI_Controller
         $this->load->view('financial/create', [
             'jobs' => $jobs,
             'vendors' => $vendors,
+            'clients' => $jobs,
             'types' => $types,
             'subTypes' => $subTypes,
             'accountingCodes' => $accountingCodes,
@@ -76,6 +77,7 @@ class Financial extends CI_Controller
     {
         authAccess();
 
+        $vendorKeys = implode(',', array_column($this->vendor->getVendorList(), 'id'));
         $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
         $typeKeys = implode(',', array_column($this->type->allTypes(), 'id'));
         $subtypeKeys = implode(',', array_column($this->subtype->allSubtypes(), 'id'));
@@ -84,7 +86,9 @@ class Financial extends CI_Controller
         $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
         $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
-        $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|required|numeric');
+        $this->form_validation->set_rules('party', 'Party', 'trim|required|numeric|in_list[1,2]');
+        $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|numeric|in_list[' . $vendorKeys . ']');
+        $this->form_validation->set_rules('client_id', 'Party Name', 'trim|numeric|in_list[' . $jobKeys . ']');
         $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
         $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
@@ -98,8 +102,8 @@ class Financial extends CI_Controller
 
         if ($this->form_validation->run() == TRUE) {
             $financialData = $this->input->post();
-            $insert = $this->financial->insert([
-                'vendor' => $financialData['vendor'],
+            $insertData = [
+                'party' => $financialData['party'],
                 'transaction_date' => $financialData['transaction_date'],
                 'job_id' => $financialData['job_id'],
                 'amount' => $financialData['amount'],
@@ -110,7 +114,17 @@ class Financial extends CI_Controller
                 'bank_account' => $financialData['bank_account'],
                 'state' => $financialData['state'],
                 'notes' => $financialData['notes']
-            ]);
+            ];
+
+            if ($financialData['party'] == 1) {
+                $insertData['vendor_id'] = $financialData['vendor_id'];
+                $insertData['client_id'] = null;
+            } else {
+                $insertData['client_id'] = $financialData['client_id'];
+                $insertData['vendor_id'] = null;
+            }
+
+            $insert = $this->financial->insert($insertData);
 
             if ($insert) {
                 redirect('financial/record/' . $insert);
@@ -165,6 +179,7 @@ class Financial extends CI_Controller
         $financial = $this->financial->getFinancialById($id);
         if ($financial) {
 
+            $vendorKeys = implode(',', array_column($this->vendor->getVendorList(), 'id'));
             $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
             $typeKeys = implode(',', array_column($this->type->allTypes(), 'id'));
             $subtypeKeys = implode(',', array_column($this->subtype->allSubtypes(), 'id'));
@@ -173,7 +188,9 @@ class Financial extends CI_Controller
             $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
             $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
 
-            $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|required|numeric');
+            $this->form_validation->set_rules('party', 'Party', 'trim|required|numeric|in_list[1,2]');
+            $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|numeric|in_list[' . $vendorKeys . ']');
+            $this->form_validation->set_rules('client_id', 'Party Name', 'trim|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
             $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
@@ -187,8 +204,8 @@ class Financial extends CI_Controller
 
             if ($this->form_validation->run() == TRUE) {
                 $financialData = $this->input->post();
-                $update = $this->financial->update($id, [
-                    'vendor_id' => $financialData['vendor_id'],
+                $updateData = [
+                    'party' => $financialData['party'],
                     'transaction_date' => $financialData['transaction_date'],
                     'job_id' => $financialData['job_id'],
                     'amount' => $financialData['amount'],
@@ -199,7 +216,17 @@ class Financial extends CI_Controller
                     'bank_account' => $financialData['bank_account'],
                     'state' => $financialData['state'],
                     'notes' => $financialData['notes']
-                ]);
+                ];
+
+                if ($financialData['party'] == 1) {
+                    $updateData['vendor_id'] = $financialData['vendor_id'];
+                    $updateData['client_id'] = null;
+                } else {
+                    $updateData['client_id'] = $financialData['client_id'];
+                    $updateData['vendor_id'] = null;
+                }
+
+                $update = $this->financial->update($id, $updateData);
 
                 if (!$update) {
                     $this->session->set_flashdata('errors', '<p>Unable to Update Financial Record.</p>');
@@ -236,6 +263,7 @@ class Financial extends CI_Controller
                 'financial' => $financial,
                 'jobs' => $jobs,
                 'vendors' => $vendors,
+                'clients' => $jobs,
                 'types' => $types,
                 'subTypes' => $subTypes,
                 'accountingCodes' => $accountingCodes,
