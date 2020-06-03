@@ -24,14 +24,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-8">
             <div class="card">
                 <div class="content view">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Party Name</label>
-                                <p><?= $financial->vendor_name ?></p>
+                    <?php if ($financial->party == 1) { ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Party Name</label>
+                                    <p><?= $financial->vendor_name ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } else if ($financial->party == 2) { ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Party Name</label>
+                                    <p><?= $financial->client_name ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -151,11 +162,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label>Party<span class="red-mark">*</span></label>
+                                    &nbsp; <label><input type="radio" name="party" id="party_vendor" value="1" <?= ($financial->party == 1 ? ' checked' : '') ?>> Vendor</label> &nbsp;
+                                    <label><input type="radio" name="party" id="party_client" value="2" <?= ($financial->party == 2 ? ' checked' : '') ?>> Client</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="vendor_id_row">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label>Party Name<span class="red-mark">*</span></label>
                                     <select id="vendor_id" name="vendor_id" class="form-control">
                                         <option value="" disabled<?= (empty($financial->vendor_id) ? ' selected' : '') ?>>Select Vendor</option>
                                         <?php foreach ($vendors as $vendor) {
                                             echo '<option value="' . $vendor->id . '"' . ($financial->vendor_id == $vendor->id ? ' selected' : '') . '>' . $vendor->name . '</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="client_id_row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Party Name<span class="red-mark">*</span></label>
+                                    <select id="client_id" name="client_id" class="form-control">
+                                        <option value="" disabled<?= (empty($financial->client_id) ? ' selected' : '') ?>>Select Client</option>
+                                        <?php foreach ($clients as $client) {
+                                            echo '<option value="' . $client->id . '"' . ($financial->client_id == $client->id ? ' selected' : '') . '>' . $client->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>

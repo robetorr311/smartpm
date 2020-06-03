@@ -40,7 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <tr>
                                         <td class="text-center"><a href="<?= base_url('financial/record/' . $financial->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td><?= (100 + $financial->id) ?></td>
-                                        <td><?= $financial->vendor_name ?></td>
+                                        <td><?= $financial->party == 1 ? $financial->vendor_name : ($financial->party == 2 ? $financial->client_name : '') ?></td>
                                         <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
                                         <td><?= number_format($financial->amount, 2) ?></td>
                                         <td><?= $financial->type_name ?></td>

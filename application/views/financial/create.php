@@ -34,11 +34,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label>Party<span class="red-mark">*</span></label>
+                                    &nbsp; <label><input type="radio" name="party" id="party_vendor" value="1" checked> Vendor</label> &nbsp;
+                                    <label><input type="radio" name="party" id="party_client" value="2"> Client</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="vendor_id_row">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label>Party Name<span class="red-mark">*</span></label>
                                     <select id="vendor_id" name="vendor_id" class="form-control">
                                         <option value="" disabled selected>Select Vendor</option>
                                         <?php foreach ($vendors as $vendor) {
                                             echo '<option value="' . $vendor->id . '">' . $vendor->name . '</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="client_id_row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Party Name<span class="red-mark">*</span></label>
+                                    <select id="client_id" name="client_id" class="form-control">
+                                        <option value="" disabled selected>Select Client</option>
+                                        <?php foreach ($clients as $client) {
+                                            echo '<option value="' . $client->id . '">' . $client->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>
