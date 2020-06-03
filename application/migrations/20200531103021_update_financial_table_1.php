@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Migration_Update_financial_table extends CI_Migration
+class Migration_Update_financial_table_1 extends CI_Migration
 {
     public function __construct()
     {
