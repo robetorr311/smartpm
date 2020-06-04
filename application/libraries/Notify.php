@@ -13,6 +13,11 @@ class Notify
         $this->m_twilioCred = new M_TwilioCredModel();
 
         $this->twilioClient = false;
+        $this->logoUrl = 'https://smartpm.app/assets/img/logo.png';
+        
+        if (isset($this->session->logoUrl) && $this->session->logoUrl != '') {
+            $this->logoUrl = base_url('assets/company_photo/' . $this->session->logoUrl);
+        }
 
         if (isset($this->CI->session->company_code)) {
             $smtpSettings = $this->m_emailCred->getSMTPSettings($this->CI->session->company_code);
@@ -90,6 +95,7 @@ class Notify
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Note - SmartPM');
         $html_message = $this->CI->load->view('template/email/note-tag-notification.php', [
+            'logoUrl' => $this->logoUrl,
             'task_name' => $task_name,
             'note' => $note,
             'link' => $link
@@ -116,6 +122,7 @@ class Notify
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Task - SmartPM');
         $html_message = $this->CI->load->view('template/email/task-tag-notification.php', [
+            'logoUrl' => $this->logoUrl,
             'task_id' => $task_id,
             'task_name' => $task_name,
             'note' => $note,
@@ -143,6 +150,7 @@ class Notify
         $this->CI->email->to($email);
         $this->CI->email->subject('A Task has been assign to You - SmartPM');
         $html_message = $this->CI->load->view('template/email/task-assign-notification.php', [
+            'logoUrl' => $this->logoUrl,
             'task_id' => $task_id,
             'task_name' => $task_name
         ], true);
