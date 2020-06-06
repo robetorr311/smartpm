@@ -135,6 +135,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </span>
                         <div class="clearfix" style="padding: 10px;"></div>
                     <?php } ?>
+                    <?php if ($job->permit_status) { ?>
+                        <h4 class="title" style="float: left;">Permit</h4>
+                        <span class="status">
+                            <?= LeadModel::permitStatusToStr($job->permit_status) ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -533,7 +540,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content">
                         <?php
                         foreach (LeadModel::getDumpsterStatus() as $key => $value) {
-                            echo '<label><input type="radio" name="dumpster_status" value="' . $key . '"' . (($key == $job->dumpster_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp;';
+                            echo '<label><input type="radio" name="dumpster_status" value="' . $key . '"' . (($key == $job->dumpster_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp; ';
                         }
                         ?>
                     </div>
@@ -544,7 +551,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content">
                         <?php
                         foreach (LeadModel::getMaterialStatus() as $key => $value) {
-                            echo '<label><input type="radio" name="materials_status" value="' . $key . '"' . (($key == $job->materials_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp;';
+                            echo '<label><input type="radio" name="materials_status" value="' . $key . '"' . (($key == $job->materials_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp; ';
                         }
                         ?>
                     </div>
@@ -555,7 +562,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content">
                         <?php
                         foreach (LeadModel::getLaborStatus() as $key => $value) {
-                            echo '<label><input type="radio" name="labor_status" value="' . $key . '"' . (($key == $job->labor_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp;';
+                            echo '<label><input type="radio" name="labor_status" value="' . $key . '"' . (($key == $job->labor_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp; ';
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Permit</h4>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <?php
+                        foreach (LeadModel::getPermitStatus() as $key => $value) {
+                            echo '<label><input type="radio" name="permit_status" value="' . $key . '"' . (($key == $job->permit_status) ? ' checked' : '') . '> ' . $value . '</label> &nbsp; ';
                         }
                         ?>
                     </div>

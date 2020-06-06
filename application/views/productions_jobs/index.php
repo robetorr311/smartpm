@@ -30,6 +30,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th class="text-center">Dumpster</th>
                             <th class="text-center">Materials</th>
                             <th class="text-center">Labor</th>
+                            <th class="text-center">Permit</th>
                         </thead>
                         <tbody>
                             <?php if (!empty($jobs)) : ?>
@@ -69,6 +70,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 } else if ($job->labor_status == 2) {
                                                                     echo '<i class="fa fa-square" aria-hidden="true"></i>';
                                                                 } else if ($job->labor_status == 3) {
+                                                                    echo '<i class="fa fa-check-square" aria-hidden="true"></i>';
+                                                                } else {
+                                                                    echo '-';
+                                                                }
+                                                                ?></td>
+                                        <td class="text-center"><?php
+                                                                if ($job->permit_status == 1) {
+                                                                    echo '<i class="fa fa-square-o" aria-hidden="true"></i>';
+                                                                } else if ($job->permit_status == 2) {
+                                                                    echo '<i class="fa fa-square" aria-hidden="true"></i>';
+                                                                } else if ($job->permit_status == 3) {
                                                                     echo '<i class="fa fa-check-square" aria-hidden="true"></i>';
                                                                 } else {
                                                                     echo '-';
