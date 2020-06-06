@@ -240,6 +240,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('dumpster_status', 'Dumpster', 'trim|numeric');
 		$this->form_validation->set_rules('materials_status', 'Materials', 'trim|numeric');
 		$this->form_validation->set_rules('labor_status', 'Labor', 'trim|numeric');
+		$this->form_validation->set_rules('permit_status', 'Permit', 'trim|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$_lead = $this->lead->getLeadById($id);
@@ -254,6 +255,7 @@ class Leads extends CI_Controller
 				$updateData['dumpster_status'] = $posts['dumpster_status'];
 				$updateData['materials_status'] = $posts['materials_status'];
 				$updateData['labor_status'] = $posts['labor_status'];
+				$updateData['permit_status'] = $posts['permit_status'];
 			}
 			$update = $this->lead->update($id, $updateData);
 
@@ -296,6 +298,16 @@ class Leads extends CI_Controller
 						'type' => 8,
 						'activity_data' => json_encode([
 							'labor_status' => $lead->labor_status
+						])
+					]);
+				}
+				if ($_lead->permit_status != $lead->permit_status) {
+					$al_insert = $this->activityLogs->insert([
+						'module' => 0,
+						'module_id' => $id,
+						'type' => 9,
+						'activity_data' => json_encode([
+							'permit_status' => $lead->permit_status
 						])
 					]);
 				}

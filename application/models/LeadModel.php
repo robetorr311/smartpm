@@ -59,6 +59,11 @@ class LeadModel extends CI_Model
         2 => 'Complete',
         3 => 'Approved'
     ];
+    private static $permitStatus = [
+        1 => 'Applied',
+        2 => 'Received',
+        3 => 'Posted'
+    ];
 
     public function allLeads()
     {
@@ -365,5 +370,15 @@ class LeadModel extends CI_Model
     public static function getLaborStatus()
     {
         return self::$laborStatus;
+    }
+
+    public static function permitStatusToStr($id)
+    {
+        return isset(self::$permitStatus[$id]) ? self::$permitStatus[$id] : $id;
+    }
+
+    public static function getPermitStatus()
+    {
+        return self::$permitStatus;
     }
 }

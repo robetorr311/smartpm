@@ -14,11 +14,12 @@ class ActivityLogsModel extends CI_Model
 	// 	1 => 'new_note',
 	// 	2 => 'new_photos',
 	// 	3 => 'new_documents',
-	// 	4 => 'change_status'
-	//  5 => 'delete_photo'
-	//  6 => 'change_dumpster_status'
-	//  7 => 'change_materials_status'
-	//  8 => 'change_labor_status'
+	// 	4 => 'change_status',
+	//  5 => 'delete_photo',
+	//  6 => 'change_dumpster_status',
+	//  7 => 'change_materials_status',
+	//  8 => 'change_labor_status',
+	//  9 => 'change_permit_status',
 	// ];
 
 	public function getLast50()
@@ -106,6 +107,9 @@ class ActivityLogsModel extends CI_Model
 			} else if ($log->type == 8) {
 				$activity_data = json_decode($log->activity_data);
 				return $log->created_user_fullname . ' - ' . LeadModel::laborStatusToStr($activity_data->labor_status) . ' labor for <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> - ' . $log->created_at;
+			} else if ($log->type == 9) {
+				$activity_data = json_decode($log->activity_data);
+				return $log->created_user_fullname . ' - ' . LeadModel::permitStatusToStr($activity_data->permit_status) . ' permit for <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> - ' . $log->created_at;
 			}
 		}
 
