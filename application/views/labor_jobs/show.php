@@ -26,18 +26,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="header">
                     <h4 class="title">Job Details</h4>
                 </div>
-				<div class="content view">
-					<div class="row">
-						<div class="col-md-12">
-                        #<?= (1600 + $job->id); ?><br />
-						<?= $job->firstname ?> <?= $job->lastname ?><br />
-						<?= $job->address ?><br />
-						<?= $job->city ?>, <?= $job->state ?><br />
-						C - <?= $job->phone1 ?><br />
-						<?= $job->email ?>
-						</div>
-					</div>
-				</div>
+                <div class="content view">
+                    <div class="row">
+                        <div class="col-md-12">
+                            #<?= (1600 + $job->id); ?><br />
+                            <?= $job->firstname ?> <?= $job->lastname ?><br />
+                            <?= $job->address ?><br />
+                            <?= $job->address_2 ?><br />
+                            <?= $job->city ?>, <?= $job->state ?><br />
+                            C - <?= $job->phone1 ?><br />
+                            <?= $job->email ?>
+                        </div>
+                    </div>
+                </div>
                 <div class="footer">
                     <a href="<?= base_url('lead/labor-job/' . $job->id . '/photos') ?>" class="btn btn-fill">Photos</a>
                     <a href="<?= base_url('lead/labor-job/' . $job->id . '/reports') ?>" class="btn btn-fill">Photo Report</a>
@@ -97,12 +98,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= LeadModel::statusToStr($job->status) ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
-                    <?php if($job->category !== null) { ?>
-                    <h4 class="title" style="float: left;">Category</h4>
-                    <span class="status">
-                        <?= LeadModel::categoryToStr($job->category); ?>
-                    </span>
-                    <div class="clearfix" style="padding: 10px;"></div>
+                    <?php if ($job->category !== null) { ?>
+                        <h4 class="title" style="float: left;">Category</h4>
+                        <span class="status">
+                            <?= LeadModel::categoryToStr($job->category); ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
                     <?php } ?>
                     <h4 class="title" style="float: left;">Job Type</h4>
                     <span class="status">
@@ -134,20 +135,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
-			<div class="row">
-				<div class="col-md-12">
-					<h3>Activity Log</h3>
-				</div>
-			</div>
-			<div class="row activity-logs">
-				<div class="col-md-12">
-					<?php
-					foreach ($aLogs as $aLog) {
-						echo '<p>' . ActivityLogsModel::stringifyLog($aLog) . '</p>';
-					}
-					?>
-				</div>
-			</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Activity Log</h3>
+                </div>
+            </div>
+            <div class="row activity-logs">
+                <div class="col-md-12">
+                    <?php
+                    foreach ($aLogs as $aLog) {
+                        echo '<p>' . ActivityLogsModel::stringifyLog($aLog) . '</p>';
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -190,8 +191,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Address<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Address" name="address" value="<?= $job->address ?>" type="text">
+                                <label>Address Line 1<span class="red-mark">*</span></label>
+                                <input class="form-control" placeholder="Address Line 1" name="address" value="<?= $job->address ?>" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input class="form-control" placeholder="Address Line 2" name="address_2" value="<?= $job->address_2 ?>" type="text">
                             </div>
                         </div>
                     </div>

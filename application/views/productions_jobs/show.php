@@ -32,6 +32,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             #<?= (1600 + $job->id); ?><br />
                             <?= $job->firstname ?> <?= $job->lastname ?><br />
                             <?= $job->address ?><br />
+                            <?= $job->address_2 ?><br />
                             <?= $job->city ?>, <?= $job->state ?><br />
                             C - <?= $job->phone1 ?><br />
                             <?= $job->email ?>
@@ -289,8 +290,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Address<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Address" name="address" value="<?= $job->address ?>" type="text">
+                                <label>Address Line 1<span class="red-mark">*</span></label>
+                                <input class="form-control" placeholder="Address Line 1" name="address" value="<?= $job->address ?>" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input class="form-control" placeholder="Address Line 2" name="address_2" value="<?= $job->address_2 ?>" type="text">
                             </div>
                         </div>
                     </div>
