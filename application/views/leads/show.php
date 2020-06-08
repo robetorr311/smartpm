@@ -395,7 +395,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Contract Status</h4>
+                    <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($lead->status) ?>
                     </span>
@@ -428,7 +428,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Category</h4>
+                    <h4 class="title" style="float: left;">Category<span class="red-mark">*</span></h4>
                     <?php if ($lead->category) { ?>
                         <span class="status">
                             <?= LeadModel::categoryToStr($lead->category) ?>
@@ -445,7 +445,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Job Type</h4>
+                    <h4 class="title" style="float: left;">Job Type<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= LeadModel::typeToStr($lead->type) ?>
                     </span>
@@ -460,7 +460,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Classification</h4>
+                    <h4 class="title" style="float: left;">Classification<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= $lead->classification_name ?>
                     </span>
