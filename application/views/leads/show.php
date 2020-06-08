@@ -99,6 +99,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="card">
                 <div class="header">
+                    <?php if ($lead->contract_date) { ?>
+                        <h4 class="title" style="float: left;">Contract Date</h4>
+                        <span class="status">
+                            <?= date('M j, Y', strtotime($lead->contract_date)); ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
+                    <?php if ($lead->contract_total) { ?>
+                        <h4 class="title" style="float: left;">Contract Total</h4>
+                        <span class="status">
+                            <?= number_format($lead->contract_total, 2); ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
                     <h4 class="title" style="float: left;">Contract Status</h4>
                     <span class="status">
                         <?= LeadModel::statusToStr($lead->status); ?>
@@ -182,8 +196,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Address<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Address" name="address" value="<?= $lead->address ?>" type="text">
+                                <label>Address Line 1<span class="red-mark">*</span></label>
+                                <input class="form-control" placeholder="Address Line 1" name="address" value="<?= $lead->address ?>" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input class="form-control" placeholder="Address Line 2" name="address_2" value="<?= $lead->address_2 ?>" type="text">
                             </div>
                         </div>
                     </div>
@@ -347,6 +370,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <?= form_open('lead/' . $lead->id . '/updatestatus', array('id' => 'lead_edit_status', 'method' => 'post')) ?>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Contract Date</h4>
+                    <?php if ($lead->contract_date) { ?>
+                        <span class="status">
+                            <?= date('M j, Y', strtotime($lead->contract_date)) ?>
+                        </span>
+                    <?php } ?>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <input class="form-control" placeholder="Contract Date" name="contract_date" type="date" value="<?= $lead->contract_date ?>">
+                    </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Contract Total</h4>
+                    <?php if ($lead->contract_total) { ?>
+                        <span class="status">
+                            <?= number_format($lead->contract_total, 2) ?>
+                        </span>
+                    <?php } ?>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <input class="form-control" placeholder="Contract Total" name="contract_total" type="number" value="<?= $lead->contract_total ?>">
+                    </div>
+                </div>
                 <div class="header">
                     <h4 class="title" style="float: left;">Contract Status</h4>
                     <span class="status">

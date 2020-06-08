@@ -52,8 +52,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Street Address<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Address" name="address" type="text">
+                                <label>Address Line 1<span class="red-mark">*</span></label>
+                                <input class="form-control" placeholder="Address Line 1" name="address" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input class="form-control" placeholder="Address Line 2" name="address_2" type="text">
                             </div>
                         </div>
                     </div>
@@ -146,6 +155,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-group">
                                 <label>Email</label>
                                 <input class="form-control" placeholder="Email" name="ap_email" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h4 class="title" style="float: left;">Contract Date</h4>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <input class="form-control" placeholder="Contract Date" name="contract_date" type="date">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h4 class="title" style="float: left;">Contract Total</h4>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <input class="form-control" placeholder="Contract Total" name="contract_total" type="number">
+                                </div>
                             </div>
                         </div>
                     </div>
