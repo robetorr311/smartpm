@@ -8,7 +8,9 @@ var aliases = {
     zip: 'Postal Code',
     phone1: 'Cell Phone',
     email: 'Email',
-    lead_source: 'Lead Source'
+    lead_source: 'Lead Source',
+    contract_date: 'Contract Date',
+    contract_total: 'Contract Total'
 };
 form.addEventListener("submit", function (e) {
     var values = validate.collectFormValues(form);
@@ -38,6 +40,16 @@ form.addEventListener("submit", function (e) {
             email: true
         },
         lead_source: {
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        contract_date: {
+            datetime: {
+                dateOnly: true
+            }
+        },
+        contract_total: {
             numericality: {
                 notValid: ' contains invalid value'
             }

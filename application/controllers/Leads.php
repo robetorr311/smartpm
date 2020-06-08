@@ -87,7 +87,6 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
 		$this->form_validation->set_rules('lead_source', 'Lead Source', 'trim|numeric|in_list[' . $clientLeadSourceKeys . ']');
-		$this->form_validation->set_rules('contract_date', 'Contract Date', 'trim|numeric');
 		$this->form_validation->set_rules('contract_total', 'Contract Total', 'trim|numeric');
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
@@ -239,7 +238,6 @@ class Leads extends CI_Controller
 		authAccess();
 
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
-		$this->form_validation->set_rules('contract_date', 'Contract Date', 'trim|numeric');
 		$this->form_validation->set_rules('contract_total', 'Contract Total', 'trim|numeric');
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
