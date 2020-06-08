@@ -40,12 +40,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="footer">
-                    <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" data-base-url="<?= base_url(); ?>" data-jobid="<?php echo $jobid; ?>" style="display: none;" multiple /></label>
-                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/photos') ?>" class="btn btn-fill">Photos</a>
-                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/reports') ?>" class="btn btn-fill">Photo Report</a>
-                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/docs') ?>" class="btn btn-fill">Docs</a>
-                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/notes') ?>" class="btn btn-fill">Notes</a>
-                    <a href="<?= base_url('lead/archive-job/' . $job->id . '/public-folder') ?>" class="btn btn-fill">Public Folder</a>
+                    <div class="row">
+                        <div class="col-md-12 camera-files-status">
+                            <div>Files uploaded succfully !!</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="btn btn-fill camera-button">Camera<input type="file" accept="image/*" capture="camera" id="camera-uploads" data-base-url="<?= base_url(); ?>" data-jobid="<?php echo $jobid; ?>" style="display: none;" multiple /></label>
+                            <a href="<?= base_url('lead/archive-job/' . $job->id . '/photos') ?>" class="btn btn-fill">Photos</a>
+                            <a href="<?= base_url('lead/archive-job/' . $job->id . '/reports') ?>" class="btn btn-fill">Photo Report</a>
+                            <a href="<?= base_url('lead/archive-job/' . $job->id . '/docs') ?>" class="btn btn-fill">Docs</a>
+                            <a href="<?= base_url('lead/archive-job/' . $job->id . '/notes') ?>" class="btn btn-fill">Notes</a>
+                            <a href="<?= base_url('lead/archive-job/' . $job->id . '/public-folder') ?>" class="btn btn-fill">Public Folder</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card">
