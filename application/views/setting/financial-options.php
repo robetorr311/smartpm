@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="card">
                 <div class="header">
                     <h4 class="title">Types</h4>
@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
@@ -226,8 +226,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-4">
             <div class="card">
                 <div class="header">
@@ -299,6 +297,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <div class="card">
                 <div class="header">

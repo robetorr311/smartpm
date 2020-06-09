@@ -9,14 +9,14 @@ class Financial extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'VendorModel', 'FinancialTypesModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
+        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'VendorModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->financial = new FinancialModel();
         $this->user = new UserModel();
         $this->lead = new LeadModel();
         $this->vendor = new VendorModel();
-        $this->type = new FinancialTypesModel();
+        // $this->type = new FinancialTypesModel();
         $this->subtype = new FinancialSubtypesModel();
         $this->accCode = new FinancialAccCodesModel();
         $this->method = new FinancialMethodsModel();
@@ -49,7 +49,7 @@ class Financial extends CI_Controller
 
         $jobs = $this->lead->getLeadList();
         $vendors = $this->vendor->getVendorList();
-        $types = $this->type->allTypes();
+        $types = FinancialModel::getType();
         $subTypes = $this->subtype->allSubtypes();
         $accountingCodes = $this->accCode->allAccCodes();
         $methods = $this->method->allMethods();
@@ -79,7 +79,7 @@ class Financial extends CI_Controller
 
         $vendorKeys = implode(',', array_column($this->vendor->getVendorList(), 'id'));
         $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
-        $typeKeys = implode(',', array_column($this->type->allTypes(), 'id'));
+        $typeKeys = implode(',', array_keys(FinancialModel::gettype()));
         $subtypeKeys = implode(',', array_column($this->subtype->allSubtypes(), 'id'));
         $accountingCodeKeys = implode(',', array_column($this->accCode->allAccCodes(), 'id'));
         $methodKeys = implode(',', array_column($this->method->allMethods(), 'id'));
@@ -145,7 +145,7 @@ class Financial extends CI_Controller
         $financial = $this->financial->getFinancialById($id);
         if ($financial) {
             $jobs = $this->lead->getLeadList();
-            $types = $this->type->allTypes();
+            $types = FinancialModel::getType();
             $subTypes = $this->subtype->allSubtypes();
             $accountingCodes = $this->accCode->allAccCodes();
             $methods = $this->method->allMethods();
@@ -181,7 +181,7 @@ class Financial extends CI_Controller
 
             $vendorKeys = implode(',', array_column($this->vendor->getVendorList(), 'id'));
             $jobKeys = implode(',', array_column($this->lead->getLeadList(), 'id'));
-            $typeKeys = implode(',', array_column($this->type->allTypes(), 'id'));
+            $typeKeys = implode(',', array_keys(FinancialModel::gettype()));
             $subtypeKeys = implode(',', array_column($this->subtype->allSubtypes(), 'id'));
             $accountingCodeKeys = implode(',', array_column($this->accCode->allAccCodes(), 'id'));
             $methodKeys = implode(',', array_column($this->method->allMethods(), 'id'));
@@ -249,7 +249,7 @@ class Financial extends CI_Controller
         if ($financial) {
             $jobs = $this->lead->getLeadList();
             $vendors = $this->vendor->getVendorList();
-            $types = $this->type->allTypes();
+            $types = FinancialModel::getType();
             $subTypes = $this->subtype->allSubtypes();
             $accountingCodes = $this->accCode->allAccCodes();
             $methods = $this->method->allMethods();

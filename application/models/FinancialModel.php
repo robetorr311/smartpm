@@ -5,20 +5,27 @@ class FinancialModel extends CI_Model
 {
     private $table = 'financial';
 
+    private static $type = [
+        1 => 'Expense',
+        2 => 'Payment',
+        3 => 'Purchase Order',
+        4 => 'Work Order',
+        5 => 'Contract',
+        6 => 'Change Order'
+    ];
+
     public function allFinancialWithLeads()
     {
         $this->db->select("
             financial.*,
             vendors.name as vendor_name,
             CONCAT(client.firstname, ' ', client.lastname) as client_name,
-            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
-            type.name as type_name
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname
         ");
         $this->db->from($this->table);
         $this->db->join('vendors as vendors', 'financial.vendor_id=vendors.id', 'left');
         $this->db->join('jobs as client', 'financial.client_id=client.id', 'left');
         $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
-        $this->db->join('financial_types as type', 'financial.type=type.id', 'left');
         $this->db->where('financial.is_deleted', FALSE);
         $this->db->order_by('financial.created_at', 'ASC');
         $query = $this->db->get();
@@ -39,7 +46,6 @@ class FinancialModel extends CI_Model
             CONCAT(client.firstname, ' ', client.lastname) as client_name,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
             CONCAT((1600 + jobs.id), ' - ', jobs.firstname, ' ', jobs.lastname) as job_fullname,
-            type.name as type_name,
             method.name as method_name,
             subtype.name as subtype_name,
             accounting_code.name as accounting_code_name,
@@ -51,7 +57,6 @@ class FinancialModel extends CI_Model
         $this->db->join('jobs as client', 'financial.client_id=client.id', 'left');
         $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
         $this->db->join('jobs as jobs', 'financial.job_id=jobs.id', 'left');
-        $this->db->join('financial_types as type', 'financial.type=type.id', 'left');
         $this->db->join('financial_methods as method', 'financial.method=method.id', 'left');
         $this->db->join('financial_subtypes as subtype', 'financial.subtype=subtype.id', 'left');
         $this->db->join('financial_acc_codes as accounting_code', 'financial.accounting_code=accounting_code.id', 'left');
@@ -88,5 +93,19 @@ class FinancialModel extends CI_Model
         return $this->db->update($this->table, [
             'is_deleted' => TRUE
         ]);
+    }
+
+    /**
+     * Static Methods
+     */
+
+    public static function typeToStr($id)
+    {
+        return isset(self::$type[$id]) ? self::$type[$id] : $id;
+    }
+
+    public static function getType()
+    {
+        return self::$type;
     }
 }
