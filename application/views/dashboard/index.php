@@ -146,6 +146,53 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>
 			<div class="row">
 				<div class="col-md-12">
+					<h3>Repairs & Service Calls</h3>
+				</div>
+			</div>
+			<div class="dashbord-box">
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $createdTasks ?></span>
+							<p><?= $boxNames[20]->label ?? 'New' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $workingTasks ?></span>
+							<p><?= $boxNames[21]->label ?? 'Pending' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $stuckTasks ?></span>
+							<p><?= $boxNames[22]->label ?? 'In-Process' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $holdTasks ?></span>
+							<p><?= $boxNames[23]->label ?? 'Completed' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $completedTasks ?></span>
+							<p><?= $boxNames[24]->label ?? 'Closed' ?></p>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
 					<h3>Tasks</h3>
 				</div>
 			</div>
@@ -187,6 +234,53 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<a href="<?= base_url('tasks/status/4') ?>">
 							<span><?= $completedTasks ?></span>
 							<p><?= $boxNames[19]->label ?? 'Completed' ?></p>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Projects</h3>
+				</div>
+			</div>
+			<div class="dashbord-box">
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $createdTasks ?></span>
+							<p><?= $boxNames[25]->label ?? 'New' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $workingTasks ?></span>
+							<p><?= $boxNames[26]->label ?? 'Planning & Budgeting' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $stuckTasks ?></span>
+							<p><?= $boxNames[27]->label ?? 'In-Process' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $holdTasks ?></span>
+							<p><?= $boxNames[28]->label ?? 'Completed' ?></p>
+						</a>
+					</div>
+				</div>
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="#">
+							<span><?= $completedTasks ?></span>
+							<p><?= $boxNames[29]->label ?? 'Closed' ?></p>
 						</a>
 					</div>
 				</div>
