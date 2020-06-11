@@ -11,7 +11,8 @@ class FinancialModel extends CI_Model
         3 => 'Purchase Order',
         4 => 'Work Order',
         5 => 'Contract',
-        6 => 'Change Order'
+        6 => 'Change Order',
+        7 => 'Credit'
     ];
 
     public function allFinancialWithLeads()

@@ -58,12 +58,12 @@
     <!-- select2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <!-- Others -->
+    <script src="<?= base_url('assets/js/search-box.js') ?>"></script>
     <script src="<?= base_url('assets/js/light-bootstrap-dashboard.js?v=1.4.0') ?>"></script>
     <script src="<?= base_url('assets/js/demo.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery.fancybox.js') ?>"></script>
     <script src="<?= base_url('assets/js/validate-support.js') ?>"></script>
     <script src="<?= base_url('assets/js/show-edit-section.js') ?>"></script>
-    <script src="<?= base_url('assets/js/search-box.js') ?>"></script>
 
 </head>
 
