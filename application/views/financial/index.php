@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $financial->party == 1 ? $financial->vendor_name : ($financial->party == 2 ? $financial->client_name : '') ?></td>
                                         <td><?= date('M j, Y', strtotime($financial->transaction_date)) ?></td>
                                         <td><?= number_format($financial->amount, 2) ?></td>
-                                        <td><?= $financial->type_name ?></td>
+                                        <td><?= FinancialModel::typeToStr($financial->type) ?></td>
                                         <td><?= $financial->created_user_fullname ?></td>
                                     </tr>
                                 <?php endforeach; ?>

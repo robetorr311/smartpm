@@ -73,7 +73,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Type</label>
-                                <p><?= $financial->type_name ?></p>
+                                <p><?= FinancialModel::typeToStr($financial->type) ?></p>
                             </div>
                         </div>
                     </div>
@@ -225,8 +225,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label>Type<span class="red-mark">*</span></label>
                                     <select name="type" class="form-control">
                                         <option value="" disabled<?= (empty($financial->type) ? ' selected' : '') ?>>Select Type</option>
-                                        <?php foreach ($types as $type) {
-                                            echo '<option value="' . $type->id . '"' . ($financial->type == $type->id ? ' selected' : '') . '>' . $type->name . '</option>';
+                                        <?php foreach ($types as $id => $type) {
+                                            echo '<option value="' . $id . '"' . ($financial->type == $id ? ' selected' : '') . '>' . $type . '</option>';
                                         } ?>
                                     </select>
                                 </div>
