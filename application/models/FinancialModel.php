@@ -10,7 +10,7 @@ class FinancialModel extends CI_Model
         2 => 'Payment',
         3 => 'Purchase Order',
         4 => 'Work Order',
-        5 => 'Contract',
+        5 => 'Contract Price',
         6 => 'Change Order',
         7 => 'Credit'
     ];
