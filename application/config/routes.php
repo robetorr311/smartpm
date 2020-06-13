@@ -246,6 +246,7 @@ $route['financial/record/(:num)'] = 'financial/show/$1';
 $route['financial/record/(:num)/edit'] = 'financial/edit/$1';
 $route['financial/record/(:num)/update']['post'] = 'financial/update/$1';
 $route['financial/record/(:num)/delete']['post'] = 'financial/delete/$1';
+$route['financial/record/(:num)/receipt'] = 'financial/receipt/$1';
 
 $route['teams'] = 'teams/index';
 $route['team/create'] = 'teams/create';

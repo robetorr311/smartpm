@@ -47,7 +47,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label style="line-height: 30px;">Transaction Date</label>
-                                <p><?= $financial->transaction_date ?></p>
+                                <p><?= date('M j, Y', strtotime($financial->transaction_date)) ?></p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -134,6 +134,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                     <div class="clearfix"></div>
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?= base_url('financial/record/' . $financial->id . '/receipt'); ?>" target="_blank" class="btn btn-fill">Receipt</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

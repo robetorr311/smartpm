@@ -15,7 +15,7 @@ class FinancialModel extends CI_Model
         7 => 'Credit'
     ];
 
-    public function allFinancialWithLeads()
+    public function allFinancials()
     {
         $this->db->select("
             financial.*,
@@ -37,6 +37,26 @@ class FinancialModel extends CI_Model
     {
         $this->db->where('is_deleted', FALSE);
         return $this->db->count_all_results($this->table);
+    }
+
+    public function allFinancialsByJobId($jobId)
+    {
+        $this->db->select("
+            financial.*,
+            vendors.name as vendor_name,
+            CONCAT(client.firstname, ' ', client.lastname) as client_name,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname
+        ");
+        $this->db->from($this->table);
+        $this->db->join('vendors as vendors', 'financial.vendor_id=vendors.id', 'left');
+        $this->db->join('jobs as client', 'financial.client_id=client.id', 'left');
+        $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
+        $this->db->where_in('financial.type', [2, 5, 6, 7]);
+        $this->db->where_in('financial.job_id', $jobId);
+        $this->db->where('financial.is_deleted', FALSE);
+        $this->db->order_by('financial.created_at', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function getFinancialById($id)
