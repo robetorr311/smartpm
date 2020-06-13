@@ -10,7 +10,7 @@ class Financial extends CI_Controller
         parent::__construct();
 
         $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'VendorModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
-        $this->load->library(['pagination', 'form_validation']);
+        $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->financial = new FinancialModel();
         $this->user = new UserModel();
@@ -33,7 +33,7 @@ class Financial extends CI_Controller
     {
         authAccess();
 
-        $financials = $this->financial->allFinancialWithLeads();
+        $financials = $this->financial->allFinancials();
         $this->load->view('header', [
             'title' => $this->title
         ]);
@@ -292,5 +292,83 @@ class Financial extends CI_Controller
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
         redirect('financial/records');
+    }
+
+    public function receipt($id)
+    {
+        authAccess();
+
+        $financial = $this->financial->getFinancialById($id);
+        if ($financial) {
+            $client = $this->lead->getLeadById($financial->job_id);
+            if ($client) {
+                $pdfContent = [];
+                $pdfContent[] = '<div style="margin-bottom: 20px;">';
+                $pdfContent[] = ($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO';
+                $pdfContent[] = '</div>';
+                $pdfContent[] = '<div style="text-align: center; margin-bottom: 20px;">';
+                $pdfContent[] = 'Payment Receipt';
+                $pdfContent[] = '</div>';
+                $pdfContent[] = '<div style="text-align: right; margin-bottom: 20px;">';
+                $pdfContent[] = 'Job Number: ' . (1600 + $client->id) . '<br />';
+                $pdfContent[] = 'Date: ' . date('M j, Y', strtotime($financial->transaction_date));
+                $pdfContent[] = '</div>';
+                $pdfContent[] = '<div style="margin-bottom: 20px;">';
+                $pdfContent[] = $client->firstname . ' ' . $client->lastname . '<br />';
+                $pdfContent[] = $client->address . '<br />';
+                $pdfContent[] = $client->address_2 . '<br />';
+                $pdfContent[] = $client->city . ', ' . $client->state . ' - ' . $client->zip;
+                $pdfContent[] = '</div>';
+                $pdfContent[] = '<div style="margin-bottom: 20px;">';
+                $pdfContent[] = 'Amount Paid: ' . number_format($financial->amount, 2) . '<br />';
+                $pdfContent[] = 'Payment Description: ' . FinancialModel::typeToStr($financial->type);
+                $pdfContent[] = '</div>';
+                $pdfContent[] = '<div>Financial History</div>';
+                $pdfContent[] = '<div>';
+                $pdfContent[] = '<table border="1" cellpadding="5" style="border-collapse: collapse;"><tr><th style="width: 120px; background-color: #777777; color: #FFFFFF; text-align: left;">Date</th><th style="width: 295px; background-color: #777777; color: #FFFFFF; text-align: left;">Description</th><th style="width: 120px; background-color: #777777; color: #FFFFFF; text-align: right;">Amount</th></tr>';
+
+                $financials = $this->financial->allFinancialsByJobId($financial->job_id);
+                $balance = 0;
+                if (!empty($financials)) {
+                    foreach ($financials as $financial) {
+                        $pdfContent[] = '<tr>';
+                        $pdfContent[] = '<td>' . date('M j, Y', strtotime($financial->transaction_date)) . '</td>';
+                        $pdfContent[] = '<td>' . FinancialModel::typeToStr($financial->type) . '</td>';
+                        $balance += $financial->amount;
+                        if (intval($financial->amount) < 0) {
+                            $pdfContent[] = '<td style="text-align: right; color: #FF0000;">- $' . number_format(abs($financial->amount), 2) . '</td>';
+                        } else {
+                            $pdfContent[] = '<td style="text-align: right;">$' . number_format($financial->amount, 2) . '</td>';
+                        }
+                        $pdfContent[] = '</tr>';
+                    }
+                }
+                $pdfContent[] = '<tr>';
+                // $pdfContent[] = '<td></td>';
+                $pdfContent[] = '<td colspan="2" style="text-align: right; background-color: #DDDDDD;">Open Balance</td>';
+                if ($balance < 0) {
+                    $pdfContent[] = '<td style="text-align: right; background-color: #DDDDDD; color: #FF0000;">- $' . number_format(abs($balance), 2) . '</td>';
+                } else {
+                    $pdfContent[] = '<td style="text-align: right; background-color: #DDDDDD;">$' . number_format($balance, 2) . '</td>';
+                }
+                $pdfContent[] = '</tr>';
+                $pdfContent[] = '</table>';
+                $pdfContent[] = '</div>';
+                $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+                $pdf->setPrintHeader(false);
+                $pdf->setPrintFooter(false);
+                $pdf->SetTitle((1600 + $client->id) . ' ' . $client->firstname . ' ' . $client->lastname . ' Payment Receipt');
+                $pdf->AddPage();
+                $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
+                ob_clean();
+                $pdf->Output((1600 + $client->id) . '_' . $client->firstname . '_' . $client->lastname . '_payment_receipt.pdf');
+            } else {
+                $this->session->set_flashdata('errors', '<p>Client Not Found.</p>');
+                redirect('financial/records');
+            }
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('financial/records');
+        }
     }
 }
