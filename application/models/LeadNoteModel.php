@@ -43,7 +43,7 @@ class LeadNoteModel extends CI_Model
         $this->db->select("
             jobs_note.*,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
-            (SELECT MAX(created_at) FROM jobs_note_reply WHERE is_deleted=false AND note_id=jobs_note.id) AS last_thread_created_at
+            IFNULL((SELECT MAX(created_at) FROM jobs_note_reply WHERE is_deleted=false AND note_id=jobs_note.id), jobs_note.created_at) AS last_thread_created_at
         ");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'jobs_note.created_by=users_created_by.id', 'left');
