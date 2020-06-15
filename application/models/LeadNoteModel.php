@@ -40,14 +40,19 @@ class LeadNoteModel extends CI_Model
 
     public function getNotesByLeadId($id)
     {
-        $this->db->select("jobs_note.*, CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname");
+        $this->db->select("
+            jobs_note.*,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname,
+            (SELECT MAX(created_at) FROM jobs_note_reply WHERE is_deleted=false AND note_id=jobs_note.id) AS last_thread_created_at
+        ");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'jobs_note.created_by=users_created_by.id', 'left');
+        $this->db->join('jobs_note_reply as note_reply', 'jobs_note.created_by=note_reply.note_id', 'left');
         $this->db->where([
             'jobs_note.job_id' => $id,
             'jobs_note.is_deleted' => FALSE
         ]);
-        $this->db->order_by('jobs_note.created_at', 'DESC');
+        $this->db->order_by('last_thread_created_at', 'DESC');
         $query = $this->db->get();
         $result = $query->result();
         return (count($result) > 0) ? $result : false;
