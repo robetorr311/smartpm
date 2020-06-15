@@ -47,7 +47,6 @@ class LeadNoteModel extends CI_Model
         ");
         $this->db->from($this->table);
         $this->db->join('users as users_created_by', 'jobs_note.created_by=users_created_by.id', 'left');
-        $this->db->join('jobs_note_reply as note_reply', 'jobs_note.created_by=note_reply.note_id', 'left');
         $this->db->where([
             'jobs_note.job_id' => $id,
             'jobs_note.is_deleted' => FALSE
