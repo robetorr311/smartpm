@@ -327,7 +327,7 @@ class Financial extends CI_Controller
                 $pdfContent[] = '<div>';
                 $pdfContent[] = '<table border="1" cellpadding="5" style="border-collapse: collapse;"><tr><th style="width: 120px; background-color: #777777; color: #FFFFFF; text-align: left;">Date</th><th style="width: 295px; background-color: #777777; color: #FFFFFF; text-align: left;">Description</th><th style="width: 120px; background-color: #777777; color: #FFFFFF; text-align: right;">Amount</th></tr>';
 
-                $financials = $this->financial->allFinancialsByJobId($financial->job_id);
+                $financials = $this->financial->allFinancialsForReceipt($financial->job_id);
                 $balance = 0;
                 if (!empty($financials)) {
                     foreach ($financials as $financial) {

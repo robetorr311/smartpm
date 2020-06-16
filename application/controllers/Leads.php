@@ -9,7 +9,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'ClientLeadSourceModel', 'ClientClassificationModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'ClientLeadSourceModel', 'ClientClassificationModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation', 'notify']);
 
 		$this->lead = new LeadModel();
@@ -17,6 +17,7 @@ class Leads extends CI_Controller
 		$this->lead_note_reply = new LeadNoteReplyModel();
 		$this->user = new UserModel();
 		$this->party = new PartyModel();
+		$this->financial = new FinancialModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->team = new TeamModel();
@@ -87,7 +88,6 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('phone2', 'Home Phone', 'trim');
 		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
 		$this->form_validation->set_rules('lead_source', 'Lead Source', 'trim|numeric|in_list[' . $clientLeadSourceKeys . ']');
-		$this->form_validation->set_rules('contract_total', 'Contract Total', 'trim|numeric');
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
@@ -107,8 +107,6 @@ class Leads extends CI_Controller
 				'phone2' => $posts['phone2'],
 				'email' => $posts['email'],
 				'lead_source' => $posts['lead_source'],
-				'contract_date' => $posts['contract_date'],
-				'contract_total' => empty($posts['contract_total']) ? null : $posts['contract_total'],
 				'status' => $posts['status'],
 				'category' => $posts['category'],
 				'type' => $posts['type'],
@@ -238,7 +236,6 @@ class Leads extends CI_Controller
 		authAccess();
 
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
-		$this->form_validation->set_rules('contract_total', 'Contract Total', 'trim|numeric');
 		$this->form_validation->set_rules('status', 'Status', 'trim|required|numeric');
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
@@ -252,8 +249,6 @@ class Leads extends CI_Controller
 			$_lead = $this->lead->getLeadById($id);
 			$posts = $this->input->post();
 			$updateData = [
-				'contract_date' => $posts['contract_date'],
-				'contract_total' => empty($posts['contract_total']) ? null : $posts['contract_total'],
 				'status' => $posts['status'],
 				'category' => $posts['category'],
 				'type' => $posts['type'],
@@ -353,6 +348,7 @@ class Leads extends CI_Controller
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
+			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = false;
 			$teams = [];
 			if (in_array($lead->status, [7, 14])) {
@@ -376,6 +372,7 @@ class Leads extends CI_Controller
 			$this->load->view('leads/show', [
 				'lead' => $lead,
 				'add_info' => $add_info,
+				'financial_record' => $financial_record,
 				'jobid' => $jobid,
 				'job_type_tags' => $job_type_tags,
 				'lead_status_tags' => $lead_status_tags,

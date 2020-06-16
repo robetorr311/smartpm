@@ -100,17 +100,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="card">
                 <div class="header">
-                    <?php if ($lead->contract_date) { ?>
+                    <?php if ($financial_record && $financial_record->contract_date) { ?>
                         <h4 class="title" style="float: left;">Contract Date</h4>
                         <span class="status">
-                            <?= date('M j, Y', strtotime($lead->contract_date)); ?>
+                            <?= date('M j, Y', strtotime($financial_record->contract_date)); ?>
                         </span>
                         <div class="clearfix" style="padding: 10px;"></div>
                     <?php } ?>
-                    <?php if ($lead->contract_total) { ?>
+                    <?php if ($financial_record && $financial_record->contract_total) { ?>
                         <h4 class="title" style="float: left;">Contract Total</h4>
                         <span class="status">
-                            <?= number_format($lead->contract_total, 2); ?>
+                            <?= number_format($financial_record->contract_total, 2); ?>
                         </span>
                         <div class="clearfix" style="padding: 10px;"></div>
                     <?php } ?>
@@ -371,30 +371,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <?= form_open('lead/' . $lead->id . '/updatestatus', array('id' => 'lead_edit_status', 'method' => 'post')) ?>
-                <div class="header">
-                    <h4 class="title" style="float: left;">Contract Date</h4>
-                    <?php if ($lead->contract_date) { ?>
-                        <span class="status">
-                            <?= date('M j, Y', strtotime($lead->contract_date)) ?>
-                        </span>
-                    <?php } ?>
-                    <div class="clearfix"></div>
-                    <div class="content">
-                        <input class="form-control" placeholder="Contract Date" name="contract_date" type="date" value="<?= $lead->contract_date ?>">
-                    </div>
-                </div>
-                <div class="header">
-                    <h4 class="title" style="float: left;">Contract Total</h4>
-                    <?php if ($lead->contract_total) { ?>
-                        <span class="status">
-                            <?= number_format($lead->contract_total, 2) ?>
-                        </span>
-                    <?php } ?>
-                    <div class="clearfix"></div>
-                    <div class="content">
-                        <input class="form-control" placeholder="Contract Total" name="contract_total" type="number" value="<?= $lead->contract_total ?>">
-                    </div>
-                </div>
                 <div class="header">
                     <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                     <span class="status">
