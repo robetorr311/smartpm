@@ -39,22 +39,13 @@ class FinancialModel extends CI_Model
         return $this->db->count_all_results($this->table);
     }
 
-    public function allFinancialsByJobId($jobId)
+    public function allFinancialsForReceipt($jobId)
     {
-        $this->db->select("
-            financial.*,
-            vendors.name as vendor_name,
-            CONCAT(client.firstname, ' ', client.lastname) as client_name,
-            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name, ' (@', users_created_by.username, ')') as created_user_fullname
-        ");
         $this->db->from($this->table);
-        $this->db->join('vendors as vendors', 'financial.vendor_id=vendors.id', 'left');
-        $this->db->join('jobs as client', 'financial.client_id=client.id', 'left');
-        $this->db->join('users as users_created_by', 'financial.created_by=users_created_by.id', 'left');
-        $this->db->where_in('financial.type', [2, 5, 6, 7]);
-        $this->db->where_in('financial.job_id', $jobId);
-        $this->db->where('financial.is_deleted', FALSE);
-        $this->db->order_by('financial.created_at', 'ASC');
+        $this->db->where_in('type', [2, 5, 6, 7]);
+        $this->db->where_in('job_id', $jobId);
+        $this->db->where('is_deleted', FALSE);
+        $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -86,6 +77,23 @@ class FinancialModel extends CI_Model
         $this->db->where([
             'financial.id' => $id,
             'financial.is_deleted' => FALSE
+        ]);
+        $query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
+
+    public function getContractDetailsByJobId($job_id)
+    {
+        $this->db->select("
+            MIN(transaction_date) AS contract_date,
+            SUM(amount) AS contract_total
+        ");
+        $this->db->from($this->table);
+        $this->db->where_in('type', [5, 6]);
+        $this->db->where([
+            'job_id' => $job_id,
+            'is_deleted' => FALSE
         ]);
         $query = $this->db->get();
         $result = $query->first_row();

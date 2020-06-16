@@ -9,13 +9,14 @@ class Completed_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'FinancialModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team_job_track = new TeamJobTrackModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->party = new PartyModel();
+		$this->financial = new FinancialModel();
 		$this->team = new TeamModel();
 		$this->leadSource = new ClientLeadSourceModel();
 		$this->classification = new ClientClassificationModel();
@@ -41,6 +42,7 @@ class Completed_jobs extends CI_Controller
 		$job = $this->lead->getLeadById($jobid);
 		if ($job) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
+			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = $this->team_job_track->getTeamName($jobid);
 			$insurance_job_details = false;
 			$insurance_job_adjusters = false;
@@ -62,6 +64,7 @@ class Completed_jobs extends CI_Controller
 				'jobid' => $jobid,
 				'job' => $job,
 				'add_info' => $add_info,
+				'financial_record' => $financial_record,
 				'teams_detail' => $teams_detail,
 				'insurance_job_details' => $insurance_job_details,
 				'insurance_job_adjusters' => $insurance_job_adjusters,

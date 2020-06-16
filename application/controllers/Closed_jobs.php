@@ -9,11 +9,12 @@ class Closed_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'PartyModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel']);
 		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
 		$this->party = new PartyModel();
+		$this->financial = new FinancialModel();
 		$this->insurance_job_details = new InsuranceJobDetailsModel();
 		$this->insurance_job_adjuster = new InsuranceJobAdjusterModel();
 		$this->team_job_track = new TeamJobTrackModel();
@@ -44,6 +45,7 @@ class Closed_jobs extends CI_Controller
 		$job = $this->lead->getLeadById($jobid);
 		if ($job) {
 			$add_info = $this->party->getPartyByLeadId($jobid);
+			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = $this->team_job_track->getTeamName($jobid);
 			$insurance_job_details = false;
 			$insurance_job_adjusters = false;
@@ -67,6 +69,7 @@ class Closed_jobs extends CI_Controller
 				'jobid' => $jobid,
 				'job' => $job,
 				'add_info' => $add_info,
+				'financial_record' => $financial_record,
 				'teams_detail' => $teams_detail,
 				'insurance_job_details' => $insurance_job_details,
 				'insurance_job_adjusters' => $insurance_job_adjusters,

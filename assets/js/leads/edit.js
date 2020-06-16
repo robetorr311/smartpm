@@ -9,8 +9,6 @@ var aliases = {
     phone1: 'Cell Phone',
     email: 'Email',
     lead_source: 'Lead Source',
-    contract_date: 'Contract Date',
-    contract_total: 'Contract Total'
 };
 form.addEventListener("submit", function (e) {
     var values = validate.collectFormValues(form);
@@ -74,16 +72,6 @@ var form_status = document.querySelector('form#lead_edit_status');
 form_status.addEventListener("submit", function (e) {
     var values = validate.collectFormValues(form_status);
     var errors = validate(values, {
-        contract_date: {
-            datetime: {
-                dateOnly: true
-            }
-        },
-        contract_total: {
-            numericality: {
-                notValid: ' contains invalid value'
-            }
-        },
         status: {
             presence: true
         },

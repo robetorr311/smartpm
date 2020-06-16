@@ -162,30 +162,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <h4 class="title" style="float: left;">Contract Date</h4>
-                                <div class="clearfix"></div>
-                                <div>
-                                    <input class="form-control" placeholder="Contract Date" name="contract_date" type="date">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div>
-                                <h4 class="title" style="float: left;">Contract Total</h4>
-                                <div class="clearfix"></div>
-                                <div>
-                                    <input class="form-control" placeholder="Contract Total" name="contract_total" type="number">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div>
                                 <h4 class="title" style="float: left;">Contract Status<span class="red-mark">*</span></h4>
                                 <div class="clearfix"></div>
                                 <div>
