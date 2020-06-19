@@ -11,8 +11,7 @@
 		left: 0px;
 		position: absolute;
 	}
-}
-
+	
 .cursor-pointer {
 	cursor: pointer;
 }
@@ -67,7 +66,7 @@
 @media all and (max-width: 991px) {
 	.sidebar .nav > li.active-pro {
 		position: initial;
-	}
+	}	
 }
 
 img {
@@ -1209,6 +1208,10 @@ input[type="button"] {
 	#show-sectin .card .footer .btn.btn-fill {
 		margin-top: 10px!important;
 	 }
+	 input.form-control.estqty {
+	width: 100px!important;
+	height: 30px!important;
+}
 }
 	
 	/* @media only screen and (max-device-width:375px){
@@ -1243,4 +1246,8 @@ input[type="button"] {
 		    
 		}
 		
+input.form-control.estqty {
+	width: 100px!important;
+	height: 30px!important;
+}
 	

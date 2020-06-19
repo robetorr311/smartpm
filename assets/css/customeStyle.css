@@ -1,0 +1,40 @@
+.estimate_Date{
+    height: 30px !important;
+}
+.total_col{
+    width: 85%;
+    text-align: right;
+    display: inline-block;
+}
+.est_total{
+    margin-top: 5px !important;
+}
+.itemadd{
+    width: 250px !important;   
+}
+input.form-control.estqty {
+	width: 100px!important;
+	height: 30px!important;
+}
+.table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 12px 8px;
+    vertical-align: middle;
+    text-align: justify;
+}
+.table>thead:first-child>tr:first-child>th.iunit_price{
+    text-align: right;
+}
+.table tbody tr td.iunit_price{
+    text-align: right;
+}
+.table>thead:first-child>tr:first-child>th.iunit_action{
+    text-align: center;
+}
+.table tbody tr td.iunit_action{
+    text-align: center;
+}
+@media(min-width:992px){
+    span.select2.select2-container.select2-container--default{
+        width:155px;
+    }
+}

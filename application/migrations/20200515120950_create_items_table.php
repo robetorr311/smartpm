@@ -29,14 +29,18 @@ class Migration_Create_items_table extends CI_Migration
                 'constraint' => 11
             ],
             'quantity_units' => [
-                'type' => 'INT',
-                'constraint' => 11
+                'type' => 'VARCHAR',
+                'constraint' => 500
             ],
             'unit_price' => [
-                'type' => 'INT',
-                'constraint' => 11
+                'type' => 'double',
+                'constraint' => 7,2
             ],
             'item_description' => [
+                'type' => 'VARCHAR',
+                'constraint' => 500
+            ],
+            'manufacturer' => [
                 'type' => 'VARCHAR',
                 'constraint' => 500
             ],

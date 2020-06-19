@@ -77,7 +77,7 @@ $route['migrate/reset_migration'] = 'migrate/reset_migration';
 
 $route['migrate/master/do_migration'] = 'master_migrate/do_migration';
 $route['migrate/master/do_migration/(:num)'] = 'master_migrate/do_migration/$1';
-$route['migrate/master/undo_migration'] = 'master_migrate/undo_migration';
+$route['migrate/master/undo_miration'] = 'master_migrate/undo_migration';
 $route['migrate/master/undo_migration/(:num)'] = 'master_migrate/undo_migration/$1';
 $route['migrate/master/reset_migration'] = 'master_migrate/reset_migration';
 
@@ -156,6 +156,10 @@ $route['lead/(:any)/(:num)/public-folder/(:num)/delete']['post'] = 'PublicFolder
 // $route['public-folder/download/(:num)/(:any)']['post'] = 'PublicFolder/download/$1/$2';
 // $route['public-folder/(:num)/(:any)'] = 'PublicFolder/file/$1/$2';
 $route['public-folder/(:num)/(:any)'] = 'PublicFolder/download/$1/$2';
+
+
+$route['lead/(:num)/client-notice'] = 'PublicFolder/client_notice/$1';
+$route['lead/client-store']['post'] = 'PublicFolder/client_notice_store';
 
 $route['lead/(:num)/photos'] = 'photos/index/$1';
 $route['lead/(:num)/photo/upload']['post'] = 'photos/ajaxupload_jobphoto';
@@ -238,8 +242,12 @@ $route['lead/closed-job/(:num)'] = 'closed_jobs/view/$1';
 $route['lead/archive-jobs'] = 'archive_jobs/index';
 $route['lead/archive-job/(:num)'] = 'archive_jobs/view/$1';
 
+$route['financial/estimate/getjobno']['post'] = 'financial/getjobno/';
+
 $route['financial'] = 'financial/index';
 $route['financial/records'] = 'financial/records';
+$route['financial/estimate'] = 'financial/estimate';
+$route['financial/downloadestimate'] = 'financial/downloadestimate';
 $route['financial/record/create'] = 'financial/create';
 $route['financial/record/store']['post'] = 'financial/store';
 $route['financial/record/(:num)'] = 'financial/show/$1';
@@ -247,9 +255,24 @@ $route['financial/record/(:num)/edit'] = 'financial/edit/$1';
 $route['financial/record/(:num)/update']['post'] = 'financial/update/$1';
 $route['financial/record/(:num)/delete']['post'] = 'financial/delete/$1';
 
-$route['financial/items'] = 'financial/itemindex';
-$route['financial/items/create'] = 'financial/createitem';
-$route['financial/items/store']['post'] = 'financial/storeitem';
+//item
+$route['items'] = 'Items/index';
+$route['items/create'] = 'Items/create';
+$route['items/(:num)/view'] = 'Items/view/$1';
+$route['items/store']['post'] = 'Items/store';
+$route['items/update']['post'] = 'Items/update/$1';
+$route['items/(:num)/delete'] = 'Items/delete/$1';
+
+
+
+// estimate
+$route['financial/estimate'] = 'financial/estimateindex';
+$route['financial/estimate/create'] = 'financial/createstimate';
+$route['financial/estimate/store']['post'] = 'financial/storeestimate';
+$route['financial/estimate/addItemdrop']['post'] = 'financial/addItemdrop/';
+
+
+$route['financial/makepdf/(:num)'] = 'financial/makepdf/$1';
 
 $route['teams'] = 'teams/index';
 $route['team/create'] = 'teams/create';
@@ -258,6 +281,8 @@ $route['team/(:num)'] = 'teams/show/$1';
 $route['team/(:num)/edit'] = 'teams/edit/$1';
 $route['team/(:num)/update']['post'] = 'teams/update/$1';
 $route['team/(:num)/delete']['post'] = 'teams/delete/$1';
+
+
 
 $route['company-docs'] = 'company_docs/index';
 $route['company-docs/upload']['post'] = 'company_docs/upload';
