@@ -313,6 +313,7 @@ img {
 .page-header-buttons {
 	margin-bottom: 30px;
 }
+td i.fa.noborder,
 .table-responsive table.table i {
 	font-size: 22px;
 	border-width: 0;

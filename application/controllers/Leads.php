@@ -9,7 +9,7 @@ class Leads extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'ClientLeadSourceModel', 'ClientClassificationModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'LeadNoteModel', 'LeadNoteReplyModel', 'UserModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamModel', 'TeamJobTrackModel', 'ClientLeadSourceModel', 'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'LeadMaterialModel']);
 		$this->load->library(['form_validation', 'notify']);
 
 		$this->lead = new LeadModel();
@@ -25,6 +25,8 @@ class Leads extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 		$this->classification = new ClientClassificationModel();
 		$this->activityLogs = new ActivityLogsModel();
+		$this->vendor = new VendorModel();
+		$this->lead_material = new LeadMaterialModel();
 	}
 
 	public function index()
@@ -367,6 +369,8 @@ class Leads extends CI_Controller
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			$classification = $this->classification->allClassification();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
+			$vendors = $this->vendor->getVendorList();
+			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/show', [
@@ -383,7 +387,9 @@ class Leads extends CI_Controller
 				'teams' => $teams,
 				'leadSources' => $clientLeadSource,
 				'classification' => $classification,
-				'aLogs' => $aLogs
+				'aLogs' => $aLogs,
+				'vendors' => $vendors,
+				'materials' => $materials
 			]);
 			$this->load->view('footer');
 		} else {
@@ -780,5 +786,133 @@ class Leads extends CI_Controller
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$this->team_job_track->remove_team($jobid);
 		redirect('lead/' . $sub_base_path . $jobid);
+	}
+
+	public function addMaterial($jobid, $sub_base_path = '')
+	{
+		authAccess();
+
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$lead = $this->lead->getLeadById($jobid);
+		if ($lead) {
+			$this->form_validation->set_rules('material', 'Material', 'trim|required|numeric');
+			$this->form_validation->set_rules('manufacturer', 'Manufacturer', 'trim|required');
+			$this->form_validation->set_rules('line_style_group', 'Line Style Group', 'trim|required');
+			$this->form_validation->set_rules('color', 'Color', 'trim|required');
+			$this->form_validation->set_rules('supplier', 'Supplier', 'trim|required');
+			$this->form_validation->set_rules('po_no', 'PO #', 'trim|required|numeric');
+			$this->form_validation->set_rules('project_cost', 'Project Cost', 'trim|required|numeric');
+			$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|required|numeric');
+			$this->form_validation->set_rules('installer', 'Installer', 'trim|required|numeric');
+			$this->form_validation->set_rules('installer_project_cost', 'Installer Project Cost', 'trim|required|numeric');
+			$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|required|numeric');
+
+			if ($this->form_validation->run() == TRUE) {
+				$material = $this->input->post();
+				$insert = $this->lead_material->insert([
+					'job_id' => $jobid,
+					'material' => $material['material'],
+					'manufacturer' => $material['manufacturer'],
+					'line_style_group' => $material['line_style_group'],
+					'color' => $material['color'],
+					'supplier' => $material['supplier'],
+					'po_no' => $material['po_no'],
+					'project_cost' => $material['project_cost'],
+					'actual_cost' => $material['actual_cost'],
+					'installer' => $material['installer'],
+					'installer_project_cost' => $material['installer_project_cost'],
+					'installer_actual_cost' => $material['installer_actual_cost']
+				]);
+
+				if (!$insert) {
+					$this->session->set_flashdata('errors', '<p>Unable to add Material.</p>');
+				}
+			} else {
+				$this->session->set_flashdata('errors', validation_errors());
+			}
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+		}
+		redirect('lead/' . $sub_base_path . $jobid);
+	}
+
+	public function updateMaterial($id, $jobid, $sub_base_path = '')
+	{
+		authAccess();
+
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$lead = $this->lead->getLeadById($jobid);
+		if ($lead) {
+			$material = $this->lead_material->getMaterialsById($id, $jobid);
+			if ($material) {
+				$this->form_validation->set_rules('material', 'Material', 'trim|required|numeric');
+				$this->form_validation->set_rules('manufacturer', 'Manufacturer', 'trim|required');
+				$this->form_validation->set_rules('line_style_group', 'Line Style Group', 'trim|required');
+				$this->form_validation->set_rules('color', 'Color', 'trim|required');
+				$this->form_validation->set_rules('supplier', 'Supplier', 'trim|required');
+				$this->form_validation->set_rules('po_no', 'PO #', 'trim|required|numeric');
+				$this->form_validation->set_rules('project_cost', 'Project Cost', 'trim|required|numeric');
+				$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|required|numeric');
+				$this->form_validation->set_rules('installer', 'Installer', 'trim|required|numeric');
+				$this->form_validation->set_rules('installer_project_cost', 'Installer Project Cost', 'trim|required|numeric');
+				$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|required|numeric');
+
+				if ($this->form_validation->run() == TRUE) {
+					$material = $this->input->post();
+					$update = $this->lead_material->update($id, [
+						'material' => $material['material'],
+						'manufacturer' => $material['manufacturer'],
+						'line_style_group' => $material['line_style_group'],
+						'color' => $material['color'],
+						'supplier' => $material['supplier'],
+						'po_no' => $material['po_no'],
+						'project_cost' => $material['project_cost'],
+						'actual_cost' => $material['actual_cost'],
+						'installer' => $material['installer'],
+						'installer_project_cost' => $material['installer_project_cost'],
+						'installer_actual_cost' => $material['installer_actual_cost']
+					]);
+
+					if (!$update) {
+						$this->session->set_flashdata('errors', '<p>Unable to Update Material.</p>');
+					}
+				} else {
+					$this->session->set_flashdata('errors', validation_errors());
+				}
+			} else {
+				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			}
+			redirect('lead/' . $sub_base_path . $jobid);
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+		}
+	}
+
+	public function deleteMaterial($id, $jobid, $sub_base_path = '')
+	{
+		authAccess();
+
+		$o_sub_base_path = $sub_base_path;
+		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+		$lead = $this->lead->getLeadById($jobid);
+		if ($lead) {
+			$material = $this->lead_material->getMaterialsById($id, $jobid);
+			if ($material) {
+				$material = $this->input->post();
+				$delete = $this->lead_material->delete($id, $jobid);
+
+				if (!$delete) {
+					$this->session->set_flashdata('errors', '<p>Unable to Delete Material.</p>');
+				}
+			} else {
+				$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			}
+			redirect('lead/' . $sub_base_path . $jobid);
+		} else {
+			$this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+		}
 	}
 }

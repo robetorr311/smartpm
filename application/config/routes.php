@@ -119,6 +119,9 @@ $route['lead/(:num)/edit'] = 'leads/edit/$1';
 $route['lead/(:num)/update']['post'] = 'leads/update/$1';
 $route['lead/(:num)/delete']['post'] = 'leads/delete/$1';
 $route['lead/(:num)/updatestatus']['post'] = 'leads/updatestatus/$1';
+$route['lead/(:num)/add-material']['post'] = 'leads/addMaterial/$1';
+$route['lead/(:num)/update-material/(:num)']['post'] = 'leads/updateMaterial/$2/$1';
+$route['lead/(:num)/delete-material/(:num)']['post'] = 'leads/deleteMaterial/$2/$1';
 
 $route['lead/(:any)/(:num)/edit'] = 'leads/edit/$2/$1';
 $route['lead/(:any)/(:num)/update']['post'] = 'leads/update/$2/$1';
@@ -126,6 +129,9 @@ $route['lead/(:any)/(:num)/delete']['post'] = 'leads/delete/$2/$1';
 $route['lead/(:any)/(:num)/updatestatus']['post'] = 'leads/updatestatus/$2/$1';
 $route['lead/(:any)/(:num)/add-team']['post'] = 'leads/addTeam/$2/$1';
 $route['lead/(:any)/(:num)/remove-team']['post'] = 'leads/removeTeam/$2/$1';
+$route['lead/(:any)/(:num)/add-material']['post'] = 'leads/addMaterial/$2/$1';
+$route['lead/(:any)/(:num)/update-material/(:num)']['post'] = 'leads/updateMaterial/$3/$2/$1';
+$route['lead/(:any)/(:num)/delete-material/(:num)']['post'] = 'leads/deleteMaterial/$3/$2/$1';
 
 $route['lead/(:num)/notes'] = 'leads/notes/$1';
 $route['lead/(:num)/add-note']['post'] = 'leads/addNote/$1';
