@@ -97,7 +97,7 @@ form_status.addEventListener("submit", function (e) {
     }
 });
 
-var form_material = document.querySelector('form#lead_edit_add_material');
+var form_material_create = document.querySelector('form#lead_edit_add_material');
 var aliases_material = {
     line_style_group: 'Line / Style / Group',
     po_no: 'PO #',
@@ -106,8 +106,8 @@ var aliases_material = {
     installer_project_cost: 'Installer Project Cost',
     installer_actual_cost: 'Installer Actual Cost'
 };
-form_material.addEventListener("submit", function (e) {
-    var values = validate.collectFormValues(form_material);
+form_material_create.addEventListener("submit", function (e) {
+    var values = validate.collectFormValues(form_material_create);
     var errors = validate(values, {
         material: {
             presence: true,
@@ -172,6 +172,76 @@ form_material.addEventListener("submit", function (e) {
     if (errors) {
         e.preventDefault();
         displayValidationError(errors, 'validation-errors-add_material');
+    }
+});
+
+var form_material_edit = document.querySelector('form#lead_edit_edit_material');
+form_material_edit.addEventListener("submit", function (e) {
+    var values = validate.collectFormValues(form_material_edit);
+    var errors = validate(values, {
+        material: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        manufacturer: {
+            presence: true
+        },
+        line_style_group: {
+            presence: true
+        },
+        color: {
+            presence: true
+        },
+        supplier: {
+            presence: true
+        },
+        po_no: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        project_cost: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        actual_cost: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        installer: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        installer_project_cost: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        },
+        installer_actual_cost: {
+            presence: true,
+            numericality: {
+                notValid: ' contains invalid value'
+            }
+        }
+    }, {
+        format: 'flat',
+        prettify: function prettify(string) {
+            return aliases_material[string] || validate.prettify(string);
+        }
+    });
+    if (errors) {
+        e.preventDefault();
+        displayValidationError(errors, 'validation-errors-edit_material');
     }
 });
 

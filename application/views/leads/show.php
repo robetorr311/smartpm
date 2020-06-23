@@ -558,6 +558,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <hr />
                     <div id="edit_material-section" style="display: none;">
+                        <div class="row">
+                            <div id="validation-errors-edit_material" class="col-md-12">
+                            </div>
+                        </div>
                         <?= form_open('lead/' . $lead->id . '/update-material', array('id' => 'lead_edit_edit_material', 'method' => 'post', 'data-url' => base_url('lead/' . $lead->id . '/update-material'))) ?>
                         <div class="row">
                             <div class="col-md-6">
