@@ -298,6 +298,12 @@ $('#camera-uploads').change(function () {
 });
 
 $(document).ready(function () {
+    $('#add_material-section form#lead_edit_add_material #material_create').select2({
+        width: '100%'
+    });
+    $('#edit_material-section form#lead_edit_edit_material #material_edit').select2({
+        width: '100%'
+    });
     $('#add_material-section form#lead_edit_add_material #installer_create').select2({
         width: '100%'
     });

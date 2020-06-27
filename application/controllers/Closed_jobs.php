@@ -9,7 +9,7 @@ class Closed_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel']);
 		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
@@ -22,6 +22,9 @@ class Closed_jobs extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 		$this->classification = new ClientClassificationModel();
 		$this->activityLogs = new ActivityLogsModel();
+		$this->vendor = new VendorModel();
+		$this->item = new ItemModel();
+		$this->lead_material = new LeadMaterialModel();
 	}
 
 	public function index()
@@ -61,6 +64,9 @@ class Closed_jobs extends CI_Controller
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			$classification = $this->classification->allClassification();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
+			$vendors = $this->vendor->getVendorList();
+			$items = $this->item->getItemList();
+			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
 
 			$this->load->view('header', [
 				'title' => $this->title
@@ -80,7 +86,10 @@ class Closed_jobs extends CI_Controller
 				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource,
 				'classification' => $classification,
-				'aLogs' => $aLogs
+				'aLogs' => $aLogs,
+				'items' => $items,
+				'vendors' => $vendors,
+				'materials' => $materials
 			]);
 			$this->load->view('footer');
 		} else {

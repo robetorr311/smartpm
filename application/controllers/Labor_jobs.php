@@ -9,7 +9,7 @@ class Labor_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'FinancialModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel']);
+		$this->load->model(['LeadModel', 'TeamModel', 'TeamJobTrackModel', 'PartyModel', 'FinancialModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel']);
 		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team = new TeamModel();
@@ -19,6 +19,9 @@ class Labor_jobs extends CI_Controller
 		$this->leadSource = new ClientLeadSourceModel();
 		$this->classification = new ClientClassificationModel();
 		$this->activityLogs = new ActivityLogsModel();
+		$this->vendor = new VendorModel();
+		$this->item = new ItemModel();
+		$this->lead_material = new LeadMaterialModel();
 	}
 
 	public function index()
@@ -52,6 +55,9 @@ class Labor_jobs extends CI_Controller
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			$classification = $this->classification->allClassification();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
+			$vendors = $this->vendor->getVendorList();
+			$items = $this->item->getItemList();
+			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('labor_jobs/show', [
@@ -68,7 +74,10 @@ class Labor_jobs extends CI_Controller
 				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource,
 				'classification' => $classification,
-				'aLogs' => $aLogs
+				'aLogs' => $aLogs,
+				'items' => $items,
+				'vendors' => $vendors,
+				'materials' => $materials
 			]);
 			$this->load->view('footer');
 		} else {
