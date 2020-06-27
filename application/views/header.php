@@ -224,6 +224,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('items') ?>">
+                                        <span class="sidebar-normal">Items</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
                                     <a class="nav-link" href="<?= base_url('setting/financial-options') ?>">
                                         <span class="sidebar-normal">Financial Options</span>
                                     </a>

@@ -456,6 +456,257 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <?= form_close() ?>
             </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Materials</h4>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div id="validation-errors-add_material" class="col-md-12">
+                        </div>
+                    </div>
+                    <div id="add_material-section">
+                        <?= form_open('lead/' . $lead->id . '/add-material', array('id' => 'lead_edit_add_material', 'method' => 'post')) ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Material<span class="red-mark">*</span></label>
+                                    <select id="material_create" name="material" class="form-control">
+                                        <option value="" disabled selected>Select Material</option>
+                                        <?php foreach ($items as $item) {
+                                            echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Manufacturer<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Manufacturer" name="manufacturer" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Line / Style / Group<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Line / Style / Group" name="line_style_group" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Color<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Color" name="color" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Supplier<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>PO #<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="PO #" name="po_no" type="number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Project Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Project Cost" name="project_cost" type="number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Actual Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Installer<span class="red-mark">*</span></label>
+                                    <select id="installer_create" name="installer" class="form-control">
+                                        <option value="" disabled selected>Select Installer</option>
+                                        <?php foreach ($vendors as $vendor) {
+                                            echo '<option value="' . $vendor->id . '">' . $vendor->name . '</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Installer Project Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Installer Project Cost" name="installer_project_cost" type="number">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Installer Actual Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Add New</button>
+                            </div>
+                        </div>
+                        <?= form_close() ?>
+                    </div>
+                    <hr />
+                    <div id="edit_material-section" style="display: none;">
+                        <div class="row">
+                            <div id="validation-errors-edit_material" class="col-md-12">
+                            </div>
+                        </div>
+                        <?= form_open('lead/' . $lead->id . '/update-material', array('id' => 'lead_edit_edit_material', 'method' => 'post', 'data-url' => base_url('lead/' . $lead->id . '/update-material'))) ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Material<span class="red-mark">*</span></label>
+                                    <select id="material_edit" name="material" class="form-control">
+                                        <option value="" disabled selected>Select Material</option>
+                                        <?php foreach ($items as $item) {
+                                            echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Manufacturer<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Manufacturer" name="manufacturer" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Line / Style / Group<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Line / Style / Group" name="line_style_group" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Color<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Color" name="color" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Supplier<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>PO #<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="PO #" name="po_no" type="number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Project Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Project Cost" name="project_cost" type="number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Actual Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Installer<span class="red-mark">*</span></label>
+                                    <select id="installer_edit" name="installer" class="form-control">
+                                        <option value="" disabled selected>Select Installer</option>
+                                        <?php foreach ($vendors as $vendor) {
+                                            echo '<option value="' . $vendor->id . '">' . $vendor->name . '</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Installer Project Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Installer Project Cost" name="installer_project_cost" type="number">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Installer Actual Cost<span class="red-mark">*</span></label>
+                                    <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#" class="btn btn-danger btn-fill edit-material-cancel">Cancel</a>
+                                <div class="pull-right">
+                                    <a id="delete_material" href="#" data-method="POST" data-url="<?= base_url('lead/' . $lead->id . '/delete-material') ?>" class="btn btn-danger btn-fill">Delete</a>
+                                    <button type="submit" class="btn btn-info btn-fill">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                        <?= form_close() ?>
+                        <hr />
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <th>Material</th>
+                            <th>Manufacturer</th>
+                            <th>Line Style Group</th>
+                            <th>Color</th>
+                            <th>Supplier</th>
+                            <th>PO #</th>
+                            <th>Project Cost</th>
+                            <th>Actual Cost</th>
+                            <th>Installer</th>
+                            <th>Installer Project Cost</th>
+                            <th>Installer Actual Cost</th>
+                            <th>Edit</th>
+                        </tr>
+                        <?php if (!empty($materials)) : ?>
+                            <?php foreach ($materials as $material) : ?>
+                                <tr>
+                                    <td><?= $material->material ?></td>
+                                    <td><?= $material->manufacturer ?></td>
+                                    <td><?= $material->line_style_group ?></td>
+                                    <td><?= $material->color ?></td>
+                                    <td><?= $material->supplier ?></td>
+                                    <td><?= $material->po_no ?></td>
+                                    <td><?= number_format($material->project_cost, 2) ?></td>
+                                    <td><?= number_format($material->actual_cost, 2) ?></td>
+                                    <td><?= $material->installer ?></td>
+                                    <td><?= number_format($material->installer_project_cost, 2) ?></td>
+                                    <td><?= number_format($material->installer_actual_cost, 2) ?></td>
+                                    <td><a href="#" data-material='<?= json_encode($material) ?>' class="text-info edit-material"><i class="fa fa-pencil noborder" aria-hidden="true"></i></a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="12" class="text-center">No Record Found!</td>
+                            </tr>
+                        <?php endif; ?>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-4">
@@ -583,7 +834,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <td><?= $insurance_job_adjuster->adjuster ?></td>
                                             <td><?= $insurance_job_adjuster->adjuster_phone ?></td>
                                             <td><?= $insurance_job_adjuster->adjuster_email ?></td>
-                                            <td><a href="<?= base_url('lead/' . $lead->id . '/delete-adjuster/' . $insurance_job_adjuster->id) ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                            <td><a href="<?= base_url('lead/' . $lead->id . '/delete-adjuster/' . $insurance_job_adjuster->id) ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o noborder"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
