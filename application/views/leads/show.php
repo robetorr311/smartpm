@@ -471,7 +471,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Material<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Material" name="material" type="number">
+                                    <select id="material_create" name="material" class="form-control">
+                                        <option value="" disabled selected>Select Material</option>
+                                        <?php foreach ($items as $item) {
+                                            echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                        } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -567,7 +572,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Material<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Material" name="material" type="number">
+                                    <select id="material_edit" name="material" class="form-control">
+                                        <option value="" disabled selected>Select Material</option>
+                                        <?php foreach ($items as $item) {
+                                            echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                        } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">

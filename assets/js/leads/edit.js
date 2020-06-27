@@ -309,7 +309,8 @@ $(document).ready(function () {
         e.preventDefault();
         var material = $(this).data('material');
         $('#edit_material-section form#lead_edit_edit_material').trigger('reset');
-        $('#edit_material-section form#lead_edit_edit_material input[name="material"]').val(material.material);
+        $('#edit_material-section form#lead_edit_edit_material select[name="material"]').val(material.material);
+        $('#edit_material-section form#lead_edit_edit_material select[name="material"]').trigger('change');
         $('#edit_material-section form#lead_edit_edit_material input[name="manufacturer"]').val(material.manufacturer);
         $('#edit_material-section form#lead_edit_edit_material input[name="line_style_group"]').val(material.line_style_group);
         $('#edit_material-section form#lead_edit_edit_material input[name="color"]').val(material.color);

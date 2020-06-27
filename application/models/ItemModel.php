@@ -13,6 +13,15 @@ class ItemModel extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function getItemList($select = "id, name")
+    {
+		$this->db->select($select);
+		$this->db->from($this->table);
+        $this->db->where('is_deleted', FALSE);
+		$query = $this->db->get();
+		return $query->result();
+    }
     
     public function getItemById($id)
     {
