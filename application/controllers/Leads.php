@@ -804,11 +804,11 @@ class Leads extends CI_Controller
 			$this->form_validation->set_rules('color', 'Color', 'trim|required');
 			$this->form_validation->set_rules('supplier', 'Supplier', 'trim|required');
 			$this->form_validation->set_rules('po_no', 'PO #', 'trim|required|numeric');
-			$this->form_validation->set_rules('project_cost', 'Project Cost', 'trim|required|numeric');
-			$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|required|numeric');
-			$this->form_validation->set_rules('installer', 'Installer', 'trim|required|numeric');
-			$this->form_validation->set_rules('installer_project_cost', 'Installer Project Cost', 'trim|required|numeric');
-			$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|required|numeric');
+			$this->form_validation->set_rules('projected_cost', 'Project Cost', 'trim|numeric');
+			$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|numeric');
+			$this->form_validation->set_rules('installer', 'Installer', 'trim|numeric');
+			$this->form_validation->set_rules('installer_projected_cost', 'Installer Project Cost', 'trim|numeric');
+			$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|numeric');
 
 			if ($this->form_validation->run() == TRUE) {
 				$material = $this->input->post();
@@ -820,11 +820,11 @@ class Leads extends CI_Controller
 					'color' => $material['color'],
 					'supplier' => $material['supplier'],
 					'po_no' => $material['po_no'],
-					'project_cost' => $material['project_cost'],
-					'actual_cost' => $material['actual_cost'],
-					'installer' => $material['installer'],
-					'installer_project_cost' => $material['installer_project_cost'],
-					'installer_actual_cost' => $material['installer_actual_cost']
+					'projected_cost' => empty($material['projected_cost']) ? null : $material['projected_cost'],
+					'actual_cost' => empty($material['actual_cost']) ? null : $material['actual_cost'],
+					'installer' => empty($material['installer']) ? null : $material['installer'],
+					'installer_projected_cost' => empty($material['installer_projected_cost']) ? null : $material['installer_projected_cost'],
+					'installer_actual_cost' => empty($material['installer_actual_cost']) ? null : $material['installer_actual_cost']
 				]);
 
 				if (!$insert) {
@@ -855,11 +855,11 @@ class Leads extends CI_Controller
 				$this->form_validation->set_rules('color', 'Color', 'trim|required');
 				$this->form_validation->set_rules('supplier', 'Supplier', 'trim|required');
 				$this->form_validation->set_rules('po_no', 'PO #', 'trim|required|numeric');
-				$this->form_validation->set_rules('project_cost', 'Project Cost', 'trim|required|numeric');
-				$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|required|numeric');
-				$this->form_validation->set_rules('installer', 'Installer', 'trim|required|numeric');
-				$this->form_validation->set_rules('installer_project_cost', 'Installer Project Cost', 'trim|required|numeric');
-				$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|required|numeric');
+				$this->form_validation->set_rules('projected_cost', 'Project Cost', 'trim|numeric');
+				$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|numeric');
+				$this->form_validation->set_rules('installer', 'Installer', 'trim|numeric');
+				$this->form_validation->set_rules('installer_projected_cost', 'Installer Project Cost', 'trim|numeric');
+				$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|numeric');
 
 				if ($this->form_validation->run() == TRUE) {
 					$material = $this->input->post();
@@ -870,11 +870,11 @@ class Leads extends CI_Controller
 						'color' => $material['color'],
 						'supplier' => $material['supplier'],
 						'po_no' => $material['po_no'],
-						'project_cost' => $material['project_cost'],
-						'actual_cost' => $material['actual_cost'],
-						'installer' => $material['installer'],
-						'installer_project_cost' => $material['installer_project_cost'],
-						'installer_actual_cost' => $material['installer_actual_cost']
+						'projected_cost' => empty($material['projected_cost']) ? null : $material['projected_cost'],
+						'actual_cost' => empty($material['actual_cost']) ? null : $material['actual_cost'],
+						'installer' => empty($material['installer']) ? null : $material['installer'],
+						'installer_projected_cost' => empty($material['installer_projected_cost']) ? null : $material['installer_projected_cost'],
+						'installer_actual_cost' => empty($material['installer_actual_cost']) ? null : $material['installer_actual_cost']
 					]);
 
 					if (!$update) {

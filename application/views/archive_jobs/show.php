@@ -603,13 +603,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Project Cost<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Project Cost" name="project_cost" type="number">
+                                    <label>Projected Cost</label>
+                                    <input class="form-control" placeholder="Projected Cost" name="projected_cost" type="number">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Actual Cost<span class="red-mark">*</span></label>
+                                    <label>Actual Cost</label>
                                     <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number">
                                 </div>
                             </div>
@@ -617,7 +617,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Installer<span class="red-mark">*</span></label>
+                                    <label>Installer</label>
                                     <select id="installer_create" name="installer" class="form-control">
                                         <option value="" disabled selected>Select Installer</option>
                                         <?php foreach ($vendors as $vendor) {
@@ -628,13 +628,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Installer Project Cost<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Installer Project Cost" name="installer_project_cost" type="number">
+                                    <label>Installer Projected Cost</label>
+                                    <input class="form-control" placeholder="Installer Projected Cost" name="installer_projected_cost" type="number">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Installer Actual Cost<span class="red-mark">*</span></label>
+                                    <label>Installer Actual Cost</label>
                                     <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number">
                                 </div>
                             </div>
@@ -704,13 +704,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Project Cost<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Project Cost" name="project_cost" type="number">
+                                    <label>Projected Cost</label>
+                                    <input class="form-control" placeholder="Projected Cost" name="projected_cost" type="number">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Actual Cost<span class="red-mark">*</span></label>
+                                    <label>Actual Cost</label>
                                     <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number">
                                 </div>
                             </div>
@@ -718,7 +718,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Installer<span class="red-mark">*</span></label>
+                                    <label>Installer</label>
                                     <select id="installer_edit" name="installer" class="form-control">
                                         <option value="" disabled selected>Select Installer</option>
                                         <?php foreach ($vendors as $vendor) {
@@ -729,13 +729,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Installer Project Cost<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Installer Project Cost" name="installer_project_cost" type="number">
+                                    <label>Installer Projected Cost</label>
+                                    <input class="form-control" placeholder="Installer Projected Cost" name="installer_projected_cost" type="number">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Installer Actual Cost<span class="red-mark">*</span></label>
+                                    <label>Installer Actual Cost</label>
                                     <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number">
                                 </div>
                             </div>
@@ -753,44 +753,46 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= form_close() ?>
                         <hr />
                     </div>
-                    <table class="table table-hover table-striped">
-                        <tr>
-                            <th>Material</th>
-                            <th>Manufacturer</th>
-                            <th>Line Style Group</th>
-                            <th>Color</th>
-                            <th>Supplier</th>
-                            <th>PO #</th>
-                            <th>Project Cost</th>
-                            <th>Actual Cost</th>
-                            <th>Installer</th>
-                            <th>Installer Project Cost</th>
-                            <th>Installer Actual Cost</th>
-                            <th>Edit</th>
-                        </tr>
-                        <?php if (!empty($materials)) : ?>
-                            <?php foreach ($materials as $material) : ?>
-                                <tr>
-                                    <td><?= $material->material ?></td>
-                                    <td><?= $material->manufacturer ?></td>
-                                    <td><?= $material->line_style_group ?></td>
-                                    <td><?= $material->color ?></td>
-                                    <td><?= $material->supplier ?></td>
-                                    <td><?= $material->po_no ?></td>
-                                    <td><?= number_format($material->project_cost, 2) ?></td>
-                                    <td><?= number_format($material->actual_cost, 2) ?></td>
-                                    <td><?= $material->installer ?></td>
-                                    <td><?= number_format($material->installer_project_cost, 2) ?></td>
-                                    <td><?= number_format($material->installer_actual_cost, 2) ?></td>
-                                    <td><a href="#" data-material='<?= json_encode($material) ?>' class="text-info edit-material"><i class="fa fa-pencil noborder" aria-hidden="true"></i></a></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
                             <tr>
-                                <td colspan="12" class="text-center">No Record Found!</td>
+                                <th>Material</th>
+                                <th>Manufacturer</th>
+                                <th>Line Style Group</th>
+                                <th>Color</th>
+                                <th>Supplier</th>
+                                <th>PO #</th>
+                                <th>Projected Cost</th>
+                                <th>Actual Cost</th>
+                                <th>Installer</th>
+                                <th>Installer Projected Cost</th>
+                                <th>Installer Actual Cost</th>
+                                <th>Edit</th>
                             </tr>
-                        <?php endif; ?>
-                    </table>
+                            <?php if (!empty($materials)) : ?>
+                                <?php foreach ($materials as $material) : ?>
+                                    <tr>
+                                        <td><?= $material->material_name ?></td>
+                                        <td><?= $material->manufacturer ?></td>
+                                        <td><?= $material->line_style_group ?></td>
+                                        <td><?= $material->color ?></td>
+                                        <td><?= $material->supplier ?></td>
+                                        <td><?= $material->po_no ?></td>
+                                        <td><?= is_null($material->projected_cost) ? '' : number_format($material->projected_cost, 2) ?></td>
+                                        <td><?= is_null($material->actual_cost) ? '' : number_format($material->actual_cost, 2) ?></td>
+                                        <td><?= is_null($material->installer) ? '' :  $material->installer_name ?></td>
+                                        <td><?= is_null($material->installer_projected_cost) ? '' : number_format($material->installer_projected_cost, 2) ?></td>
+                                        <td><?= is_null($material->installer_actual_cost) ? '' : number_format($material->installer_actual_cost, 2) ?></td>
+                                        <td><a href="#" data-material='<?= json_encode($material) ?>' class="text-info edit-material"><i class="fa fa-pencil noborder" aria-hidden="true"></i></a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="12" class="text-center">No Record Found!</td>
+                                </tr>
+                            <?php endif; ?>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
