@@ -101,9 +101,9 @@ var form_material_create = document.querySelector('form#lead_edit_add_material')
 var aliases_material = {
     line_style_group: 'Line / Style / Group',
     po_no: 'PO #',
-    project_cost: 'Project Cost',
+    projected_cost: 'Projected Cost',
     actual_cost: 'Actual Cost',
-    installer_project_cost: 'Installer Project Cost',
+    installer_projected_cost: 'Installer Projected Cost',
     installer_actual_cost: 'Installer Actual Cost'
 };
 form_material_create.addEventListener("submit", function (e) {
@@ -133,32 +133,27 @@ form_material_create.addEventListener("submit", function (e) {
                 notValid: ' contains invalid value'
             }
         },
-        project_cost: {
-            presence: true,
+        projected_cost: {
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         actual_cost: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         installer: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
-        installer_project_cost: {
-            presence: true,
+        installer_projected_cost: {
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         installer_actual_cost: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
@@ -203,32 +198,27 @@ form_material_edit.addEventListener("submit", function (e) {
                 notValid: ' contains invalid value'
             }
         },
-        project_cost: {
-            presence: true,
+        projected_cost: {
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         actual_cost: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         installer: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
-        installer_project_cost: {
-            presence: true,
+        installer_projected_cost: {
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         installer_actual_cost: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
@@ -322,11 +312,11 @@ $(document).ready(function () {
         $('#edit_material-section form#lead_edit_edit_material input[name="color"]').val(material.color);
         $('#edit_material-section form#lead_edit_edit_material input[name="supplier"]').val(material.supplier);
         $('#edit_material-section form#lead_edit_edit_material input[name="po_no"]').val(material.po_no);
-        $('#edit_material-section form#lead_edit_edit_material input[name="project_cost"]').val(material.project_cost);
+        $('#edit_material-section form#lead_edit_edit_material input[name="projected_cost"]').val(material.projected_cost);
         $('#edit_material-section form#lead_edit_edit_material input[name="actual_cost"]').val(material.actual_cost);
         $('#edit_material-section form#lead_edit_edit_material select[name="installer"]').val(material.installer);
         $('#edit_material-section form#lead_edit_edit_material select[name="installer"]').trigger('change');
-        $('#edit_material-section form#lead_edit_edit_material input[name="installer_project_cost"]').val(material.installer_project_cost);
+        $('#edit_material-section form#lead_edit_edit_material input[name="installer_projected_cost"]').val(material.installer_projected_cost);
         $('#edit_material-section form#lead_edit_edit_material input[name="installer_actual_cost"]').val(material.installer_actual_cost);
         var form_url = $('#edit_material-section form#lead_edit_edit_material').data('url');
         $('#edit_material-section form#lead_edit_edit_material').attr('action', form_url + '/' + material.id);

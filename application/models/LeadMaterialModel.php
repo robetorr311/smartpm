@@ -29,12 +29,19 @@ class LeadMaterialModel extends CI_Model
         ]);
     }
 
-    public function getMaterialsByLeadId($id)
+    public function getMaterialsByLeadId($lead_id)
     {
+        $this->db->select('
+            jobs_material.*,
+            material_item.name AS material_name,
+            material_installer.name AS installer_name,
+        ');
         $this->db->from($this->table);
+        $this->db->join('items as material_item', 'jobs_material.material=material_item.id', 'left');
+        $this->db->join('vendors as material_installer', 'jobs_material.installer=material_installer.id', 'left');
         $this->db->where([
-            'job_id' => $id,
-            'is_deleted' => FALSE
+            'jobs_material.job_id' => $lead_id,
+            'jobs_material.is_deleted' => FALSE
         ]);
         $query = $this->db->get();
         $result = $query->result();
@@ -43,11 +50,18 @@ class LeadMaterialModel extends CI_Model
 
     public function getMaterialsById($id, $jobid)
     {
+        $this->db->select('
+            jobs_material.*,
+            material_item.name AS material_name,
+            material_installer.name AS installer_name,
+        ');
         $this->db->from($this->table);
+        $this->db->join('items as material_item', 'jobs_material.material=material_item.id', 'left');
+        $this->db->join('vendors as material_installer', 'jobs_material.installer=material_installer.id', 'left');
         $this->db->where([
-            'id' => $id,
-            'job_id' => $jobid,
-            'is_deleted' => FALSE
+            'jobs_material.id' => $id,
+            'jobs_material.job_id' => $jobid,
+            'jobs_material.is_deleted' => FALSE
         ]);
         $query = $this->db->get();
         $result = $query->result();
