@@ -50,7 +50,7 @@ class EstimateModel extends CI_Model
         $this->db->where('client_id', $data['client_id']);
         $query = $this->db->get();
         $result = $query->first_row();
-        $estimate_no = $result ? $result->next_estimate_no : 1;
+        $estimate_no = ($result && $result->next_estimate_no) ? $result->next_estimate_no : 1;
 
         $data['estimate_no'] = $estimate_no;
         $data['created_by'] = $this->session->id;
