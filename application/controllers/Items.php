@@ -53,7 +53,7 @@ class Items extends CI_Controller
                 'name' => $itemData['name'],
                 'line_style_type' => $itemData['line_style_type'],
                 'internal_part_no' => ($itemData['internal_part_no'] == '') ? null : $itemData['internal_part_no'],
-                'quantity_units' => ($itemData['quantity_units'] == '') ? null : $itemData['quantity_units'],
+                'quantity_units' => $itemData['quantity_units'],
                 'unit_price' =>  ($itemData['unit_price'] == '') ? null : $itemData['unit_price'],
                 'description' => $itemData['description']
             ]);
@@ -85,7 +85,7 @@ class Items extends CI_Controller
                     'name' => $itemData['name'],
                     'line_style_type' => $itemData['line_style_type'],
                     'internal_part_no' => ($itemData['internal_part_no'] == '') ? null : $itemData['internal_part_no'],
-                    'quantity_units' => ($itemData['quantity_units'] == '') ? null : $itemData['quantity_units'],
+                    'quantity_units' => $itemData['quantity_units'],
                     'unit_price' =>  ($itemData['unit_price'] == '') ? null : $itemData['unit_price'],
                     'description' => $itemData['description']
                 ]);

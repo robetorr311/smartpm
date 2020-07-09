@@ -59,7 +59,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Quantity Units</label>
-                                <input class="form-control" placeholder="Quantity Units" name="quantity_units" type="number">
+                                <input class="form-control" placeholder="Quantity Units" name="quantity_units" type="text">
                             </div>
                         </div>
                         <div class="col-md-6">
