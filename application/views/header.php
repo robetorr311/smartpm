@@ -169,6 +169,11 @@
                         <div class="collapse submenu" id="financialCollapse">
                             <ul class="nav">
                                 <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('financial/estimates') ?>">
+                                        <span class="sidebar-normal">Estimates</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
                                     <a class="nav-link" href="<?= base_url('financial/records') ?>">
                                         <span class="sidebar-normal">Records</span>
                                     </a>

@@ -1228,6 +1228,15 @@ input[type="button"] {
 	font-size: 17px;
 }
 
+.duplicate-container .duplicate-buttons {
+	font-size: 24px;
+	margin-top: 4px;
+}
+
+.duplicate-container .duplicate-buttons span {
+	cursor: pointer;
+}
+
 /* select2 dropdown styles */
 .select2-selection__rendered {
 	line-height: 39px !important;

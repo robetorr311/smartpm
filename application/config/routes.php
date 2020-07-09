@@ -254,12 +254,20 @@ $route['financial/record/(:num)/update']['post'] = 'financial/update/$1';
 $route['financial/record/(:num)/delete']['post'] = 'financial/delete/$1';
 $route['financial/record/(:num)/receipt'] = 'financial/receipt/$1';
 
+$route['financial/estimates'] = 'estimate/index';
+$route['financial/estimate/create'] = 'estimate/create';
+$route['financial/estimate/store'] = 'estimate/store';
+$route['financial/estimate/(:num)'] = 'estimate/show/$1';
+$route['financial/estimate/(:num)/update']['post'] = 'estimate/update/$1';
+$route['financial/estimate/(:num)/delete']['post'] = 'estimate/delete/$1';
+$route['financial/estimate/(:num)/pdf'] = 'estimate/pdf/$1';
+
 $route['items'] = 'items/index';
 $route['item/create'] = 'items/create';
 $route['item/store']['post'] = 'items/store';
 $route['item/(:num)'] = 'items/show/$1';
 $route['item/(:num)/update']['post'] = 'items/update/$1';
-$route['item/(:num)/delete'] = 'items/delete/$1';
+$route['item/(:num)/delete']['post'] = 'items/delete/$1';
 
 $route['teams'] = 'teams/index';
 $route['team/create'] = 'teams/create';
