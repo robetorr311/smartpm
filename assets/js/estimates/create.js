@@ -5,7 +5,7 @@ var aliases = {
     title: 'Title',
     note: 'Note',
     sub_title: 'Sub Title',
-    description: 'Description',
+    item: 'Description',
     amount: 'Amount'
 };
 form.addEventListener("submit", function (e) {
@@ -36,7 +36,7 @@ form.addEventListener("submit", function (e) {
 
         $(this).find('.duplicate-container.description-container').each(function () {
             var ele_index_2 = parseInt($(this).data('index'));
-            validationJson[`desc_group[${ele_index_1}][${ele_index_2}][description]`] = {
+            validationJson[`desc_group[${ele_index_1}][${ele_index_2}][item]`] = {
                 presence: true
             };
             validationJson[`desc_group[${ele_index_1}][${ele_index_2}][amount]`] = {
@@ -45,7 +45,7 @@ form.addEventListener("submit", function (e) {
                 }
             };
 
-            _aliases[`desc_group[${ele_index_1}][${ele_index_2}][description]`] = aliases.description;
+            _aliases[`desc_group[${ele_index_1}][${ele_index_2}][item]`] = aliases.item;
             _aliases[`desc_group[${ele_index_1}][${ele_index_2}][amount]`] = aliases.amount;
         });
     });
@@ -66,15 +66,28 @@ $(document).ready(function () {
     $('form#estimate_create #client_id').select2({
         width: '100%'
     });
+    
+    $('form#estimate_create .group-container select').select2({
+        width: '100%'
+    });
 
     $('form#estimate_create').on('click', '.duplicate-container.group-container .duplicate-buttons.group-duplicate-buttons span#add', function () {
         var index = 0;
 
+        // find next index for new controls
         $('.duplicate-container.group-container').each(function () {
             var ele_index = parseInt($(this).data('index'));
             if (ele_index >= index) {
                 index = ele_index + 1;
             }
+        });
+
+        // find dropdown list
+        var options = '';
+        $(this).closest('.duplicate-container.group-container').find('select').first().find('option').each(function () {
+            var option = $(this);
+            var optionVal = option.val();
+            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' select' : '') + '>' + option.html() + '</option>';
         });
 
         var htmlToAdd = `<div data-index="${index}" class="duplicate-container group-container">
@@ -112,7 +125,7 @@ $(document).ready(function () {
                         </div>
                         <div data-index="0" class="row duplicate-container description-container">
                             <div class="col-md-8">
-                                <input class="form-control" placeholder="Description" name="desc_group[${index}][0][description]" type="text">
+                                <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
                             </div>
                             <div class="col-md-3 col-xs-8">
                                 <input class="form-control" placeholder="Amount" name="desc_group[${index}][0][amount]" type="number">
@@ -128,6 +141,9 @@ $(document).ready(function () {
         </div>`;
 
         $(this).closest('.duplicate-container.group-container').after(htmlToAdd);
+        $(this).closest('.duplicate-container.group-container').next().find('select').select2({
+            width: '100%'
+        });
     });
 
     $('form#estimate_create').on('click', '.duplicate-container.group-container .duplicate-buttons.group-duplicate-buttons span#remove', function () {
@@ -142,6 +158,7 @@ $(document).ready(function () {
         var index = 0;
         var parent_index = $(this).closest('.duplicate-container.group-container').data('index');
 
+        // find next index for new controls
         $(this).closest('.duplicate-container.group-container').find('.duplicate-container.description-container').each(function () {
             var ele_index = parseInt($(this).data('index'));
             if (ele_index >= index) {
@@ -149,9 +166,17 @@ $(document).ready(function () {
             }
         });
 
+        // find dropdown list
+        var options = '';
+        $(this).closest('.duplicate-container').find('select').find('option').each(function () {
+            var option = $(this);
+            var optionVal = option.val();
+            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' select' : '') + '>' + option.html() + '</option>';
+        });
+
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
             <div class="col-md-8">
-                <input class="form-control" placeholder="Description" name="desc_group[${parent_index}][${index}][description]" type="text">
+                <select name="desc_group[${parent_index}][${index}][item]" class="form-control">${options}</select>
             </div>
             <div class="col-md-3 col-xs-8">
                 <input class="form-control" placeholder="Amount" name="desc_group[${parent_index}][${index}][amount]" type="number">
@@ -163,6 +188,9 @@ $(document).ready(function () {
         </div>`;
 
         $(this).closest('.duplicate-container').after(htmlToAdd);
+        $(this).closest('.duplicate-container').next().find('select').select2({
+            width: '100%'
+        });
     });
 
     $('form#estimate_create').on('click', '.duplicate-container.group-container .duplicate-container.description-container .duplicate-buttons span#remove', function () {

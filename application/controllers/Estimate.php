@@ -9,13 +9,15 @@ class Estimate extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel']);
+        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel']);
         $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->estimate = new EstimateModel();
         $this->estimate_desc_group = new EstimateDescriptionGroupModel();
         $this->estimate_desc = new EstimateDescriptionModel();
         $this->lead = new LeadModel();
+        $this->user = new UserModel();
+        $this->item = new ItemModel();
     }
 
     public function index()
@@ -37,12 +39,14 @@ class Estimate extends CI_Controller
         authAccess();
 
         $clients = $this->lead->getLeadList();
+        $items = $this->item->getItemList();
 
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('estimate/create', [
-            'clients' => $clients
+            'clients' => $clients,
+            'items' => $items
         ]);
         $this->load->view('footer');
     }
@@ -59,7 +63,7 @@ class Estimate extends CI_Controller
                 $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][sub_title]', 'Sub Title', 'trim|required');
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][description]', 'Description', 'trim|required');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Amount', 'trim|numeric');
                 }
             }
@@ -85,7 +89,7 @@ class Estimate extends CI_Controller
                         unset($desc_group['sub_title']);
                         foreach ($desc_group as $desc) {
                             $insert_desc = $this->estimate_desc->insert([
-                                'description' => $desc['description'],
+                                'item' => $desc['item'],
                                 'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
                                 'description_group_id' => $insert_desc_group
                             ]);
@@ -117,7 +121,7 @@ class Estimate extends CI_Controller
                 unset($desc_group['id']);
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][description]', 'Description', 'trim|required');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Amount', 'trim|numeric');
                 }
             }
@@ -152,12 +156,12 @@ class Estimate extends CI_Controller
                                 foreach ($desc_group as $desc) {
                                     if (isset($desc['id'])) {
                                         $update_desc = $this->estimate_desc->update($desc['id'], [
-                                            'description' => $desc['description'],
+                                            'item' => $desc['item'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount']
                                         ]);
                                     } else {
                                         $insert_desc = $this->estimate_desc->insert([
-                                            'description' => $desc['description'],
+                                            'item' => $desc['item'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
                                             'description_group_id' => $desc_group_id
                                         ]);
@@ -174,7 +178,7 @@ class Estimate extends CI_Controller
                                 unset($desc_group['sub_title']);
                                 foreach ($desc_group as $desc) {
                                     $insert_desc = $this->estimate_desc->insert([
-                                        'description' => $desc['description'],
+                                        'item' => $desc['item'],
                                         'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
                                         'description_group_id' => $insert_desc_group
                                     ]);
@@ -207,6 +211,7 @@ class Estimate extends CI_Controller
             $estimate_desc_group_ids = array_column($estimate_desc_groups, 'id');
             $estimate_descs = $this->estimate_desc->allEstimateDescsByIds($estimate_desc_group_ids);
             $clients = $this->lead->getLeadList();
+            $items = $this->item->getItemList();
 
             $descs = [];
             if ($estimate_descs) {
@@ -225,7 +230,8 @@ class Estimate extends CI_Controller
                 'estimate' => $estimate,
                 'estimate_desc_groups' => $estimate_desc_groups,
                 'descs' => $descs,
-                'clients' => $clients
+                'clients' => $clients,
+                'items' => $items
             ]);
             $this->load->view('footer');
         } else {
@@ -258,64 +264,94 @@ class Estimate extends CI_Controller
     {
         authAccess();
 
-        echo "PDF feature is under construction.";
+        $estimate = $this->estimate->getEstimateById($id);
 
-        // $estimate = $this->estimate->getEstimateById($id);
+        if ($estimate) {
+            $estimate_desc_groups = $this->estimate_desc_group->allEstimateDescGroupsByEstimateId($id);
+            $estimate_desc_group_ids = array_column($estimate_desc_groups, 'id');
+            $estimate_descs = $this->estimate_desc->allEstimateDescsByIds($estimate_desc_group_ids);
+            $created_by_user = $this->user->getUserById($estimate->created_by);
 
-        // if ($estimate) {
-        //     $estimate_desc_groups = $this->estimate_desc_group->allEstimateDescGroupsByEstimateId($id);
-        //     $estimate_desc_group_ids = array_column($estimate_desc_groups, 'id');
-        //     $estimate_descs = $this->estimate_desc->allEstimateDescsByIds($estimate_desc_group_ids);
+            $descs = [];
+            if ($estimate_descs) {
+                foreach ($estimate_descs as $desc) {
+                    if (!isset($descs[$desc->description_group_id])) {
+                        $descs[$desc->description_group_id] = [];
+                    }
+                    $descs[$desc->description_group_id][] = $desc;
+                }
+            }
 
-        //     $descs = [];
-        //     if ($estimate_descs) {
-        //         foreach ($estimate_descs as $desc) {
-        //             if (!isset($descs[$desc->description_group_id])) {
-        //                 $descs[$desc->description_group_id] = [];
-        //             }
-        //             $descs[$desc->description_group_id][] = $desc;
-        //         }
-        //     }
+            $pdfContent = [];
 
-        //     // =============== GENERATE PDF ===============
-        //     $pdfContent = [];
+            $pdfContent[] = '<div>';
+            $pdfContent[] = '<table><tr>';
+            $pdfContent[] = '<td>' . (($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO') . '</td>';
+            $pdfContent[] = '<td align="right" style="line-height: 50px; vertical-align: middle;">Estimate #: ' . $estimate->estimate_number . '</td>';
+            $pdfContent[] = '</tr></table>';
+            $pdfContent[] = '</div>';
+            $pdfContent[] = '<div>';
+            $pdfContent[] = '<table><tr>';
+            $pdfContent[] = '<td></td>';
+            $pdfContent[] = '<td><b>ROOFING ESTIMATE<br /></b></td>';
+            $pdfContent[] = '</tr><tr>';
+            $pdfContent[] = '<td><b>' . $estimate->client_name . '</b><br />Address</td>';
+            $pdfContent[] = '<td style="background-color: #aec5e8;"><table style="border-left: solid 1px #0e2163;" cellspacing="5"><tr><td width="20"></td><td width="100%" style="line-height: 22px;">Date: ' . date('M j, Y', strtotime($estimate->date)) . '<br />Done By: ' . $estimate->created_user . '</td></tr></table></td>';
+            $pdfContent[] = '</tr></table>';
+            $pdfContent[] = '</div>';
+            $pdfContent[] = '<div>';
+            $pdfContent[] = 'Title<br />';
+            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="400">Description</th><th width="138">Total</th></tr>';
 
-        //     $pdfContent[] = '<div>';
-        //     $pdfContent[] = '<table><tr>';
-        //     $pdfContent[] = '<td>' . (($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO') . '</td>';
-        //     $pdfContent[] = '<td align="right" style="line-height: 50px; vertical-align: middle;">Estimate #: ' . $estimate->estimate_number . '</td>';
-        //     $pdfContent[] = '</tr></table>';
-        //     $pdfContent[] = '</div>';
-        //     $pdfContent[] = '<div>';
-        //     $pdfContent[] = '<table><tr>';
-        //     $pdfContent[] = '<td></td>';
-        //     $pdfContent[] = '<td cellpadding="20px">ROOFING ESTIMATE</td>';
-        //     $pdfContent[] = '</tr><tr>';
-        //     $pdfContent[] = '<td><b>' . $estimate->client_name . '</b><br />Address</td>';
-        //     $pdfContent[] = '<td>';
-        //     $pdfContent[] = '<div style="border-left: 3px solid #000; background-color: #CCC; padding-left: 20px;">Date: ' . date('M j, Y', strtotime($estimate->date)) . '<br />Done By: ' . $estimate->created_user . '</div>';
-        //     $pdfContent[] = '</td>';
-        //     $pdfContent[] = '</tr></table>';
-        //     $pdfContent[] = '</div>';
+            $total = 0;
+            $background = false;
+            foreach ($estimate_desc_groups as $group) {
+                $pdfContent[] = '<tr style="background-color: #777; color: #FFF;"><td colspan="2">' . $group->sub_title . '</td></tr>';
+                $subTotal = 0;
+                if (isset($descs[$group->id])) {
+                    foreach ($descs[$group->id] as $desc) {
+                        $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . '</td>';
+                        $pdfContent[] = '<td align="right">' . (($desc->amount == 0) ? '' : ('$' . number_format($desc->amount, 2))) . '</td></tr>';
+                        $subTotal += (float) $desc->amount;
+                        $total += (float) $desc->amount;
+                        $background = !$background;
+                    }
+                }
+                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total - Sub Title:</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
+                $background = !$background;
+            }
+            $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
+            $pdfContent[] = '</div>';
+            if (!empty($estimate->note)) {
+                $pdfContent[] = '<div>';
+                $pdfContent[] = 'Includes:<br />';
+                $pdfContent[] = nl2br($estimate->note);
+                $pdfContent[] = '</div>';
+            }
+            $pdfContent[] = '<div><p> </p>';
+            $pdfContent[] = '<table width="230" cellpadding="5" style="background-color: #DDD;"><tr><td style="border-left: solid 2px #0e2163; font-size: 9px; line-height: 18px;">';
+            $pdfContent[] = '<b>Thank you for your business!</b><br />';
+            $pdfContent[] = $estimate->client_name . '<br />';
+            $pdfContent[] = $created_by_user->email_id . '<br />';
+            $pdfContent[] = $created_by_user->office_phone;
+            $pdfContent[] = '</td></tr></table>';
+            $pdfContent[] = '</div>';
 
-        //     // echo implode('', $pdfContent);
-        //     // die();
+            // echo implode('', $pdfContent);
+            // die();
 
-        //     $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        //     $pdf->setPrintHeader(false);
-        //     $pdf->setPrintFooter(false);
-        //     $pdf->AddPage();
-        //     $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
-        //     ob_clean();
-        //     $pdf->Output('estimate.pdf');
-            
-        //     // var_dump($estimate);
-        //     // var_dump($estimate_desc_groups);
-        //     // var_dump($descs);
-        //     // =============== GENERATE PDF ===============
-        // } else {
-        //     $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-        //     redirect('financial/estimates');
-        // }
+            // $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+            $pdf = new Pdf();
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);
+            $pdf->AddPage();
+            $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
+            $pdf->lastPage();
+            ob_clean();
+            $pdf->Output('estimate.pdf');
+        } else {
+            $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+            redirect('financial/estimates');
+        }
     }
 }
