@@ -93,7 +93,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div data-index="0" class="row duplicate-container description-container">
                                             <div class="col-md-8">
-                                                <input class="form-control" placeholder="Description" name="desc_group[0][0][description]" type="text">
+                                                <select name="desc_group[0][0][item]" class="form-control">
+                                                    <option value="" disabled selected>Select Item</option>
+                                                    <?php foreach ($items as $item) {
+                                                        echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                                    } ?>
+                                                </select>
                                             </div>
                                             <div class="col-md-3 col-xs-8">
                                                 <input class="form-control" placeholder="Amount" name="desc_group[0][0][amount]" type="number">

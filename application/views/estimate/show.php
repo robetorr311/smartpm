@@ -68,7 +68,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     foreach ($descs[$group->id] as $desc) {
                                 ?>
                                         <tr>
-                                            <td><?= $desc->description ?></td>
+                                            <td><?= $desc->item_name ?></td>
                                             <td class="text-right"><?= ($desc->amount == 0) ? '' : ('$' . number_format($desc->amount, 2)) ?></td>
                                         </tr>
                                 <?php
@@ -204,7 +204,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                     <div data-index="<?= $index ?>" class="row duplicate-container description-container">
                                                         <div class="col-md-8">
                                                             <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
-                                                            <input class="form-control" placeholder="Description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" type="text" value="<?= $desc->description ?>">
+                                                            <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control">
+                                                                <option value="" disabled<?= (empty($desc->item) ? ' selected' : '') ?>>Select Item</option>
+                                                                <?php foreach ($items as $item) {
+                                                                    echo '<option value="' . $item->id . '"' . ($desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
+                                                                } ?>
+                                                            </select>
                                                         </div>
                                                         <div class="col-md-3 col-xs-8">
                                                             <input class="form-control" placeholder="Amount" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">

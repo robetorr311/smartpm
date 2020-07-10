@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td><?= $estimate->estimate_number ?></td>
                                         <td><?= date('M j, Y', strtotime($estimate->date)) ?></td>
                                         <td><?= $estimate->client_name ?></td>
-                                        <td><?= $estimate->total ?></td>
+                                        <td><?= number_format($estimate->total, 2) ?></td>
                                         <td><?= $estimate->created_user ?></td>
                                         <td class="text-center"><a href="<?= base_url('financial/estimate/' . $estimate->id . '/pdf') ?>" target="_blank" class="text-info"><i class="fa fa-file-pdf-o"></i></a></td>
                                     </tr>

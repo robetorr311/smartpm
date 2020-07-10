@@ -7,10 +7,15 @@ class EstimateDescriptionModel extends CI_Model
 
     public function allEstimateDescsByIds($ids)
     {
+        $this->db->select("
+            estimate_descriptions.*,
+            items.name AS item_name
+        ");
         $this->db->from($this->table);
+        $this->db->join('items as items', 'estimate_descriptions.item=items.id', 'left');
         $this->db->where_in('description_group_id', $ids);
-        $this->db->where('is_deleted', FALSE);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->where('estimate_descriptions.is_deleted', FALSE);
+        $this->db->order_by('estimate_descriptions.created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
