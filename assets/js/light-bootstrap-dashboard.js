@@ -122,6 +122,7 @@ lbd = {
             });
 
             addSearchEvents();
+            loadMobileMenuScripts();
             mobile_menu_initialized = true;
         } else {
             if($(window).width() > 991){
