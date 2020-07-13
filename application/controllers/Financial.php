@@ -316,7 +316,9 @@ class Financial extends CI_Controller
                 $pdfContent[] = '<div style="margin-bottom: 20px;">';
                 $pdfContent[] = $client->firstname . ' ' . $client->lastname . '<br />';
                 $pdfContent[] = $client->address . '<br />';
-                $pdfContent[] = $client->address_2 . '<br />';
+                if (!empty($client->address_2)) {
+                    $pdfContent[] = $client->address_2 . '<br />';
+                }
                 $pdfContent[] = $client->city . ', ' . $client->state . ' - ' . $client->zip;
                 $pdfContent[] = '</div>';
                 $pdfContent[] = '<div style="margin-bottom: 20px;">';

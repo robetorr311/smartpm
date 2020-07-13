@@ -30,7 +30,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             #<?= (1600 + $lead->id); ?><br />
                             <?= $lead->firstname ?> <?= $lead->lastname ?><br />
                             <?= $lead->address ?><br />
-                            <?= $lead->address_2 ?><br />
+                            <?= empty($lead->address_2) ? '' : ($lead->address_2 . '<br />') ?>
                             <?= $lead->city ?>, <?= $lead->state ?><br />
                             C - <?= $lead->phone1 ?><br />
                             <?= $lead->email ?>
