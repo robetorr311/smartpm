@@ -250,51 +250,35 @@ demo = {
       message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
 
     }, {
-        type: type[color],
-        timer: 4000,
-        placement: {
-          from: from,
-          align: align
-        }
-      });
+      type: type[color],
+      timer: 4000,
+      placement: {
+        from: from,
+        align: align
+      }
+    });
   }
 
 
 }
 
-$("input[type=filhe]").change(function () {
-  var id = $(this).attr('id');
-  //alert(id);					
-  var file_data = $('#' + id).prop('files')[0];
-  var form_data = new FormData();
-  form_data.append('file', file_data);
-  //form_data.append('file', file_data);
-  //alert(form_data);                             
-  $.ajax({
-    url: 'upload.php', // point to server-side PHP script     
-    dataType: 'text',  // what to expect back from the PHP script, if anything
-    cache: false,
-    contentType: false,
-    processData: false,
-    data: form_data,
-    type: 'post',
-    success: function (php_script_response) {
-      //alert(php_script_response); 
-      $.ajax({
-        type: 'POST',
-        url: 'ajax.php', // point to server-side PHP script     
-        data: { id: id, name: php_script_response },
-        success: function (php_script_response) {
-          $('.' + id + 'img').attr('src', '../image/' + php_script_response); // 
-        }
-      });
-    }
-  });
-});
-
 /**
  * Custom Script Added
  */
+
+function loadMobileMenuScripts() {
+  /**
+   * Anchor Tag POST request feature
+   */
+  $('.nav-mobile-menu a[data-method="POST"]').click(function (e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    var parent = $(this).parent();
+    var id = Date.now();
+    parent.append('<form id="' + id + '" action="' + url + '" method="POST" style="display:none;"></form>');
+    parent.find('form#' + id).submit();
+  });
+}
 
 $(document).ready(function () {
   /**
@@ -302,7 +286,6 @@ $(document).ready(function () {
    */
   $('a[data-method="POST"]').click(function (e) {
     e.preventDefault();
-    var method = $(this).data('method');
     var url = $(this).attr('href');
     var parent = $(this).parent();
     var id = Date.now();
@@ -321,38 +304,17 @@ $(document).ready(function () {
     }
   });
 
+  $("#myInput").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function () {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 
-   var baseUrl = '<?= base_url(); ?>';
-
-         $("#myInput").on("keyup", function() {
-          var value = $(this).val().toLowerCase();
-          $("#myTable tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
-       });
-
-  
-      /*  add user to team */
-
-      $('#add_team').change(function(){
-        
-        var teamid=$(this).val();
-        var id=$('.hidden_id').val();
-        $.ajax({
-            url: baseUrl+'user/adduser',
-            data: {teamid: teamid, userid: id},        
-            type: 'post',
-             success: function(php_script_response){  
-            }
-           });
-        });
-
-        $(document).ajaxStart(function(){
-          $("#wait").css("display", "block");
-        });
-        $(document).ajaxComplete(function(){
-          $("#wait").css("display", "none");
-        });
-
-
+  $(document).ajaxStart(function () {
+    $("#wait").css("display", "block");
+  });
+  $(document).ajaxComplete(function () {
+    $("#wait").css("display", "none");
+  });
 });
