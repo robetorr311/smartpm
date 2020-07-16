@@ -21,6 +21,14 @@ class Setting extends CI_Controller
 		$this->load->view('footer');
 	}
 
+	public function companyDetails()
+	{
+		authAccess();
+		$settings = $this->input->post();
+		$this->db->query("UPDATE admin_setting SET company_name='" . $settings['company_name'] . "', company_phone='" . $settings['company_phone'] . "', company_address='" . $settings['company_address'] . "', company_website='" . $settings['company_website'] . "', company_email='" . $settings['company_email'] . "'");
+		redirect('setting');
+	}
+
 	public function ajaxupload()
 	{
 		authAccess();

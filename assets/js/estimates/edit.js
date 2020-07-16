@@ -6,7 +6,7 @@ var aliases = {
     note: 'Note',
     sub_title: 'Sub Title',
     item: 'Description',
-    amount: 'Amount'
+    amount: 'Quantity'
 };
 form.addEventListener("submit", function (e) {
     var _aliases = aliases;
@@ -120,7 +120,7 @@ $(document).ready(function () {
                                 <label>Description<span class="red-mark">*</span></label>
                             </div>
                             <div class="col-md-4">
-                                <label>Amount</label>
+                                <label>Quantity</label>
                             </div>
                         </div>
                         <div data-index="0" class="row duplicate-container description-container">
@@ -128,7 +128,7 @@ $(document).ready(function () {
                                 <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
                             </div>
                             <div class="col-md-3 col-xs-8">
-                                <input class="form-control" placeholder="Amount" name="desc_group[${index}][0][amount]" type="number">
+                                <input class="form-control" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
                             </div>
                             <div class="col-md-1 col-xs-4 duplicate-buttons">
                                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
@@ -179,7 +179,7 @@ $(document).ready(function () {
                 <select name="desc_group[${parent_index}][${index}][item]" class="form-control">${options}</select>
             </div>
             <div class="col-md-3 col-xs-8">
-                <input class="form-control" placeholder="Amount" name="desc_group[${parent_index}][${index}][amount]" type="number">
+                <input class="form-control" placeholder="Quantity" name="desc_group[${parent_index}][${index}][amount]" type="number">
             </div>
             <div class="col-md-1 col-xs-4 duplicate-buttons">
                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>

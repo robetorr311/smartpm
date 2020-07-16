@@ -11,7 +11,7 @@ class EstimateModel extends CI_Model
             estimates.*,
             CONCAT((1600 + client.id), '.', estimate_no) as estimate_number,
             CONCAT(client.firstname, ' ', client.lastname) as client_name,
-            (SELECT SUM(amount) FROM estimate_descriptions WHERE description_group_id IN (SELECT id FROM estimate_description_groups WHERE estimate_id=estimates.id)) as total,
+            (SELECT SUM(amount * items.unit_price) FROM estimate_descriptions LEFT JOIN items as items ON estimate_descriptions.item=items.id WHERE description_group_id IN (SELECT id FROM estimate_description_groups WHERE estimate_id=estimates.id)) as total,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name) as created_user
         ");
         $this->db->from($this->table);
@@ -29,7 +29,7 @@ class EstimateModel extends CI_Model
             estimates.*,
             CONCAT((1600 + client.id), '.', estimate_no) as estimate_number,
             CONCAT(client.firstname, ' ', client.lastname) as client_name,
-            (SELECT SUM(amount) FROM estimate_descriptions WHERE description_group_id IN (SELECT id FROM estimate_description_groups WHERE estimate_id=estimates.id)) as total,
+            (SELECT SUM(amount * items.unit_price) FROM estimate_descriptions LEFT JOIN items as items ON estimate_descriptions.item=items.id WHERE description_group_id IN (SELECT id FROM estimate_description_groups WHERE estimate_id=estimates.id)) as total,
             CONCAT(users_created_by.first_name, ' ', users_created_by.last_name) as created_user
         ");
         $this->db->from($this->table);

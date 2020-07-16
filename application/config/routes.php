@@ -313,6 +313,7 @@ $route['company-photos/public/(:num)/(:any)/(:num)'] = 'company_photos/sharedFol
 $route['company-photos/public/download/(:num)/(:any)/(:num)']['post'] = 'company_photos/download/$1/$2/$3';
 
 $route['setting'] = 'setting/index';
+$route['setting/company-details']['post'] = 'setting/companyDetails';
 $route['setting/ajaxupload'] = 'setting/ajaxupload';
 $route['setting/ajaxsave'] = 'setting/ajaxsave';
 $route['setting/ajaxcolor'] = 'setting/ajaxcolor';
