@@ -9,7 +9,8 @@ class EstimateDescriptionModel extends CI_Model
     {
         $this->db->select("
             estimate_descriptions.*,
-            items.name AS item_name
+            items.name AS item_name,
+            items.unit_price AS item_unit_price
         ");
         $this->db->from($this->table);
         $this->db->join('items as items', 'estimate_descriptions.item=items.id', 'left');

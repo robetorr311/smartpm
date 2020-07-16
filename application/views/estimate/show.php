@@ -52,8 +52,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <tr>
-                                <th>Description</th>
-                                <th width="150" class="text-right">Amount</th>
+                                <th>Item</th>
+                                <th width="150" class="text-right">Total</th>
                             </tr>
                             <?php
                             $desc_total = 0;
@@ -69,10 +69,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 ?>
                                         <tr>
                                             <td><?= $desc->item_name ?></td>
-                                            <td class="text-right"><?= ($desc->amount == 0) ? '' : ('$' . number_format($desc->amount, 2)) ?></td>
+                                            <td class="text-right"></td>
                                         </tr>
                                 <?php
-                                        $group_total += (float) $desc->amount;
+                                        $group_total += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
                                     }
                                 }
                                 $desc_total += $group_total;
@@ -190,10 +190,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <label>Description<span class="red-mark">*</span></label>
+                                                    <label>Item<span class="red-mark">*</span></label>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <label>Amount</label>
+                                                    <label>Quantity</label>
                                                 </div>
                                             </div>
                                             <?php
@@ -212,7 +212,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                             </select>
                                                         </div>
                                                         <div class="col-md-3 col-xs-8">
-                                                            <input class="form-control" placeholder="Amount" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">
+                                                            <input class="form-control" placeholder="Quantity" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">
                                                         </div>
                                                         <div class="col-md-1 col-xs-4 duplicate-buttons">
                                                             <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>

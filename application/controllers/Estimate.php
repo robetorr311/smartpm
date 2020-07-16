@@ -9,7 +9,7 @@ class Estimate extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel']);
+        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel']);
         $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->estimate = new EstimateModel();
@@ -18,6 +18,7 @@ class Estimate extends CI_Controller
         $this->lead = new LeadModel();
         $this->user = new UserModel();
         $this->item = new ItemModel();
+        $this->admin_setting = new AdminSettingModel();
     }
 
     public function index()
@@ -271,6 +272,8 @@ class Estimate extends CI_Controller
             $estimate_desc_group_ids = array_column($estimate_desc_groups, 'id');
             $estimate_descs = $this->estimate_desc->allEstimateDescsByIds($estimate_desc_group_ids);
             $created_by_user = $this->user->getUserById($estimate->created_by);
+            $client = $this->lead->getLeadById($estimate->client_id);
+            $admin_conf = $this->admin_setting->getAdminSetting();
 
             $descs = [];
             if ($estimate_descs) {
@@ -295,13 +298,19 @@ class Estimate extends CI_Controller
             $pdfContent[] = '<td></td>';
             $pdfContent[] = '<td><b>ROOFING ESTIMATE<br /></b></td>';
             $pdfContent[] = '</tr><tr>';
-            $pdfContent[] = '<td><b>' . $estimate->client_name . '</b><br />Address</td>';
-            $pdfContent[] = '<td style="background-color: #aec5e8;"><table style="border-left: solid 1px #0e2163;" cellspacing="5"><tr><td width="20"></td><td width="100%" style="line-height: 22px;">Date: ' . date('M j, Y', strtotime($estimate->date)) . '<br />Done By: ' . $estimate->created_user . '</td></tr></table></td>';
+            $pdfContent[] = '<td><b>' . $estimate->client_name . '</b><br />';
+            $pdfContent[] = $client->address . '<br />';
+            if (!empty($client->address_2)) {
+                $pdfContent[] = $client->address_2 . '<br />';
+            }
+            $pdfContent[] = $client->city . ', ' . $client->state . ' - ' . $client->zip;
+            $pdfContent[] = '</td>';
+            $pdfContent[] = '<td style="background-color: #aec5e8; border-left: solid 1px #0e2163;"><table cellspacing="5"><tr><td width="20"></td><td width="100%" style="line-height: 22px;">Date: ' . date('M j, Y', strtotime($estimate->date)) . '<br />Done By: ' . $estimate->created_user . '</td></tr></table></td>';
             $pdfContent[] = '</tr></table>';
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
             $pdfContent[] = 'Title<br />';
-            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="400">Description</th><th width="138">Total</th></tr>';
+            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="400">Description</th><th width="138" align="right">Total</th></tr>';
 
             $total = 0;
             $background = false;
@@ -311,13 +320,13 @@ class Estimate extends CI_Controller
                 if (isset($descs[$group->id])) {
                     foreach ($descs[$group->id] as $desc) {
                         $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . '</td>';
-                        $pdfContent[] = '<td align="right">' . (($desc->amount == 0) ? '' : ('$' . number_format($desc->amount, 2))) . '</td></tr>';
-                        $subTotal += (float) $desc->amount;
-                        $total += (float) $desc->amount;
+                        $pdfContent[] = '<td align="right"></td></tr>';
+                        $subTotal += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
                         $background = !$background;
                     }
                 }
-                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total - Sub Title:</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
+                $total += $subTotal;
+                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total - ' . $group->sub_title . ':</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
                 $background = !$background;
             }
             $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
@@ -342,11 +351,11 @@ class Estimate extends CI_Controller
 
             // $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
             $pdf = new Pdf();
+            $pdf->setCompanyData($admin_conf->company_name, $admin_conf->company_address, $admin_conf->company_email, $admin_conf->company_phone);
             $pdf->setPrintHeader(false);
-            $pdf->setPrintFooter(false);
+            // $pdf->setPrintFooter(false);
             $pdf->AddPage();
             $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
-            $pdf->lastPage();
             ob_clean();
             $pdf->Output('estimate.pdf');
         } else {
