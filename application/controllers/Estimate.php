@@ -309,8 +309,8 @@ class Estimate extends CI_Controller
             $pdfContent[] = '</tr></table>';
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
-            $pdfContent[] = 'Title<br />';
-            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="400">Description</th><th width="138" align="right">Total</th></tr>';
+            $pdfContent[] = $estimate->title . '<br />';
+            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="400">Item</th><th width="138" align="right">Total</th></tr>';
 
             $total = 0;
             $background = false;
