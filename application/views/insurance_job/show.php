@@ -33,8 +33,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?= $job->firstname ?> <?= $job->lastname ?><br />
                             <?= $job->address ?><br />
                             <?= empty($job->address_2) ? '' : ($job->address_2 . '<br />') ?>
-                            <?= $job->city ?>, <?= $job->state ?><br />
-                            C - <?= $job->phone1 ?><br />
+                            <?= $job->city ?>, <?= $job->state ?> - <?= $job->zip ?><br />
+                            C - <?= formatPhoneNumber($job->phone1) ?><br />
                             <?= $job->email ?>
                         </div>
                     </div>
