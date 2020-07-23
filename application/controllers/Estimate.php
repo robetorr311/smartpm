@@ -340,7 +340,7 @@ class Estimate extends CI_Controller
             $pdfContent[] = '<div><p> </p>';
             $pdfContent[] = '<table width="230" cellpadding="5" style="background-color: #DDD;"><tr><td style="border-left: solid 2px #0e2163; font-size: 9px; line-height: 18px;">';
             $pdfContent[] = '<b>Thank you for your business!</b><br />';
-            $pdfContent[] = $estimate->client_name . '<br />';
+            $pdfContent[] = $estimate->created_user . '<br />';
             $pdfContent[] = $created_by_user->email_id . '<br />';
             $pdfContent[] = $created_by_user->office_phone;
             $pdfContent[] = '</td></tr></table>';
