@@ -463,7 +463,7 @@ class Estimate extends CI_Controller
             ob_clean();
             // ============== save to job_doc folder ==============
             $tmp_i = 1;
-            $new_name = 'Estimate #' . $estimate->estimate_number . ' - ' . $estimate->client_name . '.pdf';
+            $new_name = 'Estimate ' . $estimate->estimate_number . ' - ' . $estimate->client_name . '.pdf';
             $targetPath = FCPATH . "assets/job_doc/" . $new_name;
             while (file_exists($targetPath)) {
                 $new_name = 'Estimate ' . $estimate->estimate_number . ' - ' . $estimate->client_name . '_' . $tmp_i . '.pdf';
