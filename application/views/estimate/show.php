@@ -104,6 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <a href="<?= base_url('financial/estimate/' . $estimate->id . '/pdf'); ?>" target="_blank" class="btn btn-fill">PDF</a>
+                            <a href="<?= base_url('financial/estimate/' . $estimate->id . '/save-pdf'); ?>" data-method="POST" class="btn btn-fill">Save PDF</a>
                         </div>
                     </div>
                 </div>
