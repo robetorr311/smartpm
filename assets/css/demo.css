@@ -1232,9 +1232,13 @@ input[type="button"] {
 	font-size: 24px;
 	margin-top: 4px;
 }
-
 .duplicate-container .duplicate-buttons span {
 	cursor: pointer;
+}
+.estimate-description-display {
+	font-style: italic;
+	font-size: 12px;
+	font-weight: normal;
 }
 
 /* select2 dropdown styles */
@@ -1251,6 +1255,9 @@ input[type="button"] {
 @media (min-width: 769px) {
 	.camera-button {
 		display: none;
+	}
+	.duplicate-container .item-description {
+		margin-top: 5px;
 	}
 }
 @media (min-width: 992px) and (max-width: 1100px) {

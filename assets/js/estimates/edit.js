@@ -71,6 +71,17 @@ $(document).ready(function () {
         width: '100%'
     });
 
+    $('form#estimate_edit .group-container select').change(function () {
+        var selectEl = $(this);
+        var itemId = selectEl.val();
+        $.ajax({
+            url: '/item/ajax-record/' + itemId
+        }).done(function(item){
+            item = JSON.parse(item);
+            selectEl.closest('.description-container').find('textarea.item-description').val(item.description);
+        });
+    });
+
     $('form#estimate_edit').on('click', '.duplicate-container.group-container .duplicate-buttons.group-duplicate-buttons span#add', function () {
         var index = 0;
 
@@ -126,6 +137,7 @@ $(document).ready(function () {
                         <div data-index="0" class="row duplicate-container description-container">
                             <div class="col-md-8">
                                 <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
+                                <textarea class="form-control item-description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
                             </div>
                             <div class="col-md-3 col-xs-8">
                                 <input class="form-control" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
@@ -177,6 +189,7 @@ $(document).ready(function () {
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
             <div class="col-md-8">
                 <select name="desc_group[${parent_index}][${index}][item]" class="form-control">${options}</select>
+                <textarea class="form-control item-description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
             </div>
             <div class="col-md-3 col-xs-8">
                 <input class="form-control" placeholder="Quantity" name="desc_group[${parent_index}][${index}][amount]" type="number">
