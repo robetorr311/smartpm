@@ -269,6 +269,7 @@ $route['item/store']['post'] = 'items/store';
 $route['item/(:num)'] = 'items/show/$1';
 $route['item/(:num)/update']['post'] = 'items/update/$1';
 $route['item/(:num)/delete']['post'] = 'items/delete/$1';
+$route['item/ajax-record/(:num)'] = 'items/ajaxRecord/$1';
 
 $route['teams'] = 'teams/index';
 $route['team/create'] = 'teams/create';

@@ -52,7 +52,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <tr>
-                                <th>Item</th>
+                                <th>Item<div class="estimate-description-display">Description</div></th>
+                                <th width="100" class="text-right">Qty</th>
+                                <th>Unit</th>
+                                <th width="150" class="text-right">Price</th>
                                 <th width="150" class="text-right">Total</th>
                             </tr>
                             <?php
@@ -60,7 +63,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             foreach ($estimate_desc_groups as $group) {
                             ?>
                                 <tr>
-                                    <th style="background-color: #eee; color: #333 !important;" colspan="2"><?= $group->sub_title ?></th>
+                                    <th style="background-color: #eee; color: #333 !important;" colspan="5"><?= $group->sub_title ?></th>
                                 </tr>
                                 <?php
                                 $group_total = 0;
@@ -68,8 +71,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     foreach ($descs[$group->id] as $desc) {
                                 ?>
                                         <tr>
-                                            <td><?= $desc->item_name ?></td>
-                                            <td class="text-right"></td>
+                                            <td><?= $desc->item_name ?><div class="estimate-description-display"><?= $desc->description ?></div></td>
+                                            <td class="text-right"><?= number_format($desc->amount, 2) ?></td>
+                                            <td><?= $desc->item_quantity_units ?></td>
+                                            <td class="text-right">$<?= number_format($desc->item_unit_price, 2) ?></td>
+                                            <td class="text-right">$<?= number_format((($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price))), 2) ?></td>
                                         </tr>
                                 <?php
                                         $group_total += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
@@ -78,14 +84,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 $desc_total += $group_total;
                                 ?>
                                 <tr>
-                                    <th style="background-color: #eee; color: #333 !important;" class="text-right">Sub Total - <?= $group->sub_title ?>:</th>
+                                    <th style="background-color: #eee; color: #333 !important;" class="text-right" colspan="4">Sub Total - <?= $group->sub_title ?>:</th>
                                     <th style="background-color: #eee; color: #333 !important;" class="text-right">$<?= number_format($group_total, 2) ?></th>
                                 </tr>
                             <?php
                             }
                             ?>
                             <tr>
-                                <th class="text-right">Total:</th>
+                                <th class="text-right" colspan="4">Total:</th>
                                 <th class="text-right">$<?= number_format($desc_total, 2) ?></th>
                             </tr>
                         </table>
@@ -211,6 +217,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                     echo '<option value="' . $item->id . '"' . ($desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
                                                                 } ?>
                                                             </select>
+                                                            <textarea class="form-control item-description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" placeholder="Description"><?= $desc->description ?></textarea>
                                                         </div>
                                                         <div class="col-md-3 col-xs-8">
                                                             <input class="form-control" placeholder="Quantity" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">

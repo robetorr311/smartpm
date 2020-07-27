@@ -92,6 +92,7 @@ class Estimate extends CI_Controller
                         foreach ($desc_group as $desc) {
                             $insert_desc = $this->estimate_desc->insert([
                                 'item' => $desc['item'],
+                                'description' => $desc['description'],
                                 'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
                                 'description_group_id' => $insert_desc_group
                             ]);
@@ -159,11 +160,13 @@ class Estimate extends CI_Controller
                                     if (isset($desc['id'])) {
                                         $update_desc = $this->estimate_desc->update($desc['id'], [
                                             'item' => $desc['item'],
+                                            'description' => $desc['description'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount']
                                         ]);
                                     } else {
                                         $insert_desc = $this->estimate_desc->insert([
                                             'item' => $desc['item'],
+                                            'description' => $desc['description'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
                                             'description_group_id' => $desc_group_id
                                         ]);
@@ -181,6 +184,7 @@ class Estimate extends CI_Controller
                                 foreach ($desc_group as $desc) {
                                     $insert_desc = $this->estimate_desc->insert([
                                         'item' => $desc['item'],
+                                        'description' => $desc['description'],
                                         'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
                                         'description_group_id' => $insert_desc_group
                                     ]);

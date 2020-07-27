@@ -88,7 +88,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <label>Description<span class="red-mark">*</span></label>
                                             </div>
                                             <div class="col-md-4">
-                                                <label>Amount</label>
+                                                <label>Quantity</label>
                                             </div>
                                         </div>
                                         <div data-index="0" class="row duplicate-container description-container">
@@ -99,9 +99,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         echo '<option value="' . $item->id . '">' . $item->name . '</option>';
                                                     } ?>
                                                 </select>
+                                                <textarea class="form-control item-description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
                                             </div>
                                             <div class="col-md-3 col-xs-8">
-                                                <input class="form-control" placeholder="Amount" name="desc_group[0][0][amount]" type="number">
+                                                <input class="form-control" placeholder="Quantity" name="desc_group[0][0][amount]" type="number">
                                             </div>
                                             <div class="col-md-1 col-xs-4 duplicate-buttons">
                                                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>

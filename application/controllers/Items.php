@@ -137,4 +137,16 @@ class Items extends CI_Controller
         }
         redirect('items');
     }
+
+    public function ajaxRecord($id)
+    {
+        authAccess();
+
+        $item = $this->item->getItemById($id);
+        if ($item) {
+            echo json_encode($item);
+        } else {
+            echo 'ERROR';
+        }
+    }
 }
