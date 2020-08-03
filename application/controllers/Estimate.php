@@ -9,7 +9,7 @@ class Estimate extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel']);
+        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel', 'AssembliesModel']);
         $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->estimate = new EstimateModel();
@@ -20,6 +20,7 @@ class Estimate extends CI_Controller
         $this->item = new ItemModel();
         $this->admin_setting = new AdminSettingModel();
         $this->activityLogs = new ActivityLogsModel();
+        $this->assemblies = new AssembliesModel();
     }
 
     public function index()
@@ -42,13 +43,15 @@ class Estimate extends CI_Controller
 
         $clients = $this->lead->getLeadList();
         $items = $this->item->getItemList();
+        $assemblies = $this->assemblies->getAssembliesList();
 
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('estimate/create', [
             'clients' => $clients,
-            'items' => $items
+            'items' => $items,
+            'assemblies' => $assemblies
         ]);
         $this->load->view('footer');
     }

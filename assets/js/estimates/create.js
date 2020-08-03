@@ -37,7 +37,10 @@ form.addEventListener("submit", function (e) {
         $(this).find('.duplicate-container.description-container').each(function () {
             var ele_index_2 = parseInt($(this).data('index'));
             validationJson[`desc_group[${ele_index_1}][${ele_index_2}][item]`] = {
-                presence: true
+                presence: true,
+                numericality: {
+                    notValid: ' contains invalid value'
+                }
             };
             validationJson[`desc_group[${ele_index_1}][${ele_index_2}][amount]`] = {
                 numericality: {
@@ -71,7 +74,70 @@ $(document).ready(function () {
         width: '100%'
     });
 
-    $('form#estimate_create .group-container select').change(function () {
+    $('input[type=radio][name=create_type]').change(function () {
+        if (this.value == 'Create From Scratch') {
+            $('select#create_type_assemblies_select').attr("disabled", true);
+            $('#load_assembly').attr("disabled", true);
+        } else if (this.value == 'Load From Assemblies') {
+            $('select#create_type_assemblies_select').removeAttr("disabled");
+            if ($('select#create_type_assemblies_select').val() == null) {
+                $('#load_assembly').attr("disabled", true);
+            } else {
+                $('#load_assembly').removeAttr("disabled");
+            }
+        }
+    });
+
+    $('select#create_type_assemblies_select').select2({
+        width: '100%'
+    });
+
+    $('select#create_type_assemblies_select').change(function () {
+        if (this.value != null || this.value != '') {
+            $('#load_assembly').removeAttr("disabled");
+        } else {
+            $('#load_assembly').attr("disabled", true);
+        }
+    });
+
+    $('#load_assembly').click(function () {
+        var selectedAssembly = $('select#create_type_assemblies_select').val();
+        if (selectedAssembly != null || selectedAssembly != '') {
+            $.ajax({
+                url: '/assembly/ajax-record/' + selectedAssembly
+            }).done(function (assembly) {
+                assembly = JSON.parse(assembly);
+                console.log(assembly);
+                // =============== load to HTML ===============
+                var groupContainers = $('.duplicate-container.group-container');
+                if (groupContainers.length > 1) {
+                    groupContainers.each(function (index) {
+                        if (index > 0) {
+                            $(this).find('.duplicate-buttons.group-duplicate-buttons span#remove').click();
+                        }
+                    });
+                }
+                var descriptionContainers = $('.duplicate-container.description-container');
+                if (descriptionContainers.length > 1) {
+                    descriptionContainers.each(function (index) {
+                        if (index > 0) {
+                            $(this).find('.duplicate-buttons span#remove').click();
+                        }
+                    });
+                }
+                var index = $('.duplicate-container.group-container').data('index');
+                $('.duplicate-container.group-container').find('input[name="desc_group[' + index + '][sub_title]"]').val(assembly.name);
+                $('.duplicate-container.group-container').find('.duplicate-container.description-container select').val(assembly.items[0].item).change();
+                for (let i = 0; i < (assembly.items.length - 1); i++) {
+                    $('.duplicate-container.group-container').find('.duplicate-container.description-container:last-child .duplicate-buttons span#add').click();
+                    $('.duplicate-container.group-container').find('.duplicate-container.description-container:last-child select').val(assembly.items[i + 1].item).change();
+                }
+                // =============== load to HTML ===============
+            });
+        }
+    });
+
+    $('form#estimate_create').on('change', '.group-container select', function () {
         var selectEl = $(this);
         var itemId = selectEl.val();
         $.ajax({
@@ -98,7 +164,7 @@ $(document).ready(function () {
         $(this).closest('.duplicate-container.group-container').find('select').first().find('option').each(function () {
             var option = $(this);
             var optionVal = option.val();
-            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' select' : '') + '>' + option.html() + '</option>';
+            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
         });
 
         var htmlToAdd = `<div data-index="${index}" class="duplicate-container group-container">
@@ -128,7 +194,7 @@ $(document).ready(function () {
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-8">
-                                <label>Description<span class="red-mark">*</span></label>
+                                <label>Item<span class="red-mark">*</span></label>
                             </div>
                             <div class="col-md-4">
                                 <label>Quantity</label>
@@ -183,7 +249,7 @@ $(document).ready(function () {
         $(this).closest('.duplicate-container').find('select').find('option').each(function () {
             var option = $(this);
             var optionVal = option.val();
-            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' select' : '') + '>' + option.html() + '</option>';
+            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
         });
 
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">

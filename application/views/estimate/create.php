@@ -19,6 +19,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <a href="<?= base_url('financial/estimates') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
         </div>
     </div>
+    <div class="row page-header-buttons">
+        <div class="col-md-12 max-1000-form-container">
+            <label><input type="radio" name="create_type" id="create_type_scratch" value="Create From Scratch" checked> Create From Scratch</label><br />
+            <label><input type="radio" name="create_type" id="create_type_assemblies" value="Load From Assemblies"> Load From Assemblies</label><br />
+            <div class="row">
+                <div class="col-md-6">
+                    <select name="create_type_assemblies_select" id="create_type_assemblies_select" disabled>
+                        <option value="" disabled selected>Select Assembly</option>
+                        <?php
+                        foreach ($assemblies as $assembly) {
+                            echo '<option value="' . $assembly->id . '">' . $assembly->name . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col md 6">
+                    <button id="load_assembly" class="btn btn-info btn-fill" disabled>Load</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 max-1000-form-container">
             <div class="card">
@@ -85,7 +106,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <label>Description<span class="red-mark">*</span></label>
+                                                <label>Item<span class="red-mark">*</span></label>
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Quantity</label>
