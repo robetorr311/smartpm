@@ -271,6 +271,14 @@ $route['item/(:num)/update']['post'] = 'items/update/$1';
 $route['item/(:num)/delete']['post'] = 'items/delete/$1';
 $route['item/ajax-record/(:num)'] = 'items/ajaxRecord/$1';
 
+$route['assemblies'] = 'assemblies/index';
+$route['assembly/create'] = 'assemblies/create';
+$route['assembly/store']['post'] = 'assemblies/store';
+$route['assembly/(:num)'] = 'assemblies/show/$1';
+$route['assembly/(:num)/update']['post'] = 'assemblies/update/$1';
+$route['assembly/(:num)/delete']['post'] = 'assemblies/delete/$1';
+$route['assembly/ajax-record/(:num)'] = 'assemblies/ajaxRecord/$1';
+
 $route['teams'] = 'teams/index';
 $route['team/create'] = 'teams/create';
 $route['team/store']['post'] = 'teams/store';
