@@ -135,13 +135,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="footer">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="<?= base_url('financial/record/' . $financial->id . '/receipt'); ?>" target="_blank" class="btn btn-fill">Receipt</a>
+                <?php if ($financial->type == 2) { ?>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="<?= base_url('financial/record/' . $financial->id . '/receipt'); ?>" target="_blank" class="btn btn-fill">Receipt</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>

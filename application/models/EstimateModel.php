@@ -23,6 +23,25 @@ class EstimateModel extends CI_Model
         return $query->result();
     }
 
+    public function allEstimatesByClientId($clientId)
+    {
+        $this->db->select("
+            estimates.*,
+            CONCAT((1600 + client.id), '.', estimate_no) as estimate_number,
+            CONCAT(client.firstname, ' ', client.lastname) as client_name,
+            (SELECT SUM(amount * items.unit_price) FROM estimate_descriptions LEFT JOIN items as items ON estimate_descriptions.item=items.id WHERE description_group_id IN (SELECT id FROM estimate_description_groups WHERE estimate_id=estimates.id)) as total,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name) as created_user
+        ");
+        $this->db->from($this->table);
+        $this->db->join('users as users_created_by', 'estimates.created_by=users_created_by.id', 'left');
+        $this->db->join('jobs as client', 'estimates.client_id=client.id', 'left');
+        $this->db->where('estimates.client_id', $clientId);
+        $this->db->where('estimates.is_deleted', FALSE);
+        $this->db->order_by('estimates.created_at', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function getEstimateById($id)
     {
         $this->db->select("
@@ -36,6 +55,27 @@ class EstimateModel extends CI_Model
         $this->db->join('users as users_created_by', 'estimates.created_by=users_created_by.id', 'left');
         $this->db->join('jobs as client', 'estimates.client_id=client.id', 'left');
         $this->db->where('estimates.id', $id);
+        $this->db->where('estimates.is_deleted', FALSE);
+        $this->db->order_by('estimates.created_at', 'ASC');
+        $query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
+
+    public function getEstimateByClientIdAndId($clientId, $id)
+    {
+        $this->db->select("
+            estimates.*,
+            CONCAT((1600 + client.id), '.', estimate_no) as estimate_number,
+            CONCAT(client.firstname, ' ', client.lastname) as client_name,
+            (SELECT SUM(amount * items.unit_price) FROM estimate_descriptions LEFT JOIN items as items ON estimate_descriptions.item=items.id WHERE description_group_id IN (SELECT id FROM estimate_description_groups WHERE estimate_id=estimates.id)) as total,
+            CONCAT(users_created_by.first_name, ' ', users_created_by.last_name) as created_user
+        ");
+        $this->db->from($this->table);
+        $this->db->join('users as users_created_by', 'estimates.created_by=users_created_by.id', 'left');
+        $this->db->join('jobs as client', 'estimates.client_id=client.id', 'left');
+        $this->db->where('estimates.id', $id);
+        $this->db->where('estimates.client_id', $clientId);
         $this->db->where('estimates.is_deleted', FALSE);
         $this->db->order_by('estimates.created_at', 'ASC');
         $query = $this->db->get();

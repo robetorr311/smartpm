@@ -205,6 +205,8 @@ $route['lead/(:any)/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
 $route['lead/(:any)/(:num)/doc/delete']['post'] = 'docs/deletedoc';
 $route['lead/(:any)/(:num)/doc/update']['post'] = 'docs/updatedocname';
 
+// $route['lead/(:num)/client-notices'] = 'client_notice/index/$1';
+
 $route['lead/(:num)/party/add']['post'] = 'party/add/$1';
 $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
 
@@ -256,12 +258,21 @@ $route['financial/record/(:num)/receipt'] = 'financial/receipt/$1';
 
 $route['financial/estimates'] = 'estimate/index';
 $route['financial/estimate/create'] = 'estimate/create';
-$route['financial/estimate/store'] = 'estimate/store';
+$route['financial/estimate/store']['post'] = 'estimate/store';
 $route['financial/estimate/(:num)'] = 'estimate/show/$1';
 $route['financial/estimate/(:num)/update']['post'] = 'estimate/update/$1';
 $route['financial/estimate/(:num)/delete']['post'] = 'estimate/delete/$1';
 $route['financial/estimate/(:num)/pdf'] = 'estimate/pdf/$1';
 $route['financial/estimate/(:num)/save-pdf']['post'] = 'estimate/savePDF/$1';
+
+$route['financial/estimates/client/(:num)'] = 'estimate/index/$1';
+$route['financial/estimate/client/(:num)/create'] = 'estimate/create/$1';
+$route['financial/estimate/client/(:num)/store']['post'] = 'estimate/store/$1';
+$route['financial/estimate/client/(:num)/(:num)'] = 'estimate/show/$2/$1';
+$route['financial/estimate/client/(:num)/(:num)/update']['post'] = 'estimate/update/$2/$1';
+$route['financial/estimate/client/(:num)/(:num)/delete']['post'] = 'estimate/delete/$2/$1';
+$route['financial/estimate/client/(:num)/(:num)/pdf'] = 'estimate/pdf/$2/$1';
+$route['financial/estimate/client/(:num)/(:num)/save-pdf']['post'] = 'estimate/savePDF/$2/$1';
 
 $route['items'] = 'items/index';
 $route['item/create'] = 'items/create';

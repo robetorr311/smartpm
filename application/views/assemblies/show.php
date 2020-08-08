@@ -38,11 +38,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <tr>
-                                <th>Items</th>
+                                <th>Items<div class="assemblies-description-display">Description</div></th>
                             </tr>
                             <?php
                             foreach ($assemblies_description as $assemblies_desc) {
-                                echo '<tr><td>' . $assemblies_desc->item_name . '</td></tr>';
+                                echo '<tr><td>' . $assemblies_desc->item_name . '<div class="assemblies-description-display">' . $assemblies_desc->description . '</div></td></tr>';
                             }
                             ?>
                         </table>
@@ -102,6 +102,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                     echo '<option value="' . $item->id . '"' . ($assemblies_desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
                                                 } ?>
                                             </select>
+                                            <textarea class="form-control item-description" name="items[<?= $index ?>][description]" placeholder="Description"><?= $assemblies_desc->description ?></textarea>
                                             <input type="hidden" name="items[<?= $index ?>][id]" value="<?= $assemblies_desc->id ?>" />
                                         </div>
                                         <div class="col-md-1 col-xs-4 duplicate-buttons">
