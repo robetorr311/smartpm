@@ -294,7 +294,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<div class="box-container">
 					<div class="box gray-box">
 						<a href="<?= base_url('leads/status/15') ?>">
-							<span><?= $createdTasks ?></span>
+							<span><?= $punchListArchive ?></span>
 							<p><?= $boxNames[31]->label ?? 'Punch List' ?></p>
 						</a>
 					</div>
