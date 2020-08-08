@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url('financial/estimate/create') ?>" class="btn btn-info btn-fill">New Estimate</a>
+            <a href="<?= $clientId ? base_url('financial/estimate/client/' . $clientId . '/create') : base_url('financial/estimate/create') ?>" class="btn btn-info btn-fill">New Estimate</a>
         </div>
     </div>
     <div class="row">
@@ -38,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php if (!empty($estimates)) : ?>
                                 <?php foreach ($estimates as $estimate) : ?>
                                     <tr>
-                                        <td class="text-center"><a href="<?= base_url('financial/estimate/' . $estimate->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td class="text-center"><a href="<?= $clientId ? base_url('financial/estimate/client/' . $clientId . '/' . $estimate->id) : base_url('financial/estimate/' . $estimate->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td><?= $estimate->estimate_number ?></td>
                                         <td><?= date('M j, Y', strtotime($estimate->date)) ?></td>
                                         <td><?= $estimate->client_name ?></td>

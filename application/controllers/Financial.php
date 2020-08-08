@@ -357,6 +357,7 @@ class Financial extends CI_Controller
                 $pdfContent[] = '</table>';
                 $pdfContent[] = '</div>';
                 $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+                $pdf->SetFontSize(11);
                 $pdf->setPrintHeader(false);
                 $pdf->setPrintFooter(false);
                 $pdf->SetTitle((1600 + $client->id) . ' ' . $client->firstname . ' ' . $client->lastname . ' Payment Receipt');

@@ -23,21 +23,26 @@ class Estimate extends CI_Controller
         $this->assemblies = new AssembliesModel();
     }
 
-    public function index()
+    public function index($clientId = false)
     {
         authAccess();
 
-        $estimates = $this->estimate->allEstimates();
+        if ($clientId) {
+            $estimates = $this->estimate->allEstimatesByClientId($clientId);
+        } else {
+            $estimates = $this->estimate->allEstimates();
+        }
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('estimate/index', [
-            'estimates' => $estimates
+            'estimates' => $estimates,
+            'clientId' => $clientId
         ]);
         $this->load->view('footer');
     }
 
-    public function create()
+    public function create($clientId = false)
     {
         authAccess();
 
@@ -51,12 +56,13 @@ class Estimate extends CI_Controller
         $this->load->view('estimate/create', [
             'clients' => $clients,
             'items' => $items,
-            'assemblies' => $assemblies
+            'assemblies' => $assemblies,
+            'clientId' => $clientId
         ]);
         $this->load->view('footer');
     }
 
-    public function store()
+    public function store($clientId = false)
     {
         authAccess();
 
@@ -104,17 +110,29 @@ class Estimate extends CI_Controller
                 }
             } else {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Estimate.</p>');
-                redirect('financial/estimate/create');
+                if ($clientId) {
+                    redirect('financial/estimate/client/' . $clientId . '/create');
+                } else {
+                    redirect('financial/estimate/create');
+                }
             }
 
-            redirect('financial/estimates');
+            if ($clientId) {
+                redirect('financial/estimates/client/' . $clientId);
+            } else {
+                redirect('financial/estimates');
+            }
         } else {
             $this->session->set_flashdata('errors', validation_errors());
-            redirect('financial/estimate/create');
+            if ($clientId) {
+                redirect('financial/estimate/client/' . $clientId . '/create');
+            } else {
+                redirect('financial/estimate/create');
+            }
         }
     }
 
-    public function update($id)
+    public function update($id, $clientId = false)
     {
         authAccess();
 
@@ -134,7 +152,11 @@ class Estimate extends CI_Controller
         }
 
         if ($this->form_validation->run() == TRUE) {
-            $estimate = $this->estimate->getEstimateById($id);
+            if ($clientId) {
+                $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            } else {
+                $estimate = $this->estimate->getEstimateById($id);
+            }
             if ($estimate) {
                 $estimate = $this->input->post();
                 $update_estimate = $this->estimate->update($id, [
@@ -201,19 +223,26 @@ class Estimate extends CI_Controller
             } else {
                 $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             }
-
-            redirect('financial/estimate/' . $id);
         } else {
             $this->session->set_flashdata('errors', validation_errors());
+        }
+
+        if ($clientId) {
+            redirect('financial/estimate/client/' . $clientId . '/' . $id);
+        } else {
             redirect('financial/estimate/' . $id);
         }
     }
 
-    public function show($id)
+    public function show($id, $clientId = false)
     {
         authAccess();
 
-        $estimate = $this->estimate->getEstimateById($id);
+        if ($clientId) {
+            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+        } else {
+            $estimate = $this->estimate->getEstimateById($id);
+        }
 
         if ($estimate) {
             $estimate_desc_groups = $this->estimate_desc_group->allEstimateDescGroupsByEstimateId($id);
@@ -240,20 +269,29 @@ class Estimate extends CI_Controller
                 'estimate_desc_groups' => $estimate_desc_groups,
                 'descs' => $descs,
                 'clients' => $clients,
-                'items' => $items
+                'items' => $items,
+                'clientId' => $clientId
             ]);
             $this->load->view('footer');
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-            redirect('financial/estimates');
+            if ($clientId) {
+                redirect('financial/estimates/client/' . $clientId);
+            } else {
+                redirect('financial/estimates');
+            }
         }
     }
 
-    public function delete($id)
+    public function delete($id, $clientId = false)
     {
         authAccess();
 
-        $estimate = $this->estimate->getEstimateById($id);
+        if ($clientId) {
+            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+        } else {
+            $estimate = $this->estimate->getEstimateById($id);
+        }
 
         if ($estimate) {
             $this->estimate_desc->deleteByEstimateId($id);
@@ -266,14 +304,23 @@ class Estimate extends CI_Controller
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
-        redirect('financial/estimates');
+
+        if ($clientId) {
+            redirect('financial/estimates/client/' . $clientId);
+        } else {
+            redirect('financial/estimates');
+        }
     }
 
-    public function pdf($id)
+    public function pdf($id, $clientId = false)
     {
         authAccess();
 
-        $estimate = $this->estimate->getEstimateById($id);
+        if ($clientId) {
+            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+        } else {
+            $estimate = $this->estimate->getEstimateById($id);
+        }
 
         if ($estimate) {
             $estimate_desc_groups = $this->estimate_desc_group->allEstimateDescGroupsByEstimateId($id);
@@ -318,26 +365,29 @@ class Estimate extends CI_Controller
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
             $pdfContent[] = $estimate->title . '<br />';
-            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="400">Item</th><th width="138" align="right">Total</th></tr>';
+            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="258">Item</th><th width="70" align="right">Qty</th><th width="70">Unit</th><th width="70" align="right">Price</th><th width="70" align="right">Total</th></tr>';
 
             $total = 0;
             $background = false;
             foreach ($estimate_desc_groups as $group) {
-                $pdfContent[] = '<tr style="background-color: #777; color: #FFF;"><td colspan="2">' . $group->sub_title . '</td></tr>';
+                $pdfContent[] = '<tr style="background-color: #777; color: #FFF;"><td colspan="5">' . $group->sub_title . '</td></tr>';
                 $subTotal = 0;
                 if (isset($descs[$group->id])) {
                     foreach ($descs[$group->id] as $desc) {
-                        $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . '</td>';
-                        $pdfContent[] = '<td align="right"></td></tr>';
+                        $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
+                        $pdfContent[] = '<td align="right">' . number_format($desc->amount, 2) . '</td>';
+                        $pdfContent[] = '<td>' . $desc->item_quantity_units . '</td>';
+                        $pdfContent[] = '<td align="right">' . number_format($desc->item_unit_price, 2) . '</td>';
+                        $pdfContent[] = '<td align="right">' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
                         $subTotal += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
                         $background = !$background;
                     }
                 }
                 $total += $subTotal;
-                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total - ' . $group->sub_title . ':</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
+                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="4" align="right">Total - ' . $group->sub_title . ':</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
                 $background = !$background;
             }
-            $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
+            $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="4" align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
             $pdfContent[] = '</div>';
             if (!empty($estimate->note)) {
                 $pdfContent[] = '<div>';
@@ -359,6 +409,7 @@ class Estimate extends CI_Controller
 
             // $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
             $pdf = new Pdf();
+            $pdf->SetFontSize(11);
             $pdf->setCompanyData($admin_conf->company_name, $admin_conf->company_address, $admin_conf->company_email, $admin_conf->company_phone);
             $pdf->setPrintHeader(false);
             // $pdf->setPrintFooter(false);
@@ -368,15 +419,23 @@ class Estimate extends CI_Controller
             $pdf->Output('estimate.pdf');
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-            redirect('financial/estimates');
+            if ($clientId) {
+                redirect('financial/estimates/client/' . $clientId);
+            } else {
+                redirect('financial/estimates');
+            }
         }
     }
 
-    public function savePDF($id)
+    public function savePDF($id, $clientId = false)
     {
         authAccess();
 
-        $estimate = $this->estimate->getEstimateById($id);
+        if ($clientId) {
+            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+        } else {
+            $estimate = $this->estimate->getEstimateById($id);
+        }
 
         if ($estimate) {
             $estimate_desc_groups = $this->estimate_desc_group->allEstimateDescGroupsByEstimateId($id);
@@ -421,26 +480,29 @@ class Estimate extends CI_Controller
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
             $pdfContent[] = $estimate->title . '<br />';
-            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="400">Item</th><th width="138" align="right">Total</th></tr>';
+            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="258">Item</th><th width="70" align="right">Qty</th><th width="70">Unit</th><th width="70" align="right">Price</th><th width="70" align="right">Total</th></tr>';
 
             $total = 0;
             $background = false;
             foreach ($estimate_desc_groups as $group) {
-                $pdfContent[] = '<tr style="background-color: #777; color: #FFF;"><td colspan="2">' . $group->sub_title . '</td></tr>';
+                $pdfContent[] = '<tr style="background-color: #777; color: #FFF;"><td colspan="5">' . $group->sub_title . '</td></tr>';
                 $subTotal = 0;
                 if (isset($descs[$group->id])) {
                     foreach ($descs[$group->id] as $desc) {
-                        $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . '</td>';
-                        $pdfContent[] = '<td align="right"></td></tr>';
+                        $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
+                        $pdfContent[] = '<td align="right">' . number_format($desc->amount, 2) . '</td>';
+                        $pdfContent[] = '<td>' . $desc->item_quantity_units . '</td>';
+                        $pdfContent[] = '<td align="right">' . number_format($desc->item_unit_price, 2) . '</td>';
+                        $pdfContent[] = '<td align="right">' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
                         $subTotal += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
                         $background = !$background;
                     }
                 }
                 $total += $subTotal;
-                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total - ' . $group->sub_title . ':</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
+                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="4" align="right">Total - ' . $group->sub_title . ':</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
                 $background = !$background;
             }
-            $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
+            $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="4" align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
             $pdfContent[] = '</div>';
             if (!empty($estimate->note)) {
                 $pdfContent[] = '<div>';
@@ -462,6 +524,7 @@ class Estimate extends CI_Controller
 
             // $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
             $pdf = new Pdf();
+            $pdf->SetFontSize(11);
             $pdf->setCompanyData($admin_conf->company_name, $admin_conf->company_address, $admin_conf->company_email, $admin_conf->company_phone);
             $pdf->setPrintHeader(false);
             // $pdf->setPrintFooter(false);
@@ -482,21 +545,31 @@ class Estimate extends CI_Controller
             $search = '.' . strtolower(pathinfo($new_name, PATHINFO_EXTENSION));
             $trimmed = str_replace($search, '', $new_name);
             $params = array();
-			$params['job_id'] = $estimate->client_id;
-			$params['doc_name'] = $new_name;
-			$params['name'] = $trimmed;
-			$params['entry_date'] = date('Y-m-d h:i:s');
-			$params['is_active'] = TRUE;
-			$this->db->insert('jobs_doc', $params);
-			$al_insert = $this->activityLogs->insert([
-				'module' => 0,
-				'module_id' => $estimate->client_id,
-				'type' => 3
-			]);
-            redirect('financial/estimate/' . $id);
+            $params['job_id'] = $estimate->client_id;
+            $params['doc_name'] = $new_name;
+            $params['name'] = $trimmed;
+            $params['entry_date'] = date('Y-m-d h:i:s');
+            $params['is_active'] = TRUE;
+            $this->db->insert('jobs_doc', $params);
+            $al_insert = $this->activityLogs->insert([
+                'module' => 0,
+                'module_id' => $estimate->client_id,
+                'type' => 3
+            ]);
+            $this->session->set_flashdata('errors', '<p>PDF Saved.</p>');
+
+            if ($clientId) {
+                redirect('financial/estimate/client/' . $clientId . '/' . $id);
+            } else {
+                redirect('financial/estimate/' . $id);
+            }
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-            redirect('financial/estimates');
+            if ($clientId) {
+                redirect('financial/estimates/client/' . $clientId);
+            } else {
+                redirect('financial/estimates');
+            }
         }
     }
 }

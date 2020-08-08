@@ -56,6 +56,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 echo '<option value="' . $item->id . '">' . $item->name . '</option>';
                                             } ?>
                                         </select>
+                                        <textarea class="form-control item-description" name="items[0][description]" placeholder="Description"></textarea>
                                     </div>
                                     <div class="col-md-1 col-xs-4 duplicate-buttons">
                                         <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
@@ -70,6 +71,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 echo '<option value="' . $item->id . '">' . $item->name . '</option>';
                                             } ?>
                                         </select>
+                                        <textarea class="form-control item-description" name="items[1][description]" placeholder="Description"></textarea>
                                     </div>
                                     <div class="col-md-1 col-xs-4 duplicate-buttons">
                                         <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>

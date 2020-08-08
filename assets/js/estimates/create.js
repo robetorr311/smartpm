@@ -66,6 +66,8 @@ form.addEventListener("submit", function (e) {
 });
 
 $(document).ready(function () {
+    var blockItemChangeEvent = false;
+
     $('form#estimate_create #client_id').select2({
         width: '100%'
     });
@@ -107,8 +109,6 @@ $(document).ready(function () {
                 url: '/assembly/ajax-record/' + selectedAssembly
             }).done(function (assembly) {
                 assembly = JSON.parse(assembly);
-                console.log(assembly);
-                // =============== load to HTML ===============
                 var groupContainers = $('.duplicate-container.group-container');
                 if (groupContainers.length > 1) {
                     groupContainers.each(function (index) {
@@ -126,18 +126,24 @@ $(document).ready(function () {
                     });
                 }
                 var index = $('.duplicate-container.group-container').data('index');
+                blockItemChangeEvent = true;
                 $('.duplicate-container.group-container').find('input[name="desc_group[' + index + '][sub_title]"]').val(assembly.name);
                 $('.duplicate-container.group-container').find('.duplicate-container.description-container select').val(assembly.items[0].item).change();
+                $('.duplicate-container.group-container').find('.duplicate-container.description-container textarea.item-description').val(assembly.items[0].description);
                 for (let i = 0; i < (assembly.items.length - 1); i++) {
                     $('.duplicate-container.group-container').find('.duplicate-container.description-container:last-child .duplicate-buttons span#add').click();
                     $('.duplicate-container.group-container').find('.duplicate-container.description-container:last-child select').val(assembly.items[i + 1].item).change();
+                    $('.duplicate-container.group-container').find('.duplicate-container.description-container:last-child textarea.item-description').val(assembly.items[i + 1].description);
                 }
-                // =============== load to HTML ===============
+                blockItemChangeEvent = false;
             });
         }
     });
 
     $('form#estimate_create').on('change', '.group-container select', function () {
+        if (blockItemChangeEvent) {
+            return;
+        }
         var selectEl = $(this);
         var itemId = selectEl.val();
         $.ajax({

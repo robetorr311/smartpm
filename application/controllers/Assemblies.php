@@ -55,6 +55,7 @@ class Assemblies extends CI_Controller
         if (isset($_POST['items']) && is_array($_POST['items'])) {
             foreach ($_POST['items'] as $id_item => $item) {
                 $this->form_validation->set_rules('items[' . $id_item . '][item_id]', 'Item', 'trim|required|numeric');
+                $this->form_validation->set_rules('items[' . $id_item . '][description]', 'Description', 'trim|required');
             }
         }
 
@@ -68,6 +69,7 @@ class Assemblies extends CI_Controller
                 foreach ($assembly['items'] as $item) {
                     $insert_assemblies_description = $this->assemblies_description->insert([
                         'item' => $item['item_id'],
+                        'description' => $item['description'],
                         'assemblies_id' => $insert_assembly
                     ]);
                 }
@@ -95,6 +97,7 @@ class Assemblies extends CI_Controller
             if (isset($_POST['items']) && is_array($_POST['items'])) {
                 foreach ($_POST['items'] as $id_item => $item) {
                     $this->form_validation->set_rules('items[' . $id_item . '][item_id]', 'Item', 'trim|required|numeric');
+                    $this->form_validation->set_rules('items[' . $id_item . '][description]', 'Description', 'trim|required');
                 }
             }
 
@@ -110,11 +113,13 @@ class Assemblies extends CI_Controller
                     foreach ($_assembly['items'] as $item) {
                         if (isset($item['id'])) {
                             $update_assemblies_description = $this->assemblies_description->update($item['id'], [
-                                'item' => $item['item_id']
+                                'item' => $item['item_id'],
+                                'description' => $item['description']
                             ]);
                         } else {
                             $insert_assemblies_description = $this->assemblies_description->insert([
                                 'item' => $item['item_id'],
+                                'description' => $item['description'],
                                 'assemblies_id' => $id
                             ]);
                         }

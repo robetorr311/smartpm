@@ -41,6 +41,17 @@ $(document).ready(function () {
         width: '100%'
     });
 
+    $('form#assembly_edit').on('change', '.description-container select', function () {
+        var selectEl = $(this);
+        var itemId = selectEl.val();
+        $.ajax({
+            url: '/item/ajax-record/' + itemId
+        }).done(function (item) {
+            item = JSON.parse(item);
+            selectEl.closest('.description-container').find('textarea.item-description').val(item.description);
+        });
+    });
+
     $('form#assembly_edit').on('click', '.duplicate-container.description-container .duplicate-buttons span#add', function () {
         var index = 0;
 
@@ -63,6 +74,7 @@ $(document).ready(function () {
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
         <div class="col-md-11 col-xs-8">
                 <select name="items[${index}][item_id]" class="form-control">${options}</select>
+                <textarea class="form-control item-description" name="items[${index}][description]" placeholder="Description"></textarea>
             </div>
             <div class="col-md-1 col-xs-4 duplicate-buttons">
                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
