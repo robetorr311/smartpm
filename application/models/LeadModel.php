@@ -20,7 +20,8 @@ class LeadModel extends CI_Model
         11 => 'Archive',
         12 => 'Cold',
         13 => 'Postponed',
-        14 => 'Dead / Lost'
+        14 => 'Dead / Lost',
+        15 => 'Punch List'
     ];
     // private static $signedStage = [
     //     0 => 'Ordering / Buy Out',

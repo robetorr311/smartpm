@@ -285,6 +285,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Archive</h3>
+				</div>
+			</div>
+			<div class="dashbord-box">
+				<div class="box-container">
+					<div class="box gray-box">
+						<a href="<?= base_url('leads/status/15') ?>">
+							<span><?= $createdTasks ?></span>
+							<p><?= $boxNames[31]->label ?? 'Punch List' ?></p>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-md-3">
 			<div class="row">
