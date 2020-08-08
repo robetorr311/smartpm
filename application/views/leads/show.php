@@ -399,6 +399,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <option value="7" <?= ("7" == $lead->status) ? 'selected' : '' ?>>Signed</option>
                                 <option value="8" <?= ("8" == $lead->status) ? 'selected' : '' ?>>In Production</option>
                                 <option value="9" <?= ("9" == $lead->status) ? 'selected' : '' ?>>Completed</option>
+                                <option value="15" <?= ("15" == $lead->status) ? 'selected' : '' ?>>Punch List</option>
                                 <option value="10" <?= ("10" == $lead->status) ? 'selected' : '' ?>>Closed</option>
                                 <option value="11" <?= ("11" == $lead->status) ? 'selected' : '' ?>>Archive</option>
                             </optgroup>

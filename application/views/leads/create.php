@@ -185,6 +185,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <option value="7">Signed</option>
                                             <option value="8">In Production</option>
                                             <option value="9">Completed</option>
+                                            <option value="15">Punch List</option>
                                             <option value="10">Closed</option>
                                             <option value="11">Archive</option>
                                         </optgroup>
