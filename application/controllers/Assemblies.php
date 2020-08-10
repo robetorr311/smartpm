@@ -109,7 +109,11 @@ class Assemblies extends CI_Controller
 
                 if ($update_assembly) {
                     $exception_ids = array_column($_assembly['items'], 'id');
-                    $this->assemblies_description->deleteByAssemblyIdWithExceptionIds($id, $exception_ids);
+                    if (is_array($exception_ids) && count($exception_ids) > 0) {
+                        $this->assemblies_description->deleteByAssemblyIdWithExceptionIds($id, $exception_ids);
+                    } else {
+                        $this->assemblies_description->deleteByAssemblyId($id);
+                    }
                     foreach ($_assembly['items'] as $item) {
                         if (isset($item['id'])) {
                             $update_assemblies_description = $this->assemblies_description->update($item['id'], [
