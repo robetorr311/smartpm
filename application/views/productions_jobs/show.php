@@ -513,6 +513,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <option value="7" <?= ("7" == $job->status) ? 'selected' : '' ?>>Signed</option>
                                 <option value="8" <?= ("8" == $job->status) ? 'selected' : '' ?>>In Production</option>
                                 <option value="9" <?= ("9" == $job->status) ? 'selected' : '' ?>>Completed</option>
+                                <option value="15" <?= ("15" == $job->status) ? 'selected' : '' ?>>Punch List</option>
                                 <option value="10" <?= ("10" == $job->status) ? 'selected' : '' ?>>Closed</option>
                                 <option value="11" <?= ("11" == $job->status) ? 'selected' : '' ?>>Archive</option>
                             </optgroup>
