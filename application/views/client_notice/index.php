@@ -87,19 +87,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <div class="row">
         <div class="col-md-8">
-            <div class="card add-note-card">
+            <div class="card">
                 <div class="header">
-                    <h4 class="title">Add Note</h4>
+                    <h4 class="title">Send Notice</h4>
                 </div>
-                <div class="content view">
-                    <div class="row add-note-form">
+                <div class="content">
+                    <div class="row">
                         <div class="col-md-12">
-                            <form action="<?= base_url('lead/' . $sub_base_path . $lead->id . '/add-note') ?>" method="post">
+                            <form action="<?= base_url('lead/' . $sub_base_path . $lead->id . '/client-notice/store') ?>" method="post">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Type<span class="red-mark">*</span></label>
+                                            <select name="type" class="form-control">
+                                                <option value="" disabled selected>Select Type</option>
+                                                <?php foreach ($noticeTypes as $noticeType) {
+                                                    echo '<option value="' . $noticeType->id . '">' . $noticeType->name . '</option>';
+                                                } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Date<span class="red-mark">*</span></label>
+                                            <input class="form-control" placeholder="Date" Name="date" type="date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Expected Date</label>
+                                            <input class="form-control" placeholder="Expected Date" Name="expected_date" type="date">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Your Note<span class="red-mark">*</span></label>
-                                            <textarea class="form-control note-input" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
+                                            <label>Note</label>
+                                            <textarea class="form-control note-input" name="note" placeholder="Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -117,70 +142,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="card lead-notes-card">
                 <div class="header">
-                    <h4 class="title">Leads / Clients Notes</h4>
+                    <h4 class="title">Client Notices</h4>
                 </div>
-                <div class="content view">
-                    <?php
-                    if ($notes) {
-                        foreach ($notes as $note) {
-                            echo '<div class="row note-item">';
-                            echo '<div class="col-md-12">';
-                            echo '<label>' . $note->created_user_fullname . '</label>';
-                            echo '<a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/delete') . '" data-method="POST" class="text-danger pull-right"><i class="fa fa-trash-o"></i></a></a>';
-                            echo '<a href="#" data-noteid="' . $note->id . '" class="edit-note text-info pull-right"><i class="fa fa-pencil"></i></a></a>';
-                            echo '<p>' . $note->note . '</p>';
-                            echo '<small class="date-created">' . $note->created_at . '</small>';
-                            echo '<div style="text-align: right;">';
-                            echo '<small><a href="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/replies') . '">Thread Details</a></small>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '<div id="note-item-edit-' . $note->id . '" class="note-item-edit col-md-12">';
-                            echo '<form action="' . base_url('lead/' . $sub_base_path . $lead->id . '/note/' . $note->id . '/update') . '" method="post">';
-                            echo '<div class="row">';
-                            echo '<div class="col-md-12">';
-                            echo '<div class="form-group">';
-                            echo '<label>Your Note<span class="red-mark">*</span></label>';
-                            echo '<textarea class="form-control note-input" name="note" placeholder="Your Note (You can use Ctrl + Enter for Submit)" rows="10" ctrl-enter-submit>' . str_replace('<br />', '', $note->note) . '</textarea>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '<div class="row">';
-                            echo '<div class="col-md-12">';
-                            echo '<div class="form-group">';
-                            echo '<a href="#" data-noteid="' . $note->id . '" class="note-item-edit-cancel btn btn-info btn-fill">Cancel</a>';
-                            echo '<button type="submit" class="btn btn-info btn-fill pull-right">Update</button>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</form>';
-                            echo '</div>';
-                            echo '</div>';
-                        }
-                    } else {
-                        echo '<p>-</p>';
+                <?php
+                if ($notices) {
+                    foreach ($notices as $notice) {
+                ?>
+                        <hr />
+                        <div class="content view">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Type</label>
+                                    <p><?= $notice->type_name ?></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Date</label>
+                                    <p><?= date('M j, Y', strtotime($notice->date)) ?></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Expected Date</label>
+                                    <p><?= is_null($notice->expected_date) ? '-' : date('M j, Y', strtotime($notice->expected_date)) ?></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Note</label>
+                                    <p><?= empty($notice->note) ? '-' : nl2br($notice->note) ?></p>
+                                </div>
+                            </div>
+                        </div>
+                <?php
                     }
-                    ?>
-                </div>
+                    echo "<p></p>";
+                } else {
+                    echo '<div class="content view"><p>-</p></div>';
+                }
+                ?>
             </div>
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $('.note-item-edit-cancel, .edit-note').click(function(e) {
-            e.preventDefault();
-            var noteId = $(this).data('noteid');
-            $('#note-item-edit-' + noteId).toggleClass('visible');
-        });
-
-        $('.note-input').atwho({
-            at: '@',
-            data: <?= json_encode($users) ?>,
-            headerTpl: '<div class="atwho-header">User List:</div>',
-            displayTpl: '<li>${name} (@${username})</li>',
-            insertTpl: '${atwho-at}${username}',
-            searchKey: 'username',
-            limit: 100
-        });
-    });
-</script>

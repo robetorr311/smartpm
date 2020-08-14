@@ -10,9 +10,10 @@ class PublicFolder extends CI_Controller
 		parent::__construct();
 
 		$this->load->library(['form_validation']);
-		$this->load->model(['PublicFolderModel', 'LeadModel']);
+		$this->load->model(['PublicFolderModel', 'LeadModel', 'FinancialModel']);
 		$this->lead = new LeadModel();
 		$this->publicFolder = new PublicFolderModel();
+		$this->financial = new FinancialModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -22,6 +23,8 @@ class PublicFolder extends CI_Controller
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($job_id);
 		$files = $this->publicFolder->allPublicFilesByJobId($job_id);
+		$financials = $this->financial->allFinancialsForReceipt($job_id);
+
 		$this->load->view('header', [
 			'title' => $this->title
 		]);
@@ -30,6 +33,7 @@ class PublicFolder extends CI_Controller
 			'files' => $files,
 			'jobid' => $job_id,
 			'company_code' => $this->session->userdata('company_code'),
+			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);
 		$this->load->view('footer');

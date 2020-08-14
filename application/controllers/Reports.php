@@ -7,11 +7,12 @@ class Reports extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['RoofingProjectModel', 'JobsPhotoModel', 'LeadModel']);
+		$this->load->model(['RoofingProjectModel', 'JobsPhotoModel', 'LeadModel', 'FinancialModel']);
 		$this->load->library(['pagination']);
 		$this->roofing = new RoofingProjectModel();
 		$this->photos = new JobsPhotoModel();
 		$this->lead = new LeadModel();
+		$this->financial = new FinancialModel();
 	}
 
 	public function index($id, $sub_base_path = '')
@@ -21,11 +22,14 @@ class Reports extends CI_Controller
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($id);
 		$allreport = $this->roofing->allProject(['job_id' => $id, 'active' => 1]);
+		$financials = $this->financial->allFinancialsForReceipt($id);
+
 		$this->load->view('header', ['title' => 'All Reports']);
 		$this->load->view('report/index', [
 			'lead' => $lead,
 			'allreport' => $allreport,
 			'jobid' => $id,
+			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);
 		$this->load->view('footer');

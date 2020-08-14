@@ -9,9 +9,10 @@ class Photos extends CI_Controller
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['form_validation', 'email', 'user_agent', 'session', 'image_lib']);
-		$this->load->model(['JobsPhotoModel', 'LeadModel', 'ActivityLogsModel']);
+		$this->load->model(['JobsPhotoModel', 'LeadModel', 'ActivityLogsModel', 'FinancialModel']);
 		$this->lead = new LeadModel();
 		$this->activityLogs = new ActivityLogsModel();
+		$this->financial = new FinancialModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -25,12 +26,15 @@ class Photos extends CI_Controller
 		$params['is_active'] = 1;
 		$count = $this->JobsPhotoModel->getCount($params);
 		$imgs  = $this->JobsPhotoModel->allPhoto($params);
+		$financials = $this->financial->allFinancialsForReceipt($job_id);
+
 		$this->load->view('header', ['title' => 'Add Photo']);
 		$this->load->view('photo/index', [
 			'lead' => $lead,
 			'count' => $count,
 			'imgs' => $imgs,
 			'jobid' => $job_id,
+			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);
 		$this->load->view('footer');

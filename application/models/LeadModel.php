@@ -273,7 +273,7 @@ class LeadModel extends CI_Model
             COUNT(IF(status=12, 1, NULL)) as cold,
             COUNT(IF(status=13, 1, NULL)) as postponed,
             COUNT(IF(status=14, 1, NULL)) as lostLeads,
-            COUNT(IF(status=15, 1, NULL)) as punchListArchive
+            COUNT(IF(status=15, 1, NULL)) as punchList
         ", FALSE);
 		$this->db->from($this->table);
         $this->db->where('is_deleted', FALSE);

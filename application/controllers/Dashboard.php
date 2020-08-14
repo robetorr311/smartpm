@@ -39,7 +39,7 @@ class Dashboard extends CI_Controller
 			'completedJobs' => $leadStatusCount->completed,
 			'closedJobs' => $leadStatusCount->closed,
 			'archiveJobs' => $leadStatusCount->archive,
-			'punchListArchive' => $leadStatusCount->punchListArchive,
+			'punchList' => $leadStatusCount->punchList,
 			'createdTasks' => $taskStatusCount->created,
 			'workingTasks' => $taskStatusCount->working,
 			'stuckTasks' => $taskStatusCount->stuck,

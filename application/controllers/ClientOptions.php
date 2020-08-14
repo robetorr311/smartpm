@@ -9,10 +9,11 @@ class ClientOptions extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['ClientLeadSourceModel', 'ClientClassificationModel']);
+        $this->load->model(['ClientLeadSourceModel', 'ClientClassificationModel', 'ClientNoticeTypeModel']);
 
         $this->leadSource = new ClientLeadSourceModel();
         $this->classification = new ClientClassificationModel();
+        $this->noticeType = new ClientNoticeTypeModel();
     }
 
     public function index()
@@ -21,13 +22,15 @@ class ClientOptions extends CI_Controller
 
         $leadSource = $this->leadSource->allLeadSource();
         $classification = $this->classification->allClassification();
+        $noticeTypes = $this->noticeType->allNoticeTypes();
 
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('setting/client-options', [
             'leadSource' => $leadSource,
-            'classification' => $classification
+            'classification' => $classification,
+            'noticeTypes' => $noticeTypes
         ]);
         $this->load->view('footer');
     }
@@ -127,6 +130,55 @@ class ClientOptions extends CI_Controller
         authAccess();
 
         $this->classification->delete($id);
+        redirect('setting/client-options');
+    }
+
+    public function insertNoticeType()
+    {
+        authAccess();
+
+        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+
+        if ($this->form_validation->run() == TRUE) {
+            $data = $this->input->post();
+            $insert = $this->noticeType->insert([
+                'name' => $data['name']
+            ]);
+            if (!$insert) {
+                $this->session->set_flashdata('errors', '<p>Unable to Create Notice Type.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', validation_errors());
+        }
+        redirect('setting/client-options');
+    }
+
+    public function updateNoticeType($id)
+    {
+        authAccess();
+
+        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+
+        if ($this->form_validation->run() == TRUE) {
+            $data = $this->input->post();
+            $update = $this->noticeType->update($id, [
+                'name' => $data['name']
+            ]);
+            if (!$update) {
+                $this->session->set_flashdata('errors', '<p>Unable to Update Notice Type.</p>');
+            }
+        } else {
+            $this->session->set_flashdata('errors', validation_errors());
+        }
+
+        redirect('setting/client-options');
+    }
+
+    public function deleteNoticeType($id)
+    {
+        authAccess();
+
+        $this->noticeType->delete($id);
         redirect('setting/client-options');
     }
 }

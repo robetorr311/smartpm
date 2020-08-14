@@ -373,6 +373,7 @@ class Leads extends CI_Controller
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
+			$financials = $this->financial->allFinancialsForReceipt($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('leads/show', [
@@ -392,7 +393,8 @@ class Leads extends CI_Controller
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
-				'materials' => $materials
+				'materials' => $materials,
+				'financials' => $financials
 			]);
 			$this->load->view('footer');
 		} else {
@@ -419,12 +421,14 @@ class Leads extends CI_Controller
 		if ($lead) {
 			$notes = $this->lead_note->getNotesByLeadId($leadId);
 			$users = $this->user->getUserList();
+			$financials = $this->financial->allFinancialsForReceipt($leadId);
 
 			$this->load->view('header', ['title' => $this->title . ' Notes']);
 			$this->load->view('leads/notes', [
 				'lead' => $lead,
 				'notes' => $notes,
 				'users' => $users,
+				'financials' => $financials,
 				'sub_base_path' => $sub_base_path
 			]);
 			$this->load->view('footer');
@@ -585,6 +589,7 @@ class Leads extends CI_Controller
 			if ($note) {
 				$note_replies = $this->lead_note_reply->getRepliesByNoteId($noteId);
 				$users = $this->user->getUserList();
+				$financials = $this->financial->allFinancialsForReceipt($leadId);
 
 				$this->load->view('header', ['title' => $this->title . ' Notes']);
 				$this->load->view('leads/note_replies', [
@@ -592,6 +597,7 @@ class Leads extends CI_Controller
 					'note' => $note,
 					'note_replies' => $note_replies,
 					'users' => $users,
+					'financials' => $financials,
 					'sub_base_path' => $sub_base_path
 				]);
 				$this->load->view('footer');
