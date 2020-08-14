@@ -337,7 +337,7 @@ class Financial extends CI_Controller
                         $pdfContent[] = '<td>' . date('M j, Y', strtotime($financial->transaction_date)) . '</td>';
                         $pdfContent[] = '<td>' . FinancialModel::typeToStr($financial->type) . '</td>';
                         $balance += $financial->amount;
-                        if (intval($financial->amount) < 0) {
+                        if (floatval($financial->amount) < 0) {
                             $pdfContent[] = '<td style="text-align: right; color: #FF0000;">- $' . number_format(abs($financial->amount), 2) . '</td>';
                         } else {
                             $pdfContent[] = '<td style="text-align: right;">$' . number_format($financial->amount, 2) . '</td>';

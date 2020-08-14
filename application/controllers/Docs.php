@@ -9,10 +9,11 @@ class Docs extends CI_Controller
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['session', 'image_lib']);
-		$this->load->model(['JobsDocModel', 'Common_model', 'LeadModel', 'ActivityLogsModel']);
+		$this->load->model(['JobsDocModel', 'Common_model', 'LeadModel', 'ActivityLogsModel', 'FinancialModel']);
 		$this->doc = new JobsDocModel();
 		$this->lead = new LeadModel();
 		$this->activityLogs = new ActivityLogsModel();
+		$this->financial = new FinancialModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -25,11 +26,14 @@ class Docs extends CI_Controller
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
 		$docs = $this->Common_model->get_all_where('jobs_doc', $params);
+		$financials = $this->financial->allFinancialsForReceipt($job_id);
+		
 		$this->load->view('header', ['title' => 'Add Doucment']);
 		$this->load->view('doc/index', [
 			'lead' => $lead,
 			'docs' => $docs,
 			'jobid' => $job_id,
+			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);
 		$this->load->view('footer');

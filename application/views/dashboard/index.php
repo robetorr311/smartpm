@@ -129,17 +129,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</div>
 				<div class="box-container">
 					<div class="box gray-box">
-						<a href="<?= base_url('lead/closed-jobs') ?>">
-							<span><?= $closedJobs ?></span>
-							<p><?= $boxNames[13]->label ?? 'Closed' ?></p>
+						<a href="<?= base_url('leads/status/15') ?>">
+							<span><?= $punchList ?></span>
+							<p><?= $boxNames[31]->label ?? 'Punch List' ?></p>
 						</a>
 					</div>
 				</div>
 				<div class="box-container">
 					<div class="box gray-box">
-						<a href="<?= base_url('lead/archive-jobs') ?>">
-							<span><?= $archiveJobs ?></span>
-							<p><?= $boxNames[14]->label ?? 'Archive' ?></p>
+						<a href="<?= base_url('lead/closed-jobs') ?>">
+							<span><?= $closedJobs ?></span>
+							<p><?= $boxNames[13]->label ?? 'Closed' ?></p>
 						</a>
 					</div>
 				</div>
@@ -293,9 +293,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="dashbord-box">
 				<div class="box-container">
 					<div class="box gray-box">
-						<a href="<?= base_url('leads/status/15') ?>">
-							<span><?= $punchListArchive ?></span>
-							<p><?= $boxNames[31]->label ?? 'Punch List' ?></p>
+						<a href="<?= base_url('lead/archive-jobs') ?>">
+							<span><?= $archiveJobs ?></span>
+							<p><?= $boxNames[14]->label ?? 'Archive' ?></p>
 						</a>
 					</div>
 				</div>

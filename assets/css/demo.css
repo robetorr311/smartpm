@@ -1235,6 +1235,7 @@ input[type="button"] {
 .duplicate-container .duplicate-buttons span {
 	cursor: pointer;
 }
+.assemblies-description-display,
 .estimate-description-display {
 	font-style: italic;
 	font-size: 12px;
@@ -1245,11 +1246,44 @@ input[type="button"] {
 .select2-selection__rendered {
 	line-height: 39px !important;
 }
-.select2-container--default .select2-selection--single .select2-selection__arrow {
+.select2-container--default
+	.select2-selection--single
+	.select2-selection__arrow {
 	height: 38px !important;
 }
 .select2-selection {
 	height: 40px !important;
+}
+
+@media (max-width: 1199px) {
+	.client-details-column {
+		margin-bottom: 15px;
+	}
+	.client-details-column:last-child {
+		margin-bottom: 0px;
+	}
+}
+
+@media (min-width: 1200px) {
+	/* Client Details Column */
+	.client-details {
+		display: table;
+		width: 100%;
+	}
+	.client-details-column {
+		display: table-cell;
+		border-right: solid 1px #cccccc;
+		float: none;
+	}
+	.client-details-column:last-child {
+		border-width: 0px;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1100px) {
+	#show-sectin .card .footer .btn.btn-fill {
+		margin-top: 10px !important;
+	}
 }
 
 @media (min-width: 769px) {
@@ -1260,24 +1294,6 @@ input[type="button"] {
 		margin-top: 5px;
 	}
 }
-@media (min-width: 992px) and (max-width: 1100px) {
-	#show-sectin .card .footer .btn.btn-fill {
-		margin-top: 10px !important;
-	}
-}
-
-/* @media only screen and (max-device-width:375px){
-	
-	#show-section .card .footer .btn {
-	    padding: 6px 5px!important;
-	    font-size: 11px!important;
-	}
-	
-	#show-section .card .footer .col-md-12{
-	    padding: 0 5px;
-	}
-	
-	} */
 
 @media only screen and (max-device-width: 320px) {
 	#show-section .card .footer {
@@ -1288,6 +1304,7 @@ input[type="button"] {
 		margin-top: 6px;
 	}
 }
+
 @media only screen and (max-device-width: 767px) {
 	#show-section .card .footer .btn {
 		padding: 6px 5px !important;

@@ -169,4 +169,17 @@ class Notify
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
+
+    public function sendClientNotice($email, $type, $note)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('Notice');
+        $html_message = $this->CI->load->view('template/email/client-notice-notification.php', [
+            'logoUrl' => $this->logoUrl,
+            'type' => $type,
+            'note' => $note
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
 }

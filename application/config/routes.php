@@ -205,7 +205,11 @@ $route['lead/(:any)/(:num)/doc/save']['post'] = 'docs/ajaxsave_jobdoc';
 $route['lead/(:any)/(:num)/doc/delete']['post'] = 'docs/deletedoc';
 $route['lead/(:any)/(:num)/doc/update']['post'] = 'docs/updatedocname';
 
-// $route['lead/(:num)/client-notices'] = 'client_notice/index/$1';
+$route['lead/(:num)/client-notices'] = 'client_notice/index/$1';
+$route['lead/(:num)/client-notice/store']['post'] = 'client_notice/store/$1';
+
+$route['lead/(:any)/(:num)/client-notices'] = 'client_notice/index/$2/$1';
+$route['lead/(:any)/(:num)/client-notice/store']['post'] = 'client_notice/store/$2/$1';
 
 $route['lead/(:num)/party/add']['post'] = 'party/add/$1';
 $route['lead/(:num)/party/update']['post'] = 'party/update/$1';
@@ -364,6 +368,9 @@ $route['setting/client-options/lead-source/(:num)/delete']['post'] = 'clientOpti
 $route['setting/client-options/classification/store']['post'] = 'clientOptions/insertClassification';
 $route['setting/client-options/classification/(:num)/update']['post'] = 'clientOptions/updateClassification/$1';
 $route['setting/client-options/classification/(:num)/delete']['post'] = 'clientOptions/deleteClassification/$1';
+$route['setting/client-options/notice-type/store']['post'] = 'clientOptions/insertNoticeType';
+$route['setting/client-options/notice-type/(:num)/update']['post'] = 'clientOptions/updateNoticeType/$1';
+$route['setting/client-options/notice-type/(:num)/delete']['post'] = 'clientOptions/deleteNoticeType/$1';
 $route['setting/task-options'] = 'taskOptions/index';
 $route['setting/task-options/type/store']['post'] = 'taskOptions/insertType';
 $route['setting/task-options/type/(:num)/update']['post'] = 'taskOptions/updateType/$1';

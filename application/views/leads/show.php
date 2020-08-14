@@ -27,8 +27,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <h4 class="title">Leads / Clients Detail</h4>
                 </div>
                 <div class="content view">
-                    <div class="row">
-                        <div class="col-md-12">
+                    <div class="row client-details">
+                        <div class="col-lg-4 client-details-column">
+                            <h6><u>Client Detail</u></h6>
                             #<?= (1600 + $lead->id); ?><br />
                             <?= $lead->firstname ?> <?= $lead->lastname ?><br />
                             <?= $lead->address ?><br />
@@ -36,6 +37,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?= $lead->city ?>, <?= $lead->state ?> - <?= $lead->zip ?><br />
                             C - <?= formatPhoneNumber($lead->phone1) ?><br />
                             <?= $lead->email ?>
+                        </div>
+                        <div class="col-lg-4 client-details-column">
+                            <h6><u>Financial Details</u></h6>
+                            <table style="width: 100%;">
+                                <?php
+                                $balance = 0;
+                                foreach ($financials as $financial) {
+                                    $balance += $financial->amount;
+                                ?>
+                                    <tr>
+                                        <td><?= FinancialModel::typeToStr($financial->type) ?></td>
+                                        <td class="text-right"><b><?= (floatval($financial->amount) ? '- $' . number_format(abs($financial->amount), 2) : '$' . number_format($financial->amount, 2)) ?></b></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                                <tr>
+                                    <td>Balance Due</td>
+                                    <td class="text-right" style="border-top: solid 1px #000;"><b><?= (floatval($balance) ? '- $' . number_format(abs($balance), 2) : '$' . number_format($balance, 2)) ?></b></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-4 client-details-column">
+                            <h6><u>Job Details</u></h6>
+                            <table>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -52,6 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <a href="<?= base_url('lead/' . $lead->id . '/notes'); ?>" class="btn btn-fill">Notes</a>
                             <a href="<?= base_url('lead/' . $lead->id . '/public-folder'); ?>" class="btn btn-fill">Public Folder</a>
                             <a href="<?= base_url('financial/estimates/client/' . $lead->id); ?>" class="btn btn-fill" target="_blank">Estimates</a>
+                            <a href="<?= base_url('lead/' . $lead->id . '/client-notices'); ?>" class="btn btn-fill">Client Notice</a>
                         </div>
                     </div>
                 </div>
