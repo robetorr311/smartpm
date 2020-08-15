@@ -29,12 +29,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="content view">
                     <div class="row client-details">
                         <div class="col-lg-4 client-details-column">
-                            <h6><u>Client Detail</u></h6>
-                            #<?= (1600 + $job->id); ?><br />
+                            <h6><u>Client Details</u></h6>
+                            Job Number <?= (1600 + $job->id); ?><br />
                             <?= $job->firstname ?> <?= $job->lastname ?><br />
                             <?= $job->address ?><br />
                             <?= empty($job->address_2) ? '' : ($job->address_2 . '<br />') ?>
-                            <?= $job->city ?>, <?= $job->state ?> - <?= $job->zip ?><br />
+                            <?= $job->city ?>, <?= $job->state ?> <?= $job->zip ?><br />
                             C - <?= formatPhoneNumber($job->phone1) ?><br />
                             <?= $job->email ?>
                         </div>
@@ -48,14 +48,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 ?>
                                     <tr>
                                         <td><?= FinancialModel::typeToStr($financial->type) ?></td>
-                                        <td class="text-right"><b><?= (floatval($financial->amount) ? '- $' . number_format(abs($financial->amount), 2) : '$' . number_format($financial->amount, 2)) ?></b></td>
+                                        <td class="text-right"><b><?= (floatval($financial->amount) < 0 ? '- $' . number_format(abs($financial->amount), 2) : '$' . number_format($financial->amount, 2)) ?></b></td>
                                     </tr>
                                 <?php
                                 }
                                 ?>
                                 <tr>
                                     <td>Balance Due</td>
-                                    <td class="text-right" style="border-top: solid 1px #000;"><b><?= (floatval($balance) ? '- $' . number_format(abs($balance), 2) : '$' . number_format($balance, 2)) ?></b></td>
+                                    <td class="text-right" style="border-top: solid 1px #000;"><b><?= (floatval($balance) < 0 ? '- $' . number_format(abs($balance), 2) : '$' . number_format($balance, 2)) ?></b></td>
                                 </tr>
                             </table>
                         </div>
