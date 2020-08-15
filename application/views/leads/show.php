@@ -61,26 +61,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                         <div class="col-lg-4 client-details-column">
                             <h6><u>Job Details</u></h6>
-                            <table style="width: 100%;">
+                            <table>
                                 <tr>
-                                    <td>Contract Date:</td>
-                                    <td><?= date('M j, Y', strtotime($financial_record->contract_date)) ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Shingle Color:</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>Completion Date:</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>Installer:</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>Material Supplier:</td>
-                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             </table>
                         </div>
