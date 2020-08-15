@@ -255,7 +255,8 @@ class Leads extends CI_Controller
 				'status' => $posts['status'],
 				'category' => $posts['category'],
 				'type' => $posts['type'],
-				'classification' => $posts['classification']
+				'classification' => $posts['classification'],
+				'completed_date' => ($_lead->status != '9' && $posts['status'] == '9' ? date('Y-m-d') : ($_lead->status == '9' && $posts['status'] == '9' ? $_lead->status : null))
 			];
 			if ($_lead->status === '8') {
 				$updateData['dumpster_status'] = $posts['dumpster_status'];
