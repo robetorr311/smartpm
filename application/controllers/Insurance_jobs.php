@@ -63,6 +63,8 @@ class Insurance_jobs extends CI_Controller
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
+			$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($jobid);
+			$financials = $this->financial->allFinancialsForReceipt($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
 			$this->load->view('insurance_job/show', [
@@ -82,7 +84,9 @@ class Insurance_jobs extends CI_Controller
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
-				'materials' => $materials
+				'materials' => $materials,
+				'primary_material_info' => $primary_material_info,
+				'financials' => $financials
 			]);
 			$this->load->view('footer');
 		} else {

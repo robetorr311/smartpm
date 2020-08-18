@@ -374,6 +374,7 @@ class Leads extends CI_Controller
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
+			$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($jobid);
 			$financials = $this->financial->allFinancialsForReceipt($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
@@ -395,6 +396,7 @@ class Leads extends CI_Controller
 				'items' => $items,
 				'vendors' => $vendors,
 				'materials' => $materials,
+				'primary_material_info' => $primary_material_info,
 				'financials' => $financials
 			]);
 			$this->load->view('footer');
@@ -420,15 +422,19 @@ class Leads extends CI_Controller
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($leadId);
 		if ($lead) {
+			$financial_record = $this->financial->getContractDetailsByJobId($leadId);
 			$notes = $this->lead_note->getNotesByLeadId($leadId);
 			$users = $this->user->getUserList();
+			$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($leadId);
 			$financials = $this->financial->allFinancialsForReceipt($leadId);
 
 			$this->load->view('header', ['title' => $this->title . ' Notes']);
 			$this->load->view('leads/notes', [
 				'lead' => $lead,
+				'financial_record' => $financial_record,
 				'notes' => $notes,
 				'users' => $users,
+				'primary_material_info' => $primary_material_info,
 				'financials' => $financials,
 				'sub_base_path' => $sub_base_path
 			]);
@@ -588,17 +594,21 @@ class Leads extends CI_Controller
 		if ($lead) {
 			$note = $this->lead_note->getNoteById($noteId, $leadId);
 			if ($note) {
+				$financial_record = $this->financial->getContractDetailsByJobId($leadId);
 				$note_replies = $this->lead_note_reply->getRepliesByNoteId($noteId);
 				$users = $this->user->getUserList();
+				$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($leadId);
 				$financials = $this->financial->allFinancialsForReceipt($leadId);
 
 				$this->load->view('header', ['title' => $this->title . ' Notes']);
 				$this->load->view('leads/note_replies', [
 					'lead' => $lead,
+					'financial_record' => $financial_record,
 					'note' => $note,
 					'note_replies' => $note_replies,
 					'users' => $users,
 					'financials' => $financials,
+					'primary_material_info' => $primary_material_info,
 					'sub_base_path' => $sub_base_path
 				]);
 				$this->load->view('footer');
@@ -816,6 +826,7 @@ class Leads extends CI_Controller
 			$this->form_validation->set_rules('installer', 'Installer', 'trim|numeric');
 			$this->form_validation->set_rules('installer_projected_cost', 'Installer Project Cost', 'trim|numeric');
 			$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|numeric');
+			$this->form_validation->set_rules('primary_material_info', 'Primary Material Information', 'trim|numeric');
 
 			if ($this->form_validation->run() == TRUE) {
 				$material = $this->input->post();
@@ -831,7 +842,8 @@ class Leads extends CI_Controller
 					'actual_cost' => empty($material['actual_cost']) ? null : $material['actual_cost'],
 					'installer' => empty($material['installer']) ? null : $material['installer'],
 					'installer_projected_cost' => empty($material['installer_projected_cost']) ? null : $material['installer_projected_cost'],
-					'installer_actual_cost' => empty($material['installer_actual_cost']) ? null : $material['installer_actual_cost']
+					'installer_actual_cost' => empty($material['installer_actual_cost']) ? null : $material['installer_actual_cost'],
+					'primary_material_info' => ($material['primary_material_info'] == '1') ? 1 : 0
 				]);
 
 				if (!$insert) {
@@ -867,6 +879,7 @@ class Leads extends CI_Controller
 				$this->form_validation->set_rules('installer', 'Installer', 'trim|numeric');
 				$this->form_validation->set_rules('installer_projected_cost', 'Installer Project Cost', 'trim|numeric');
 				$this->form_validation->set_rules('installer_actual_cost', 'Installer Actual Cost', 'trim|numeric');
+				$this->form_validation->set_rules('primary_material_info', 'Primary Material Information', 'trim|numeric');
 
 				if ($this->form_validation->run() == TRUE) {
 					$material = $this->input->post();
@@ -881,7 +894,8 @@ class Leads extends CI_Controller
 						'actual_cost' => empty($material['actual_cost']) ? null : $material['actual_cost'],
 						'installer' => empty($material['installer']) ? null : $material['installer'],
 						'installer_projected_cost' => empty($material['installer_projected_cost']) ? null : $material['installer_projected_cost'],
-						'installer_actual_cost' => empty($material['installer_actual_cost']) ? null : $material['installer_actual_cost']
+						'installer_actual_cost' => empty($material['installer_actual_cost']) ? null : $material['installer_actual_cost'],
+						'primary_material_info' => ($material['primary_material_info'] == '1') ? 1 : 0
 					]);
 
 					if (!$update) {

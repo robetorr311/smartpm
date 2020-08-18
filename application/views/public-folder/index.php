@@ -48,11 +48,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                         <div class="col-lg-4 client-details-column">
                             <h6><u>Job Details</u></h6>
-                            <table>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                            <table style="width: 100%;">
+                                <?php if (!empty($financial_record->contract_date)) { ?>
+                                    <tr>
+                                        <td>Contract Date:</td>
+                                        <td><?= date('M j, Y', strtotime($financial_record->contract_date)) ?></td>
+                                    </tr>
+                                <?php } ?>
+                                <?php if (!empty($lead->completed_date)) { ?>
+                                    <tr>
+                                        <td>Completion Date:</td>
+                                        <td><?= date('M j, Y', strtotime($lead->completed_date)) ?></td>
+                                    </tr>
+                                <?php } ?>
+                                <?php if (!empty($primary_material_info)) { ?>
+                                    <?php if (!empty($primary_material_info->color)) { ?>
+                                        <tr>
+                                            <td>Shingle Color:</td>
+                                            <td><?= $primary_material_info->color ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                    <?php if (!empty($primary_material_info->installer_name)) { ?>
+                                        <tr>
+                                            <td>Installer:</td>
+                                            <td><?= $primary_material_info->installer_name ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                    <?php if (!empty($primary_material_info->supplier)) { ?>
+                                        <tr>
+                                            <td>Material Supplier:</td>
+                                            <td><?= $primary_material_info->supplier ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } ?>
                             </table>
                         </div>
                     </div>

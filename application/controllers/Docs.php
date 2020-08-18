@@ -9,11 +9,12 @@ class Docs extends CI_Controller
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['session', 'image_lib']);
-		$this->load->model(['JobsDocModel', 'Common_model', 'LeadModel', 'ActivityLogsModel', 'FinancialModel']);
+		$this->load->model(['JobsDocModel', 'Common_model', 'LeadModel', 'ActivityLogsModel', 'FinancialModel', 'LeadMaterialModel']);
 		$this->doc = new JobsDocModel();
 		$this->lead = new LeadModel();
 		$this->activityLogs = new ActivityLogsModel();
 		$this->financial = new FinancialModel();
+		$this->lead_material = new LeadMaterialModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -22,17 +23,21 @@ class Docs extends CI_Controller
 		
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($job_id);
+		$financial_record = $this->financial->getContractDetailsByJobId($job_id);
 		$params = array();
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
 		$docs = $this->Common_model->get_all_where('jobs_doc', $params);
+		$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($job_id);
 		$financials = $this->financial->allFinancialsForReceipt($job_id);
 		
 		$this->load->view('header', ['title' => 'Add Doucment']);
 		$this->load->view('doc/index', [
 			'lead' => $lead,
+			'financial_record' => $financial_record,
 			'docs' => $docs,
 			'jobid' => $job_id,
+			'primary_material_info' => $primary_material_info,
 			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);

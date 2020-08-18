@@ -67,6 +67,7 @@ class Archive_jobs extends CI_Controller
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
+			$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($jobid);
 			$financials = $this->financial->allFinancialsForReceipt($jobid);
 
 			$this->load->view('header', [
@@ -90,6 +91,7 @@ class Archive_jobs extends CI_Controller
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
+				'primary_material_info' => $primary_material_info,
 				'materials' => $materials,
 				'financials' => $financials
 			]);
