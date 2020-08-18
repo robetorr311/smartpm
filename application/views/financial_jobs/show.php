@@ -578,7 +578,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Color<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Color" name="color" type="text">
+                                    <input class="form-control" placeholder="Color" name="color" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->color)) ? (' value="' . $primary_material_info->color . '"') : '' ?>>
                                 </div>
                             </div>
                         </div>
@@ -586,7 +586,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Supplier<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text">
+                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->supplier)) ? (' value="' . $primary_material_info->supplier . '"') : '' ?>>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -684,7 +684,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Color<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Color" name="color" type="text">
+                                    <input class="form-control" placeholder="Color" name="color" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->color)) ? (' value="' . $primary_material_info->color . '"') : '' ?>>
                                 </div>
                             </div>
                         </div>
@@ -692,7 +692,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Supplier<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text">
+                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->supplier)) ? (' value="' . $primary_material_info->supplier . '"') : '' ?>>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -962,3 +962,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 <script src="<?= base_url('assets/js/leads/edit.js') ?>"></script>
+<?php if (!empty($primary_material_info) && !empty($primary_material_info->installer)) { ?>
+    <script>
+        $('#add_material-section form#lead_edit_add_material #installer_create').val(<?= $primary_material_info->installer ?>);
+        $('#add_material-section form#lead_edit_add_material #installer_create').trigger('change');
+        $('#edit_material-section form#lead_edit_edit_material #installer_edit').val(<?= $primary_material_info->installer ?>);
+        $('#edit_material-section form#lead_edit_edit_material #installer_edit').trigger('change');
+    </script>
+<?php } ?>
