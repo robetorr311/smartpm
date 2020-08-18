@@ -9,10 +9,11 @@ class Photos extends CI_Controller
 
 		$this->load->helper(['form', 'security', 'cookie']);
 		$this->load->library(['form_validation', 'email', 'user_agent', 'session', 'image_lib']);
-		$this->load->model(['JobsPhotoModel', 'LeadModel', 'ActivityLogsModel', 'FinancialModel']);
+		$this->load->model(['JobsPhotoModel', 'LeadModel', 'ActivityLogsModel', 'FinancialModel', 'LeadMaterialModel']);
 		$this->lead = new LeadModel();
 		$this->activityLogs = new ActivityLogsModel();
 		$this->financial = new FinancialModel();
+		$this->lead_material = new LeadMaterialModel();
 	}
 
 	public function index($job_id, $sub_base_path = '')
@@ -21,20 +22,24 @@ class Photos extends CI_Controller
 
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($job_id);
+		$financial_record = $this->financial->getContractDetailsByJobId($job_id);
 		$params = array();
 		$params['job_id'] = $job_id;
 		$params['is_active'] = 1;
 		$count = $this->JobsPhotoModel->getCount($params);
 		$imgs  = $this->JobsPhotoModel->allPhoto($params);
+		$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($job_id);
 		$financials = $this->financial->allFinancialsForReceipt($job_id);
 
 		$this->load->view('header', ['title' => 'Add Photo']);
 		$this->load->view('photo/index', [
 			'lead' => $lead,
+			'financial_record' => $financial_record,
 			'count' => $count,
 			'imgs' => $imgs,
 			'jobid' => $job_id,
 			'financials' => $financials,
+			'primary_material_info' => $primary_material_info,
 			'sub_base_path' => $sub_base_path
 		]);
 		$this->load->view('footer');

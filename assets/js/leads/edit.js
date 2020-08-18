@@ -305,6 +305,11 @@ $(document).ready(function () {
         e.preventDefault();
         var material = $(this).data('material');
         $('#edit_material-section form#lead_edit_edit_material').trigger('reset');
+        if (material.primary_material_info == 1) {
+            $('#edit_material-section form#lead_edit_edit_material input[name="primary_material_info"]').prop('checked', true);
+        } else {
+            $('#edit_material-section form#lead_edit_edit_material input[name="primary_material_info"]').prop('checked', false);
+        }
         $('#edit_material-section form#lead_edit_edit_material select[name="material"]').val(material.material);
         $('#edit_material-section form#lead_edit_edit_material select[name="material"]').trigger('change');
         $('#edit_material-section form#lead_edit_edit_material input[name="manufacturer"]').val(material.manufacturer);

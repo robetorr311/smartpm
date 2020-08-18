@@ -7,12 +7,13 @@ class Reports extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['RoofingProjectModel', 'JobsPhotoModel', 'LeadModel', 'FinancialModel']);
+		$this->load->model(['RoofingProjectModel', 'JobsPhotoModel', 'LeadModel', 'FinancialModel', 'LeadMaterialModel']);
 		$this->load->library(['pagination']);
 		$this->roofing = new RoofingProjectModel();
 		$this->photos = new JobsPhotoModel();
 		$this->lead = new LeadModel();
 		$this->financial = new FinancialModel();
+		$this->lead_material = new LeadMaterialModel();
 	}
 
 	public function index($id, $sub_base_path = '')
@@ -21,14 +22,18 @@ class Reports extends CI_Controller
 
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($id);
+		$financial_record = $this->financial->getContractDetailsByJobId($id);
 		$allreport = $this->roofing->allProject(['job_id' => $id, 'active' => 1]);
+		$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($id);
 		$financials = $this->financial->allFinancialsForReceipt($id);
 
 		$this->load->view('header', ['title' => 'All Reports']);
 		$this->load->view('report/index', [
 			'lead' => $lead,
+			'financial_record' => $financial_record,
 			'allreport' => $allreport,
 			'jobid' => $id,
+			'primary_material_info' => $primary_material_info,
 			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);
