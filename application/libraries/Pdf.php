@@ -17,7 +17,7 @@
 
         public function Footer()
         {
-            $this->SetY(-25);
+            $this->SetY(-23);
             $content = "<div style=\"letter-spacing: 2px; line-height: 20px; text-align: center;\">{$this->company_name} | <span style=\"letter-spacing: normal;\">{$this->company_address}</span><br />{$this->company_email} | {$this->company_phone}</div>";
             $this->writeHTML($content, true, false, true, false, '');
         }
