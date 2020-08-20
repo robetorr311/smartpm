@@ -409,6 +409,7 @@ class Estimate extends CI_Controller
 
             // $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
             $pdf = new Pdf();
+            $pdf->SetAutoPageBreak(TRUE, 27);
             $pdf->SetFontSize(11);
             $pdf->setCompanyData($admin_conf->company_name, $admin_conf->company_address, $admin_conf->company_email, $admin_conf->company_phone);
             $pdf->setPrintHeader(false);
@@ -524,6 +525,7 @@ class Estimate extends CI_Controller
 
             // $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
             $pdf = new Pdf();
+            $pdf->SetAutoPageBreak(TRUE, 27);
             $pdf->SetFontSize(11);
             $pdf->setCompanyData($admin_conf->company_name, $admin_conf->company_address, $admin_conf->company_email, $admin_conf->company_phone);
             $pdf->setPrintHeader(false);
