@@ -502,7 +502,7 @@ class Estimate extends CI_Controller
             // $pdf->setPrintFooter(false);
             $pdf->AddPage();
             $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
-            $pdf->keepTogether(30);
+            $pdf->keepTogether(35);
             $pdf->writeHTML(implode('', $pdfThankYouContent), true, false, true, false, '');
             ob_clean();
             $pdf->Output('estimate.pdf');
@@ -629,7 +629,7 @@ class Estimate extends CI_Controller
             // $pdf->setPrintFooter(false);
             $pdf->AddPage();
             $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
-            $pdf->keepTogether(30);
+            $pdf->keepTogether(35);
             $pdf->writeHTML(implode('', $pdfThankYouContent), true, false, true, false, '');
             ob_clean();
             // ============== save to job_doc folder ==============
