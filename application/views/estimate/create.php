@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12 max-1000-form-container">
-            <a href="<?= $clientId ? base_url('financial/estimates/client/' . $clientId) : base_url('financial/estimates') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
+            <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/estimates') : base_url('financial/estimates') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
         </div>
     </div>
     <div class="row page-header-buttons">
@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div id="validation-errors" class="col-md-12">
                         </div>
                     </div>
-                    <form id="estimate_create" action="<?= $clientId ? base_url('financial/estimate/client/' . $clientId . '/store') : base_url('financial/estimate/store') ?>" method="post" novalidate>
+                    <form id="estimate_create" action="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/estimate/store') : base_url('financial/estimate/store') ?>" method="post" novalidate>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

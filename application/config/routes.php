@@ -269,14 +269,23 @@ $route['financial/estimate/(:num)/delete']['post'] = 'estimate/delete/$1';
 $route['financial/estimate/(:num)/pdf'] = 'estimate/pdf/$1';
 $route['financial/estimate/(:num)/save-pdf']['post'] = 'estimate/savePDF/$1';
 
-$route['financial/estimates/client/(:num)'] = 'estimate/index/$1';
-$route['financial/estimate/client/(:num)/create'] = 'estimate/create/$1';
-$route['financial/estimate/client/(:num)/store']['post'] = 'estimate/store/$1';
-$route['financial/estimate/client/(:num)/(:num)'] = 'estimate/show/$2/$1';
-$route['financial/estimate/client/(:num)/(:num)/update']['post'] = 'estimate/update/$2/$1';
-$route['financial/estimate/client/(:num)/(:num)/delete']['post'] = 'estimate/delete/$2/$1';
-$route['financial/estimate/client/(:num)/(:num)/pdf'] = 'estimate/pdf/$2/$1';
-$route['financial/estimate/client/(:num)/(:num)/save-pdf']['post'] = 'estimate/savePDF/$2/$1';
+$route['lead/(:num)/estimates'] = 'estimate/index/$1';
+$route['lead/(:num)/estimate/create'] = 'estimate/create/$1';
+$route['lead/(:num)/estimate/store']['post'] = 'estimate/store/$1';
+$route['lead/(:num)/estimate/(:num)'] = 'estimate/show/$2/$1';
+$route['lead/(:num)/estimate/(:num)/update']['post'] = 'estimate/update/$2/$1';
+$route['lead/(:num)/estimate/(:num)/delete']['post'] = 'estimate/delete/$2/$1';
+$route['lead/(:num)/estimate/(:num)/pdf'] = 'estimate/pdf/$2/$1';
+$route['lead/(:num)/estimate/(:num)/save-pdf']['post'] = 'estimate/savePDF/$2/$1';
+
+$route['lead/(:any)/(:num)/estimates'] = 'estimate/index/$2/$1';
+$route['lead/(:any)/(:num)/estimate/create'] = 'estimate/create/$2/$1';
+$route['lead/(:any)/(:num)/estimate/store']['post'] = 'estimate/store/$2/$1';
+$route['lead/(:any)/(:num)/estimate/(:num)'] = 'estimate/show/$3/$2/$1';
+$route['lead/(:any)/(:num)/estimate/(:num)/update']['post'] = 'estimate/update/$3/$2/$1';
+$route['lead/(:any)/(:num)/estimate/(:num)/delete']['post'] = 'estimate/delete/$3/$2/$1';
+$route['lead/(:any)/(:num)/estimate/(:num)/pdf'] = 'estimate/pdf/$3/$2/$1';
+$route['lead/(:any)/(:num)/estimate/(:num)/save-pdf']['post'] = 'estimate/savePDF/$3/$2/$1';
 
 $route['items'] = 'items/index';
 $route['item/create'] = 'items/create';

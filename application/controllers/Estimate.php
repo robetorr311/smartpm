@@ -9,7 +9,7 @@ class Estimate extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel', 'AssembliesModel']);
+        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel', 'AssembliesModel', 'FinancialModel', 'LeadMaterialModel']);
         $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->estimate = new EstimateModel();
@@ -21,30 +21,60 @@ class Estimate extends CI_Controller
         $this->admin_setting = new AdminSettingModel();
         $this->activityLogs = new ActivityLogsModel();
         $this->assemblies = new AssembliesModel();
+        $this->financial = new FinancialModel();
+        $this->lead_material = new LeadMaterialModel();
     }
 
-    public function index($clientId = false)
+    public function index($clientId = false, $sub_base_path = '')
     {
         authAccess();
 
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+        $vars = [];
         if ($clientId) {
-            $estimates = $this->estimate->allEstimatesByClientId($clientId);
+            $lead = $this->lead->getLeadById($clientId);
+            if ($lead) {
+                $estimates = $this->estimate->allEstimatesByClientId($clientId);
+                $financial_record = $this->financial->getContractDetailsByJobId($clientId);
+                $primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($clientId);
+                $financials = $this->financial->allFinancialsForReceipt($clientId);
+                $vars['lead'] = $lead;
+                $vars['financial_record'] = $financial_record;
+                $vars['primary_material_info'] = $primary_material_info;
+                $vars['financials'] = $financials;
+            } else {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
         } else {
             $estimates = $this->estimate->allEstimates();
         }
+
+        $vars['estimates'] = $estimates;
+        $vars['clientId'] = $clientId;
+        $vars['sub_base_path'] = $sub_base_path;
+
         $this->load->view('header', [
             'title' => $this->title
         ]);
-        $this->load->view('estimate/index', [
-            'estimates' => $estimates,
-            'clientId' => $clientId
-        ]);
+        $this->load->view('estimate/index', $vars);
         $this->load->view('footer');
     }
 
-    public function create($clientId = false)
+    public function create($clientId = false, $sub_base_path = '')
     {
         authAccess();
+
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+        if ($clientId) {
+            $lead = $this->lead->getLeadById($clientId);
+            if (!$lead) {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
+        }
 
         $clients = $this->lead->getLeadList();
         $items = $this->item->getItemList();
@@ -57,14 +87,25 @@ class Estimate extends CI_Controller
             'clients' => $clients,
             'items' => $items,
             'assemblies' => $assemblies,
-            'clientId' => $clientId
+            'clientId' => $clientId,
+            'sub_base_path' => $sub_base_path
         ]);
         $this->load->view('footer');
     }
 
-    public function store($clientId = false)
+    public function store($clientId = false, $sub_base_path = '')
     {
         authAccess();
+
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+        if ($clientId) {
+            $lead = $this->lead->getLeadById($clientId);
+            if (!$lead) {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
+        }
 
         $this->form_validation->set_rules('client_id', 'Client Name', 'trim|required|numeric');
         $this->form_validation->set_rules('date', 'Date', 'trim|required');
@@ -111,30 +152,40 @@ class Estimate extends CI_Controller
             } else {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Estimate.</p>');
                 if ($clientId) {
-                    redirect('financial/estimate/client/' . $clientId . '/create');
+                    redirect('lead/' . $sub_base_path . $clientId . '/estimate/create');
                 } else {
                     redirect('financial/estimate/create');
                 }
             }
 
             if ($clientId) {
-                redirect('financial/estimates/client/' . $clientId);
+                redirect('lead/' . $sub_base_path . $clientId . '/estimates');
             } else {
                 redirect('financial/estimates');
             }
         } else {
             $this->session->set_flashdata('errors', validation_errors());
             if ($clientId) {
-                redirect('financial/estimate/client/' . $clientId . '/create');
+                redirect('lead/' . $sub_base_path . $clientId . '/estimate/create');
             } else {
                 redirect('financial/estimate/create');
             }
         }
     }
 
-    public function update($id, $clientId = false)
+    public function update($id, $clientId = false, $sub_base_path = '')
     {
         authAccess();
+
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+        if ($clientId) {
+            $lead = $this->lead->getLeadById($clientId);
+            if (!$lead) {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
+        }
 
         // $this->form_validation->set_rules('client_id', 'Client Name', 'trim|required|numeric');
         $this->form_validation->set_rules('date', 'Date', 'trim|required');
@@ -228,18 +279,34 @@ class Estimate extends CI_Controller
         }
 
         if ($clientId) {
-            redirect('financial/estimate/client/' . $clientId . '/' . $id);
+            redirect('lead/' . $sub_base_path . $clientId . '/estimate/' . $id);
         } else {
             redirect('financial/estimate/' . $id);
         }
     }
 
-    public function show($id, $clientId = false)
+    public function show($id, $clientId = false, $sub_base_path = '')
     {
         authAccess();
 
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+        $vars = [];
         if ($clientId) {
-            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            $lead = $this->lead->getLeadById($clientId);
+            if ($lead) {
+                $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+                $financial_record = $this->financial->getContractDetailsByJobId($clientId);
+                $primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($clientId);
+                $financials = $this->financial->allFinancialsForReceipt($clientId);
+                $vars['lead'] = $lead;
+                $vars['financial_record'] = $financial_record;
+                $vars['primary_material_info'] = $primary_material_info;
+                $vars['financials'] = $financials;
+            } else {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
         } else {
             $estimate = $this->estimate->getEstimateById($id);
         }
@@ -261,34 +328,44 @@ class Estimate extends CI_Controller
                 }
             }
 
+            $vars['estimate'] = $estimate;
+            $vars['estimate_desc_groups'] = $estimate_desc_groups;
+            $vars['descs'] = $descs;
+            $vars['clients'] = $clients;
+            $vars['items'] = $items;
+            $vars['clientId'] = $clientId;
+            $vars['sub_base_path'] = $sub_base_path;
+
             $this->load->view('header', [
                 'title' => $this->title
             ]);
-            $this->load->view('estimate/show', [
-                'estimate' => $estimate,
-                'estimate_desc_groups' => $estimate_desc_groups,
-                'descs' => $descs,
-                'clients' => $clients,
-                'items' => $items,
-                'clientId' => $clientId
-            ]);
+            $this->load->view('estimate/show', $vars);
             $this->load->view('footer');
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             if ($clientId) {
-                redirect('financial/estimates/client/' . $clientId);
+                redirect('lead/' . $sub_base_path . $clientId . '/estimates');
             } else {
                 redirect('financial/estimates');
             }
         }
     }
 
-    public function delete($id, $clientId = false)
+    public function delete($id, $clientId = false, $sub_base_path = '')
     {
         authAccess();
 
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
+        $vars = [];
         if ($clientId) {
-            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            $lead = $this->lead->getLeadById($clientId);
+            if ($lead) {
+                $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            } else {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
         } else {
             $estimate = $this->estimate->getEstimateById($id);
         }
@@ -306,18 +383,26 @@ class Estimate extends CI_Controller
         }
 
         if ($clientId) {
-            redirect('financial/estimates/client/' . $clientId);
+            redirect('lead/' . $sub_base_path . $clientId . '/estimates');
         } else {
             redirect('financial/estimates');
         }
     }
 
-    public function pdf($id, $clientId = false)
+    public function pdf($id, $clientId = false, $sub_base_path = '')
     {
         authAccess();
 
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
         if ($clientId) {
-            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            $lead = $this->lead->getLeadById($clientId);
+            if ($lead) {
+                $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            } else {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
         } else {
             $estimate = $this->estimate->getEstimateById($id);
         }
@@ -395,14 +480,15 @@ class Estimate extends CI_Controller
                 $pdfContent[] = nl2br($estimate->note);
                 $pdfContent[] = '</div>';
             }
-            $pdfContent[] = '<div><p> </p>';
-            $pdfContent[] = '<table width="230" cellpadding="5" style="background-color: #DDD;"><tr><td style="border-left: solid 2px #0e2163; font-size: 9px; line-height: 18px;">';
-            $pdfContent[] = '<b>Thank you for your business!</b><br />';
-            $pdfContent[] = $estimate->created_user . '<br />';
-            $pdfContent[] = $created_by_user->email_id . '<br />';
-            $pdfContent[] = $created_by_user->office_phone;
-            $pdfContent[] = '</td></tr></table>';
-            $pdfContent[] = '</div>';
+            $pdfThankYouContent[] = '<p> </p>';
+            $pdfThankYouContent[] = '<div>';
+            $pdfThankYouContent[] = '<table width="230" cellpadding="5" style="background-color: #DDD;"><tr><td style="border-left: solid 2px #0e2163; font-size: 9px; line-height: 18px;">';
+            $pdfThankYouContent[] = '<b>Thank you for your business!</b><br />';
+            $pdfThankYouContent[] = $estimate->created_user . '<br />';
+            $pdfThankYouContent[] = $created_by_user->email_id . '<br />';
+            $pdfThankYouContent[] = $created_by_user->office_phone;
+            $pdfThankYouContent[] = '</td></tr></table>';
+            $pdfThankYouContent[] = '</div>';
 
             // echo implode('', $pdfContent);
             // die();
@@ -416,24 +502,34 @@ class Estimate extends CI_Controller
             // $pdf->setPrintFooter(false);
             $pdf->AddPage();
             $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
+            $pdf->keepTogether(30);
+            $pdf->writeHTML(implode('', $pdfThankYouContent), true, false, true, false, '');
             ob_clean();
             $pdf->Output('estimate.pdf');
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             if ($clientId) {
-                redirect('financial/estimates/client/' . $clientId);
+                redirect('lead/' . $sub_base_path . $clientId . '/estimates');
             } else {
                 redirect('financial/estimates');
             }
         }
     }
 
-    public function savePDF($id, $clientId = false)
+    public function savePDF($id, $clientId = false, $sub_base_path = '')
     {
         authAccess();
 
+        $o_sub_base_path = $sub_base_path;
+        $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
         if ($clientId) {
-            $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            $lead = $this->lead->getLeadById($clientId);
+            if ($lead) {
+                $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
+            } else {
+                $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
+                redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
+            }
         } else {
             $estimate = $this->estimate->getEstimateById($id);
         }
@@ -511,14 +607,15 @@ class Estimate extends CI_Controller
                 $pdfContent[] = nl2br($estimate->note);
                 $pdfContent[] = '</div>';
             }
-            $pdfContent[] = '<div><p> </p>';
-            $pdfContent[] = '<table width="230" cellpadding="5" style="background-color: #DDD;"><tr><td style="border-left: solid 2px #0e2163; font-size: 9px; line-height: 18px;">';
-            $pdfContent[] = '<b>Thank you for your business!</b><br />';
-            $pdfContent[] = $estimate->created_user . '<br />';
-            $pdfContent[] = $created_by_user->email_id . '<br />';
-            $pdfContent[] = $created_by_user->office_phone;
-            $pdfContent[] = '</td></tr></table>';
-            $pdfContent[] = '</div>';
+            $pdfThankYouContent[] = '<p> </p>';
+            $pdfThankYouContent[] = '<div>';
+            $pdfThankYouContent[] = '<table width="230" cellpadding="5" style="background-color: #DDD;"><tr><td style="border-left: solid 2px #0e2163; font-size: 9px; line-height: 18px;">';
+            $pdfThankYouContent[] = '<b>Thank you for your business!</b><br />';
+            $pdfThankYouContent[] = $estimate->created_user . '<br />';
+            $pdfThankYouContent[] = $created_by_user->email_id . '<br />';
+            $pdfThankYouContent[] = $created_by_user->office_phone;
+            $pdfThankYouContent[] = '</td></tr></table>';
+            $pdfThankYouContent[] = '</div>';
 
             // echo implode('', $pdfContent);
             // die();
@@ -532,6 +629,8 @@ class Estimate extends CI_Controller
             // $pdf->setPrintFooter(false);
             $pdf->AddPage();
             $pdf->writeHTML(implode('', $pdfContent), true, false, true, false, '');
+            $pdf->keepTogether(30);
+            $pdf->writeHTML(implode('', $pdfThankYouContent), true, false, true, false, '');
             ob_clean();
             // ============== save to job_doc folder ==============
             $tmp_i = 1;
@@ -561,14 +660,14 @@ class Estimate extends CI_Controller
             $this->session->set_flashdata('errors', '<p>PDF Saved.</p>');
 
             if ($clientId) {
-                redirect('financial/estimate/client/' . $clientId . '/' . $id);
+                redirect('lead/' . $sub_base_path . $clientId . '/estimate/' . $id);
             } else {
                 redirect('financial/estimate/' . $id);
             }
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             if ($clientId) {
-                redirect('financial/estimates/client/' . $clientId);
+                redirect('lead/' . $sub_base_path . $clientId . '/estimates');
             } else {
                 redirect('financial/estimates');
             }
