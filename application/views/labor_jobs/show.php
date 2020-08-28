@@ -15,9 +15,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 <div id="show-section" class="container-fluid show-edit-visible">
     <div class="row page-header-buttons">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <a href="<?= base_url('lead/labor-jobs') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
             <a href="#" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Edit</a>
+        </div>
+        <div class="col-md-4 text-right">
+            <a <?= $prev_lead ? 'href="' . base_url('lead/labor-job/' . $prev_lead->id) . '"' : '' ?> class="<?= $prev_lead ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill' ?>"><i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp; Prev Lead</a>
+            <a <?= $next_lead ? 'href="' . base_url('lead/labor-job/' . $next_lead->id) . '"' : '' ?> class="<?= $next_lead ? 'btn btn-info btn-fill' : 'btn btn-default btn-fill' ?>">Next Lead &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
         </div>
     </div>
     <div class="row">
@@ -198,6 +202,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?= $job->classification_name ?>
                     </span>
                     <div class="clearfix" style="padding: 10px;"></div>
+                    <?php if ($job->sales_rep_name !== null) { ?>
+                        <h4 class="title" style="float: left;">Sales Rep</h4>
+                        <span class="status">
+                            <?= empty($job->sales_rep_name) ? '-' : $job->sales_rep_name ?>
+                        </span>
+                        <div class="clearfix" style="padding: 10px;"></div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -458,26 +469,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select class="form-control" id="lead" name="status">
                             <option value="" disabled <?= is_null($job->status) ? 'selected' : '' ?>>Select Contract Status</option>
                             <optgroup label="Leads">
-                                <option value="0" <?= ("0" == $job->status) ? 'selected' : '' ?>>New</option>
-                                <option value="1" <?= ("1" == $job->status) ? 'selected' : '' ?>>Appointment Scheduled</option>
-                                <option value="2" <?= ("2" == $job->status) ? 'selected' : '' ?>>Needs Follow Up Call</option>
-                                <option value="3" <?= ("3" == $job->status) ? 'selected' : '' ?>>Needs Site Visit</option>
-                                <option value="4" <?= ("4" == $job->status) ? 'selected' : '' ?>>Needs Estimate / Bid</option>
+                                <?php foreach ($status_lead as $status_index) { ?>
+                                    <option value="<?php echo $status_index ?>" <?= $job->status == $status_index ? ' selected' : '' ?>><?= LeadModel::statusToStr($status_index) ?></option>
+                                <?php } ?>
                             </optgroup>
                             <optgroup label="Prospects">
-                                <option value="5" <?= ("5" == $job->status) ? 'selected' : '' ?>>Estimate Sent</option>
-                                <option value="6" <?= ("6" == $job->status) ? 'selected' : '' ?>>Ready to Sign / Verbal Go</option>
-                                <option value="12" <?= ("12" == $job->status) ? 'selected' : '' ?>>Cold</option>
-                                <option value="13" <?= ("13" == $job->status) ? 'selected' : '' ?>>Postponed</option>
-                                <option value="14" <?= ("14" == $job->status) ? 'selected' : '' ?>>Dead / Lost</option>
+                                <?php foreach ($status_prospect as $status_index) { ?>
+                                    <option value="<?php echo $status_index ?>" <?= $job->status == $status_index ? ' selected' : '' ?>><?= LeadModel::statusToStr($status_index) ?></option>
+                                <?php } ?>
                             </optgroup>
-                            <optgroup label="Prospects">
-                                <option value="7" <?= ("7" == $job->status) ? 'selected' : '' ?>>Signed</option>
-                                <option value="8" <?= ("8" == $job->status) ? 'selected' : '' ?>>In Production</option>
-                                <option value="9" <?= ("9" == $job->status) ? 'selected' : '' ?>>Completed</option>
-                                <option value="15" <?= ("15" == $job->status) ? 'selected' : '' ?>>Punch List</option>
-                                <option value="10" <?= ("10" == $job->status) ? 'selected' : '' ?>>Closed</option>
-                                <option value="11" <?= ("11" == $job->status) ? 'selected' : '' ?>>Archive</option>
+                            <optgroup label="Jobs">
+                                <?php foreach ($status_job as $status_index) { ?>
+                                    <option value="<?php echo $status_index ?>" <?= $job->status == $status_index ? ' selected' : '' ?>><?= LeadModel::statusToStr($status_index) ?></option>
+                                <?php } ?>
                             </optgroup>
                         </select>
                     </div>
@@ -528,6 +532,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php endforeach; ?>
                         </select>
                     </div>
+                </div>
+                <div class="header">
+                    <h4 class="title" style="float: left;">Sales Rep</h4>
+                    <span class="status">
+                        <?= empty($job->sales_rep_name) ? '-' : $job->sales_rep_name ?>
+                    </span>
+                    <div class="clearfix"></div>
+                    <div class="content">
+                        <select class="form-control lead-status" id="sales_rep_id" name="sales_rep_id" style="width: 100%;">
+                            <option value="" disabled <?= empty($job->sales_rep_id) ? 'selected' : '' ?>>Select Sales Rep</option>
+                            <?php foreach ($users as $user) : ?>
+                                <option value="<?= $user->id ?>" <?= ((!empty($job->sales_rep_id)) && $user->id == $job->sales_rep_id) ? 'selected' : '' ?>><?= $user->name . ' (@' . $user->username . ')' ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="clearfix"></div>
                     <button type="submit" class="btn btn-info btn-fill pull-right">Update</button>
                     <div class="clearfix" style="padding: 10px;"></div>
                 </div>
@@ -578,7 +598,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Color<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Color" name="color" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->color)) ? (' value="' . $primary_material_info->color . '"') : '' ?>>
+                                    <input class="form-control" placeholder="Color" name="color" type="text" <?= (!empty($primary_material_info) && !empty($primary_material_info->color)) ? (' value="' . $primary_material_info->color . '"') : '' ?>>
                                 </div>
                             </div>
                         </div>
@@ -586,7 +606,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Supplier<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->supplier)) ? (' value="' . $primary_material_info->supplier . '"') : '' ?>>
+                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text" <?= (!empty($primary_material_info) && !empty($primary_material_info->supplier)) ? (' value="' . $primary_material_info->supplier . '"') : '' ?>>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -684,7 +704,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Color<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Color" name="color" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->color)) ? (' value="' . $primary_material_info->color . '"') : '' ?>>
+                                    <input class="form-control" placeholder="Color" name="color" type="text" <?= (!empty($primary_material_info) && !empty($primary_material_info->color)) ? (' value="' . $primary_material_info->color . '"') : '' ?>>
                                 </div>
                             </div>
                         </div>
@@ -692,7 +712,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Supplier<span class="red-mark">*</span></label>
-                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text"<?= (!empty($primary_material_info) && !empty($primary_material_info->supplier)) ? (' value="' . $primary_material_info->supplier . '"') : '' ?>>
+                                    <input class="form-control" placeholder="Supplier" name="supplier" type="text" <?= (!empty($primary_material_info) && !empty($primary_material_info->supplier)) ? (' value="' . $primary_material_info->supplier . '"') : '' ?>>
                                 </div>
                             </div>
                             <div class="col-md-6">

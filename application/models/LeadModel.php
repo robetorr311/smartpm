@@ -23,14 +23,9 @@ class LeadModel extends CI_Model
         14 => 'Dead / Lost',
         15 => 'Punch List'
     ];
-    // private static $signedStage = [
-    //     0 => 'Ordering / Buy Out',
-    //     1 => 'Scheduled',
-    //     2 => 'In Process',
-    //     3 => 'Complete',
-    //     4 => 'Punch List',
-    //     5 => 'Closed'
-    // ];
+    private static $status_lead = [0, 1, 2, 3, 4];
+    private static $status_prospect = [5, 6, 12, 13, 14];
+    private static $status_job = [7, 8, 9, 10, 11];
     private static $type = [
         0 => 'Undefined / None',
         1 => 'Residential',
@@ -215,19 +210,59 @@ class LeadModel extends CI_Model
 
     public function getLeadList($select = "id, CONCAT(firstname, ' ', lastname) AS name")
     {
-		$this->db->select($select);
-		$this->db->from($this->table);
+        $this->db->select($select);
+        $this->db->from($this->table);
         $this->db->where('is_deleted', FALSE);
-		$query = $this->db->get();
-		return $query->result();
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function getLeadById($id)
     {
-        $this->db->select("jobs.*, (SELECT name FROM client_lead_source WHERE id=jobs.lead_source) AS lead_source_name, (SELECT name FROM client_classification WHERE id=jobs.classification) AS classification_name");
+        $this->db->select("
+            jobs.*,
+            (SELECT name FROM client_lead_source WHERE id=jobs.lead_source) AS lead_source_name,
+            (SELECT name FROM client_classification WHERE id=jobs.classification) AS classification_name,
+            CONCAT(users_sales_rep.first_name, ' ', users_sales_rep.last_name, ' (@', users_sales_rep.username, ')') AS sales_rep_name
+        ");
+        $this->db->from($this->table);
+        $this->db->join('users as users_sales_rep', 'jobs.sales_rep_id=users_sales_rep.id', 'left');
         $this->db->where([
-            'id' => $id
+            'jobs.id' => $id,
+            'jobs.is_deleted' => FALSE
         ]);
+        $query = $this->db->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
+
+    public function getNextLeadAfterId($lead_status, $lead_id, $category_id = null)
+    {
+        $this->db->select("jobs.id");
+        $this->db->where([
+            'id > ' => $lead_id,
+            'status' => $lead_status,
+            'is_deleted' => FALSE
+        ]);
+        if ($category_id !== null) $this->db->where('category', $category_id);
+        $this->db->order_by('id', 'ASC');
+        $this->db->limit(1);
+        $query = $this->db->get($this->table);
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
+
+    public function getPreviousLeadAfterId($lead_status, $lead_id, $category_id = null)
+    {
+        $this->db->select("jobs.id");
+        $this->db->where([
+            'id < ' => $lead_id,
+            'status' => $lead_status,
+            'is_deleted' => FALSE
+        ]);
+        if ($category_id !== null) $this->db->where('category', $category_id);
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
         $query = $this->db->get($this->table);
         $result = $query->first_row();
         return $result ? $result : false;
@@ -275,9 +310,9 @@ class LeadModel extends CI_Model
             COUNT(IF(status=14, 1, NULL)) as lostLeads,
             COUNT(IF(status=15, 1, NULL)) as punchList
         ", FALSE);
-		$this->db->from($this->table);
+        $this->db->from($this->table);
         $this->db->where('is_deleted', FALSE);
-		$query = $this->db->get();
+        $query = $this->db->get();
         $result = $query->first_row();
         return $result ? $result : false;
     }
@@ -322,6 +357,21 @@ class LeadModel extends CI_Model
     public static function getStatus()
     {
         return self::$status;
+    }
+
+    public static function getStatusLead()
+    {
+        return self::$status_lead;
+    }
+
+    public static function getStatusProspect()
+    {
+        return self::$status_prospect;
+    }
+
+    public static function getStatusJob()
+    {
+        return self::$status_job;
     }
 
     public static function typeToStr($id)

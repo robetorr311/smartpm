@@ -9,7 +9,7 @@ class Closed_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel']);
+		$this->load->model(['LeadModel', 'PartyModel', 'FinancialModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'TeamJobTrackModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel', 'UserModel']);
 		$this->load->library(['form_validation']);
 
 		$this->lead = new LeadModel();
@@ -21,6 +21,7 @@ class Closed_jobs extends CI_Controller
 		$this->team = new TeamModel();
 		$this->leadSource = new ClientLeadSourceModel();
 		$this->classification = new ClientClassificationModel();
+		$this->user = new UserModel();
 		$this->activityLogs = new ActivityLogsModel();
 		$this->vendor = new VendorModel();
 		$this->item = new ItemModel();
@@ -63,6 +64,7 @@ class Closed_jobs extends CI_Controller
 			$lead_category_tags = LeadModel::getCategory();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			$classification = $this->classification->allClassification();
+			$users = $this->user->getUserList();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
@@ -88,6 +90,7 @@ class Closed_jobs extends CI_Controller
 				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource,
 				'classification' => $classification,
+				'users' => $users,
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,

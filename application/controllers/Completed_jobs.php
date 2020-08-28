@@ -9,7 +9,7 @@ class Completed_jobs extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'FinancialModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel']);
+		$this->load->model(['LeadModel', 'TeamJobTrackModel', 'InsuranceJobDetailsModel', 'InsuranceJobAdjusterModel', 'PartyModel', 'FinancialModel', 'TeamModel', 'ClientLeadSourceModel',  'ClientClassificationModel', 'ActivityLogsModel', 'VendorModel', 'ItemModel', 'LeadMaterialModel', 'UserModel']);
 		$this->load->library(['form_validation']);
 		$this->lead = new LeadModel();
 		$this->team_job_track = new TeamJobTrackModel();
@@ -20,6 +20,7 @@ class Completed_jobs extends CI_Controller
 		$this->team = new TeamModel();
 		$this->leadSource = new ClientLeadSourceModel();
 		$this->classification = new ClientClassificationModel();
+		$this->user = new UserModel();
 		$this->activityLogs = new ActivityLogsModel();
 		$this->vendor = new VendorModel();
 		$this->item = new ItemModel();
@@ -44,6 +45,8 @@ class Completed_jobs extends CI_Controller
 
 		$job = $this->lead->getLeadById($jobid);
 		if ($job) {
+			$next_lead = $this->lead->getNextLeadAfterId($job->status, $job->id);
+			$prev_lead = $this->lead->getPreviousLeadAfterId($job->status, $job->id);
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = $this->team_job_track->getTeamName($jobid);
@@ -58,8 +61,12 @@ class Completed_jobs extends CI_Controller
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
+			$status_lead = LeadModel::getStatusLead();
+			$status_prospect = LeadModel::getStatusProspect();
+			$status_job = LeadModel::getStatusJob();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			$classification = $this->classification->allClassification();
+			$users = $this->user->getUserList();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
@@ -83,12 +90,18 @@ class Completed_jobs extends CI_Controller
 				'lead_category_tags' => $lead_category_tags,
 				'leadSources' => $clientLeadSource,
 				'classification' => $classification,
+				'users' => $users,
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
 				'primary_material_info' => $primary_material_info,
 				'materials' => $materials,
-				'financials' => $financials
+				'financials' => $financials,
+				'status_lead' => $status_lead,
+				'status_prospect' => $status_prospect,
+				'status_job' => $status_job,
+				'next_lead' => $next_lead,
+				'prev_lead' => $prev_lead
 			]);
 			$this->load->view('footer');
 		} else {
