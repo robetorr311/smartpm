@@ -14,7 +14,7 @@ class Notify
 
         $this->twilioClient = false;
         $this->logoUrl = 'https://smartpm.app/assets/img/logo.png';
-        
+
         if (isset($this->session->logoUrl) && $this->session->logoUrl != '') {
             $this->logoUrl = base_url('assets/company_photo/' . $this->session->logoUrl);
         }
@@ -156,6 +156,33 @@ class Notify
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
+    }
+
+    public function sendLeadAssignNotification($email, $lead_id, $lead_name, $link)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject("You have a new Lead: {$lead_name}");
+        $html_message = $this->CI->load->view('template/email/lead-assign-notification.php', [
+            'logoUrl' => $this->logoUrl,
+            'lead_id' => $lead_id,
+            'lead_name' => $lead_name,
+            'link' => $link,
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
+    public function sendLeadAssignNotificationMob($phone, $lead_id, $lead_name, $link)
+    {
+        if ($this->twilioClient) {
+            $this->twilioClient->messages->create(
+                $phone,
+                [
+                    'from' => $this->twilio_number,
+                    'body' => "Smartpm.app: You have a new Lead: {$lead_name} - Lead # {$lead_id} ( {$link} )",
+                ]
+            );
+        }
     }
 
     public function sendWelcomeUserNotification($email, $name, $logoUrl = false)

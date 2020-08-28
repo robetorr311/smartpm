@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url('leads') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
+            <a href="<?= base_url('leads/status/0') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
         </div>
     </div>
     <div class="row">
@@ -168,26 +168,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select class="form-control" id="lead" name="status">
                                         <option value="" disabled selected>Select Contract Status</option>
                                         <optgroup label="Leads">
-                                            <option value="0">New</option>
-                                            <option value="1">Appointment Scheduled</option>
-                                            <option value="2">Needs Follow Up Call</option>
-                                            <option value="3">Needs Site Visit</option>
-                                            <option value="4">Needs Estimate / Bid</option>
+                                            <?php foreach ($status_lead as $status_index) { ?>
+                                                <option value="<?php echo $status_index ?>"><?= LeadModel::statusToStr($status_index) ?></option>
+                                            <?php } ?>
                                         </optgroup>
                                         <optgroup label="Prospects">
-                                            <option value="5">Estimate Sent</option>
-                                            <option value="6">Ready to Sign / Verbal Go</option>
-                                            <option value="12">Cold</option>
-                                            <option value="13">Postponed</option>
-                                            <option value="14">Dead / Lost</option>
+                                            <?php foreach ($status_prospect as $status_index) { ?>
+                                                <option value="<?php echo $status_index ?>"><?= LeadModel::statusToStr($status_index) ?></option>
+                                            <?php } ?>
                                         </optgroup>
-                                        <optgroup label="Prospects">
-                                            <option value="7">Signed</option>
-                                            <option value="8">In Production</option>
-                                            <option value="9">Completed</option>
-                                            <option value="15">Punch List</option>
-                                            <option value="10">Closed</option>
-                                            <option value="11">Archive</option>
+                                        <optgroup label="Jobs">
+                                            <?php foreach ($status_job as $status_index) { ?>
+                                                <option value="<?php echo $status_index ?>"><?= LeadModel::statusToStr($status_index) ?></option>
+                                            <?php } ?>
                                         </optgroup>
                                     </select>
                                 </div>
@@ -242,7 +235,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div class="clearfix" style="padding: 10px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h4 class="title" style="float: left;">Sales Rep</h4>
+                                <div class="clearfix"></div>
+                                <div>
+                                    <select class="form-control lead-status" id="sales_rep_id" name="sales_rep_id">
+                                        <option value="" disabled selected>Select Sales Rep</option>
+                                        <?php foreach ($users as $user) : ?>
+                                            <option value="<?= $user->id ?>"><?= $user->name . ' (@' . $user->username . ')' ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

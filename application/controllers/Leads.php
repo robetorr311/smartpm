@@ -46,10 +46,18 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
+		$subtitle = LeadModel::statusToStr($status);
+		$next_status = is_string(LeadModel::statusToStr($status + 1)) ? $status + 1 : false;
+		$prev_status = is_string(LeadModel::statusToStr($status - 1)) ? $status - 1 : false;
+
 		$leads = $this->lead->allLeadsByStatus($status);
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/index', [
-			'leads' => $leads
+			'status' => $status,
+			'leads' => $leads,
+			'subtitle' => $subtitle,
+			'next_status' => $next_status,
+			'prev_status' => $prev_status
 		]);
 		$this->load->view('footer');
 	}
@@ -61,8 +69,12 @@ class Leads extends CI_Controller
 		$job_type_tags = LeadModel::getType();
 		$lead_status_tags = LeadModel::getStatus();
 		$lead_category_tags = LeadModel::getCategory();
+		$status_lead = LeadModel::getStatusLead();
+		$status_prospect = LeadModel::getStatusProspect();
+		$status_job = LeadModel::getStatusJob();
 		$clientLeadSource = $this->leadSource->allLeadSource();
 		$classification = $this->classification->allClassification();
+		$users = $this->user->getUserList();
 
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/create', [
@@ -70,7 +82,11 @@ class Leads extends CI_Controller
 			'lead_status_tags' => $lead_status_tags,
 			'lead_category_tags' => $lead_category_tags,
 			'leadSources' => $clientLeadSource,
-			'classification' => $classification
+			'classification' => $classification,
+			'users' => $users,
+			'status_lead' => $status_lead,
+			'status_prospect' => $status_prospect,
+			'status_job' => $status_job
 		]);
 		$this->load->view('footer');
 	}
@@ -95,6 +111,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 		$this->form_validation->set_rules('classification', 'Classification', 'trim|required|numeric');
+		$this->form_validation->set_rules('sales_rep_id', 'Sales Rep', 'trim|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
@@ -114,6 +131,7 @@ class Leads extends CI_Controller
 				'category' => $posts['category'],
 				'type' => $posts['type'],
 				'classification' => $posts['classification'],
+				'sales_rep_id' => empty($posts['sales_rep_id']) ? null : $posts['sales_rep_id'],
 				'entry_date' => date('Y-m-d h:i:s')
 			]);
 
@@ -130,6 +148,26 @@ class Leads extends CI_Controller
 					'email' => $posts['ap_email'],
 					'phone' => $posts['ap_phone']
 				]);
+
+				// send notification to sales rep
+				if (!empty($posts['sales_rep_id'])) {
+					$sales_rep = $this->user->getUserById($posts['sales_rep_id']);
+					if ($sales_rep) {
+						$client_name = $posts['firstname'] . ' ' . $posts['lastname'];
+						$lead_url = base_url('lead/' . $insert);
+
+						if ($sales_rep->cell_1 && in_array($sales_rep->notifications, [2, 4])) {
+							$this->notify = new Notify();
+							$this->notify->sendLeadAssignNotificationMob($sales_rep->cell_1, $insert, $client_name, $lead_url);
+						}
+
+						if (in_array($sales_rep->notifications, [3, 4])) {
+							$this->notify = new Notify();
+							$this->notify->sendLeadAssignNotification($sales_rep->email_id, $insert, $client_name, $lead_url);
+						}
+					}
+				}
+
 				redirect('lead/' . $insert);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Create Lead.</p>');
@@ -247,6 +285,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('materials_status', 'Materials', 'trim|numeric');
 		$this->form_validation->set_rules('labor_status', 'Labor', 'trim|numeric');
 		$this->form_validation->set_rules('permit_status', 'Permit', 'trim|numeric');
+		$this->form_validation->set_rules('sales_rep_id', 'Sales Rep', 'trim|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$_lead = $this->lead->getLeadById($id);
@@ -256,6 +295,7 @@ class Leads extends CI_Controller
 				'category' => $posts['category'],
 				'type' => $posts['type'],
 				'classification' => $posts['classification'],
+				'sales_rep_id' => empty($posts['sales_rep_id']) ? null : $posts['sales_rep_id'],
 				'completed_date' => ($_lead->status != '9' && $posts['status'] == '9' ? date('Y-m-d') : ($_lead->status == '9' && $posts['status'] == '9' ? $_lead->status : null))
 			];
 			if ($_lead->status === '8') {
@@ -334,6 +374,25 @@ class Leads extends CI_Controller
 				} else {
 					$sub_base_path = '';
 				}
+
+				if (!empty($posts['sales_rep_id']) && ($posts['sales_rep_id'] != $_lead->sales_rep_id)) {
+					$sales_rep = $this->user->getUserById($posts['sales_rep_id']);
+					if ($sales_rep) {
+						$client_name = $posts['firstname'] . ' ' . $posts['lastname'];
+						$lead_url = base_url('lead/' . $lead->id);
+
+						if ($sales_rep->cell_1 && in_array($sales_rep->notifications, [2, 4])) {
+							$this->notify = new Notify();
+							$this->notify->sendLeadAssignNotificationMob($sales_rep->cell_1, $lead->id, $client_name, $lead_url);
+						}
+
+						if (in_array($sales_rep->notifications, [3, 4])) {
+							$this->notify = new Notify();
+							$this->notify->sendLeadAssignNotification($sales_rep->email_id, $lead->id, $client_name, $lead_url);
+						}
+					}
+				}
+
 				redirect('lead/' . $sub_base_path . $id);
 			} else {
 				$this->session->set_flashdata('errors', '<p>Unable to Update Task.</p>');
@@ -351,6 +410,10 @@ class Leads extends CI_Controller
 
 		$lead = $this->lead->getLeadById($jobid);
 		if ($lead) {
+			$back_url = base_url('leads');
+			if (isset($lead->status)) $back_url = base_url('leads/status/' . $lead->status);
+			$next_lead = $this->lead->getNextLeadAfterId($lead->status, $lead->id);
+			$prev_lead = $this->lead->getPreviousLeadAfterId($lead->status, $lead->id);
 			$add_info = $this->party->getPartyByLeadId($jobid);
 			$financial_record = $this->financial->getContractDetailsByJobId($jobid);
 			$teams_detail = false;
@@ -368,8 +431,12 @@ class Leads extends CI_Controller
 			$job_type_tags = LeadModel::getType();
 			$lead_status_tags = LeadModel::getStatus();
 			$lead_category_tags = LeadModel::getCategory();
+			$status_lead = LeadModel::getStatusLead();
+			$status_prospect = LeadModel::getStatusProspect();
+			$status_job = LeadModel::getStatusJob();
 			$clientLeadSource = $this->leadSource->allLeadSource();
 			$classification = $this->classification->allClassification();
+			$users = $this->user->getUserList();
 			$aLogs = $this->activityLogs->getLogsByLeadId($jobid);
 			$vendors = $this->vendor->getVendorList();
 			$items = $this->item->getItemList();
@@ -392,12 +459,19 @@ class Leads extends CI_Controller
 				'teams' => $teams,
 				'leadSources' => $clientLeadSource,
 				'classification' => $classification,
+				'users' => $users,
 				'aLogs' => $aLogs,
 				'items' => $items,
 				'vendors' => $vendors,
 				'materials' => $materials,
 				'primary_material_info' => $primary_material_info,
-				'financials' => $financials
+				'financials' => $financials,
+				'status_lead' => $status_lead,
+				'status_prospect' => $status_prospect,
+				'status_job' => $status_job,
+				'next_lead' => $next_lead,
+				'prev_lead' => $prev_lead,
+				'back_url' => $back_url
 			]);
 			$this->load->view('footer');
 		} else {
