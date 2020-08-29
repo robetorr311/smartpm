@@ -18,7 +18,7 @@ class EstimateModel extends CI_Model
         $this->db->join('users as users_created_by', 'estimates.created_by=users_created_by.id', 'left');
         $this->db->join('jobs as client', 'estimates.client_id=client.id', 'left');
         $this->db->where('estimates.is_deleted', FALSE);
-        $this->db->order_by('estimates.created_at', 'ASC');
+        $this->db->order_by('estimates.created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -43,7 +43,7 @@ class EstimateModel extends CI_Model
         $this->db->join('jobs as client', 'estimates.client_id=client.id', 'left');
         $this->db->where('estimates.id', $id);
         $this->db->where('estimates.is_deleted', FALSE);
-        $this->db->order_by('estimates.created_at', 'ASC');
+        $this->db->order_by('estimates.created_at', 'DESC');
         $query = $this->db->get();
         $result = $query->first_row();
         return $result ? $result : false;
