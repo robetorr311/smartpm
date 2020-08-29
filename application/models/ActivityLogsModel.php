@@ -20,6 +20,7 @@ class ActivityLogsModel extends CI_Model
 	//  7 => 'change_materials_status',
 	//  8 => 'change_labor_status',
 	//  9 => 'change_permit_status',
+	//  10 => 'change_sales_rep',
 	// ];
 
 	public function getLast50()
@@ -110,6 +111,9 @@ class ActivityLogsModel extends CI_Model
 			} else if ($log->type == 9) {
 				$activity_data = json_decode($log->activity_data);
 				return $log->created_user_fullname . ' - ' . LeadModel::permitStatusToStr($activity_data->permit_status) . ' permit for <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> - ' . $log->created_at;
+			} else if ($log->type == 10) {
+				$activity_data = json_decode($log->activity_data);
+				return $log->created_user_fullname . ' - Updated Client <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> Sales Rep to "' . $activity_data->sales_rep_name . '" - ' . $log->created_at;
 			}
 		}
 

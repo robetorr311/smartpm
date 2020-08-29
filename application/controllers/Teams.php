@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Teams extends CI_Controller
 {
 
-	private $title = 'Teams';
+	private $title = 'Teams and Regions';
 
 	public function __construct()
 	{

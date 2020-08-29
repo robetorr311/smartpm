@@ -9,6 +9,7 @@ var aliases = {
     phone1: 'Cell Phone',
     email: 'Email',
     lead_source: 'Lead Source',
+    sales_rep_id: 'Sales Rep'
 };
 form.addEventListener("submit", function (e) {
     var values = validate.collectFormValues(form);
@@ -52,6 +53,9 @@ form.addEventListener("submit", function (e) {
             presence: true
         },
         classification: {
+            presence: true
+        },
+        sales_rep_id: {
             presence: true
         }
     }, {
