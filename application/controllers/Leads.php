@@ -111,7 +111,7 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 		$this->form_validation->set_rules('classification', 'Classification', 'trim|required|numeric');
-		$this->form_validation->set_rules('sales_rep_id', 'Sales Rep', 'trim|numeric');
+		$this->form_validation->set_rules('sales_rep_id', 'Sales Rep', 'trim|required|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$posts = $this->input->post();
@@ -131,7 +131,7 @@ class Leads extends CI_Controller
 				'category' => $posts['category'],
 				'type' => $posts['type'],
 				'classification' => $posts['classification'],
-				'sales_rep_id' => empty($posts['sales_rep_id']) ? null : $posts['sales_rep_id'],
+				'sales_rep_id' => $posts['sales_rep_id'],
 				'entry_date' => date('Y-m-d h:i:s')
 			]);
 
@@ -281,11 +281,11 @@ class Leads extends CI_Controller
 		$this->form_validation->set_rules('category', 'Category', 'trim|required|numeric');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required|numeric');
 		$this->form_validation->set_rules('classification', 'Classification', 'trim|required|numeric');
+		$this->form_validation->set_rules('sales_rep_id', 'Sales Rep', 'trim|required|numeric');
 		$this->form_validation->set_rules('dumpster_status', 'Dumpster', 'trim|numeric');
 		$this->form_validation->set_rules('materials_status', 'Materials', 'trim|numeric');
 		$this->form_validation->set_rules('labor_status', 'Labor', 'trim|numeric');
 		$this->form_validation->set_rules('permit_status', 'Permit', 'trim|numeric');
-		$this->form_validation->set_rules('sales_rep_id', 'Sales Rep', 'trim|numeric');
 
 		if ($this->form_validation->run() == TRUE) {
 			$_lead = $this->lead->getLeadById($id);
@@ -295,7 +295,7 @@ class Leads extends CI_Controller
 				'category' => $posts['category'],
 				'type' => $posts['type'],
 				'classification' => $posts['classification'],
-				'sales_rep_id' => empty($posts['sales_rep_id']) ? null : $posts['sales_rep_id'],
+				'sales_rep_id' => $posts['sales_rep_id'],
 				'completed_date' => ($_lead->status != '9' && $posts['status'] == '9' ? date('Y-m-d') : ($_lead->status == '9' && $posts['status'] == '9' ? $_lead->status : null))
 			];
 			if ($_lead->status === '8') {
@@ -377,6 +377,16 @@ class Leads extends CI_Controller
 
 				if (!empty($posts['sales_rep_id']) && ($posts['sales_rep_id'] != $_lead->sales_rep_id)) {
 					$sales_rep = $this->user->getUserById($posts['sales_rep_id']);
+					// ==================== Add to Activity Logs ====================
+					$al_insert = $this->activityLogs->insert([
+						'module' => 0,
+						'module_id' => $id,
+						'type' => 10,
+						'activity_data' => json_encode([
+							'sales_rep_name' => $sales_rep->first_name . ' ' . $sales_rep->last_name . ' (@' . $sales_rep->username . ')'
+						])
+					]);
+					// ==================== Add to Activity Logs ====================
 					if ($sales_rep) {
 						$client_name = $posts['firstname'] . ' ' . $posts['lastname'];
 						$lead_url = base_url('lead/' . $lead->id);

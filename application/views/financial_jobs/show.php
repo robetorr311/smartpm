@@ -534,7 +534,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="header">
-                    <h4 class="title" style="float: left;">Sales Rep</h4>
+                    <h4 class="title" style="float: left;">Sales Rep<span class="red-mark">*</span></h4>
                     <span class="status">
                         <?= empty($job->sales_rep_name) ? '-' : $job->sales_rep_name ?>
                     </span>

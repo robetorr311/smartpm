@@ -220,12 +220,12 @@
                             <ul class="nav">
                                 <li class="nav-item ">
                                     <a class="nav-link" href="<?= base_url('setting') ?>">
-                                        <span class="sidebar-normal"> Setting </span>
+                                        <span class="sidebar-normal">Setting</span>
                                     </a>
                                 </li>
                                 <li class="nav-item ">
                                     <a class="nav-link" href="<?= base_url('teams') ?>">
-                                        <span class="sidebar-normal"> Teams</span>
+                                        <span class="sidebar-normal">Teams and Regions</span>
                                     </a>
                                 </li>
                                 <li class="nav-item ">

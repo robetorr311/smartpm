@@ -242,7 +242,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <h4 class="title" style="float: left;">Sales Rep</h4>
+                                <h4 class="title" style="float: left;">Sales Rep<span class="red-mark">*</span></h4>
                                 <div class="clearfix"></div>
                                 <div>
                                     <select class="form-control lead-status" id="sales_rep_id" name="sales_rep_id">
