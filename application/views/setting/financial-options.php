@@ -389,6 +389,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group text-right">
+                                        <label><input type="checkbox" name="is_default" value="yes"> Default</label> &nbsp;
                                         <button type="submit" class="btn btn-info btn-fill">Create</button>
                                     </div>
                                 </div>
@@ -408,6 +409,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group text-right">
+                                        <label><input type="checkbox" name="is_default" value="yes"> Default</label> &nbsp;
                                         <button onclick="cancelEdit('state')" type="button" class="btn btn-info btn-fill">Cancel</button>
                                         <button type="submit" class="btn btn-info btn-fill">Update</button>
                                     </div>
@@ -426,8 +428,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php if (!empty($states)) : ?>
                                     <?php foreach ($states as $state) : ?>
                                         <tr>
-                                            <td><?= $state->name ?></td>
-                                            <td class="text-center"><a onclick="editAction('<?= $state->id ?>', '<?= $state->name ?>', 'state', 'state')" class="text-warning cursor-pointer" style="margin-right: 10px;"><i class="fa fa-pencil"></i></a><a href="<?= base_url('setting/financial-options/state/' . $state->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
+                                            <td><?= $state->name . ($state->is_default ? ' <small>(default)</small>' : '') ?></td>
+                                            <td class="text-center"><a onclick="editActionStatus('<?= $state->id ?>', '<?= $state->name ?>', '<?= $state->is_default ?>', 'state', 'state')" class="text-warning cursor-pointer" style="margin-right: 10px;"><i class="fa fa-pencil"></i></a><a href="<?= base_url('setting/financial-options/state/' . $state->id . '/delete') ?>" data-method="POST" class="text-danger"><i class="fa fa-trash-o"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
@@ -457,5 +459,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $('#' + idPrefix + 'Edit').hide();
         $('#' + idPrefix + 'Insert').show();
 
+    }
+
+    function editActionStatus(id, name, isDefault, idPrefix, optionName) {
+        $('#' + idPrefix + 'Insert').hide();
+        $('#' + idPrefix + 'Edit').show();
+        $('#' + idPrefix + 'Edit form').attr('action', '<?= base_url('setting/financial-options') ?>/' + optionName + '/' + id + '/update');
+        $('#' + idPrefix + 'Edit form input[name="name"]').val(name);
+        $('#' + idPrefix + 'Edit form input[name="is_default"]').prop('checked', (isDefault == '1'));
+        $('#' + idPrefix + 'Edit form input[name="name"]').focus();
     }
 </script>

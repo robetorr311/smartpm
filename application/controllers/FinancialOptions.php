@@ -298,7 +298,8 @@ class FinancialOptions extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $data = $this->input->post();
             $insert = $this->state->insert([
-                'name' => $data['name']
+                'name' => $data['name'],
+                'is_default' => ($data['is_default'] == 'yes')
             ]);
             if (!$insert) {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Financial Option State.</p>');
@@ -317,8 +318,12 @@ class FinancialOptions extends CI_Controller
 
         if ($this->form_validation->run() == TRUE) {
             $data = $this->input->post();
+            if ($data['is_default'] == 'yes') {
+                $this->state->clearDefault();
+            }
             $update = $this->state->update($id, [
-                'name' => $data['name']
+                'name' => $data['name'],
+                'is_default' => ($data['is_default'] == 'yes')
             ]);
             if (!$update) {
                 $this->session->set_flashdata('errors', '<p>Unable to Update Financial Option State.</p>');

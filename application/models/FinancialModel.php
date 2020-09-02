@@ -42,8 +42,19 @@ class FinancialModel extends CI_Model
     public function allFinancialsForReceipt($jobId)
     {
         $this->db->from($this->table);
-        $this->db->where_in('type', [2, 5, 6, 7]);
-        $this->db->where_in('job_id', $jobId);
+        $this->db->where_in('type', [2, 6, 7]);
+        $this->db->where('job_id', $jobId);
+        $this->db->where('is_deleted', FALSE);
+        $this->db->order_by('created_at', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function allContractPriceFinancialsForReceipt($jobId)
+    {
+        $this->db->from($this->table);
+        $this->db->where('type', 5);
+        $this->db->where('job_id', $jobId);
         $this->db->where('is_deleted', FALSE);
         $this->db->order_by('created_at', 'ASC');
         $query = $this->db->get();

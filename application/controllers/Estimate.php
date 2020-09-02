@@ -38,10 +38,12 @@ class Estimate extends CI_Controller
                 $estimates = $this->estimate->allEstimatesByClientId($clientId);
                 $financial_record = $this->financial->getContractDetailsByJobId($clientId);
                 $primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($clientId);
+                $contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($clientId);
                 $financials = $this->financial->allFinancialsForReceipt($clientId);
                 $vars['lead'] = $lead;
                 $vars['financial_record'] = $financial_record;
                 $vars['primary_material_info'] = $primary_material_info;
+				$vars['contract_price_financials'] = $contract_price_financials;
                 $vars['financials'] = $financials;
             } else {
                 $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
@@ -298,10 +300,12 @@ class Estimate extends CI_Controller
                 $estimate = $this->estimate->getEstimateByClientIdAndId($clientId, $id);
                 $financial_record = $this->financial->getContractDetailsByJobId($clientId);
                 $primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($clientId);
+                $contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($clientId);
                 $financials = $this->financial->allFinancialsForReceipt($clientId);
                 $vars['lead'] = $lead;
                 $vars['financial_record'] = $financial_record;
                 $vars['primary_material_info'] = $primary_material_info;
+				$vars['contract_price_financials'] = $contract_price_financials;
                 $vars['financials'] = $financials;
             } else {
                 $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');

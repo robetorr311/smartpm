@@ -25,6 +25,7 @@ class Reports extends CI_Controller
 		$financial_record = $this->financial->getContractDetailsByJobId($id);
 		$allreport = $this->roofing->allProject(['job_id' => $id, 'active' => 1]);
 		$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($id);
+		$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($id);
 		$financials = $this->financial->allFinancialsForReceipt($id);
 
 		$this->load->view('header', ['title' => 'All Reports']);
@@ -34,6 +35,7 @@ class Reports extends CI_Controller
 			'allreport' => $allreport,
 			'jobid' => $id,
 			'primary_material_info' => $primary_material_info,
+			'contract_price_financials' => $contract_price_financials,
 			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);

@@ -66,6 +66,7 @@ class Labor_jobs extends CI_Controller
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
 			$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($jobid);
+			$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($jobid);
 			$financials = $this->financial->allFinancialsForReceipt($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
@@ -89,6 +90,7 @@ class Labor_jobs extends CI_Controller
 				'vendors' => $vendors,
 				'materials' => $materials,
 				'primary_material_info' => $primary_material_info,
+				'contract_price_financials' => $contract_price_financials,
 				'financials' => $financials,
 				'status_lead' => $status_lead,
 				'status_prospect' => $status_prospect,

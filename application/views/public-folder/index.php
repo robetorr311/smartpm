@@ -30,6 +30,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <table style="width: 100%;">
                                 <?php
                                 $balance = 0;
+                                if (!empty($contract_price_financials)) {
+                                    foreach ($contract_price_financials as $financial) {
+                                        $balance += $financial->amount;
+                                ?>
+                                        <tr>
+                                            <td><?= FinancialModel::typeToStr($financial->type) ?></td>
+                                            <td class="text-right"><b><?= (floatval($financial->amount) < 0 ? '- $' . number_format(abs($financial->amount), 2) : '$' . number_format($financial->amount, 2)) ?></b></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <tr>
+                                        <td><?= FinancialModel::typeToStr(5) ?></td>
+                                        <td class="text-right"><b>$0.00</b></td>
+                                    </tr>
+                                <?php
+                                }
                                 foreach ($financials as $financial) {
                                     $balance += $financial->amount;
                                 ?>

@@ -118,7 +118,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Accounting Code<span class="red-mark">*</span></label>
+                                    <label>Accounting Code</label>
                                     <select name="accounting_code" class="form-control">
                                         <option value="" disabled selected>Select Accounting Code</option>
                                         <?php foreach ($accountingCodes as $accountingCode) {
@@ -129,7 +129,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Method<span class="red-mark">*</span></label>
+                                    <label>Method</label>
                                     <select name="method" class="form-control">
                                         <option value="" disabled selected>Select Method</option>
                                         <?php foreach ($methods as $method) {
@@ -140,7 +140,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Bank Account<span class="red-mark">*</span></label>
+                                    <label>Bank Account</label>
                                     <select name="bank_account" class="form-control">
                                         <option value="" disabled selected>Select Bank Account</option>
                                         <?php foreach ($bankAccounts as $bankAccount) {
@@ -157,7 +157,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select name="state" class="form-control">
                                         <option value="" disabled selected>Select State</option>
                                         <?php foreach ($states as $state) {
-                                            echo '<option value="' . $state->id . '">' . $state->name . '</option>';
+                                            echo '<option value="' . $state->id . '"' . ($state->is_default ? ' selected' : '') . '>' . $state->name . '</option>';
                                         } ?>
                                     </select>
                                 </div>
