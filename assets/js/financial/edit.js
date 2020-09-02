@@ -51,19 +51,16 @@ form.addEventListener("submit", function (e) {
             }
         },
         accounting_code: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         method: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         bank_account: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }

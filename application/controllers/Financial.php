@@ -94,14 +94,19 @@ class Financial extends CI_Controller
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
         $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
         $this->form_validation->set_rules('subtype', 'Sub Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
-        $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|required|numeric|in_list[' . $accountingCodeKeys . ']');
-        $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
-        $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');
+        $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|numeric|in_list[' . $accountingCodeKeys . ']');
+        $this->form_validation->set_rules('method', 'Method', 'trim|numeric|in_list[' . $methodKeys . ']');
+        $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|numeric|in_list[' . $bankAccountKeys . ']');
         $this->form_validation->set_rules('state', 'State', 'trim|required|numeric|in_list[' . $stateKeys . ']');
         $this->form_validation->set_rules('notes', 'Notes', 'trim');
 
         if ($this->form_validation->run() == TRUE) {
             $financialData = $this->input->post();
+
+            if (($financialData['type'] == '2' || $financialData['type'] == '7') && $financialData['amount'] > 0) {
+                $financialData['amount'] = $financialData['amount'] * -1;
+            }
+
             $insertData = [
                 'party' => $financialData['party'],
                 'transaction_date' => $financialData['transaction_date'],
@@ -109,9 +114,9 @@ class Financial extends CI_Controller
                 'amount' => $financialData['amount'],
                 'type' => $financialData['type'],
                 'subtype' => $financialData['subtype'],
-                'accounting_code' => $financialData['accounting_code'],
-                'method' => $financialData['method'],
-                'bank_account' => $financialData['bank_account'],
+                'accounting_code' => empty($financialData['accounting_code']) ? null : $financialData['accounting_code'],
+                'method' => empty($financialData['method']) ? null : $financialData['method'],
+                'bank_account' => empty($financialData['bank_account']) ? null : $financialData['bank_account'],
                 'state' => $financialData['state'],
                 'notes' => $financialData['notes']
             ];
@@ -192,28 +197,31 @@ class Financial extends CI_Controller
             $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|numeric|in_list[' . $vendorKeys . ']');
             $this->form_validation->set_rules('client_id', 'Party Name', 'trim|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('transaction_date', 'Transaction Date', 'trim|required');
-            $this->form_validation->set_rules('job_id', 'Job', 'trim|required|numeric|in_list[' . $jobKeys . ']');
             $this->form_validation->set_rules('amount', 'Amount', 'trim|required|numeric');
             $this->form_validation->set_rules('type', 'Type', 'trim|required|numeric|in_list[' . $typeKeys . ']');
             $this->form_validation->set_rules('subtype', 'Sub Type', 'trim|required|numeric|in_list[' . $subtypeKeys . ']');
-            $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|required|numeric|in_list[' . $accountingCodeKeys . ']');
-            $this->form_validation->set_rules('method', 'Method', 'trim|required|numeric|in_list[' . $methodKeys . ']');
-            $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|required|numeric|in_list[' . $bankAccountKeys . ']');
+            $this->form_validation->set_rules('accounting_code', 'Accounting Code', 'trim|numeric|in_list[' . $accountingCodeKeys . ']');
+            $this->form_validation->set_rules('method', 'Method', 'trim|numeric|in_list[' . $methodKeys . ']');
+            $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|numeric|in_list[' . $bankAccountKeys . ']');
             $this->form_validation->set_rules('state', 'State', 'trim|required|numeric|in_list[' . $stateKeys . ']');
             $this->form_validation->set_rules('notes', 'Notes', 'trim');
 
             if ($this->form_validation->run() == TRUE) {
                 $financialData = $this->input->post();
+
+                if (($financialData['type'] == '2' || $financialData['type'] == '7') && $financialData['amount'] > 0) {
+                    $financialData['amount'] = $financialData['amount'] * -1;
+                }
+
                 $updateData = [
                     'party' => $financialData['party'],
                     'transaction_date' => $financialData['transaction_date'],
-                    'job_id' => $financialData['job_id'],
                     'amount' => $financialData['amount'],
                     'type' => $financialData['type'],
                     'subtype' => $financialData['subtype'],
-                    'accounting_code' => $financialData['accounting_code'],
-                    'method' => $financialData['method'],
-                    'bank_account' => $financialData['bank_account'],
+                    'accounting_code' => empty($financialData['accounting_code']) ? null : $financialData['accounting_code'],
+                    'method' => empty($financialData['method']) ? null : $financialData['method'],
+                    'bank_account' => empty($financialData['bank_account']) ? null : $financialData['bank_account'],
                     'state' => $financialData['state'],
                     'notes' => $financialData['notes']
                 ];
@@ -329,8 +337,29 @@ class Financial extends CI_Controller
                 $pdfContent[] = '<div>';
                 $pdfContent[] = '<table border="1" cellpadding="5" style="border-collapse: collapse;"><tr><th style="width: 120px; background-color: #777777; color: #FFFFFF; text-align: left;">Date</th><th style="width: 295px; background-color: #777777; color: #FFFFFF; text-align: left;">Description</th><th style="width: 120px; background-color: #777777; color: #FFFFFF; text-align: right;">Amount</th></tr>';
 
+                $contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($financial->job_id);
                 $financials = $this->financial->allFinancialsForReceipt($financial->job_id);
                 $balance = 0;
+                if (!empty($contract_price_financials)) {
+                    foreach ($contract_price_financials as $financial) {
+                        $pdfContent[] = '<tr>';
+                        $pdfContent[] = '<td>' . date('M j, Y', strtotime($financial->transaction_date)) . '</td>';
+                        $pdfContent[] = '<td>' . FinancialModel::typeToStr($financial->type) . '</td>';
+                        $balance += $financial->amount;
+                        if (floatval($financial->amount) < 0) {
+                            $pdfContent[] = '<td style="text-align: right; color: #FF0000;">- $' . number_format(abs($financial->amount), 2) . '</td>';
+                        } else {
+                            $pdfContent[] = '<td style="text-align: right;">$' . number_format($financial->amount, 2) . '</td>';
+                        }
+                        $pdfContent[] = '</tr>';
+                    }
+                } else {
+                    $pdfContent[] = '<tr>';
+                    $pdfContent[] = '<td>' . date('M j, Y', time()) . '</td>';
+                    $pdfContent[] = '<td>' . FinancialModel::typeToStr(5) . '</td>';
+                    $pdfContent[] = '<td style="text-align: right;">$0.00</td>';
+                    $pdfContent[] = '</tr>';
+                }
                 if (!empty($financials)) {
                     foreach ($financials as $financial) {
                         $pdfContent[] = '<tr>';

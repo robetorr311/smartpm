@@ -29,6 +29,7 @@ class Client_notice extends CI_Controller
         $notices = $this->client_notice->allNotices($job_id);
         $noticeTypes = $this->noticeType->allNoticeTypes();
         $primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($job_id);
+        $contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($job_id);
         $financials = $this->financial->allFinancialsForReceipt($job_id);
 
 		$this->load->view('header', [
@@ -40,6 +41,7 @@ class Client_notice extends CI_Controller
             'notices' => $notices,
             'noticeTypes' => $noticeTypes,
             'primary_material_info' => $primary_material_info,
+            'contract_price_financials' => $contract_price_financials,
             'financials' => $financials,
             'sub_base_path' => $sub_base_path
 		]);

@@ -26,6 +26,7 @@ class PublicFolder extends CI_Controller
 		$financial_record = $this->financial->getContractDetailsByJobId($job_id);
 		$files = $this->publicFolder->allPublicFilesByJobId($job_id);
 		$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($job_id);
+		$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($job_id);
 		$financials = $this->financial->allFinancialsForReceipt($job_id);
 
 		$this->load->view('header', [
@@ -38,6 +39,7 @@ class PublicFolder extends CI_Controller
 			'jobid' => $job_id,
 			'company_code' => $this->session->userdata('company_code'),
 			'primary_material_info' => $primary_material_info,
+			'contract_price_financials' => $contract_price_financials,
 			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);

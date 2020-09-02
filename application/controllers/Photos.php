@@ -29,6 +29,7 @@ class Photos extends CI_Controller
 		$count = $this->JobsPhotoModel->getCount($params);
 		$imgs  = $this->JobsPhotoModel->allPhoto($params);
 		$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($job_id);
+		$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($job_id);
 		$financials = $this->financial->allFinancialsForReceipt($job_id);
 
 		$this->load->view('header', ['title' => 'Add Photo']);
@@ -38,6 +39,7 @@ class Photos extends CI_Controller
 			'count' => $count,
 			'imgs' => $imgs,
 			'jobid' => $job_id,
+			'contract_price_financials' => $contract_price_financials,
 			'financials' => $financials,
 			'primary_material_info' => $primary_material_info,
 			'sub_base_path' => $sub_base_path

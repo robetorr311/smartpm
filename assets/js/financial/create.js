@@ -51,19 +51,16 @@ form.addEventListener("submit", function (e) {
             }
         },
         accounting_code: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         method: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
         },
         bank_account: {
-            presence: true,
             numericality: {
                 notValid: ' contains invalid value'
             }
@@ -116,10 +113,23 @@ $(document).ready(function () {
     $('form#financial_create #party_vendor').change(function () {
         $('form#financial_create #vendor_id_row').show();
         $('form#financial_create #client_id_row').hide();
+        $('form#financial_create #job_id').val('');
+        $('form#financial_create #job_id').prop('disabled', false);
+        $('form#financial_create #job_id_hidden').remove();
+        $('form#financial_create #job_id').change();
     });
     $('form#financial_create #party_client').change(function () {
         $('form#financial_create #client_id_row').show();
         $('form#financial_create #vendor_id_row').hide();
+        var selectedClient = $('form#financial_create #client_id').val();
+        $('form#financial_create #job_id').val(selectedClient);
+        $('form#financial_create #job_id').prop('disabled', true);
+        if ($('form#financial_create #job_id_hidden').length) {
+            $('form#financial_create #job_id_hidden').val(selectedClient);
+        } else {
+            $('form#financial_create #job_id').after('<input id="job_id_hidden" type="hidden" name="job_id" value="' + selectedClient + '" />');
+        }
+        $('form#financial_create #job_id').change();
     });
 
     $('form#financial_create #vendor_id').select2({
@@ -130,5 +140,17 @@ $(document).ready(function () {
     });
     $('form#financial_create #job_id').select2({
         width: '100%'
+    });
+
+    $('form#financial_create #client_id').change(function () {
+        var selectedClient = $(this).val();
+        $('form#financial_create #job_id').val(selectedClient);
+        $('form#financial_create #job_id').prop('disabled', true);
+        if ($('form#financial_create #job_id_hidden').length) {
+            $('form#financial_create #job_id_hidden').val(selectedClient);
+        } else {
+            $('form#financial_create #job_id').after('<input id="job_id_hidden" type="hidden" name="job_id" value="' + selectedClient + '" />');
+        }
+        $('form#financial_create #job_id').change();
     });
 });

@@ -34,4 +34,12 @@ class StatesModel extends CI_Model
         ]);
         return $update;
     }
+
+    public function clearDefault()
+    {
+        $this->db->where('is_default', true);
+        $this->db->update($this->table, [
+            'is_default' => false
+        ]);
+    }
 }

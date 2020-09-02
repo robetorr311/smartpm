@@ -213,7 +213,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Job<span class="red-mark">*</span></label>
-                                    <select id="job_id" name="job_id" class="form-control">
+                                    <select id="job_id" name="job_id" class="form-control" disabled>
                                         <option value="" disabled<?= (empty($financial->job_id) ? ' selected' : '') ?>>Select Job</option>
                                         <?php foreach ($jobs as $job) {
                                             echo '<option value="' . $job->id . '"' . ($financial->job_id == $job->id ? ' selected' : '') . '>' . (1600 + $job->id) . ' - ' . $job->name . '</option>';
@@ -255,7 +255,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Accounting Code<span class="red-mark">*</span></label>
+                                    <label>Accounting Code</label>
                                     <select name="accounting_code" class="form-control">
                                         <option value="" disabled<?= (empty($financial->accounting_code) ? ' selected' : '') ?>>Select Accounting Code</option>
                                         <?php foreach ($accountingCodes as $accountingCode) {
@@ -266,7 +266,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Method<span class="red-mark">*</span></label>
+                                    <label>Method</label>
                                     <select name="method" class="form-control">
                                         <option value="" disabled<?= (empty($financial->method) ? ' selected' : '') ?>>Select Method</option>
                                         <?php foreach ($methods as $method) {
@@ -277,7 +277,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Bank Account<span class="red-mark">*</span></label>
+                                    <label>Bank Account</label>
                                     <select name="bank_account" class="form-control">
                                         <option value="" disabled<?= (empty($financial->bank_account) ? ' selected' : '') ?>>Select Bank Account</option>
                                         <?php foreach ($bankAccounts as $bankAccount) {

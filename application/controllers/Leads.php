@@ -452,6 +452,7 @@ class Leads extends CI_Controller
 			$items = $this->item->getItemList();
 			$materials = $this->lead_material->getMaterialsByLeadId($jobid);
 			$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($jobid);
+			$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($jobid);
 			$financials = $this->financial->allFinancialsForReceipt($jobid);
 
 			$this->load->view('header', ['title' => $this->title]);
@@ -475,6 +476,7 @@ class Leads extends CI_Controller
 				'vendors' => $vendors,
 				'materials' => $materials,
 				'primary_material_info' => $primary_material_info,
+				'contract_price_financials' => $contract_price_financials,
 				'financials' => $financials,
 				'status_lead' => $status_lead,
 				'status_prospect' => $status_prospect,
@@ -510,6 +512,7 @@ class Leads extends CI_Controller
 			$notes = $this->lead_note->getNotesByLeadId($leadId);
 			$users = $this->user->getUserList();
 			$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($leadId);
+			$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($leadId);
 			$financials = $this->financial->allFinancialsForReceipt($leadId);
 
 			$this->load->view('header', ['title' => $this->title . ' Notes']);
@@ -519,6 +522,7 @@ class Leads extends CI_Controller
 				'notes' => $notes,
 				'users' => $users,
 				'primary_material_info' => $primary_material_info,
+				'contract_price_financials' => $contract_price_financials,
 				'financials' => $financials,
 				'sub_base_path' => $sub_base_path
 			]);
@@ -682,6 +686,7 @@ class Leads extends CI_Controller
 				$note_replies = $this->lead_note_reply->getRepliesByNoteId($noteId);
 				$users = $this->user->getUserList();
 				$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($leadId);
+				$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($leadId);
 				$financials = $this->financial->allFinancialsForReceipt($leadId);
 
 				$this->load->view('header', ['title' => $this->title . ' Notes']);
@@ -691,6 +696,7 @@ class Leads extends CI_Controller
 					'note' => $note,
 					'note_replies' => $note_replies,
 					'users' => $users,
+					'contract_price_financials' => $contract_price_financials,
 					'financials' => $financials,
 					'primary_material_info' => $primary_material_info,
 					'sub_base_path' => $sub_base_path

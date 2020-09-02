@@ -29,6 +29,7 @@ class Docs extends CI_Controller
 		$params['is_active'] = 1;
 		$docs = $this->Common_model->get_all_where('jobs_doc', $params);
 		$primary_material_info = $this->lead_material->getPrimaryMaterialInfoByLeadId($job_id);
+		$contract_price_financials = $this->financial->allContractPriceFinancialsForReceipt($job_id);
 		$financials = $this->financial->allFinancialsForReceipt($job_id);
 		
 		$this->load->view('header', ['title' => 'Add Doucment']);
@@ -38,6 +39,7 @@ class Docs extends CI_Controller
 			'docs' => $docs,
 			'jobid' => $job_id,
 			'primary_material_info' => $primary_material_info,
+			'contract_price_financials' => $contract_price_financials,
 			'financials' => $financials,
 			'sub_base_path' => $sub_base_path
 		]);
