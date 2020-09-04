@@ -67,10 +67,32 @@ class Client_notice extends CI_Controller
             if (!$insert) {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Notice.</p>');
             } else {
+
+                // Get last inserted notice id
+                $inserted_notice_id = $this->db->insert_id();
+               
+                $this->load->Model('ClientNoticeTypeModel');
+                $notice_type_details = $this->ClientNoticeTypeModel->getNoticeTypeById($notice['type']);
+                
                 $lead = $this->lead->getLeadById($job_id);
                 if (!empty($lead->email)) {
                     $this->notify = new Notify();
-                    $this->notify->sendClientNotice($lead->email, $notice['type'], $notice['note']);
+                    // Email details to send
+                    $emaildata = [];
+                    $admindata = $this->session->userdata('admindata');
+                    $emaildata['company_name'] = $this->session->userdata('company_name');
+                    $emaildata['logoUrl'] = base_url(COMPANY_ASSETS_FOLDER. $this->session->userdata('logoUrl'));
+                    $emaildata['notice_type'] = $notice_type_details['name'];
+                    $emaildata['notice_details'] = $notice;
+                    $emaildata['theme_color'] = $admindata['color'];
+                    $emaildata['to_email']  = $lead->email;
+                    $mail_status = $this->notify->sendClientNotice($emaildata);
+                    
+                    if($mail_status == 1) {
+                        $this->session->set_flashdata('success', 'Notice has been sent successfully.');
+                    } else {
+                        $this->session->set_flashdata('errors', 'There is an error encountered! Please try again.');
+                    }
                 }
             }
         } else {

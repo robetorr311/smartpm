@@ -28,13 +28,24 @@ class Notify
             }
         }
 
+        // $this->CI->email->initialize([
+        //     'protocol' => 'smtp',
+        //     'smtp_crypto' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_crypto : getenv('EMAIL_SMTP_CRYPTO'),
+        //     'smtp_host' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_host : getenv('EMAIL_SMTP_HOST'),
+        //     'smtp_port' => intval((isset($smtpSettings) && $smtpSettings->smtp_port != 0) ? $smtpSettings->smtp_port : getenv('EMAIL_SMTP_PORT')),
+        //     'smtp_user' => (isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER'),
+        //     'smtp_pass' => (isset($smtpSettings) && !empty($smtpSettings->smtp_pass)) ? $smtpSettings->smtp_pass : getenv('EMAIL_SMTP_PASS'),
+        //     'mailtype' => 'html'
+        // ]);
+
+        // For mailtrap
         $this->CI->email->initialize([
             'protocol' => 'smtp',
-            'smtp_crypto' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_crypto : getenv('EMAIL_SMTP_CRYPTO'),
-            'smtp_host' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_host : getenv('EMAIL_SMTP_HOST'),
-            'smtp_port' => intval((isset($smtpSettings) && $smtpSettings->smtp_port != 0) ? $smtpSettings->smtp_port : getenv('EMAIL_SMTP_PORT')),
-            'smtp_user' => (isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER'),
-            'smtp_pass' => (isset($smtpSettings) && !empty($smtpSettings->smtp_pass)) ? $smtpSettings->smtp_pass : getenv('EMAIL_SMTP_PASS'),
+            'smtp_crypto' => getenv('EMAIL_SMTP_CRYPTO'),
+            'smtp_host' => getenv('EMAIL_SMTP_HOST'),
+            'smtp_port' => getenv('EMAIL_SMTP_PORT'),
+            'smtp_user' => getenv('EMAIL_SMTP_USER'),
+            'smtp_pass' => getenv('EMAIL_SMTP_PASS'),
             'mailtype' => 'html'
         ]);
         $this->CI->email->set_newline("\r\n");
@@ -197,16 +208,27 @@ class Notify
         $this->CI->email->send();
     }
 
-    public function sendClientNotice($email, $type, $note)
+    /*** To send email notification for notice ***/
+    
+    public function sendClientNotice($emaildata = array())
     {
-        $this->CI->email->to($email);
-        $this->CI->email->subject('Notice');
-        $html_message = $this->CI->load->view('template/email/client-notice-notification.php', [
-            'logoUrl' => $this->logoUrl,
-            'type' => $type,
-            'note' => $note
-        ], true);
-        $this->CI->email->message($html_message);
-        $this->CI->email->send();
+        $result = 0;
+
+        if(!empty($emaildata)) {
+
+            $this->CI->email->to($emaildata['to_email']);
+            $subject = 'Notice from '.$emaildata['company_name'];
+            $this->CI->email->subject($subject);
+            //re($emaildata);
+            $html_message = $this->CI->load->view('template/email/client-notice-notification.php', [
+                'emaildata' => $emaildata,
+            ], true);
+            $this->CI->email->message($html_message);
+
+            if($this->CI->email->send()) {
+                $result = 1;
+            }
+        }
+        return $result;
     }
 }

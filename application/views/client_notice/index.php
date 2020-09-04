@@ -9,6 +9,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 echo $this->session->flashdata('errors');
                 echo '</div>';
             }
+
+            if (!empty($this->session->flashdata('success'))) {
+                echo '<div class="alert alert-success fade in alert-dismissable" title="Error:"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>';
+                echo $this->session->flashdata('success');
+                echo '</div>';
+            }
             ?>
         </div>
     </div>
