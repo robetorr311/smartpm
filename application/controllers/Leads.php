@@ -51,7 +51,9 @@ class Leads extends CI_Controller
 		$data['limit'] = !empty($postdata['length']) ? $postdata['length'] : DEFAULT_PAGINATION_LIMIT;
 		$data['offset'] = !empty($postdata['start']) ? $postdata['start'] : 0;
 		$data['searchVaule'] = !empty($postdata['search']['value']) ? $postdata['search']['value'] : ''; // Search value
-
+		$columnIndex = !empty($postdata['order'][0]['column']) ? $postdata['order'][0]['column'] : 4; // Column index
+		$data['columnName'] = $postdata['columns'][$columnIndex]['data']; // Column name
+     	$data['columnSortOrder'] = !empty($postdata['order'][0]['dir']) ? $postdata['order'][0]['dir'] : 'desc'; // asc or desc
 		$total_result = $this->lead->getLeads($data,$total_records = 1);
 		$results = $this->lead->getLeads($data);
 		// r($total_result);

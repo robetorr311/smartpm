@@ -82,9 +82,9 @@ $(document).ready( function () {
               
                     { data: "firstname" },
 					{ data: "lastname" },
-					{ data: "status" },
-					{ data: "type"},
-					{ data: "DT_RowId", 
+					{ data: "status", sorting: false },
+					{ data: "type", sorting: false },
+					{ data: "DT_RowId", sorting: false,
 						render : function(DT_RowId) {
 							var url = "<?php echo base_url('lead/') ?>"+ DT_RowId;
 							return '<a href="'+url+'" data-toggle ="tooltip" data-placement="top" class="text-info view-icon" title="View"><i class="fa fa-eye"></i></a>';

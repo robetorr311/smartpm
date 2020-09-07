@@ -86,11 +86,6 @@ class LeadModel extends CI_Model
             $this->db->limit($data['limit'],$data['offset']);
         }
         // Search
-        // $searchQuery = '';
-        // if($data['searchVaule'] != ''){
-        //     $searchQuery = " (firstname like '%".$data['searchVaule']."%' or lastname like '%".$data['searchVaule']."%') ";
-        // }
-    
         $con= mysqli_connect(getenv('DB_HOSTNAME'),getenv('DB_USERNAME'),getenv('DB_PASSWORD'),getenv('DB_PASSWORD'));
         $searchQuery = '';
         if($total_reocrds == '' && !empty($data['searchVaule'])) {
@@ -108,6 +103,7 @@ class LeadModel extends CI_Model
         $query = $this->db->select('id as DT_RowId,firstname,lastname,status,type')
                  ->from($this->table)
                  ->where('is_deleted',0)
+                 ->order_by($data['columnName'], $data['columnSortOrder'])
                  ->get();
 
         if($query->num_rows() > 0) {
