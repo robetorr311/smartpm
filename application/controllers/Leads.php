@@ -34,38 +34,14 @@ class Leads extends CI_Controller
 	{
 		authAccess();
 
-		//$leads = $this->lead->allLeads();
+		$leads = $this->lead->allLeads();
 		$this->load->view('header', ['title' => $this->title]);
-		$this->load->view('leads/index');
+		$this->load->view('leads/index', [
+			'leads' => $leads
+		]);
 		$this->load->view('footer');
 	}
 
-	/*** Get leads data in to datatable ***/
-
-	public function list()
-	{
-		authAccess();
-		$postdata = $this->input->post();
-		
-		$data["status"] = !empty($postdata['status_id']) ? $postdata['status_id'] : ''; 
-		$data['limit'] = !empty($postdata['length']) ? $postdata['length'] : DEFAULT_PAGINATION_LIMIT;
-		$data['offset'] = !empty($postdata['start']) ? $postdata['start'] : 0;
-		$data['searchVaule'] = !empty($postdata['search']['value']) ? $postdata['search']['value'] : ''; // Search value
-		$columnIndex = !empty($postdata['order'][0]['column']) ? $postdata['order'][0]['column'] : 4; // Column index
-		$data['columnName'] = $postdata['columns'][$columnIndex]['data']; // Column name
-     	$data['columnSortOrder'] = !empty($postdata['order'][0]['dir']) ? $postdata['order'][0]['dir'] : 'desc'; // asc or desc
-		$total_result = $this->lead->getLeads($data,$total_records = 1);
-		$results = $this->lead->getLeads($data);
-		// r($total_result);
-		// re($results);
-		$output = array(  
-			"draw" => intval($_POST["draw"]),  
-			"recordsTotal"  =>  !empty($total_result) ? intval($total_result) : 0,  
-			"recordsFiltered" => count($results),  
-			"data" => $results  
-	   );  
-	   echo json_encode($output);
-	}
 
 	public function status($status)
 	{

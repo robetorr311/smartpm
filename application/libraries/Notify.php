@@ -28,30 +28,15 @@ class Notify
             }
         }
 
-        if($_SERVER['HTTP_HOST'] == 'localhost') {
-            // For mailtrap
-            $this->CI->email->initialize([
-                'protocol' => 'smtp',
-                'smtp_crypto' => getenv('EMAIL_SMTP_CRYPTO'),
-                'smtp_host' => getenv('EMAIL_SMTP_HOST'),
-                'smtp_port' => getenv('EMAIL_SMTP_PORT'),
-                'smtp_user' => getenv('EMAIL_SMTP_USER'),
-                'smtp_pass' => getenv('EMAIL_SMTP_PASS'),
-                'mailtype' => 'html'
-            ]);
-        } else {
-            $this->CI->email->initialize([
-                'protocol' => 'smtp',
-                'smtp_crypto' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_crypto : getenv('EMAIL_SMTP_CRYPTO'),
-                'smtp_host' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_host : getenv('EMAIL_SMTP_HOST'),
-                'smtp_port' => intval((isset($smtpSettings) && $smtpSettings->smtp_port != 0) ? $smtpSettings->smtp_port : getenv('EMAIL_SMTP_PORT')),
-                'smtp_user' => (isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER'),
-                'smtp_pass' => (isset($smtpSettings) && !empty($smtpSettings->smtp_pass)) ? $smtpSettings->smtp_pass : getenv('EMAIL_SMTP_PASS'),
-                'mailtype' => 'html'
-            ]);
-        }
-        
-
+        $this->CI->email->initialize([
+            'protocol' => 'smtp',
+            'smtp_crypto' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_crypto : getenv('EMAIL_SMTP_CRYPTO'),
+            'smtp_host' => (isset($smtpSettings) && !empty($smtpSettings->smtp_host)) ? $smtpSettings->smtp_host : getenv('EMAIL_SMTP_HOST'),
+            'smtp_port' => intval((isset($smtpSettings) && $smtpSettings->smtp_port != 0) ? $smtpSettings->smtp_port : getenv('EMAIL_SMTP_PORT')),
+            'smtp_user' => (isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER'),
+            'smtp_pass' => (isset($smtpSettings) && !empty($smtpSettings->smtp_pass)) ? $smtpSettings->smtp_pass : getenv('EMAIL_SMTP_PASS'),
+            'mailtype' => 'html'
+        ]);
         
         $this->CI->email->set_newline("\r\n");
         $this->CI->email->from(((isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER')), 'SmartPM Notification');
@@ -215,18 +200,24 @@ class Notify
 
     /*** To send email notification for notice ***/
     
-    public function sendClientNotice($emaildata = array())
+    public function sendClientNotice($email='', $company_name='', $logoUrl='', $notice_type_name='', $notice_details='', $theme_color='')
     {
         $result = 0;
 
-        if(!empty($emaildata)) {
-
-            $this->CI->email->to($emaildata['to_email']);
-            $subject = 'Notice from '.$emaildata['company_name'];
+        if(!empty($email)) {
+            
+            $emaildata = [];
+            $emaildata['logoUrl'] = $logoUrl;
+            $emaildata['notice_type'] = $notice_type_name;
+            $emaildata['notice_details'] = $notice_details;
+            $emaildata['theme_color'] = $theme_color;
+            $this->CI->email->to($email);
+            $subject = 'Notice from '.$company_name;
             $this->CI->email->subject($subject);
-            //re($emaildata);
+           
             $html_message = $this->CI->load->view('template/email/client-notice-notification.php', [
                 'emaildata' => $emaildata,
+
             ], true);
             $this->CI->email->message($html_message);
 

@@ -88,5 +88,3 @@ define('DEFAULT_BASE_URL', '');
 // Company assets folder
 define('COMPANY_ASSETS_FOLDER','assets/company_photo/');
 
-// Default pagination length
-define('DEFAULT_PAGINATION_LIMIT',10);

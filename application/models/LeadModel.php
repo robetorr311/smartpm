@@ -61,8 +61,7 @@ class LeadModel extends CI_Model
         3 => 'Posted'
     ];
 
-    /*** Depricated: newly created getLeads ***/
-
+  
     public function allLeads()
     {
         $this->db->from($this->table);
@@ -75,57 +74,7 @@ class LeadModel extends CI_Model
         return $query->result();
     }
 
-    /*** To get all leads list ***/
-
-    public function getLeads($data = array(), $total_reocrds = '')
-    {
-        $result = [];
-        
-        // PAgination
-        if($total_reocrds != 1) {
-            $this->db->limit($data['limit'],$data['offset']);
-        }
-        // Search
-        $con= mysqli_connect(getenv('DB_HOSTNAME'),getenv('DB_USERNAME'),getenv('DB_PASSWORD'),getenv('DB_PASSWORD'));
-        $searchQuery = '';
-        if($total_reocrds == '' && !empty($data['searchVaule'])) {
-            $escaped_string = mysqli_real_escape_string($con,$data['searchVaule']);
-            $searchQuery = " (firstname like '%".$escaped_string."%' or lastname like '%".$escaped_string."%') ";
-            $this->db->where($searchQuery);
-        }
-        // filter by status
-        if(!empty($data['status'])) {
-            $this->db->where('status',$data['status']);
-        } else {
-            $this->db->where_in('status', [0, 1, 2, 3, 4, 5, 6, 13, 14]);
-        }
-        
-        $query = $this->db->select('id as DT_RowId,firstname,lastname,status,type')
-                 ->from($this->table)
-                 ->where('is_deleted',0)
-                 ->order_by($data['columnName'], $data['columnSortOrder'])
-                 ->get();
-
-        if($query->num_rows() > 0) {
-            if($total_reocrds == 1) {
-                $result =  $query->num_rows();
-            } else {
-                $result = $query->result_array();
-                if(!empty($result)) {
-                    foreach ($result as $key => &$val) {
-                        $val['type'] = self::$type[$val['type']];
-                        $val['status'] = self::$status[$val['status']];
-                    }
-                }
-                
-            }
-        }
-       
-        return $result;
-    }
-
-    /*** Depricated: newly created getLeads ***/
-    
+   
     public function allLeadsByStatus($status)
     {
         if (!isset(self::$status[$status])) {
@@ -142,6 +91,7 @@ class LeadModel extends CI_Model
         return $query->result();
     }
 
+    
     public function allJobs()
     {
         $this->db->from($this->table);
