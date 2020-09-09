@@ -111,7 +111,6 @@ $route['task/(:num)/update']['post'] = 'tasks/update/$1';
 $route['task/(:num)/delete']['post'] = 'tasks/delete/$1';
 
 $route['leads'] = 'leads/index';
-$route['leads/list'] = 'leads/list';
 $route['leads/status/(:num)'] = 'leads/status/$1';
 $route['lead/create'] = 'leads/create';
 $route['lead/store']['post'] = 'leads/store';
@@ -219,7 +218,7 @@ $route['lead/(:any)/(:num)/party/add']['post'] = 'party/add/$2/$1';
 $route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
 $route['lead/all-status'] = 'all_status/index';
-$route['lead/all-status-list'] = 'all_status/list';
+
 
 $route['lead/signed-jobs'] = 'signed_jobs/index';
 
