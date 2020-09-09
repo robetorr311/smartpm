@@ -200,7 +200,7 @@ class Notify
 
     /*** To send email notification for notice ***/
     
-    public function sendClientNotice($email='', $company_name='', $logoUrl='', $notice_type_name='', $notice_details='', $theme_color='')
+    public function sendClientNotice($email, $company_name, $logoUrl, $notice_type_name, $notice_details, $theme_color)
     {
         $result = 0;
 
