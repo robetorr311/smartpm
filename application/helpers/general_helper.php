@@ -15,3 +15,20 @@ if (!function_exists('formatPhoneNumber')) {
         return $phone;
     }
 }
+
+/**
+ * Debuging Functions
+ */
+
+function re($value = "")
+{
+	echo "<pre>";
+	print_r($value);
+	exit;
+}
+
+function r($value)
+{
+	echo "<pre>";
+	print_r($value);
+}

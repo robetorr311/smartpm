@@ -17,6 +17,7 @@ class Client_notice extends CI_Controller
         $this->noticeType = new ClientNoticeTypeModel();
         $this->financial = new FinancialModel();
         $this->lead_material = new LeadMaterialModel();
+        $this->ClientNoticeTypeModel = new ClientNoticeTypeModel();
     }
 
     public function index($job_id, $sub_base_path = '')
@@ -69,10 +70,26 @@ class Client_notice extends CI_Controller
             if (!$insert) {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Notice.</p>');
             } else {
+
+                // Get last inserted notice id
+                $inserted_notice_id = $this->db->insert_id();
+               
+                $notice_type_details = $this->ClientNoticeTypeModel->getNoticeTypeById($notice['type']);
+                
                 $lead = $this->lead->getLeadById($job_id);
                 if (!empty($lead->email)) {
                     $this->notify = new Notify();
-                    $this->notify->sendClientNotice($lead->email, $notice['type'], $notice['note']);
+                    // Email details to send
+                    $emaildata = [];
+                    $admindata = $this->session->userdata('admindata');
+                    $emaildata['company_name'] = $this->session->userdata('company_name');
+                    $emaildata['logoUrl'] = base_url(COMPANY_ASSETS_FOLDER. $this->session->userdata('logoUrl'));
+                    $emaildata['notice_type'] = $notice_type_details->name;
+                    $emaildata['notice_details'] = $notice;
+                    $emaildata['theme_color'] = $admindata['color'];
+                    $emaildata['to_email']  = $lead->email;
+
+                    $mail_status = $this->notify->sendClientNotice($emaildata['to_email'],$emaildata['company_name'],$emaildata['logoUrl'],$emaildata['notice_type'],$emaildata['notice_details'],$emaildata['theme_color']);
                 }
             }
         } else {
