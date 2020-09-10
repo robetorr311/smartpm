@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php if ($clientId) { ?>
                 <a href="<?= base_url('lead/' . $sub_base_path . $clientId) ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
             <?php } ?>
-            <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/estimate/create') : base_url('financial/estimate/create') ?>" class="btn btn-info btn-fill">New Estimate</a>
+            <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/invoice/create') : base_url('financial/invoice/create') ?>" class="btn btn-info btn-fill">New Invoice</a>
         </div>
     </div>
     <div class="row">
@@ -139,13 +139,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Estimate List</h4>
+                    <h4 class="title">Invoice List</h4>
                 </div>
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
                         <thead>
                             <th class="text-center">View</th>
-                            <th>Estimate #</th>
+                            <th>Invoice #</th>
                             <th>Date</th>
                             <th>Client Name</th>
                             <th>Total</th>
@@ -153,16 +153,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th class="text-center">PDF</th>
                         </thead>
                         <tbody>
-                            <?php if (!empty($estimates)) : ?>
-                                <?php foreach ($estimates as $estimate) : ?>
+                            <?php if (!empty($invoices)) : ?>
+                                <?php foreach ($invoices as $invoice) : ?>
                                     <tr>
-                                        <td class="text-center"><a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/estimate/' . $estimate->id) : base_url('financial/estimate/' . $estimate->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                        <td><?= $estimate->estimate_number ?></td>
-                                        <td><?= date('M j, Y', strtotime($estimate->date)) ?></td>
-                                        <td><?= $estimate->client_name ?></td>
-                                        <td>$<?= number_format($estimate->total, 2) ?></td>
-                                        <td><?= $estimate->created_user ?></td>
-                                        <td class="text-center"><a href="<?= base_url('financial/estimate/' . $estimate->id . '/pdf') ?>" target="_blank" class="text-info"><i class="fa fa-file-pdf-o"></i></a></td>
+                                        <td class="text-center"><a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/invoice/' . $invoice->id) : base_url('financial/invoice/' . $invoice->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td><?= $invoice->id ?></td>
+                                        <td><?= date('M j, Y', strtotime($invoice->date)) ?></td>
+                                        <td><?= $invoice->client_name ?></td>
+                                        <td>$<?= number_format($invoice->total, 2) ?></td>
+                                        <td><?= $invoice->created_user ?></td>
+                                        <td class="text-center"><a href="<?= base_url('financial/invoice/' . $invoice->id . '/pdf') ?>" target="_blank" class="text-info"><i class="fa fa-file-pdf-o"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

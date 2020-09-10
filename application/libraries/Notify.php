@@ -209,4 +209,18 @@ class Notify
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
+
+    public function sendInvoice($email, $client_name, $user_name, $attachment)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->subject('Invoice');
+        $this->CI->email->attach($attachment);
+        $html_message = $this->CI->load->view('template/email/invoice-notification.php', [
+            'logoUrl' => $this->logoUrl,
+            'client_name' => $client_name,
+            'user_name' => $user_name
+        ], true);
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
 }

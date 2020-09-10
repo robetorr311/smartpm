@@ -118,7 +118,7 @@ class Estimate extends CI_Controller
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Amount', 'trim|numeric');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
                 }
             }
         }
@@ -199,7 +199,7 @@ class Estimate extends CI_Controller
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Amount', 'trim|numeric');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
                 }
             }
         }
@@ -466,8 +466,8 @@ class Estimate extends CI_Controller
                         $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
                         $pdfContent[] = '<td align="right">' . number_format($desc->amount, 2) . '</td>';
                         $pdfContent[] = '<td>' . $desc->item_quantity_units . '</td>';
-                        $pdfContent[] = '<td align="right">' . number_format($desc->item_unit_price, 2) . '</td>';
-                        $pdfContent[] = '<td align="right">' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
+                        $pdfContent[] = '<td align="right">$' . number_format($desc->item_unit_price, 2) . '</td>';
+                        $pdfContent[] = '<td align="right">$' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
                         $subTotal += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
                         $background = !$background;
                     }
@@ -593,8 +593,8 @@ class Estimate extends CI_Controller
                         $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
                         $pdfContent[] = '<td align="right">' . number_format($desc->amount, 2) . '</td>';
                         $pdfContent[] = '<td>' . $desc->item_quantity_units . '</td>';
-                        $pdfContent[] = '<td align="right">' . number_format($desc->item_unit_price, 2) . '</td>';
-                        $pdfContent[] = '<td align="right">' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
+                        $pdfContent[] = '<td align="right">$' . number_format($desc->item_unit_price, 2) . '</td>';
+                        $pdfContent[] = '<td align="right">$' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
                         $subTotal += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
                         $background = !$background;
                     }
