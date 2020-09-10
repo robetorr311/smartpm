@@ -178,6 +178,11 @@
                                         <span class="sidebar-normal">Records</span>
                                     </a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="<?= base_url('financial/invoices') ?>">
+                                        <span class="sidebar-normal">Invoices</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

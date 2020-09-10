@@ -133,6 +133,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <a href="<?= base_url('lead/completed-job/' . $job->id . '/notes') ?>" class="btn btn-fill">Notes</a>
                             <a href="<?= base_url('lead/completed-job/' . $job->id . '/public-folder') ?>" class="btn btn-fill">Public Folder</a>
                             <a href="<?= base_url('lead/completed-job/' . $job->id . '/estimates'); ?>" class="btn btn-fill">Estimates</a>
+                            <a href="<?= base_url('lead/completed-job/' . $job->id . '/invoices'); ?>" class="btn btn-fill">Invoices</a>
                             <a href="<?= base_url('lead/completed-job/' . $job->id . '/client-notices'); ?>" class="btn btn-fill">Client Notice</a>
                         </div>
                     </div>
