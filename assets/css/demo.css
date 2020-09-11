@@ -1247,6 +1247,20 @@ input[type="button"] {
 	font-size: 12px;
 	font-weight: normal;
 }
+.duplicate-container.description-container {
+	position: relative;
+}
+.sortable-items {
+	margin: 0 -15px;
+	padding: 0 15px;
+}
+.sortable-items .duplicate-container.description-container .handle {
+	position: absolute;
+    top: 20px;
+    left: -1px;
+    font-size: 11px;
+    cursor: all-scroll;
+}
 
 /* select2 dropdown styles */
 .select2-selection__rendered {

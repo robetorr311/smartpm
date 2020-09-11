@@ -10,7 +10,7 @@ class EstimateDescriptionGroupModel extends CI_Model
         $this->db->from($this->table);
         $this->db->where('estimate_id', $estimate_id);
         $this->db->where('is_deleted', FALSE);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->order_by('order', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }

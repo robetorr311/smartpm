@@ -137,17 +137,20 @@ $(document).ready(function () {
                                 <label>Quantity</label>
                             </div>
                         </div>
-                        <div data-index="0" class="row duplicate-container description-container">
-                            <div class="col-md-8">
-                                <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
-                                <textarea class="form-control item-description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
-                            </div>
-                            <div class="col-md-3 col-xs-8">
-                                <input class="form-control" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
-                            </div>
-                            <div class="col-md-1 col-xs-4 duplicate-buttons">
-                                <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
-                                <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
+                        <div class="sortable-items">
+                            <div data-index="0" class="row duplicate-container description-container">
+                                <div class="col-md-8">
+                                    <i class="fa fa-bars handle" aria-hidden="true"></i>
+                                    <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
+                                    <textarea class="form-control item-description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
+                                </div>
+                                <div class="col-md-3 col-xs-8">
+                                    <input class="form-control" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
+                                </div>
+                                <div class="col-md-1 col-xs-4 duplicate-buttons">
+                                    <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
+                                    <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -158,6 +161,11 @@ $(document).ready(function () {
         $(this).closest('.duplicate-container.group-container').after(htmlToAdd);
         $(this).closest('.duplicate-container.group-container').next().find('select').select2({
             width: '100%'
+        });
+        $(this).closest('.duplicate-container.group-container').next().find('.sortable-items').sortable({
+            handle: '.handle',
+            invertSwap: true,
+            animation: 150
         });
     });
 
@@ -191,6 +199,7 @@ $(document).ready(function () {
 
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
             <div class="col-md-8">
+                <i class="fa fa-bars handle" aria-hidden="true"></i>
                 <select name="desc_group[${parent_index}][${index}][item]" class="form-control">${options}</select>
                 <textarea class="form-control item-description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
             </div>
@@ -215,5 +224,12 @@ $(document).ready(function () {
         } else {
             alert('Minimum 1 description required!');
         }
+    });
+
+    // ============== Drag & Drop Items ==============
+    $('.sortable-items').sortable({
+        handle: '.handle',
+        invertSwap: true,
+        animation: 150
     });
 });

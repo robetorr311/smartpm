@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
     <?php if ($clientId) { ?>
         <div class="row">
-        <div class="col-md-12 max-1000-form-container">
+            <div class="col-md-12 max-1000-form-container">
                 <div class="card">
                     <div class="header">
                         <h4 class="title">Leads / Clients Detail</h4>
@@ -167,7 +167,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <tr>
-                                <th>Item<div class="estimate-description-display">Description</div></th>
+                                <th>Item<div class="estimate-description-display">Description</div>
+                                </th>
                                 <th width="100" class="text-right">Qty</th>
                                 <th>Unit</th>
                                 <th width="150" class="text-right">Price</th>
@@ -186,7 +187,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     foreach ($descs[$group->id] as $desc) {
                                 ?>
                                         <tr>
-                                            <td><?= $desc->item_name ?><div class="estimate-description-display"><?= $desc->description ?></div></td>
+                                            <td><?= $desc->item_name ?><div class="estimate-description-display"><?= $desc->description ?></div>
+                                            </td>
                                             <td class="text-right"><?= number_format($desc->amount, 2) ?></td>
                                             <td><?= $desc->item_quantity_units ?></td>
                                             <td class="text-right">$<?= number_format($desc->item_unit_price, 2) ?></td>
@@ -318,35 +320,38 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                     <label>Quantity</label>
                                                 </div>
                                             </div>
-                                            <?php
-                                            if (isset($descs[$group->id])) {
-                                                $index = 0;
-                                                foreach ($descs[$group->id] as $desc) {
-                                            ?>
-                                                    <div data-index="<?= $index ?>" class="row duplicate-container description-container">
-                                                        <div class="col-md-8">
-                                                            <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
-                                                            <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control">
-                                                                <option value="" disabled<?= (empty($desc->item) ? ' selected' : '') ?>>Select Item</option>
-                                                                <?php foreach ($items as $item) {
-                                                                    echo '<option value="' . $item->id . '"' . ($desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
-                                                                } ?>
-                                                            </select>
-                                                            <textarea class="form-control item-description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" placeholder="Description"><?= $desc->description ?></textarea>
+                                            <div class="sortable-items">
+                                                <?php
+                                                if (isset($descs[$group->id])) {
+                                                    $index = 0;
+                                                    foreach ($descs[$group->id] as $desc) {
+                                                ?>
+                                                        <div data-index="<?= $index ?>" class="row duplicate-container description-container">
+                                                            <div class="col-md-8">
+                                                                <i class="fa fa-bars handle" aria-hidden="true"></i>
+                                                                <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
+                                                                <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control">
+                                                                    <option value="" disabled<?= (empty($desc->item) ? ' selected' : '') ?>>Select Item</option>
+                                                                    <?php foreach ($items as $item) {
+                                                                        echo '<option value="' . $item->id . '"' . ($desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
+                                                                    } ?>
+                                                                </select>
+                                                                <textarea class="form-control item-description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" placeholder="Description"><?= $desc->description ?></textarea>
+                                                            </div>
+                                                            <div class="col-md-3 col-xs-8">
+                                                                <input class="form-control" placeholder="Quantity" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">
+                                                            </div>
+                                                            <div class="col-md-1 col-xs-4 duplicate-buttons">
+                                                                <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
+                                                                <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-3 col-xs-8">
-                                                            <input class="form-control" placeholder="Quantity" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">
-                                                        </div>
-                                                        <div class="col-md-1 col-xs-4 duplicate-buttons">
-                                                            <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
-                                                            <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
-                                                        </div>
-                                                    </div>
-                                            <?php
-                                                    $index++;
+                                                <?php
+                                                        $index++;
+                                                    }
                                                 }
-                                            }
-                                            ?>
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

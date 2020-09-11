@@ -83,7 +83,8 @@ class Estimate extends CI_Controller
         $assemblies = $this->assemblies->getAssembliesList();
 
         $this->load->view('header', [
-            'title' => $this->title
+            'title' => $this->title,
+            'sortable' => true
         ]);
         $this->load->view('estimate/create', [
             'clients' => $clients,
@@ -133,23 +134,29 @@ class Estimate extends CI_Controller
             ]);
 
             if ($insert_estimate) {
+                $group_order = 1;
                 foreach ($estimate['desc_group'] as $desc_group) {
                     $insert_desc_group = $this->estimate_desc_group->insert([
                         'sub_title' => $desc_group['sub_title'],
-                        'estimate_id' => $insert_estimate
+                        'estimate_id' => $insert_estimate,
+                        'order' => $group_order
                     ]);
 
                     if ($insert_desc_group) {
                         unset($desc_group['sub_title']);
+                        $order = 1;
                         foreach ($desc_group as $desc) {
                             $insert_desc = $this->estimate_desc->insert([
                                 'item' => $desc['item'],
                                 'description' => $desc['description'],
                                 'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
-                                'description_group_id' => $insert_desc_group
+                                'description_group_id' => $insert_desc_group,
+                                'order' => $order
                             ]);
+                            $order++;
                         }
                     }
+                    $group_order++;
                 }
             } else {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Estimate.</p>');
@@ -222,10 +229,12 @@ class Estimate extends CI_Controller
                     $exception_ids = array_column($estimate['desc_group'], 'id');
                     $this->estimate_desc->deleteByEstimateIdWithExceptionEstimateGroupIds($id, $exception_ids);
                     $this->estimate_desc_group->deleteByEstimateIdWithExceptionIds($id, $exception_ids);
+                    $group_order = 1;
                     foreach ($estimate['desc_group'] as $desc_group) {
                         if (isset($desc_group['id'])) {
                             $update_desc_group = $this->estimate_desc_group->update($desc_group['id'], [
-                                'sub_title' => $desc_group['sub_title']
+                                'sub_title' => $desc_group['sub_title'],
+                                'order' => $group_order
                             ]);
 
                             if ($update_desc_group) {
@@ -234,41 +243,50 @@ class Estimate extends CI_Controller
                                 unset($desc_group['sub_title']);
                                 $exception_ids = array_column($desc_group, 'id');
                                 $this->estimate_desc->deleteByEstimateGroupIdWithExceptionIds($desc_group_id, $exception_ids);
+                                $order = 1;
                                 foreach ($desc_group as $desc) {
                                     if (isset($desc['id'])) {
                                         $update_desc = $this->estimate_desc->update($desc['id'], [
                                             'item' => $desc['item'],
                                             'description' => $desc['description'],
-                                            'amount' => empty($desc['amount']) ? NULL : $desc['amount']
+                                            'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
+                                            'order' => $order
                                         ]);
                                     } else {
                                         $insert_desc = $this->estimate_desc->insert([
                                             'item' => $desc['item'],
                                             'description' => $desc['description'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
-                                            'description_group_id' => $desc_group_id
+                                            'description_group_id' => $desc_group_id,
+                                            'order' => $order
                                         ]);
                                     }
+                                    $order++;
                                 }
                             }
                         } else {
                             $insert_desc_group = $this->estimate_desc_group->insert([
                                 'sub_title' => $desc_group['sub_title'],
-                                'estimate_id' => $id
+                                'estimate_id' => $id,
+                                'order' => $group_order
                             ]);
 
                             if ($insert_desc_group) {
                                 unset($desc_group['sub_title']);
+                                $order = 1;
                                 foreach ($desc_group as $desc) {
                                     $insert_desc = $this->estimate_desc->insert([
                                         'item' => $desc['item'],
                                         'description' => $desc['description'],
                                         'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
-                                        'description_group_id' => $insert_desc_group
+                                        'description_group_id' => $insert_desc_group,
+                                        'order' => $order
                                     ]);
+                                    $order++;
                                 }
                             }
                         }
+                        $group_order++;
                     }
                 } else {
                     $this->session->set_flashdata('errors', '<p>Unable to Update Estimate.</p>');
@@ -341,7 +359,8 @@ class Estimate extends CI_Controller
             $vars['sub_base_path'] = $sub_base_path;
 
             $this->load->view('header', [
-                'title' => $this->title
+                'title' => $this->title,
+                'sortable' => true
             ]);
             $this->load->view('estimate/show', $vars);
             $this->load->view('footer');
