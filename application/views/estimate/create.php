@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12 max-1000-form-container">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Create Estimate</h4>
+                    <h4 class="title">Create Estimate Worksheet</h4>
                 </div>
                 <div class="content">
                     <div class="row">
@@ -112,22 +112,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <label>Quantity</label>
                                             </div>
                                         </div>
-                                        <div data-index="0" class="row duplicate-container description-container">
-                                            <div class="col-md-8">
-                                                <select name="desc_group[0][0][item]" class="form-control">
-                                                    <option value="" disabled selected>Select Item</option>
-                                                    <?php foreach ($items as $item) {
-                                                        echo '<option value="' . $item->id . '">' . $item->name . '</option>';
-                                                    } ?>
-                                                </select>
-                                                <textarea class="form-control item-description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
-                                            </div>
-                                            <div class="col-md-3 col-xs-8">
-                                                <input class="form-control" placeholder="Quantity" name="desc_group[0][0][amount]" type="number">
-                                            </div>
-                                            <div class="col-md-1 col-xs-4 duplicate-buttons">
-                                                <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
-                                                <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
+                                        <div class="sortable-items">
+                                            <div data-index="0" class="row duplicate-container description-container">
+                                                <div class="col-md-8">
+                                                    <i class="fa fa-bars handle" aria-hidden="true"></i>
+                                                    <select name="desc_group[0][0][item]" class="form-control">
+                                                        <option value="" disabled selected>Select Item</option>
+                                                        <?php foreach ($items as $item) {
+                                                            echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                                        } ?>
+                                                    </select>
+                                                    <textarea class="form-control item-description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
+                                                </div>
+                                                <div class="col-md-3 col-xs-8">
+                                                    <input class="form-control" placeholder="Quantity" name="desc_group[0][0][amount]" type="number">
+                                                </div>
+                                                <div class="col-md-1 col-xs-4 duplicate-buttons">
+                                                    <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
+                                                    <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

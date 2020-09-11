@@ -17,7 +17,7 @@ class EstimateDescriptionModel extends CI_Model
         $this->db->join('items as items', 'estimate_descriptions.item=items.id', 'left');
         $this->db->where_in('description_group_id', $ids);
         $this->db->where('estimate_descriptions.is_deleted', FALSE);
-        $this->db->order_by('estimate_descriptions.created_at', 'ASC');
+        $this->db->order_by('estimate_descriptions.order', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
