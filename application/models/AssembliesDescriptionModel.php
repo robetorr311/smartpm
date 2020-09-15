@@ -9,7 +9,9 @@ class AssembliesDescriptionModel extends CI_Model
     {
         $this->db->select("
             assemblies_descriptions.*,
-            items.name AS item_name
+            items.name AS item_name,
+            items.quantity_units AS quantity_units,
+            items.unit_price AS unit_price
         ");
         $this->db->from($this->table);
         $this->db->join('items as items', 'assemblies_descriptions.item=items.id', 'left');

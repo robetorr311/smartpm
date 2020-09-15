@@ -105,16 +105,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-3">
                                                 <label>Item<span class="red-mark">*</span></label>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-2">
                                                 <label>Quantity</label>
                                             </div>
+                                            <div class="col-md-2">
+                                                <label>Unit</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Price</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Total</label>
+                                            </div>
+                                            <div class="col-md-1"></div>
                                         </div>
                                         <div class="sortable-items">
                                             <div data-index="0" class="row duplicate-container description-container">
-                                                <div class="col-md-8">
+                                                <div class="col-md-3">
                                                     <i class="fa fa-bars handle" aria-hidden="true"></i>
                                                     <select name="desc_group[0][0][item]" class="form-control">
                                                         <option value="" disabled selected>Select Item</option>
@@ -122,12 +132,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                             echo '<option value="' . $item->id . '">' . $item->name . '</option>';
                                                         } ?>
                                                     </select>
-                                                    <textarea class="form-control item-description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
+                                                    <textarea class="form-control item_description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
                                                 </div>
-                                                <div class="col-md-3 col-xs-8">
-                                                    <input class="form-control" placeholder="Quantity" name="desc_group[0][0][amount]" type="number">
+                                                <div class="col-md-2">
+                                                    <input class="form-control item_amount" placeholder="Quantity" name="desc_group[0][0][amount]" type="number">
                                                 </div>
-                                                <div class="col-md-1 col-xs-4 duplicate-buttons">
+                                                <div class="col-md-2">
+                                                    <input class="form-control item_unit" placeholder="Unit" name="desc_group[0][0][quantity_units]" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control item_price" placeholder="Price" name="desc_group[0][0][unit_price]" type="number">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span class="item_total">$0.00</span>
+                                                </div>
+                                                <div class="col-md-1 duplicate-buttons">
                                                     <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
                                                     <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
                                                 </div>
