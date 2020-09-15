@@ -48,7 +48,7 @@ $(document).ready(function () {
             url: '/item/ajax-record/' + itemId
         }).done(function (item) {
             item = JSON.parse(item);
-            selectEl.closest('.description-container').find('textarea.item-description').val(item.description);
+            selectEl.closest('.description-container').find('textarea.item_description').val(item.description);
         });
     });
 
@@ -74,7 +74,7 @@ $(document).ready(function () {
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
         <div class="col-md-11 col-xs-8">
                 <select name="items[${index}][item_id]" class="form-control">${options}</select>
-                <textarea class="form-control item-description" name="items[${index}][description]" placeholder="Description"></textarea>
+                <textarea class="form-control item_description" name="items[${index}][description]" placeholder="Description"></textarea>
             </div>
             <div class="col-md-1 col-xs-4 duplicate-buttons">
                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>

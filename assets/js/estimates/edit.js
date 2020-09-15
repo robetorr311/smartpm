@@ -6,7 +6,8 @@ var aliases = {
     note: 'Note',
     sub_title: 'Sub Title',
     item: 'Description',
-    amount: 'Quantity'
+    amount: 'Quantity',
+    unit_price: 'Price'
 };
 form.addEventListener("submit", function (e) {
     var _aliases = aliases;
@@ -47,9 +48,15 @@ form.addEventListener("submit", function (e) {
                     notValid: ' contains invalid value'
                 }
             };
+            validationJson[`desc_group[${ele_index_1}][${ele_index_2}][unit_price]`] = {
+                numericality: {
+                    notValid: ' contains invalid value'
+                }
+            };
 
             _aliases[`desc_group[${ele_index_1}][${ele_index_2}][item]`] = aliases.item;
             _aliases[`desc_group[${ele_index_1}][${ele_index_2}][amount]`] = aliases.amount;
+            _aliases[`desc_group[${ele_index_1}][${ele_index_2}][unit_price]`] = aliases.unit_price;
         });
     });
 
@@ -74,14 +81,19 @@ $(document).ready(function () {
         width: '100%'
     });
 
+    $('form#estimate_edit .group-container select, form#estimate_edit .group-container input').on('input', itemValuesChange);
+
     $('form#estimate_edit').on('change', '.group-container select', function () {
         var selectEl = $(this);
         var itemId = selectEl.val();
         $.ajax({
             url: '/item/ajax-record/' + itemId
         }).done(function (item) {
+            var descriptionContainer = selectEl.closest('.description-container');
             item = JSON.parse(item);
-            selectEl.closest('.description-container').find('textarea.item-description').val(item.description);
+            descriptionContainer.find('textarea.item_description').val(item.description);
+            descriptionContainer.find('input.item_unit').val(item.quantity_units);
+            descriptionContainer.find('input.item_price').val(item.unit_price);
         });
     });
 
@@ -130,24 +142,43 @@ $(document).ready(function () {
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-3">
                                 <label>Item<span class="red-mark">*</span></label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label>Quantity</label>
                             </div>
+                            <div class="col-md-2">
+                                <label>Unit</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Price</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Total</label>
+                            </div>
+                            <div class="col-md-1"></div>
                         </div>
                         <div class="sortable-items">
                             <div data-index="0" class="row duplicate-container description-container">
-                                <div class="col-md-8">
-                                    <i class="fa fa-bars handle" aria-hidden="true"></i>
+                                <div class="col-md-3">
+                                <i class="fa fa-bars handle" aria-hidden="true"></i>
                                     <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
-                                    <textarea class="form-control item-description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
+                                    <textarea class="form-control item_description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
                                 </div>
-                                <div class="col-md-3 col-xs-8">
-                                    <input class="form-control" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
+                                <div class="col-md-2">
+                                    <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
                                 </div>
-                                <div class="col-md-1 col-xs-4 duplicate-buttons">
+                                <div class="col-md-2">
+                                    <input class="form-control item_unit" placeholder="Unit" name="desc_group[${index}][0][quantity_units]" type="text">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control item_price" placeholder="Price" name="desc_group[${index}][0][unit_price]" type="number">
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="item_total">$0.00</span>
+                                </div>
+                                <div class="col-md-1 duplicate-buttons">
                                     <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
                                     <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
                                 </div>
@@ -167,6 +198,8 @@ $(document).ready(function () {
             invertSwap: true,
             animation: 150
         });
+        
+        $(this).closest('.duplicate-container.group-container').next().find('select, input').on('input', itemValuesChange);
     });
 
     $('form#estimate_edit').on('click', '.duplicate-container.group-container .duplicate-buttons.group-duplicate-buttons span#remove', function () {
@@ -198,15 +231,24 @@ $(document).ready(function () {
         });
 
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
-            <div class="col-md-8">
+            <div class="col-md-3">
                 <i class="fa fa-bars handle" aria-hidden="true"></i>
                 <select name="desc_group[${parent_index}][${index}][item]" class="form-control">${options}</select>
-                <textarea class="form-control item-description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
+                <textarea class="form-control item_description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
             </div>
-            <div class="col-md-3 col-xs-8">
-                <input class="form-control" placeholder="Quantity" name="desc_group[${parent_index}][${index}][amount]" type="number">
+            <div class="col-md-2">
+                <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${parent_index}][${index}][amount]" type="number">
             </div>
-            <div class="col-md-1 col-xs-4 duplicate-buttons">
+            <div class="col-md-2">
+                <input class="form-control item_unit" placeholder="Unit" name="desc_group[${parent_index}][${index}][quantity_units]" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control item_price" placeholder="Price" name="desc_group[${parent_index}][${index}][unit_price]" type="number">
+            </div>
+            <div class="col-md-2">
+                <span class="item_total">$0.00</span>
+            </div>
+            <div class="col-md-1 duplicate-buttons">
                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
                 <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
             </div>
@@ -216,6 +258,8 @@ $(document).ready(function () {
         $(this).closest('.duplicate-container').next().find('select').select2({
             width: '100%'
         });
+
+        $(this).closest('.duplicate-container').next().find('select, input').on('input', itemValuesChange);
     });
 
     $('form#estimate_edit').on('click', '.duplicate-container.group-container .duplicate-container.description-container .duplicate-buttons span#remove', function () {
@@ -232,4 +276,15 @@ $(document).ready(function () {
         invertSwap: true,
         animation: 150
     });
+
+    // ============== Item Calculation on value change ==============
+    function itemValuesChange() {
+        var descriptionContainer = $(this).closest('.description-container');
+        var qty = Number(descriptionContainer.find('input.item_amount').val());
+        var price = Number(descriptionContainer.find('input.item_price').val());
+        descriptionContainer.find('.item_total').html((qty * price).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }));
+    }
 });

@@ -102,7 +102,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                     echo '<option value="' . $item->id . '"' . ($assemblies_desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
                                                 } ?>
                                             </select>
-                                            <textarea class="form-control item-description" name="items[<?= $index ?>][description]" placeholder="Description"><?= $assemblies_desc->description ?></textarea>
+                                            <textarea class="form-control item_description" name="items[<?= $index ?>][description]" placeholder="Description"><?= $assemblies_desc->description ?></textarea>
                                             <input type="hidden" name="items[<?= $index ?>][id]" value="<?= $assemblies_desc->id ?>" />
                                         </div>
                                         <div class="col-md-1 col-xs-4 duplicate-buttons">

@@ -120,6 +120,7 @@ class Estimate extends CI_Controller
                 foreach ($desc_group as $id_desc => $desc) {
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][unit_price]', 'Price', 'trim|numeric');
                 }
             }
         }
@@ -150,6 +151,8 @@ class Estimate extends CI_Controller
                                 'item' => $desc['item'],
                                 'description' => $desc['description'],
                                 'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
+                                'quantity_units' => empty($desc['quantity_units']) ? NULL : $desc['quantity_units'],
+                                'unit_price' => empty($desc['unit_price']) ? NULL : $desc['unit_price'],
                                 'description_group_id' => $insert_desc_group,
                                 'order' => $order
                             ]);
@@ -207,6 +210,7 @@ class Estimate extends CI_Controller
                 foreach ($desc_group as $id_desc => $desc) {
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][unit_price]', 'Price', 'trim|numeric');
                 }
             }
         }
@@ -250,6 +254,8 @@ class Estimate extends CI_Controller
                                             'item' => $desc['item'],
                                             'description' => $desc['description'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
+                                            'quantity_units' => empty($desc['quantity_units']) ? NULL : $desc['quantity_units'],
+                                            'unit_price' => empty($desc['unit_price']) ? NULL : $desc['unit_price'],
                                             'order' => $order
                                         ]);
                                     } else {
@@ -257,6 +263,8 @@ class Estimate extends CI_Controller
                                             'item' => $desc['item'],
                                             'description' => $desc['description'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
+                                            'quantity_units' => empty($desc['quantity_units']) ? NULL : $desc['quantity_units'],
+                                            'unit_price' => empty($desc['unit_price']) ? NULL : $desc['unit_price'],
                                             'description_group_id' => $desc_group_id,
                                             'order' => $order
                                         ]);
@@ -279,6 +287,8 @@ class Estimate extends CI_Controller
                                         'item' => $desc['item'],
                                         'description' => $desc['description'],
                                         'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
+                                        'quantity_units' => empty($desc['quantity_units']) ? NULL : $desc['quantity_units'],
+                                        'unit_price' => empty($desc['unit_price']) ? NULL : $desc['unit_price'],
                                         'description_group_id' => $insert_desc_group,
                                         'order' => $order
                                     ]);
@@ -484,10 +494,10 @@ class Estimate extends CI_Controller
                     foreach ($descs[$group->id] as $desc) {
                         $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
                         $pdfContent[] = '<td align="right">' . number_format($desc->amount, 2) . '</td>';
-                        $pdfContent[] = '<td>' . $desc->item_quantity_units . '</td>';
-                        $pdfContent[] = '<td align="right">$' . number_format($desc->item_unit_price, 2) . '</td>';
-                        $pdfContent[] = '<td align="right">$' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
-                        $subTotal += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
+                        $pdfContent[] = '<td>' . $desc->quantity_units . '</td>';
+                        $pdfContent[] = '<td align="right">$' . number_format($desc->unit_price, 2) . '</td>';
+                        $pdfContent[] = '<td align="right">$' . number_format(floatval($desc->item_total), 2) . '</td></tr>';
+                        $subTotal += (empty($desc->item_total) ? 0 : $desc->item_total);
                         $background = !$background;
                     }
                 }
@@ -611,10 +621,10 @@ class Estimate extends CI_Controller
                     foreach ($descs[$group->id] as $desc) {
                         $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
                         $pdfContent[] = '<td align="right">' . number_format($desc->amount, 2) . '</td>';
-                        $pdfContent[] = '<td>' . $desc->item_quantity_units . '</td>';
-                        $pdfContent[] = '<td align="right">$' . number_format($desc->item_unit_price, 2) . '</td>';
-                        $pdfContent[] = '<td align="right">$' . number_format((floatval($desc->amount) * floatval($desc->item_unit_price)), 2) . '</td></tr>';
-                        $subTotal += (($desc->amount == 0) ? 0 : (floatval($desc->amount) * floatval($desc->item_unit_price)));
+                        $pdfContent[] = '<td>' . $desc->quantity_units . '</td>';
+                        $pdfContent[] = '<td align="right">$' . number_format($desc->unit_price, 2) . '</td>';
+                        $pdfContent[] = '<td align="right">$' . number_format(floatval($desc->item_total), 2) . '</td></tr>';
+                        $subTotal += (empty($desc->item_total) ? 0 : $desc->item_total);
                         $background = !$background;
                     }
                 }

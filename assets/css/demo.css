@@ -1261,6 +1261,9 @@ input[type="button"] {
     font-size: 11px;
     cursor: all-scroll;
 }
+.sortable-items .duplicate-container.description-container .item_total {
+	line-height: 40px;
+}
 
 /* select2 dropdown styles */
 .select2-selection__rendered {
@@ -1310,7 +1313,7 @@ input[type="button"] {
 	.camera-button {
 		display: none;
 	}
-	.duplicate-container .item-description {
+	.duplicate-container .item_description {
 		margin-top: 5px;
 	}
 }
