@@ -1,3 +1,9 @@
+<style>
+/*** For item description textarea ***/    
+#estimate_edit .item-description {
+    margin-left: 10px !important;
+}
+</style>
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
@@ -148,6 +154,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <tr>
+                                <th width="100" >Group</th>
                                 <th>Item<div class="estimate-description-display">Description</div></th>
                                 <th width="100" class="text-right">Qty</th>
                                 <th>Unit</th>
@@ -159,7 +166,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             foreach ($estimate_desc_groups as $group) {
                             ?>
                                 <tr>
-                                    <th style="background-color: #eee; color: #333 !important;" colspan="5"><?= $group->sub_title ?></th>
+                                    <th style="background-color: #eee; color: #333 !important;" colspan="6"><?= $group->sub_title ?></th>
                                 </tr>
                                 <?php
                                 $group_total = 0;
@@ -167,6 +174,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     foreach ($descs[$group->id] as $desc) {
                                 ?>
                                         <tr>
+                                            <td ><?= $desc->group_name ?></td>
                                             <td><?= $desc->item_name ?><div class="estimate-description-display"><?= $desc->description ?></div></td>
                                             <td class="text-right"><?= number_format($desc->amount, 2) ?></td>
                                             <td><?= $desc->item_quantity_units ?></td>
@@ -180,14 +188,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 $desc_total += $group_total;
                                 ?>
                                 <tr>
-                                    <th style="background-color: #eee; color: #333 !important;" class="text-right" colspan="4">Sub Total - <?= $group->sub_title ?>:</th>
+                                    <th style="background-color: #eee; color: #333 !important;" class="text-right" colspan="5">Sub Total - <?= $group->sub_title ?>:</th>
                                     <th style="background-color: #eee; color: #333 !important;" class="text-right">$<?= number_format($group_total, 2) ?></th>
                                 </tr>
                             <?php
                             }
                             ?>
                             <tr>
-                                <th class="text-right" colspan="4">Total:</th>
+                                <th class="text-right" colspan="5">Total:</th>
                                 <th class="text-right">$<?= number_format($desc_total, 2) ?></th>
                             </tr>
                         </table>
@@ -292,7 +300,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-md-8">
+                                                <div class="col-md-4">
+                                                    <label>Group<span class="red-mark">*</span></label>
+                                                </div>
+                                                <div class="col-md-4">
                                                     <label>Item<span class="red-mark">*</span></label>
                                                 </div>
                                                 <div class="col-md-4">
@@ -305,15 +316,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 foreach ($descs[$group->id] as $desc) {
                                             ?>
                                                     <div data-index="<?= $index ?>" class="row duplicate-container description-container">
-                                                        <div class="col-md-8">
+                                                    <div class="col-md-4">
                                                             <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
-                                                            <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control">
+                                                            <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][group]" class="form-control groups-dropdown">
+                                                                <option value="" disabled<?= (empty($desc->group) ? ' selected' : '') ?>>Unassigned</option>
+                                                                <?php foreach ($groups as $group_type) { 
+                                                                    echo '<option value="' . $group_type->id . '"' . ($desc->group_id == $group_type->id ? ' selected' : '') . '>' . $group_type->name . '</option>';
+                                                                } ?>
+                                                            </select>
+                                                            
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
+                                                            <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control items-dropdown">
                                                                 <option value="" disabled<?= (empty($desc->item) ? ' selected' : '') ?>>Select Item</option>
                                                                 <?php foreach ($items as $item) {
                                                                     echo '<option value="' . $item->id . '"' . ($desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
                                                                 } ?>
                                                             </select>
-                                                            <textarea class="form-control item-description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" placeholder="Description"><?= $desc->description ?></textarea>
                                                         </div>
                                                         <div class="col-md-3 col-xs-8">
                                                             <input class="form-control" placeholder="Quantity" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">
@@ -321,6 +341,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <div class="col-md-1 col-xs-4 duplicate-buttons">
                                                             <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
                                                             <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <textarea class="form-control item-description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" placeholder="Description"><?= $desc->description ?></textarea>
                                                         </div>
                                                     </div>
                                             <?php

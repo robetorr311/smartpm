@@ -9,11 +9,13 @@ class EstimateDescriptionModel extends CI_Model
     {
         $this->db->select("
             estimate_descriptions.*,
+            groups.name as group_name,
             items.name AS item_name,
             items.unit_price AS item_unit_price,
             items.quantity_units AS item_quantity_units
         ");
         $this->db->from($this->table);
+        $this->db->join('groups', 'estimate_descriptions.group_id=groups.id', 'left');
         $this->db->join('items as items', 'estimate_descriptions.item=items.id', 'left');
         $this->db->where_in('description_group_id', $ids);
         $this->db->where('estimate_descriptions.is_deleted', FALSE);

@@ -1,3 +1,10 @@
+<style>
+/*** For item description textarea ***/    
+#estimate_create .item-description {
+    margin-left: 10px !important;
+}
+</style>
+
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
@@ -105,7 +112,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-4">
+                                                <label>Group<span class="red-mark">*</span></label>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <label>Item<span class="red-mark">*</span></label>
                                             </div>
                                             <div class="col-md-4">
@@ -113,14 +123,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             </div>
                                         </div>
                                         <div data-index="0" class="row duplicate-container description-container">
-                                            <div class="col-md-8">
-                                                <select name="desc_group[0][0][item]" class="form-control">
-                                                    <option value="" disabled selected>Select Item</option>
-                                                    <?php foreach ($items as $item) {
-                                                        echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                            <div class="col-md-4">
+                                                <select name="desc_group[0][0][group]" class="form-control groups-dropdown">
+                                                    <option value="" disabled selected>Unassigned</option>
+                                                    <?php foreach ($groups as $group) {
+                                                        echo '<option value="' . $group->id . '">' . $group->name . '</option>';
                                                     } ?>
                                                 </select>
-                                                <textarea class="form-control item-description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select name="desc_group[0][0][item]" class="form-control items-dropdown">
+                                                    <option value="" disabled selected>Select Item</option>
+                                                </select>
                                             </div>
                                             <div class="col-md-3 col-xs-8">
                                                 <input class="form-control" placeholder="Quantity" name="desc_group[0][0][amount]" type="number">
@@ -128,6 +142,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <div class="col-md-1 col-xs-4 duplicate-buttons">
                                                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
                                                 <span id="remove" class="pull-right"><i class="fa fa-minus-square-o text-danger" aria-hidden="true"></i></span>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <textarea class="form-control item-description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
                                             </div>
                                         </div>
                                     </div>

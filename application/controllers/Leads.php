@@ -1025,4 +1025,9 @@ class Leads extends CI_Controller
 			redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
 		}
 	}
+
+	public function group()
+	{
+		re(99);
+	}
 }
