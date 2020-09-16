@@ -337,7 +337,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                     foreach ($descs[$group->id] as $desc) {
                                                 ?>
                                                         <div data-index="<?= $index ?>" class="row duplicate-container description-container">
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-6">
                                                                 <i class="fa fa-bars handle" aria-hidden="true"></i>
                                                                 <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
                                                                 <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control">
@@ -348,17 +348,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </select>
                                                                 <textarea class="form-control item_description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" placeholder="Description"><?= $desc->description ?></textarea>
                                                             </div>
-                                                            <div class="col-md-2">
-                                                                <input class="form-control" placeholder="Quantity" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <input class="form-control item_unit" placeholder="Unit" name="desc_group[<?= $parent_index ?>][<?= $index ?>][quantity_units]" type="text" value="<?= $desc->quantity_units ?>">
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <input class="form-control item_price" placeholder="Price" name="desc_group[<?= $parent_index ?>][<?= $index ?>][unit_price]" type="number" value="<?= $desc->unit_price ?>">
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <span class="item_total"><?= empty($desc->item_total) ? '' : ('$' . number_format($desc->item_total, 2)) ?></span>
+                                                            <div class="col-md-5 no-vertical-padding">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control item_amount" placeholder="Quantity" name="desc_group[<?= $parent_index ?>][<?= $index ?>][amount]" type="number" value="<?= $desc->amount ?>">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control item_unit" placeholder="Unit" name="desc_group[<?= $parent_index ?>][<?= $index ?>][quantity_units]" type="text" value="<?= $desc->quantity_units ?>">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control item_price" placeholder="Price" name="desc_group[<?= $parent_index ?>][<?= $index ?>][unit_price]" type="number" value="<?= $desc->unit_price ?>">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <span class="item_total"><?= empty($desc->item_total) ? '' : ('$' . number_format($desc->item_total, 2)) ?></span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-1 duplicate-buttons">
                                                                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>

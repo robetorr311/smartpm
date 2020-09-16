@@ -161,22 +161,26 @@ $(document).ready(function () {
                         </div>
                         <div class="sortable-items">
                             <div data-index="0" class="row duplicate-container description-container">
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                 <i class="fa fa-bars handle" aria-hidden="true"></i>
                                     <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
                                     <textarea class="form-control item_description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
                                 </div>
-                                <div class="col-md-2">
-                                    <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
-                                </div>
-                                <div class="col-md-2">
-                                    <input class="form-control item_unit" placeholder="Unit" name="desc_group[${index}][0][quantity_units]" type="text">
-                                </div>
-                                <div class="col-md-2">
-                                    <input class="form-control item_price" placeholder="Price" name="desc_group[${index}][0][unit_price]" type="number">
-                                </div>
-                                <div class="col-md-2">
-                                    <span class="item_total">$0.00</span>
+                                <div class="col-md-5 no-vertical-padding">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control item_unit" placeholder="Unit" name="desc_group[${index}][0][quantity_units]" type="text">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control item_price" placeholder="Price" name="desc_group[${index}][0][unit_price]" type="number">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="item_total">$0.00</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-1 duplicate-buttons">
                                     <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
@@ -231,22 +235,26 @@ $(document).ready(function () {
         });
 
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <i class="fa fa-bars handle" aria-hidden="true"></i>
                 <select name="desc_group[${parent_index}][${index}][item]" class="form-control">${options}</select>
                 <textarea class="form-control item_description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
             </div>
-            <div class="col-md-2">
-                <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${parent_index}][${index}][amount]" type="number">
-            </div>
-            <div class="col-md-2">
-                <input class="form-control item_unit" placeholder="Unit" name="desc_group[${parent_index}][${index}][quantity_units]" type="text">
-            </div>
-            <div class="col-md-2">
-                <input class="form-control item_price" placeholder="Price" name="desc_group[${parent_index}][${index}][unit_price]" type="number">
-            </div>
-            <div class="col-md-2">
-                <span class="item_total">$0.00</span>
+            <div class="col-md-5 no-vertical-padding">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${parent_index}][${index}][amount]" type="number">
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control item_unit" placeholder="Unit" name="desc_group[${parent_index}][${index}][quantity_units]" type="text">
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control item_price" placeholder="Price" name="desc_group[${parent_index}][${index}][unit_price]" type="number">
+                    </div>
+                    <div class="col-md-3">
+                        <span class="item_total">$0.00</span>
+                    </div>
+                </div>
             </div>
             <div class="col-md-1 duplicate-buttons">
                 <span id="add"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
