@@ -728,7 +728,7 @@ class Invoice extends CI_Controller
 
             // ============== Send Email ==============
             $this->notify = new Notify();
-            $this->notify->sendInvoice($client->email, $invoice->client_name, $invoice->created_user, $new_name);
+            $this->notify->sendInvoice($client->email, $invoice->client_name, $invoice->created_user, $targetPath);
             // ============== Send Email ==============
 
             if ($clientId) {
