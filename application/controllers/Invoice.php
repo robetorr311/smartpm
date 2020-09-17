@@ -367,7 +367,7 @@ class Invoice extends CI_Controller
             $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Invoice Balance Due:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
-            $pdfContent[] = '<p><b>Financial Summary (Does not include this Invoice)</b></p>';
+            $pdfContent[] = '<p><b>Financial Summary</b></p>';
             $pdfContent[] = '<table width="262">';
             $balance = 0;
             if (!empty($contract_price_financials)) {
@@ -392,7 +392,7 @@ class Invoice extends CI_Controller
                 $pdfContent[] = '</tr>';
             }
             $pdfContent[] = '<tr>';
-            $pdfContent[] = '<td>Balance Due</td>';
+            $pdfContent[] = '<td>Open Balance</td>';
             $pdfContent[] = '<td style="text-align: right; border-top: solid 1px #000;"><b>' . (floatval($balance) < 0 ? '- $' . number_format(abs($balance), 2) : '$' . number_format($balance, 2)) . '</b></td>';
             $pdfContent[] = '</tr>';
             $pdfContent[] = '</table>';
@@ -490,7 +490,7 @@ class Invoice extends CI_Controller
             $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Invoice Balance Due:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
-            $pdfContent[] = '<p><b>Financial Summary (Does not include this Invoice)</b></p>';
+            $pdfContent[] = '<p><b>Financial Summary</b></p>';
             $pdfContent[] = '<table width="262">';
             $balance = 0;
             if (!empty($contract_price_financials)) {
@@ -515,7 +515,7 @@ class Invoice extends CI_Controller
                 $pdfContent[] = '</tr>';
             }
             $pdfContent[] = '<tr>';
-            $pdfContent[] = '<td>Balance Due</td>';
+            $pdfContent[] = '<td>Open Balance</td>';
             $pdfContent[] = '<td style="text-align: right; border-top: solid 1px #000;"><b>' . (floatval($balance) < 0 ? '- $' . number_format(abs($balance), 2) : '$' . number_format($balance, 2)) . '</b></td>';
             $pdfContent[] = '</tr>';
             $pdfContent[] = '</table>';
@@ -644,7 +644,7 @@ class Invoice extends CI_Controller
             $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td align="right">Invoice Balance Due:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
-            $pdfContent[] = '<p><b>Financial Summary (Does not include this Invoice)</b></p>';
+            $pdfContent[] = '<p><b>Financial Summary</b></p>';
             $pdfContent[] = '<table width="262">';
             $balance = 0;
             if (!empty($contract_price_financials)) {
@@ -669,7 +669,7 @@ class Invoice extends CI_Controller
                 $pdfContent[] = '</tr>';
             }
             $pdfContent[] = '<tr>';
-            $pdfContent[] = '<td>Balance Due</td>';
+            $pdfContent[] = '<td>Open Balance</td>';
             $pdfContent[] = '<td style="text-align: right; border-top: solid 1px #000;"><b>' . (floatval($balance) < 0 ? '- $' . number_format(abs($balance), 2) : '$' . number_format($balance, 2)) . '</b></td>';
             $pdfContent[] = '</tr>';
             $pdfContent[] = '</table>';
