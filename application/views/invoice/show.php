@@ -186,9 +186,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="footer">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/invoice/' . $invoice->id . '/pdf') : base_url('financial/invoice/' . $invoice->id . '/pdf'); ?>" target="_blank" class="btn btn-fill">PDF</a>
+                            <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/invoice/' . $invoice->id . '/pdf') : base_url('financial/invoice/' . $invoice->id . '/pdf'); ?>" target="_blank" class="btn btn-fill">View PDF</a>
                             <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/invoice/' . $invoice->id . '/save-pdf') : base_url('financial/invoice/' . $invoice->id . '/save-pdf'); ?>" data-method="POST" class="btn btn-fill">Save PDF</a>
-                            <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/invoice/' . $invoice->id . '/save-send-pdf') : base_url('financial/invoice/' . $invoice->id . '/save-send-pdf'); ?>" data-method="POST" class="btn btn-fill">Save & Send PDF</a>
+                            <a href="<?= $clientId ? base_url('lead/' . $sub_base_path . $clientId . '/invoice/' . $invoice->id . '/send-pdf') : base_url('financial/invoice/' . $invoice->id . '/send-pdf'); ?>" data-method="POST" class="btn btn-fill">Send PDF</a>
                         </div>
                     </div>
                 </div>

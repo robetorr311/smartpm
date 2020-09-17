@@ -296,7 +296,7 @@ $route['financial/invoice/(:num)/update']['post'] = 'invoice/update/$1';
 $route['financial/invoice/(:num)/delete']['post'] = 'invoice/delete/$1';
 $route['financial/invoice/(:num)/pdf'] = 'invoice/pdf/$1';
 $route['financial/invoice/(:num)/save-pdf']['post'] = 'invoice/savePDF/$1';
-$route['financial/invoice/(:num)/save-send-pdf']['post'] = 'invoice/saveSendPDF/$1';
+$route['financial/invoice/(:num)/send-pdf']['post'] = 'invoice/sendPDF/$1';
 
 $route['lead/(:num)/invoices'] = 'invoice/index/$1';
 $route['lead/(:num)/invoice/create'] = 'invoice/create/$1';
@@ -306,7 +306,7 @@ $route['lead/(:num)/invoice/(:num)/update']['post'] = 'invoice/update/$2/$1';
 $route['lead/(:num)/invoice/(:num)/delete']['post'] = 'invoice/delete/$2/$1';
 $route['lead/(:num)/invoice/(:num)/pdf'] = 'invoice/pdf/$2/$1';
 $route['lead/(:num)/invoice/(:num)/save-pdf']['post'] = 'invoice/savePDF/$2/$1';
-$route['lead/(:num)/invoice/(:num)/save-send-pdf']['post'] = 'invoice/saveSendPDF/$2/$1';
+$route['lead/(:num)/invoice/(:num)/send-pdf']['post'] = 'invoice/sendPDF/$2/$1';
 
 $route['lead/(:any)/(:num)/invoices'] = 'invoice/index/$2/$1';
 $route['lead/(:any)/(:num)/invoice/create'] = 'invoice/create/$2/$1';
@@ -316,7 +316,7 @@ $route['lead/(:any)/(:num)/invoice/(:num)/update']['post'] = 'invoice/update/$3/
 $route['lead/(:any)/(:num)/invoice/(:num)/delete']['post'] = 'invoice/delete/$3/$2/$1';
 $route['lead/(:any)/(:num)/invoice/(:num)/pdf'] = 'invoice/pdf/$3/$2/$1';
 $route['lead/(:any)/(:num)/invoice/(:num)/save-pdf']['post'] = 'invoice/savePDF/$3/$2/$1';
-$route['lead/(:any)/(:num)/invoice/(:num)/save-send-pdf']['post'] = 'invoice/saveSendPDF/$3/$2/$1';
+$route['lead/(:any)/(:num)/invoice/(:num)/send-pdf']['post'] = 'invoice/sendPDF/$3/$2/$1';
 
 $route['items'] = 'items/index';
 $route['item/create'] = 'items/create';
