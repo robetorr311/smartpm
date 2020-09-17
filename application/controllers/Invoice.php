@@ -587,7 +587,7 @@ class Invoice extends CI_Controller
         }
     }
 
-    public function saveSendPDF($id, $clientId = false, $sub_base_path = '')
+    public function sendPDF($id, $clientId = false, $sub_base_path = '')
     {
         authAccess();
 
@@ -710,26 +710,32 @@ class Invoice extends CI_Controller
             }
             $pdf->Output($targetPath, 'F');
             // ============== save to jobs_doc database table ==============
-            $search = '.' . strtolower(pathinfo($new_name, PATHINFO_EXTENSION));
-            $trimmed = str_replace($search, '', $new_name);
-            $params = array();
-            $params['job_id'] = $invoice->client_id;
-            $params['doc_name'] = $new_name;
-            $params['name'] = $trimmed;
-            $params['entry_date'] = date('Y-m-d h:i:s');
-            $params['is_active'] = TRUE;
-            $this->db->insert('jobs_doc', $params);
+            // $search = '.' . strtolower(pathinfo($new_name, PATHINFO_EXTENSION));
+            // $trimmed = str_replace($search, '', $new_name);
+            // $params = array();
+            // $params['job_id'] = $invoice->client_id;
+            // $params['doc_name'] = $new_name;
+            // $params['name'] = $trimmed;
+            // $params['entry_date'] = date('Y-m-d h:i:s');
+            // $params['is_active'] = TRUE;
+            // $this->db->insert('jobs_doc', $params);
             $al_insert = $this->activityLogs->insert([
                 'module' => 0,
                 'module_id' => $invoice->client_id,
-                'type' => 3
+                'type' => 11,
+                'activity_data' => json_encode([
+                    'invoie_id' => $id
+                ])
             ]);
-            $this->session->set_flashdata('errors', '<p>PDF Saved and Sent.</p>');
+            $this->session->set_flashdata('errors', '<p>Invoie PDF Sent.</p>');
 
             // ============== Send Email ==============
             $this->notify = new Notify();
             $this->notify->sendInvoice($client->email, $invoice->client_name, $invoice->created_user, $targetPath);
             // ============== Send Email ==============
+            
+            // ============== Delete PDF ==============
+            unlink($targetPath);
 
             if ($clientId) {
                 redirect('lead/' . $sub_base_path . $clientId . '/invoice/' . $id);

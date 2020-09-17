@@ -21,6 +21,7 @@ class ActivityLogsModel extends CI_Model
 	//  8 => 'change_labor_status',
 	//  9 => 'change_permit_status',
 	//  10 => 'change_sales_rep',
+	//  11 => 'invoice_sent',
 	// ];
 
 	public function getLast50()
@@ -97,7 +98,6 @@ class ActivityLogsModel extends CI_Model
 				$activity_data = json_decode($log->activity_data);
 				return $log->created_user_fullname . ' - Updated Client <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> status to "' . LeadModel::statusToStr($activity_data->status) . '" - ' . $log->created_at;
 			} else if ($log->type == 5) {
-				$activity_data = json_decode($log->activity_data);
 				return $log->created_user_fullname . ' - Deleted a Photo from <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> - ' . $log->created_at;
 			} else if ($log->type == 6) {
 				$activity_data = json_decode($log->activity_data);
@@ -114,6 +114,9 @@ class ActivityLogsModel extends CI_Model
 			} else if ($log->type == 10) {
 				$activity_data = json_decode($log->activity_data);
 				return $log->created_user_fullname . ' - Updated Client <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> Sales Rep to "' . $activity_data->sales_rep_name . '" - ' . $log->created_at;
+			} else if ($log->type == 11) {
+				$activity_data = json_decode($log->activity_data);
+				return $log->created_user_fullname . ' - Invoice #' . $activity_data->invoie_id . ' PDF Sent to <a href="' . base_url('lead/' . $log->module_id) . '">' . $log->client_name . '</a> - ' . $log->created_at;
 			}
 		}
 
