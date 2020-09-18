@@ -105,20 +105,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <label>Item<span class="red-mark">*</span></label>
                                             </div>
-                                            <div class="col-md-2">
-                                                <label>Quantity</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>Unit</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>Price</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>Total</label>
+                                            <div class="col-md-5 no-vertical-padding">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Quantity</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>Unit</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>Price</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>Total</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-1"></div>
                                         </div>
