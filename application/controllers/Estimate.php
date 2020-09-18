@@ -231,8 +231,13 @@ class Estimate extends CI_Controller
 
                 if ($update_estimate) {
                     $exception_ids = array_column($estimate['desc_group'], 'id');
-                    $this->estimate_desc->deleteByEstimateIdWithExceptionEstimateGroupIds($id, $exception_ids);
-                    $this->estimate_desc_group->deleteByEstimateIdWithExceptionIds($id, $exception_ids);
+                    if (empty($exception_ids)) {
+                        $this->estimate_desc->deleteByEstimateId($id);
+                        $this->estimate_desc_group->deleteByEstimateId($id);
+                    } else {
+                        $this->estimate_desc->deleteByEstimateIdWithExceptionEstimateGroupIds($id, $exception_ids);
+                        $this->estimate_desc_group->deleteByEstimateIdWithExceptionIds($id, $exception_ids);
+                    }
                     $group_order = 1;
                     foreach ($estimate['desc_group'] as $desc_group) {
                         if (isset($desc_group['id'])) {
