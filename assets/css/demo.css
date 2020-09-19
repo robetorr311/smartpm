@@ -19,6 +19,11 @@ input[type="checkbox"] {
 	width: auto;
 }
 
+.no-vertical-padding {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
 .cursor-pointer {
 	cursor: pointer;
 }
