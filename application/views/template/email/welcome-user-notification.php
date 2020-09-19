@@ -21,11 +21,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <table class="em_main_table" style="border-collapse: collapse; mso-table-lspace: 0px; mso-table-rspace: 0px; width: 700px;" width="700" cellspacing="0" cellpadding="0" border="0" align="center">
             <tbody>
               <tr>
-                <td style="border-collapse: collapse; mso-line-height-rule: exactly; padding: 15px;" class="em_padd" valign="top" bgcolor="#FFA500" align="center">
+                <td style="border-collapse: collapse; mso-line-height-rule: exactly; padding: 15px;" class="em_padd" valign="top" bgcolor="<?= $theme_color; ?>" align="center">
                   <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="border-collapse: collapse; mso-table-lspace: 0px; mso-table-rspace: 0px;">
                     <tbody>
                       <tr>
-                        <td valign="top" align="center" style="border-collapse: collapse; mso-line-height-rule: exactly;"><img class="em_img" alt="logo" style="display: block; font-family: Arial, sans-serif; font-size: 30px; line-height: 34px; color: #000000; max-width: 700px; border: 0; outline: none;" src="<?= ($logoUrl ? base_url('assets/' . $logoUrl) : 'https://smartpm.app/assets/img/logo.png') ?>" width="150" border="0"></td>
+                        <td valign="top" align="center" style="border-collapse: collapse; mso-line-height-rule: exactly;"><img class="em_img" alt="logo" style="display: block; font-family: Arial, sans-serif; font-size: 30px; line-height: 34px; color: #000000; max-width: 700px; border: 0; outline: none;" src="<?= $logoUrl; ?>" width="150" border="0"></td>
                       </tr>
                     </tbody>
                   </table>

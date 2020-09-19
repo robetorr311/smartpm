@@ -6,7 +6,7 @@ class Notify
     public function __construct()
     {
         $this->CI = &get_instance();
-        $this->CI->load->library('email');
+        $this->CI->load->library(['email','session']);
         $this->CI->load->model(['M_EmailCredModel', 'M_TwilioCredModel']);
 
         $this->m_emailCred = new M_EmailCredModel();
@@ -15,8 +15,16 @@ class Notify
         $this->twilioClient = false;
         $this->logoUrl = 'https://smartpm.app/assets/img/logo.png';
 
-        if (isset($this->session->logoUrl) && $this->session->logoUrl != '') {
-            $this->logoUrl = base_url('assets/company_photo/' . $this->session->logoUrl);
+        $admindata = $this->CI->session->userdata('admindata');
+
+        if(!empty($admindata['color'])) {
+            $this->theme_color = $admindata['color'];
+        } else {
+            $this->theme_color = "#FFA500";
+        }
+
+        if (isset($this->CI->session->logoUrl) && $this->CI->session->logoUrl != '') {
+            $this->logoUrl = base_url('assets/company_photo/' . $this->CI->session->logoUrl);
         }
 
         if (isset($this->CI->session->company_code)) {
@@ -59,11 +67,14 @@ class Notify
     public function createPassword($email, $token, $logoUrl)
     {
         $this->CI->email->to($email);
+        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
         $this->CI->email->subject('Create Password - SmartPM');
         $html_message = $this->CI->load->view('template/email/create-password.php', [
             'token' => $token,
-            'logoUrl' => $logoUrl
+            'logoUrl' => $logoUrl,
+            'theme_color' => $this->theme_color
         ], true);
+        
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
@@ -192,7 +203,8 @@ class Notify
         $this->CI->email->subject('Welcome to SmartPM');
         $html_message = $this->CI->load->view('template/email/welcome-user-notification.php', [
             'name' => $name,
-            'logoUrl' => $logoUrl
+            'logoUrl' => $this->logoUrl,
+            'theme_color'=> $this->theme_color,
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
