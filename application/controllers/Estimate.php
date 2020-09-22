@@ -501,7 +501,8 @@ class Estimate extends CI_Controller
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
             $pdfContent[] = $estimate->title . '<br />';
-            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="70">Group</th><th width="240">Item</th><th width="60" align="right">Qty</th><th width="60">Unit</th><th width="60" align="right">Price</th><th width="60" align="right">Total</th></tr>';
+            
+            $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="258">Item</th><th width="70" align="right">Qty</th><th width="70">Unit</th><th width="70" align="right">Price</th><th width="70" align="right">Total</th></tr>';
 
             $total = 0;
             $background = false;
@@ -510,7 +511,7 @@ class Estimate extends CI_Controller
                 $subTotal = 0;
                 if (isset($descs[$group->id])) {
                     foreach ($descs[$group->id] as $desc) {
-                        $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>'.$desc->group_name.'</td><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
+                        $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td>' . $desc->item_name . (empty($desc->description) ? '' : '<br /><i style="font-size: 8px;">' . $desc->description . '</i>') . '</td>';
                         $pdfContent[] = '<td align="right">' . number_format($desc->amount, 2) . '</td>';
                         $pdfContent[] = '<td>' . $desc->quantity_units . '</td>';
                         $pdfContent[] = '<td align="right">$' . number_format($desc->unit_price, 2) . '</td>';
@@ -520,10 +521,10 @@ class Estimate extends CI_Controller
                     }
                 }
                 $total += $subTotal;
-                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="5" align="right">Total - ' . $group->sub_title . ':</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
+                $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="4" align="right">Total - ' . $group->sub_title . ':</td><td align="right">$' . number_format($subTotal, 2) . '</td></tr>';
                 $background = !$background;
             }
-            $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="5" align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
+            $pdfContent[] = '<tr' . ($background ? ' style="background-color: #EEE;"' : '') . '><td colspan="4" align="right">Total:</td><td align="right">$' . number_format($total, 2) . '</td></tr></table>';
             $pdfContent[] = '</div>';
             if (!empty($estimate->note)) {
                 $pdfContent[] = '<div>';

@@ -167,7 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <tr>
-                                <th width="100" >Group</th>
+                                
                                 <th>Item<div class="estimate-description-display">Description</div>
                                 </th>
                                 <th width="100" class="text-right">Qty</th>
@@ -180,7 +180,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             foreach ($estimate_desc_groups as $group) {
                             ?>
                                 <tr>
-                                    <th style="background-color: #eee; color: #333 !important;" colspan="6"><?= $group->sub_title ?></th>
+                                    <th style="background-color: #eee; color: #333 !important;" colspan="5"><?= $group->sub_title ?></th>
                                 </tr>
                                 <?php
                                 $group_total = 0;
@@ -188,7 +188,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     foreach ($descs[$group->id] as $desc) {
                                 ?>
                                         <tr>
-                                            <td><?= $desc->group_name ?></td>
                                             <td><?= $desc->item_name ?><div class="estimate-description-display"><?= $desc->description ?></div>
                                             </td>
                                             <td class="text-right"><?= number_format($desc->amount, 2) ?></td>
@@ -203,14 +202,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 $desc_total += $group_total;
                                 ?>
                                 <tr>
-                                    <th style="background-color: #eee; color: #333 !important;" class="text-right" colspan="5">Sub Total - <?= $group->sub_title ?>:</th>
+                                    <th style="background-color: #eee; color: #333 !important;" class="text-right" colspan="4">Sub Total - <?= $group->sub_title ?>:</th>
                                     <th style="background-color: #eee; color: #333 !important;" class="text-right">$<?= number_format($group_total, 2) ?></th>
                                 </tr>
                             <?php
                             }
                             ?>
                             <tr>
-                                <th class="text-right" colspan="5">Total:</th>
+                                <th class="text-right" colspan="4">Total:</th>
                                 <th class="text-right">$<?= number_format($desc_total, 2) ?></th>
                             </tr>
                         </table>
