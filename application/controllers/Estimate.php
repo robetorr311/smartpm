@@ -479,7 +479,7 @@ class Estimate extends CI_Controller
 
             $pdfContent[] = '<div>';
             $pdfContent[] = '<table><tr>';
-            $pdfContent[] = '<td>' . (($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO') . '</td>';
+            //$pdfContent[] = '<td>' . (($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO') . '</td>';
             
             $pdfContent[] = '<td align="right" style="line-height: 50px; vertical-align: middle;">Estimate #: ' . $estimate->estimate_number . '</td>';
             $pdfContent[] = '</tr></table>';
@@ -507,7 +507,7 @@ class Estimate extends CI_Controller
             $total = 0;
             $background = false;
             foreach ($estimate_desc_groups as $group) {
-                $pdfContent[] = '<tr style="background-color: #777; color: #FFF;"><td colspan="6">' . $group->sub_title . '</td></tr>';
+                $pdfContent[] = '<tr style="background-color: #777; color: #FFF;"><td colspan="5">' . $group->sub_title . '</td></tr>';
                 $subTotal = 0;
                 if (isset($descs[$group->id])) {
                     foreach ($descs[$group->id] as $desc) {
