@@ -37,6 +37,6 @@ class Migration_Create_item_groups_table extends CI_Migration
 
     public function down()
     {
-        $this->dbforge->drop_table('groups', TRUE);
+        $this->dbforge->drop_table('item_groups', TRUE);
     }
 }
