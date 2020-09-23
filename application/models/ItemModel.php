@@ -55,18 +55,4 @@ class ItemModel extends CI_Model
             'is_deleted' => TRUE
         ]);
     }
-
-    /*** Get Items by group-id ***/
-
-    public function getItemsByGroupId($group_id)
-    {
-        $query = $this->db->select('items.id, items.name')
-                 ->from('group_items_mapping')
-                 ->join('items','items.id = group_items_mapping.item_id')
-                 ->where('items.is_deleted', FALSE)
-                 ->where('group_items_mapping.group_id',$group_id)
-                 ->get();
-        
-        return ($query->num_rows() > 0) ? $query->result() : [];
-    }
 }

@@ -80,11 +80,4 @@ class ItemGroupModel extends CI_Model
         }
         return $this->db->get($this->table)->num_rows();
     }
-
-    /*** To remove Group items bby group id ***/
-
-    public function removeGroupItemsByGroupId($group_id)
-    {
-        return $query = $this->db->where('group_id', $group_id)->delete('group_items_mapping');
-    }
 }

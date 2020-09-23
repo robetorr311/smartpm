@@ -9,11 +9,12 @@ class ItemGroup extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['ItemGroupModel','ItemModel']);
+        $this->load->model(['ItemGroupModel','ItemModel','GroupItemsMappingModel']);
         $this->load->library(['pagination', 'form_validation']);
 
         $this->itemgroup = new ItemGroupModel();
         $this->item = new ItemModel();
+        $this->group_items_mapping = new GroupItemsMappingModel();
     }
 
     /*** Group Listing Page ***/
@@ -77,8 +78,7 @@ class ItemGroup extends CI_Controller
                     }
                     // Save to group-item table
                     if(!empty($groupMapping)) {
-                        
-                        $this->db->insert_batch('group_items_mapping', $groupMapping);
+                        $this->group_items_mapping->insert_batch($groupMapping);
                         unset($groupMapping, $data);
                     }
                 }
@@ -103,7 +103,7 @@ class ItemGroup extends CI_Controller
     
         if ($itemgroup) {
 
-            $groupitems = $this->item->getItemsByGroupId($id);
+            $groupitems = $this->group_items_mapping->getItemsByGroupId($id);
             $items = $this->item->allItems();
            
             $this->load->view('header', [
@@ -143,7 +143,7 @@ class ItemGroup extends CI_Controller
                 ]);
 
                 if($update) {
-                    $this->itemgroup->removeGroupItemsByGroupId($id);
+                    $this->group_items_mapping->removeGroupItemsByGroupId($id);
                     if (!empty($itemsArray)) {
                         $groupMapping = $data = [];
                         $data['group_id'] = $id;
@@ -155,7 +155,7 @@ class ItemGroup extends CI_Controller
                         
                         // Save to group-item table
                         if(!empty($groupMapping)) {
-                            $this->db->insert_batch('group_items_mapping', $groupMapping);
+                            $this->group_items_mapping->insert_batch($groupMapping);
                             unset($groupMapping, $data);
                         }
                     }
@@ -210,7 +210,7 @@ class ItemGroup extends CI_Controller
     public function getItemsByGroupId()
     {
         $group_id  = $this->input->post('group_id');
-        $groupitems = $this->item->getItemsByGroupId($group_id);
+        $groupitems = $this->group_items_mapping->getItemsByGroupId($group_id);
         echo json_encode($groupitems);
     }
 }
