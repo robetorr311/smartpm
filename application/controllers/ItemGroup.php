@@ -55,7 +55,7 @@ class ItemGroup extends CI_Controller
     {
         authAccess();
         // Validations
-        $this->form_validation->set_rules('name', 'Item-Group Name', 'trim|required|is_unique[item_groups.name]');
+        $this->form_validation->set_rules('name', 'Item-Group Name', 'trim|required|is_unique[item_groups.name]',['is_unique' => 'This Item-Group Name already exists.']);
 
         if ($this->form_validation->run() == TRUE) {
             $postdata = $this->input->post();
@@ -200,7 +200,7 @@ class ItemGroup extends CI_Controller
         if($result == 0)
             $response = true;
         else {
-            $this->form_validation->set_message('check_group_name', 'The Item-Group Name field must contain a unique value.');
+            $this->form_validation->set_message('check_group_name', 'This Item-Group Name already exists.');
             $response = false;
         }
         return $response;
