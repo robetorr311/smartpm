@@ -90,6 +90,7 @@ class Notify
     public function emailVerification($email, $company_code, $token)
     {
         $this->CI->email->to($email);
+        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
         $this->CI->email->subject('Email Verification - SmartPM');
         $html_message = $this->CI->load->view('template/email/email-verification.php', [
             'company_code' => $company_code,
@@ -222,6 +223,7 @@ class Notify
     public function sendWelcomeUserNotification($email, $name, $logoUrl = false)
     {
         $this->CI->email->to($email);
+        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
         $this->CI->email->subject('Welcome to SmartPM');
         $html_message = $this->CI->load->view('template/email/welcome-user-notification.php', [
             'name' => $name,
