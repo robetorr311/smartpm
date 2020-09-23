@@ -6,7 +6,7 @@ class Notify
     public function __construct()
     {
         $this->CI = &get_instance();
-        $this->CI->load->library(['email','session']);
+        $this->CI->load->library('email');
         $this->CI->load->model(['M_EmailCredModel', 'M_TwilioCredModel']);
 
         $this->m_emailCred = new M_EmailCredModel();

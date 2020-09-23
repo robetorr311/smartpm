@@ -107,7 +107,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label>Group<span class="red-mark">*</span></label>
+                                                <label>Item-Group<span class="red-mark">*</span></label>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Item<span class="red-mark">*</span></label>
@@ -134,22 +134,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <div data-index="0" class="row duplicate-container description-container">
                                             
                                                 <div class="col-md-6 no-vertical-padding">
-                                                    <div class="col-md-6">
-                                                        <i class="fa fa-bars handle" aria-hidden="true"></i>
-                                                        <select name="desc_group[0][0][group]" class="form-control groups-dropdown">
-                                                            <option value="" disabled selected>Unassigned</option>
-                                                            <?php foreach ($groups as $group) {
-                                                                echo '<option value="' . $group->id . '">' . $group->name . '</option>';
-                                                            } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <select name="desc_group[0][0][item]" class="form-control items-dropdown">
-                                                            <option value="" disabled selected>Select Item</option>
-                                                            <?php foreach ($items as $item) {
-                                                                echo '<option value="' . $item->id . '">' . $item->name . '</option>';
-                                                            } ?>
-                                                        </select>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <i class="fa fa-bars handle" aria-hidden="true"></i>
+                                                            <select name="desc_group[0][0][group]" class="form-control groups-dropdown">
+                                                                <option value="" disabled selected>Unassigned</option>
+                                                                <?php foreach ($itemgroups as $itemgroup) {
+                                                                    echo '<option value="' . $itemgroup->id . '">' . $itemgroup->name . '</option>';
+                                                                } ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <select name="desc_group[0][0][item]" class="form-control items-dropdown">
+                                                                <option value="" disabled selected>Select Item</option>
+                                                                <?php foreach ($items as $item) {
+                                                                    echo '<option value="' . $item->id . '">' . $item->name . '</option>';
+                                                                } ?>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                     <textarea class="form-control item_description" name="desc_group[0][0][description]" placeholder="Description"></textarea>
                                                 </div>

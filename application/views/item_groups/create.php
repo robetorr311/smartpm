@@ -17,26 +17,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url('groups') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
+            <a href="<?= base_url('item-groups') ?>" class="btn btn-info btn-fill"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12 max-1000-form-container">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Create Group</h4>
+                    <h4 class="title">Create Item-Group</h4>
                 </div>
                 <div class="content">
                     <div class="row">
                         <div id="validation-errors" class="col-md-12">
                         </div>
                     </div>
-                    <?= form_open('group/store', array('id' => 'group_create', 'method' => 'post', 'novalidate' => true)) ?>
+                    <?= form_open('item-groups/store', array('id' => 'group_create', 'method' => 'post', 'novalidate' => true)) ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Group Name<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Group Name" name="name" type="text">
+                                <label>Item-Group Name<span class="red-mark">*</span></label>
+                                <input class="form-control" placeholder="Item-Group Name" name="name" type="text">
                             </div>
                         </div>
                     </div>

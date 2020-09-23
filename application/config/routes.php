@@ -430,13 +430,13 @@ $route['search/tasks']['post'] = 'search/tasks';
 $route['search/users']['post'] = 'search/users';
 
 // Group Managment Routes
-$route['groups'] = 'groups/index';
-$route['group/create'] = 'groups/create';
-$route['group/store']['post'] = 'groups/store';
-$route['group/(:num)'] = 'groups/show/$1';
-$route['group/(:num)/update']['post'] = 'groups/update/$1';
-$route['group/(:num)/delete']['post'] = 'groups/delete/$1';
-$route['group/get-group-items']['post'] = 'groups/getItemsByGroupId';
+$route['item-groups'] = 'itemGroup/index';
+$route['item-groups/create'] = 'ItemGroup/create';
+$route['item-groups/store']['post'] = 'itemGroup/store';
+$route['item-groups/(:num)'] = 'itemGroup/show/$1';
+$route['item-groups/(:num)/update']['post'] = 'itemGroup/update/$1';
+$route['item-groups/(:num)/delete']['post'] = 'itemGroup/delete/$1';
+$route['item-groups/get-group-items']['post'] = 'itemGroup/getItemsByGroupId';
 
 // Wildcard
 $route['(.+)'] = 'errors/page_missing';

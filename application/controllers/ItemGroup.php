@@ -1,18 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Groups extends CI_Controller
+class ItemGroup extends CI_Controller
 {
-    private $title = 'Groups';
+    private $title = 'Item Groups';
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->load->model(['GroupModel','ItemModel']);
+        $this->load->model(['ItemGroupModel','ItemModel']);
         $this->load->library(['pagination', 'form_validation']);
 
-        $this->group = new GroupModel();
+        $this->itemgroup = new ItemGroupModel();
         $this->item = new ItemModel();
     }
 
@@ -22,13 +22,13 @@ class Groups extends CI_Controller
     {
         authAccess();
 
-        $groups = $this->group->allGroups();
+        $itemgroups = $this->itemgroup->allGroups();
         
         $this->load->view('header', [
             'title' => $this->title
         ]);
-        $this->load->view('groups/index', [
-            'groups' => $groups,
+        $this->load->view('item_groups/index', [
+            'itemgroups' => $itemgroups,
         ]);
         $this->load->view('footer');
     }
@@ -43,9 +43,8 @@ class Groups extends CI_Controller
 
         $this->load->view('header', [
             'title' => $this->title,
-            'items' => $items
         ]);
-        $this->load->view('groups/create');
+        $this->load->view('item_groups/create',['items' => $items]);
         $this->load->view('footer');
     }
 
@@ -55,15 +54,18 @@ class Groups extends CI_Controller
     {
         authAccess();
         // Validations
-        $this->form_validation->set_rules('name', 'Group Name', 'trim|required|is_unique[groups.name]');
+        $this->form_validation->set_rules('name', 'Item-Group Name', 'trim|required|is_unique[item_groups.name]');
 
         if ($this->form_validation->run() == TRUE) {
             $postdata = $this->input->post();
             $itemsArray = (!empty($postdata['items'])) ? explode(",",$postdata['items']) : [];
             unset($postdata['items']);
+            
+            // Save to item-group table
+            $insert = $this->itemgroup->insert([
+                'name' => $postdata['name'],
+            ]);
 
-            // Save to group table
-            $insert = $this->group->insert($postdata);
             if ($insert) {
                 if (!empty($itemsArray)) {
                     $groupMapping = $data = [];
@@ -75,19 +77,19 @@ class Groups extends CI_Controller
                     }
                     // Save to group-item table
                     if(!empty($groupMapping)) {
+                        
                         $this->db->insert_batch('group_items_mapping', $groupMapping);
                         unset($groupMapping, $data);
                     }
                 }
-                //redirect('item/' . $insert);
-                redirect('groups');
+                redirect('item-groups/'.$insert);
             } else {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Group.</p>');
-                redirect('group/create');
+                redirect('item-groups/create');
             }
         } else {
             $this->session->set_flashdata('errors', validation_errors());
-            redirect('group/create');
+            redirect('item-groups/create');
         }
     }
 
@@ -97,25 +99,25 @@ class Groups extends CI_Controller
     {   
         authAccess();
 
-        $group = $this->group->getGroupById($id);
+        $itemgroup = $this->itemgroup->getGroupById($id);
     
-        if ($group) {
+        if ($itemgroup) {
 
             $groupitems = $this->item->getItemsByGroupId($id);
             $items = $this->item->allItems();
            
             $this->load->view('header', [
                 'title' => $this->title,
+            ]);
+            $this->load->view('item_groups/show', [
+                'itemgroup' => $itemgroup,
                 'groupitems' => $groupitems,
                 'items' => $items
-            ]);
-            $this->load->view('groups/show', [
-                'group' => $group
             ]);
             $this->load->view('footer');
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-            redirect('groups');
+            redirect('item-groups');
         }
     }
 
@@ -125,10 +127,10 @@ class Groups extends CI_Controller
     {
         authAccess();
        
-        $group = $this->group->getGroupById($id);
+        $itemgroup = $this->itemgroup->getGroupById($id);
        
-        if ($group) {
-            $this->form_validation->set_rules('name', 'Group Name', 'trim|required|callback_check_group_name['.$id.']');
+        if ($itemgroup) {
+            $this->form_validation->set_rules('name', 'Item-Group Name', 'trim|required|callback_check_group_name['.$id.']');
 
             if ($this->form_validation->run() == TRUE) {
 
@@ -136,10 +138,12 @@ class Groups extends CI_Controller
                 
                 $itemsArray = (!empty($postdata['items'])) ? explode(",",$postdata['items']) : [];
                 unset($postdata['items']);
-                $update = $this->group->update($id,$postdata);
+                $update = $this->itemgroup->update($id,[
+                    'name' => $postdata['name'],
+                ]);
 
                 if($update) {
-                    $this->group->removeGroupItemsByGroupId($id);
+                    $this->itemgroup->removeGroupItemsByGroupId($id);
                     if (!empty($itemsArray)) {
                         $groupMapping = $data = [];
                         $data['group_id'] = $id;
@@ -162,10 +166,10 @@ class Groups extends CI_Controller
             } else {
                 $this->session->set_flashdata('errors', validation_errors());
             }
-            redirect('group/' . $id);
+            redirect('item-groups/' . $id);
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
-            redirect('groups');
+            redirect('item-groups');
         }
     }
 
@@ -174,29 +178,29 @@ class Groups extends CI_Controller
     public function delete($id)
     {
         authAccess();
-        $group = $this->group->getGroupById($id);
+        $group = $this->itemgroup->getGroupById($id);
 
         if ($group) {
-            $delete = $this->group->delete($id);
+            $delete = $this->itemgroup->delete($id);
             if (!$delete) {
                 $this->session->set_flashdata('errors', '<p>Unable to delete Item.</p>');
             }
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
         }
-        redirect('groups');
+        redirect('item-groups');
     }
 
     /*** Validation of Group-name while update ***/
 
     public function check_group_name($name, $id)
     {
-        $result = $this->group->check_group_name($name, $id);
+        $result = $this->itemgroup->check_group_name($name, $id);
 
         if($result == 0)
             $response = true;
         else {
-            $this->form_validation->set_message('check_group_name', 'The Group Name field must contain a unique value.');
+            $this->form_validation->set_message('check_group_name', 'The Item-Group Name field must contain a unique value.');
             $response = false;
         }
         return $response;

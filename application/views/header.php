@@ -239,8 +239,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= base_url('groups') ?>">
-                                        <span class="sidebar-normal">Groups</span>
+                                    <a class="nav-link" href="<?= base_url('item-groups') ?>">
+                                        <span class="sidebar-normal">Item Groups</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">

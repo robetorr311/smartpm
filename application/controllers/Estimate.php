@@ -9,7 +9,7 @@ class Estimate extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel', 'AssembliesModel', 'FinancialModel', 'LeadMaterialModel','GroupModel']);
+        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel', 'AssembliesModel', 'FinancialModel', 'LeadMaterialModel','ItemGroupModel']);
         $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->estimate = new EstimateModel();
@@ -17,7 +17,7 @@ class Estimate extends CI_Controller
         $this->estimate_desc = new EstimateDescriptionModel();
         $this->lead = new LeadModel();
         $this->user = new UserModel();
-        $this->group = new GroupModel();
+        $this->itemgroup = new ItemGroupModel();
         $this->item = new ItemModel();
         $this->admin_setting = new AdminSettingModel();
         $this->activityLogs = new ActivityLogsModel();
@@ -80,7 +80,7 @@ class Estimate extends CI_Controller
         }
          // Dropdown values
         $clients = $this->lead->getLeadList();
-        $groups = $this->group->getGroupList();
+        $itemgroups = $this->itemgroup->getGroupList();
         $assemblies = $this->assemblies->getAssembliesList();
 
         $this->load->view('header', [
@@ -89,7 +89,7 @@ class Estimate extends CI_Controller
         ]);
         $this->load->view('estimate/create', [
             'clients' => $clients,
-            'groups' => $groups,
+            'itemgroups' => $itemgroups,
             'assemblies' => $assemblies,
             'clientId' => $clientId,
             'sub_base_path' => $sub_base_path
@@ -363,7 +363,7 @@ class Estimate extends CI_Controller
             $estimate_descs = $this->estimate_desc->allEstimateDescsByIds($estimate_desc_group_ids);
             // Dropdown values
             $clients = $this->lead->getLeadList();
-            $groups = $this->group->getGroupList();
+            $itemgroups = $this->itemgroup->getGroupList();
             $items = $this->item->getItemList();
 
             $descs = [];
@@ -380,7 +380,7 @@ class Estimate extends CI_Controller
             $vars['estimate_desc_groups'] = $estimate_desc_groups;
             $vars['descs'] = $descs;
             $vars['clients'] = $clients;
-            $vars['groups'] = $groups;
+            $vars['itemgroups'] = $itemgroups;
             $vars['items'] = $items;
             $vars['clientId'] = $clientId;
             $vars['sub_base_path'] = $sub_base_path;
@@ -389,6 +389,7 @@ class Estimate extends CI_Controller
                 'title' => $this->title,
                 'sortable' => true
             ]);
+            
             $this->load->view('estimate/show', $vars);
             $this->load->view('footer');
         } else {
@@ -479,7 +480,7 @@ class Estimate extends CI_Controller
 
             $pdfContent[] = '<div>';
             $pdfContent[] = '<table><tr>';
-            //$pdfContent[] = '<td>' . (($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO') . '</td>';
+            $pdfContent[] = '<td>' . (($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO') . '</td>';
             
             $pdfContent[] = '<td align="right" style="line-height: 50px; vertical-align: middle;">Estimate #: ' . $estimate->estimate_number . '</td>';
             $pdfContent[] = '</tr></table>';

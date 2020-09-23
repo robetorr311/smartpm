@@ -5,7 +5,7 @@ var aliases = {
     title: 'Title',
     note: 'Note',
     sub_title: 'Sub Title',
-    group:'Group',
+    group:'Item-Group',
     item: 'Item',
     amount: 'Quantity',
     unit_price: 'Price'
@@ -181,7 +181,7 @@ $(document).ready(function () {
 
     $('form#estimate_create').on('click', '.duplicate-container.group-container .duplicate-buttons.group-duplicate-buttons span#add', function () {
         var index = 0;
-        var parent_index = $(this).closest('.duplicate-container.group-container').data('index');
+        
         // find next index for new controls
         $('.duplicate-container.group-container').each(function () {
             var ele_index = parseInt($(this).data('index'));
@@ -235,7 +235,7 @@ $(document).ready(function () {
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-3">
-                                <label>Group<span class="red-mark">*</span></label>
+                                <label>Item-Group<span class="red-mark">*</span></label>
                             </div>
                             <div class="col-md-3">
                                 <label>Item<span class="red-mark">*</span></label>
@@ -261,25 +261,29 @@ $(document).ready(function () {
                         <div class="sortable-items">
                             <div data-index="0" class="row duplicate-container description-container">
                                 <div class="col-md-6 no-vertical-padding">
-                                    <div class="col-md-6">
-                                        <i class="fa fa-bars handle" aria-hidden="true"></i>
-                                        <select name="desc_group[${parent_index}][${index}][group]" class="form-control groups-dropdown">${options_groups}</select>
+                                    <div class ="row">
+                                        <div class="col-md-6">
+                                            <i class="fa fa-bars handle" aria-hidden="true"></i>
+                                            <select name="desc_group[${index}][0][item]" class="form-control groups-dropdown">${options_groups}</select>
+                                            
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="desc_group[${index}][0][item]" class="form-control items-dropdown">${options_items}</select>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <select name="desc_group[${parent_index}][${index}][item]" class="form-control items-dropdown">${options_items}</select>
-                                    </div>
-                                    <textarea class="form-control item_description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
+                                   
+                                    <textarea class="form-control item-description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
                                 </div>
                                 <div class="col-md-5 no-vertical-padding">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${parent_index}][${index}][amount]" type="number">
+                                            <input class="form-control item_amount" placeholder="Quantity" name="desc_group[${index}][0][amount]" type="number">
                                         </div>
                                         <div class="col-md-3">
-                                            <input class="form-control item_unit" placeholder="Unit" name="desc_group[${parent_index}][${index}][quantity_units]" type="text">
+                                            <input class="form-control item_unit" placeholder="Unit" name="desc_group[${index}][0][quantity_units]" type="text">
                                         </div>
                                         <div class="col-md-3">
-                                            <input class="form-control item_price" placeholder="Price" name="desc_group[${parent_index}][${index}][unit_price]" type="number">
+                                            <input class="form-control item_price" placeholder="Price" name="desc_group[${index}][0][unit_price]" type="number">
                                         </div>
                                         <div class="col-md-3">
                                             <span class="item_total">$0.00</span>
@@ -350,14 +354,16 @@ $(document).ready(function () {
 
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
             <div class="col-md-6 no-vertical-padding">
-                <div class="col-md-6">
-                    <i class="fa fa-bars handle" aria-hidden="true"></i>
-                    <select name="desc_group[${parent_index}][${index}][group]" class="form-control groups-dropdown">${options_groups}</select>
-                    
-                </div>
-                <div class="col-md-6">
-                    <select name="desc_group[${parent_index}][${index}][item]" class="form-control items-dropdown">${options_items}</select>
-                    
+                <div class ="row">
+                    <div class="col-md-6">
+                        <i class="fa fa-bars handle" aria-hidden="true"></i>
+                        <select name="desc_group[${parent_index}][${index}][group]" class="form-control groups-dropdown">${options_groups}</select>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <select name="desc_group[${parent_index}][${index}][item]" class="form-control items-dropdown">${options_items}</select>
+                        
+                    </div>
                 </div>
                 <textarea class="form-control item_description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
             </div>
@@ -423,7 +429,7 @@ $(document).ready(function () {
         var selectEl = $(this);
         var group_id = selectEl.val();
         $.ajax({
-            url: '/group/get-group-items/',
+            url: '/item-groups/get-group-items/',
             type: 'POST',
             data: {group_id : group_id}
         }).done(function (response) {
