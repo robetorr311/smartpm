@@ -119,7 +119,7 @@ class Estimate extends CI_Controller
                 $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][sub_title]', 'Sub Title', 'trim|required');
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Group', 'trim|required');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item-Group', 'trim|required');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][unit_price]', 'Price', 'trim|numeric');
@@ -212,7 +212,7 @@ class Estimate extends CI_Controller
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
 
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Group', 'trim|required');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item-Group', 'trim|required');
 
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');

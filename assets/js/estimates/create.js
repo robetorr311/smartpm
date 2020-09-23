@@ -264,7 +264,7 @@ $(document).ready(function () {
                                     <div class ="row">
                                         <div class="col-md-6">
                                             <i class="fa fa-bars handle" aria-hidden="true"></i>
-                                            <select name="desc_group[${index}][0][item]" class="form-control groups-dropdown">${options_groups}</select>
+                                            <select name="desc_group[${index}][0][group]" class="form-control groups-dropdown">${options_groups}</select>
                                             
                                         </div>
                                         <div class="col-md-6">

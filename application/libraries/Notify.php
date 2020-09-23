@@ -95,7 +95,7 @@ class Notify
             'company_code' => $company_code,
             'token' => $token,
             'theme_color' => $this->theme_color,
-            'logoUrl' => $logoUrl
+            'logoUrl' => $this->logoUrl
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
