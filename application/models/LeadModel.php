@@ -61,6 +61,7 @@ class LeadModel extends CI_Model
         3 => 'Posted'
     ];
 
+  
     public function allLeads()
     {
         $this->db->from($this->table);
@@ -73,6 +74,7 @@ class LeadModel extends CI_Model
         return $query->result();
     }
 
+   
     public function allLeadsByStatus($status)
     {
         if (!isset(self::$status[$status])) {
@@ -89,6 +91,7 @@ class LeadModel extends CI_Model
         return $query->result();
     }
 
+    
     public function allJobs()
     {
         $this->db->from($this->table);

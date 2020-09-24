@@ -21,11 +21,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <table class="em_main_table" style="border-collapse: collapse; mso-table-lspace: 0px; mso-table-rspace: 0px; width: 700px;" width="700" cellspacing="0" cellpadding="0" border="0" align="center">
             <tbody>
               <tr>
-                <td style="border-collapse: collapse; mso-line-height-rule: exactly; padding: 15px;" class="em_padd" valign="top" bgcolor="#FFA500" align="center">
+                <td style="border-collapse: collapse; mso-line-height-rule: exactly; padding: 15px;" class="em_padd" valign="top" bgcolor="<?php echo !empty($emaildata['logoUrl']) ? $emaildata['theme_color'] : '#FFA500'; ?>" align="center">
                   <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="border-collapse: collapse; mso-table-lspace: 0px; mso-table-rspace: 0px;">
                     <tbody>
                       <tr>
-                        <td valign="top" align="center" style="border-collapse: collapse; mso-line-height-rule: exactly;"><img class="em_img" alt="logo" style="display: block; font-family: Arial, sans-serif; font-size: 30px; line-height: 34px; color: #000000; max-width: 700px; border: 0; outline: none;" src="<?= $logoUrl ?>" width="150" border="0"></td>
+                        <td valign="top" align="center" style="border-collapse: collapse; mso-line-height-rule: exactly;"><img class="em_img" alt="logo" style="display: block; font-family: Arial, sans-serif; font-size: 30px; line-height: 34px; color: #000000; max-width: 700px; border: 0; outline: none;" src="<?php echo !empty($emaildata['logoUrl']) ? $emaildata['logoUrl'] : ''; ?>" width="150" border="0"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -37,8 +37,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tbody>
                       <tr>
                         <td style="border-collapse: collapse; mso-line-height-rule: exactly; font-family: 'Open Sans', Arial, sans-serif; font-size: 16px; line-height: 20px; color: #333333;" valign="top" align="left">
-                          <p>RE: <?= $type ?></p>
-                          <p>Message: <?= empty($note) ? '-' : nl2br($note) ?></p>
+                          <p><strong>Type:</strong> <?php echo !empty($emaildata['notice_type']) ?  $emaildata['notice_type'] : 'N/A' ?></p>
+                          <p><strong>Date:</strong> <?php echo empty($emaildata['notice_details']['date']) ? 'N/A' : date('d-M-Y',strtotime($emaildata['notice_details']['date'])) ?></p>
+                          <p><strong>Expected Date:</strong> <?php echo empty($emaildata['notice_details']['expected_date']) ? 'N/A' : date('d-M-Y',strtotime($emaildata['notice_details']['expected_date'])) ?></p>
+                          <p><strong>Message:</strong> <?php echo empty($emaildata['notice_details']['note']) ? 'N/A' : nl2br($emaildata['notice_details']['note']) ?></p>
                         </td>
                       </tr>
                     </tbody>

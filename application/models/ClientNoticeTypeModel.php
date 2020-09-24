@@ -34,4 +34,17 @@ class ClientNoticeTypeModel extends CI_Model
         ]);
         return $update;
     }
+
+    /***  Get Notice type by id ***/
+    public function getNoticeTypeById($id = '')
+    {
+
+        $query = $this->db->select('id, name')
+                            ->from($this->table)
+                            ->where('is_deleted',0)
+                            ->where('id',$id)
+                            ->get();
+        $result = $query->first_row();
+        return $result ? $result : false;
+    }
 }

@@ -42,6 +42,7 @@ class Leads extends CI_Controller
 		$this->load->view('footer');
 	}
 
+
 	public function status($status)
 	{
 		authAccess();
@@ -50,7 +51,8 @@ class Leads extends CI_Controller
 		$next_status = is_string(LeadModel::statusToStr($status + 1)) ? $status + 1 : false;
 		$prev_status = is_string(LeadModel::statusToStr($status - 1)) ? $status - 1 : false;
 
-		$leads = $this->lead->allLeadsByStatus($status);
+		$leads = $this->lead->allLeadsBystatus($status);
+
 		$this->load->view('header', ['title' => $this->title]);
 		$this->load->view('leads/index', [
 			'status' => $status,

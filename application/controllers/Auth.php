@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Auth extends CI_Controller
 {
 	public function __construct()
-	{
+	{	
 		parent::__construct();
 		
 		$this->load->library(['new_company', 'notify']);
@@ -46,6 +46,7 @@ class Auth extends CI_Controller
 			$db = 'smartpm_' . $authData['company_code'];
 			if (verifyDB($db, TRUE)) {
 				dbSelect($db);
+
 				$this->user = new UserModel();
 				if ($user = $this->user->authenticate($authData['email'], $authData['password'])) {
 					if (empty($user->verification_token)) {
@@ -63,6 +64,7 @@ class Auth extends CI_Controller
 								'company_code' => $authData['company_code'],
 								'database' => $db,
 								'logoUrl' => $admin_conf->url,
+								'company_name' => $admin_conf->company_name,
 								'logged_in' => TRUE
 							]);
 							$result1 = $this->user->get_crm_data('admin_setting', ['color', 'url', 'favicon'], ['company_id' => $user->company_id]);

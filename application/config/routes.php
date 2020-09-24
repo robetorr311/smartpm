@@ -219,6 +219,7 @@ $route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
 $route['lead/all-status'] = 'all_status/index';
 
+
 $route['lead/signed-jobs'] = 'signed_jobs/index';
 
 $route['lead/cash-jobs'] = 'cash_jobs/index';

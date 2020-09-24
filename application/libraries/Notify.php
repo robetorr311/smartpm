@@ -37,6 +37,7 @@ class Notify
             'smtp_pass' => (isset($smtpSettings) && !empty($smtpSettings->smtp_pass)) ? $smtpSettings->smtp_pass : getenv('EMAIL_SMTP_PASS'),
             'mailtype' => 'html'
         ]);
+        
         $this->CI->email->set_newline("\r\n");
         $this->CI->email->from(((isset($smtpSettings) && !empty($smtpSettings->smtp_user)) ? $smtpSettings->smtp_user : getenv('EMAIL_SMTP_USER')), 'SmartPM Notification');
     }
@@ -197,17 +198,34 @@ class Notify
         $this->CI->email->send();
     }
 
-    public function sendClientNotice($email, $type, $note)
+    /*** To send email notification for notice ***/
+    
+    public function sendClientNotice($email, $company_name, $logoUrl, $notice_type_name, $notice_details, $theme_color)
     {
-        $this->CI->email->to($email);
-        $this->CI->email->subject('Notice');
-        $html_message = $this->CI->load->view('template/email/client-notice-notification.php', [
-            'logoUrl' => $this->logoUrl,
-            'type' => $type,
-            'note' => $note
-        ], true);
-        $this->CI->email->message($html_message);
-        $this->CI->email->send();
+        $result = 0;
+
+        if(!empty($email)) {
+            
+            $emaildata = [];
+            $emaildata['logoUrl'] = $logoUrl;
+            $emaildata['notice_type'] = $notice_type_name;
+            $emaildata['notice_details'] = $notice_details;
+            $emaildata['theme_color'] = $theme_color;
+            $this->CI->email->to($email);
+            $subject = 'Notice from '.$company_name;
+            $this->CI->email->subject($subject);
+           
+            $html_message = $this->CI->load->view('template/email/client-notice-notification.php', [
+                'emaildata' => $emaildata,
+
+            ], true);
+            $this->CI->email->message($html_message);
+
+            if($this->CI->email->send()) {
+                $result = 1;
+            }
+        }
+        return $result;
     }
 
     public function sendInvoice($email, $client_name, $user_name, $attachment)
