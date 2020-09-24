@@ -128,4 +128,18 @@ $(document).ready(function() {
     $('form#financial_edit #job_id').select2({
         width: '100%'
     });
+
+    $('form#financial_edit #attachments').change(function (e) {
+        var input = e.target;
+        var output = $('form#financial_edit #attachment_list');
+        var children = "";
+        for (var i = 0; i < input.files.length; ++i) {
+            children += '<div><i class="fa fa-paperclip" aria-hidden="true"></i> ' + input.files[i].name + '</div>';
+        }
+        output.html(children == '' ? children : ('<br />' + children));
+    });
+
+    $('form#financial_edit .existing-financial-attachment i.text-danger').click(function () {
+        $(this).closest('.existing-financial-attachment').remove();
+    });
 });

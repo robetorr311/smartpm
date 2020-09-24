@@ -153,4 +153,14 @@ $(document).ready(function () {
         }
         $('form#financial_create #job_id').change();
     });
+
+    $('form#financial_create #attachments').change(function (e) {
+        var input = e.target;
+        var output = $('form#financial_create #attachment_list');
+        var children = "";
+        for (var i = 0; i < input.files.length; ++i) {
+            children += '<div><i class="fa fa-paperclip" aria-hidden="true"></i> ' + input.files[i].name + '</div>';
+        }
+        output.html(children == '' ? children : ('<br />' + children));
+    });
 });

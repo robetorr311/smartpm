@@ -30,7 +30,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div id="validation-errors" class="col-md-12">
                         </div>
                     </div>
-                    <form id="financial_create" action="<?= base_url('financial/record/store') ?>" method="post" novalidate>
+                    <form id="financial_create" action="<?= base_url('financial/record/store') ?>" method="post" enctype="multipart/form-data" novalidate>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -168,6 +168,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Notes</label>
                                     <textarea id="note-input" class="form-control" name="notes" placeholder="Notes" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Attachments</label>
+                                    <input id="attachments" class="form-control" type="file" name="attachments[]" multiple>
+                                    <div id="attachment_list"></div>
                                 </div>
                             </div>
                         </div>
