@@ -425,9 +425,18 @@ $route['setting/user-options'] = 'userOptions/index';
 $route['setting/user-options/cell-notif-suffix/store']['post'] = 'userOptions/insertCellNotifSuffix';
 $route['setting/user-options/cell-notif-suffix/(:num)/update']['post'] = 'userOptions/updateCellNotifSuffix/$1';
 $route['setting/user-options/cell-notif-suffix/(:num)/delete']['post'] = 'userOptions/deleteCellNotifSuffix/$1';
-
 $route['search/leads']['post'] = 'search/leads';
 $route['search/tasks']['post'] = 'search/tasks';
 $route['search/users']['post'] = 'search/users';
 
+// Group Managment Routes
+$route['item-groups'] = 'itemGroup/index';
+$route['item-groups/create'] = 'ItemGroup/create';
+$route['item-groups/store']['post'] = 'itemGroup/store';
+$route['item-groups/(:num)'] = 'itemGroup/show/$1';
+$route['item-groups/(:num)/update']['post'] = 'itemGroup/update/$1';
+$route['item-groups/(:num)/delete']['post'] = 'itemGroup/delete/$1';
+$route['item-groups/get-group-items']['post'] = 'itemGroup/getItemsByGroupId';
+
+// Wildcard
 $route['(.+)'] = 'errors/page_missing';

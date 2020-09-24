@@ -9,10 +9,12 @@ class EstimateDescriptionModel extends CI_Model
     {
         $this->db->select("
             estimate_descriptions.*,
+            item_groups.name as group_name,
             items.name AS item_name,
             (estimate_descriptions.unit_price*estimate_descriptions.amount) AS item_total
         ");
         $this->db->from($this->table);
+        $this->db->join('item_groups', 'estimate_descriptions.group_id=item_groups.id', 'left');
         $this->db->join('items as items', 'estimate_descriptions.item=items.id', 'left');
         $this->db->where_in('description_group_id', $ids);
         $this->db->where('estimate_descriptions.is_deleted', FALSE);

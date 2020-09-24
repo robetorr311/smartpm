@@ -228,57 +228,62 @@
                         </a>
                         <div class="collapse submenu" id="componentsCollapse">
                             <ul class="nav">
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting') ?>">
                                         <span class="sidebar-normal">Setting</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('teams') ?>">
                                         <span class="sidebar-normal">Teams and Regions</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= base_url('item-groups') ?>">
+                                        <span class="sidebar-normal">Item Groups</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('items') ?>">
                                         <span class="sidebar-normal">Items</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('assemblies') ?>">
                                         <span class="sidebar-normal">Assemblies</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/financial-options') ?>">
                                         <span class="sidebar-normal">Financial Options</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/client-options') ?>">
                                         <span class="sidebar-normal">Client Options</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/task-options') ?>">
                                         <span class="sidebar-normal">Task Options</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/user-options') ?>">
                                         <span class="sidebar-normal">User Options</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/smtp-settings') ?>">
                                         <span class="sidebar-normal">SMTP Settings</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/twilio-settings') ?>">
                                         <span class="sidebar-normal">Twilio Settings</span>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/dashboard-options') ?>">
                                         <span class="sidebar-normal">Dashboard Options</span>
                                     </a>
