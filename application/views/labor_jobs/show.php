@@ -639,13 +639,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Projected Cost</label>
-                                    <input class="form-control" placeholder="Projected Cost" name="projected_cost" type="number">
+                                    <input class="form-control" placeholder="Projected Cost" name="projected_cost" type="number" step=".01">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Actual Cost</label>
-                                    <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number">
+                                    <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number" step=".01">
                                 </div>
                             </div>
                         </div>
@@ -664,13 +664,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Installer Projected Cost</label>
-                                    <input class="form-control" placeholder="Installer Projected Cost" name="installer_projected_cost" type="number">
+                                    <input class="form-control" placeholder="Installer Projected Cost" name="installer_projected_cost" type="number" step=".01">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Installer Actual Cost</label>
-                                    <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number">
+                                    <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number" step=".01">
                                 </div>
                             </div>
                         </div>
@@ -745,13 +745,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Projected Cost</label>
-                                    <input class="form-control" placeholder="Projected Cost" name="projected_cost" type="number">
+                                    <input class="form-control" placeholder="Projected Cost" name="projected_cost" type="number" step=".01">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Actual Cost</label>
-                                    <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number">
+                                    <input class="form-control" placeholder="Actual Cost" name="actual_cost" type="number" step=".01">
                                 </div>
                             </div>
                         </div>
@@ -770,13 +770,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Installer Projected Cost</label>
-                                    <input class="form-control" placeholder="Installer Projected Cost" name="installer_projected_cost" type="number">
+                                    <input class="form-control" placeholder="Installer Projected Cost" name="installer_projected_cost" type="number" step=".01">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Installer Actual Cost</label>
-                                    <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number">
+                                    <input class="form-control" placeholder="Installer Actual Cost" name="installer_actual_cost" type="number" step=".01">
                                 </div>
                             </div>
                         </div>
