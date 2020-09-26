@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Migration_Update_jobs_material_table_3 extends CI_Migration
+class Migration_Update_jobs_material_table_4 extends CI_Migration
 {
     public function __construct()
     {
