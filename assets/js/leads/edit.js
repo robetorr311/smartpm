@@ -104,7 +104,6 @@ form_status.addEventListener("submit", function (e) {
 var form_material_create = document.querySelector('form#lead_edit_add_material');
 var aliases_material = {
     line_style_group: 'Line / Style / Group',
-    po_no: 'PO #',
     projected_cost: 'Projected Cost',
     actual_cost: 'Actual Cost',
     installer_projected_cost: 'Installer Projected Cost',
@@ -130,12 +129,6 @@ form_material_create.addEventListener("submit", function (e) {
         },
         supplier: {
             presence: true
-        },
-        po_no: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
         },
         projected_cost: {
             numericality: {
@@ -195,12 +188,6 @@ form_material_edit.addEventListener("submit", function (e) {
         },
         supplier: {
             presence: true
-        },
-        po_no: {
-            presence: true,
-            numericality: {
-                notValid: ' contains invalid value'
-            }
         },
         projected_cost: {
             numericality: {

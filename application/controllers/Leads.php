@@ -912,7 +912,6 @@ class Leads extends CI_Controller
 			$this->form_validation->set_rules('line_style_group', 'Line Style Group', 'trim|required');
 			$this->form_validation->set_rules('color', 'Color', 'trim|required');
 			$this->form_validation->set_rules('supplier', 'Supplier', 'trim|required');
-			$this->form_validation->set_rules('po_no', 'PO #', 'trim|required|numeric');
 			$this->form_validation->set_rules('projected_cost', 'Project Cost', 'trim|numeric');
 			$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|numeric');
 			$this->form_validation->set_rules('installer', 'Installer', 'trim|numeric');
@@ -929,7 +928,7 @@ class Leads extends CI_Controller
 					'line_style_group' => $material['line_style_group'],
 					'color' => $material['color'],
 					'supplier' => $material['supplier'],
-					'po_no' => $material['po_no'],
+					'po_no' => empty($material['po_no']) ? null : $material['po_no'],
 					'projected_cost' => empty($material['projected_cost']) ? null : $material['projected_cost'],
 					'actual_cost' => empty($material['actual_cost']) ? null : $material['actual_cost'],
 					'installer' => empty($material['installer']) ? null : $material['installer'],
@@ -965,7 +964,6 @@ class Leads extends CI_Controller
 				$this->form_validation->set_rules('line_style_group', 'Line Style Group', 'trim|required');
 				$this->form_validation->set_rules('color', 'Color', 'trim|required');
 				$this->form_validation->set_rules('supplier', 'Supplier', 'trim|required');
-				$this->form_validation->set_rules('po_no', 'PO #', 'trim|required|numeric');
 				$this->form_validation->set_rules('projected_cost', 'Project Cost', 'trim|numeric');
 				$this->form_validation->set_rules('actual_cost', 'Actual Cost', 'trim|numeric');
 				$this->form_validation->set_rules('installer', 'Installer', 'trim|numeric');
@@ -981,7 +979,7 @@ class Leads extends CI_Controller
 						'line_style_group' => $material['line_style_group'],
 						'color' => $material['color'],
 						'supplier' => $material['supplier'],
-						'po_no' => $material['po_no'],
+						'po_no' => empty($material['po_no']) ? null : $material['po_no'],
 						'projected_cost' => empty($material['projected_cost']) ? null : $material['projected_cost'],
 						'actual_cost' => empty($material['actual_cost']) ? null : $material['actual_cost'],
 						'installer' => empty($material['installer']) ? null : $material['installer'],

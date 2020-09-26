@@ -701,7 +701,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>PO #<span class="red-mark">*</span></label>
+                                    <label>PO #</label>
                                     <input class="form-control" placeholder="PO #" name="po_no" type="number">
                                 </div>
                             </div>
@@ -807,7 +807,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>PO #<span class="red-mark">*</span></label>
+                                    <label>PO #</label>
                                     <input class="form-control" placeholder="PO #" name="po_no" type="number">
                                 </div>
                             </div>
