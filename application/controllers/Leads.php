@@ -953,7 +953,6 @@ class Leads extends CI_Controller
 	public function updateMaterial($id, $jobid, $sub_base_path = '')
 	{
 		authAccess();
-
 		$o_sub_base_path = $sub_base_path;
 		$sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
 		$lead = $this->lead->getLeadById($jobid);
