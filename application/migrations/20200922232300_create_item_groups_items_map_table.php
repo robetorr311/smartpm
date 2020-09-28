@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Migration_Create_group_items_mapping_table extends CI_Migration
+class Migration_Create_item_groups_items_map_table extends CI_Migration
 {
     public function __construct()
     {
@@ -18,22 +18,20 @@ class Migration_Create_group_items_mapping_table extends CI_Migration
             ],
             'group_id' => [
                 'type' => 'INT',
-                'constraint' => 11,
-                'default' => NULL
+                'constraint' => 11
             ],
             'item_id' => [
                 'type' => 'INT',
-                'constraint' => 11,
-                'default' => NULL
+                'constraint' => 11
             ],
         ];
         $this->dbforge->add_field($field);
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('group_items_mapping', TRUE);
+        $this->dbforge->create_table('item_groups_items_map', TRUE);
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('group_items_mapping', TRUE);
+        $this->dbforge->drop_table('item_groups_items_map', TRUE);
     }
 }

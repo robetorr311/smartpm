@@ -7,11 +7,11 @@ class ItemGroupModel extends CI_Model
 
     /*** To list all active groups ***/
 
-    public function allGroups()
+    public function allItemGroups()
     {
-        $this->db->select('item_groups.id,item_groups.name, COUNT(GI.id) as items_count');
+        $this->db->select('item_groups.*, COUNT(igi_map.id) as items_count');
         $this->db->from($this->table);
-        $this->db->join('group_items_mapping GI','GI.group_id = item_groups.id','left');
+        $this->db->join('item_groups_items_map igi_map', 'igi_map.group_id = item_groups.id', 'left');
         $this->db->where('is_deleted', FALSE);
         $this->db->group_by('item_groups.id');
         $this->db->order_by('created_at', 'ASC');
@@ -19,25 +19,25 @@ class ItemGroupModel extends CI_Model
         return $query->result();
     }
 
-    public function getGroupList($select = "id, name")
+    public function getItemGroupList($select = "id, name")
     {
-		$this->db->select($select);
-		$this->db->from($this->table);
+        $this->db->select($select);
+        $this->db->from($this->table);
         $this->db->where('is_deleted', FALSE);
-		$query = $this->db->get();
-		return $query->result();
+        $query = $this->db->get();
+        return $query->result();
     }
-    
+
     /*** Get group details by group-id ***/
 
-    public function getGroupById($id)
+    public function getItemGroupById($id)
     {
-        $query = $this->db->select("item_groups.id,item_groups.name")
-                 ->from($this->table)
-                 ->where([
-                    'id' => $id,
-                    'is_deleted' => FALSE
-                  ])->get();
+        $this->db->from($this->table);
+        $this->db->where([
+            'id' => $id,
+            'is_deleted' => FALSE
+        ]);
+        $query = $this->db->get();
         $result = $query->first_row();
         return $result ? $result : false;
     }
@@ -58,7 +58,7 @@ class ItemGroupModel extends CI_Model
         $update = $this->db->update($this->table, $data);
         return $update;
     }
-    
+
     /*** To Remove Group (soft-delete) ***/
 
     public function delete($id)
@@ -67,17 +67,5 @@ class ItemGroupModel extends CI_Model
         return $this->db->update($this->table, [
             'is_deleted' => TRUE
         ]);
-    }
-    
-    /*** Validation of Group-name while update ***/
-
-    public function check_group_name($name,$id)
-    {   
-        $this->db->where('name', $name);
-        if($id) {
-            $this->db->where('is_deleted', FALSE);
-            $this->db->where_not_in('id', $id);
-        }
-        return $this->db->get($this->table)->num_rows();
     }
 }

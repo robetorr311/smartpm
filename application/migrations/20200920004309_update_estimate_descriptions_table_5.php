@@ -21,7 +21,6 @@ class Migration_Update_estimate_descriptions_table_5 extends CI_Migration
         ];
 
         $this->dbforge->add_column('estimate_descriptions', $fields);
-        
     }
 
     public function down()

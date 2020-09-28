@@ -219,7 +219,6 @@ $route['lead/(:any)/(:num)/party/update']['post'] = 'party/update/$2/$1';
 
 $route['lead/all-status'] = 'all_status/index';
 
-
 $route['lead/signed-jobs'] = 'signed_jobs/index';
 
 $route['lead/cash-jobs'] = 'cash_jobs/index';
@@ -429,14 +428,14 @@ $route['search/leads']['post'] = 'search/leads';
 $route['search/tasks']['post'] = 'search/tasks';
 $route['search/users']['post'] = 'search/users';
 
-// Group Managment Routes
+// Item Groups Managment Routes
 $route['item-groups'] = 'itemGroup/index';
-$route['item-groups/create'] = 'ItemGroup/create';
-$route['item-groups/store']['post'] = 'itemGroup/store';
-$route['item-groups/(:num)'] = 'itemGroup/show/$1';
-$route['item-groups/(:num)/update']['post'] = 'itemGroup/update/$1';
-$route['item-groups/(:num)/delete']['post'] = 'itemGroup/delete/$1';
-$route['item-groups/get-group-items']['post'] = 'itemGroup/getItemsByGroupId';
+$route['item-group/create'] = 'ItemGroup/create';
+$route['item-group/store']['post'] = 'itemGroup/store';
+$route['item-group/(:num)'] = 'itemGroup/show/$1';
+$route['item-group/(:num)/update']['post'] = 'itemGroup/update/$1';
+$route['item-group/(:num)/delete']['post'] = 'itemGroup/delete/$1';
+$route['item-group/ajax-record/(:num)'] = 'itemGroup/ajaxRecord/$1';
 
 // Wildcard
 $route['(.+)'] = 'errors/page_missing';

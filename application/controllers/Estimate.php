@@ -17,7 +17,7 @@ class Estimate extends CI_Controller
         $this->estimate_desc = new EstimateDescriptionModel();
         $this->lead = new LeadModel();
         $this->user = new UserModel();
-        $this->itemgroup = new ItemGroupModel();
+        $this->itemGroup = new ItemGroupModel();
         $this->item = new ItemModel();
         $this->admin_setting = new AdminSettingModel();
         $this->activityLogs = new ActivityLogsModel();
@@ -80,7 +80,7 @@ class Estimate extends CI_Controller
         }
          // Dropdown values
         $clients = $this->lead->getLeadList();
-        $itemgroups = $this->itemgroup->getGroupList();
+        $itemGroups = $this->itemGroup->getItemGroupList();
         $assemblies = $this->assemblies->getAssembliesList();
 
         $this->load->view('header', [
@@ -89,7 +89,7 @@ class Estimate extends CI_Controller
         ]);
         $this->load->view('estimate/create', [
             'clients' => $clients,
-            'itemgroups' => $itemgroups,
+            'itemGroups' => $itemGroups,
             'assemblies' => $assemblies,
             'clientId' => $clientId,
             'sub_base_path' => $sub_base_path
@@ -119,8 +119,8 @@ class Estimate extends CI_Controller
                 $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][sub_title]', 'Sub Title', 'trim|required');
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item-Group', 'trim|required');
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item Group', 'trim|required|numeric');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][unit_price]', 'Price', 'trim|numeric');
                 }
@@ -211,10 +211,8 @@ class Estimate extends CI_Controller
                 unset($desc_group['id']);
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
-
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item-Group', 'trim|required');
-
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item Group', 'trim|required|numeric');
+                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][unit_price]', 'Price', 'trim|numeric');
                 }
@@ -363,8 +361,7 @@ class Estimate extends CI_Controller
             $estimate_descs = $this->estimate_desc->allEstimateDescsByIds($estimate_desc_group_ids);
             // Dropdown values
             $clients = $this->lead->getLeadList();
-            $itemgroups = $this->itemgroup->getGroupList();
-            $items = $this->item->getItemList();
+            $itemGroups = $this->itemGroup->getItemGroupList();
 
             $descs = [];
             if ($estimate_descs) {
@@ -380,8 +377,7 @@ class Estimate extends CI_Controller
             $vars['estimate_desc_groups'] = $estimate_desc_groups;
             $vars['descs'] = $descs;
             $vars['clients'] = $clients;
-            $vars['itemgroups'] = $itemgroups;
-            $vars['items'] = $items;
+            $vars['itemGroups'] = $itemGroups;
             $vars['clientId'] = $clientId;
             $vars['sub_base_path'] = $sub_base_path;
 

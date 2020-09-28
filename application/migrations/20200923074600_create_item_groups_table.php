@@ -18,14 +18,12 @@ class Migration_Create_item_groups_table extends CI_Migration
             ],
             'name' => [
                 'type' => 'varchar',
-                'constraint' => 255,
-                'default' => NULL
+                'constraint' => 255
             ],
             
             'is_deleted' => [
-                'type' => 'tinyint',
-                'constraint' => 1,
-                'default' => 0
+                'type' => 'BOOLEAN',
+                'default' => FALSE
             ],
             'created_at TIMESTAMP default CURRENT_TIMESTAMP',
             'updated_at TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'

@@ -24,23 +24,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12 max-1000-form-container">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Create Item-Group</h4>
+                    <h4 class="title">Create Item Group</h4>
                 </div>
                 <div class="content">
                     <div class="row">
                         <div id="validation-errors" class="col-md-12">
                         </div>
                     </div>
-                    <?= form_open('item-groups/store', array('id' => 'group_create', 'method' => 'post', 'novalidate' => true)) ?>
+                    <?= form_open('item-group/store', ['id' => 'item_group_create', 'method' => 'post', 'novalidate' => true]) ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Item-Group Name<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Item-Group Name" name="name" type="text">
+                                <label>Item Group Name<span class="red-mark">*</span></label>
+                                <input class="form-control" placeholder="Item Group Name" name="name" type="text">
                             </div>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -49,7 +48,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -65,15 +63,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 <script>
-
     $(document).ready(function() {
-        
-        // For mapping items to a group
         $('input#items').tagsinput({
             itemValue: 'id',
-            itemText: function(item) {
-                return item.name;
-            },
+            itemText: 'name',
             typeahead: {
                 source: <?= json_encode($items) ?>,
                 afterSelect: function() {

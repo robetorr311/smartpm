@@ -167,8 +167,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <tr>
-                                
-                                <th>Item<div class="estimate-description-display">Description</div>
+                                <th>
+                                    Item
+                                    <div class="estimate-description-display">Description</div>
                                 </th>
                                 <th width="100" class="text-right">Qty</th>
                                 <th>Unit</th>
@@ -315,7 +316,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <label>Item-Group<span class="red-mark">*</span></label>
+                                                    <label>Item Group<span class="red-mark">*</span></label>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>Item<span class="red-mark">*</span></label>
@@ -334,7 +335,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <div class="col-md-3">
                                                             <label>Total</label>
                                                         </div>
-                                                       
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1"></div>
@@ -352,23 +352,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         <i class="fa fa-bars handle" aria-hidden="true"></i>
                                                                         <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
                                                                         <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][group]" class="form-control groups-dropdown">
-                                                                            <option value="" disabled<?= (empty($desc->group) ? ' selected' : '') ?>>Unassigned</option>
-                                                                            <?php foreach ($itemgroups as $itemgroup_type) { 
-                                                                                echo '<option value="' . $itemgroup_type->id . '"' . ($desc->group_id == $itemgroup_type->id ? ' selected' : '') . '>' . $itemgroup_type->name . '</option>';
+                                                                            <option value="" disabled<?= (empty($desc->group_id) ? ' selected' : '') ?>>Select Item Group</option>
+                                                                            <option value="0"<?= (!is_null($desc->group_id) && $desc->group_id == 0 ? ' selected' : '') ?>>Unassigned</option>
+                                                                            <?php foreach ($itemGroups as $itemGroup) {
+                                                                                echo '<option value="' . $itemGroup->id . '"' . ($desc->group_id == $itemGroup->id ? ' selected' : '') . '>' . $itemGroup->name . '</option>';
                                                                             } ?>
                                                                         </select>
-                                                                        
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <input name="desc_group[<?= $parent_index ?>][<?= $index ?>][id]" type="hidden" value="<?= $desc->id ?>">
-                                                                        <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control items-dropdown">
+                                                                        <select name="desc_group[<?= $parent_index ?>][<?= $index ?>][item]" class="form-control items-dropdown" data-oldval="<?= $desc->item ?>">
                                                                             <option value="" disabled<?= (empty($desc->item) ? ' selected' : '') ?>>Select Item</option>
-                                                                            <?php foreach ($items as $item) {
-                                                                                echo '<option value="' . $item->id . '"' . ($desc->item == $item->id ? ' selected' : '') . '>' . $item->name . '</option>';
-                                                                            } ?>
                                                                         </select>
                                                                     </div>
-                                                                </div>    
+                                                                </div>
                                                                 <textarea class="form-control item_description" name="desc_group[<?= $parent_index ?>][<?= $index ?>][description]" placeholder="Description"><?= $desc->description ?></textarea>
                                                             </div>
                                                             <div class="col-md-5 no-vertical-padding">

@@ -5,7 +5,7 @@ var aliases = {
     title: 'Title',
     note: 'Note',
     sub_title: 'Sub Title',
-    group:'Item-Group',
+    group: 'Item Group',
     item: 'Item',
     amount: 'Quantity',
     unit_price: 'Price'
@@ -181,7 +181,7 @@ $(document).ready(function () {
 
     $('form#estimate_create').on('click', '.duplicate-container.group-container .duplicate-buttons.group-duplicate-buttons span#add', function () {
         var index = 0;
-        
+
         // find next index for new controls
         $('.duplicate-container.group-container').each(function () {
             var ele_index = parseInt($(this).data('index'));
@@ -189,7 +189,7 @@ $(document).ready(function () {
                 index = ele_index + 1;
             }
         });
-        
+
         // find dropdown list
 
         // Groups dropdown
@@ -235,7 +235,7 @@ $(document).ready(function () {
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-3">
-                                <label>Item-Group<span class="red-mark">*</span></label>
+                                <label>Item Group<span class="red-mark">*</span></label>
                             </div>
                             <div class="col-md-3">
                                 <label>Item<span class="red-mark">*</span></label>
@@ -425,25 +425,22 @@ $(document).ready(function () {
 
     // Get items by group id
     $('form#estimate_create').on('change', '.group-container .groups-dropdown', function () {
-        
         var selectEl = $(this);
         var group_id = selectEl.val();
         $.ajax({
-            url: '/item-groups/get-group-items/',
-            type: 'POST',
-            data: {group_id : group_id}
+            url: '/item-group/ajax-record/' + group_id,
+            type: 'GET'
         }).done(function (response) {
-            var results = JSON.parse(response);
-            var option_data = "<option value=''disabled selected>Select Item</option>";
-            if(results.length > 0) {
-               
-                results.forEach((element) => {
-                    
-                    option_data += "<option value='"+element.id+"'>"+element.name+"</option>"; 
-                });
-               
+            if (response != 'ERROR') {
+                var results = JSON.parse(response);
+                var option_data = "<option value=''disabled selected>Select Item</option>";
+                if (results && results.items && results.items.length > 0) {
+                    results.items.forEach((item) => {
+                        option_data += "<option value='" + item.id + "'>" + item.name + "</option>";
+                    });
+                }
+                selectEl.closest('.description-container').find('.items-dropdown').html(option_data);
             }
-            selectEl.closest('.description-container').find('.items-dropdown').first().html(option_data);
         });
     });
 });

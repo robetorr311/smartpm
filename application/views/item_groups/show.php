@@ -27,8 +27,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Item-Group Name</label>
-                                <p><?= $itemgroup->name ?></p>
+                                <label>Item Group Name</label>
+                                <p><?= $itemGroup->name ?></p>
                             </div>
                         </div>
                     </div>
@@ -37,10 +37,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-md-12">
                             <label>Items</label>
                             <?php
-                            if (!empty($groupitems)) {
+                            if (!empty($groupItems)) {
                                 echo '<p>';
-                                foreach ($groupitems as $groupitem) {
-                                    echo '<span class="info-tag">' . $groupitem->name .'</span>';
+                                foreach ($groupItems as $groupItem) {
+                                    echo '<span class="info-tag">' . $groupItem->name .'</span>';
                                 }
                                 echo '</p>';
                             } else {
@@ -55,12 +55,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<!-- edit sesction -->
+<!-- Edit Section -->
 <div id="edit-section" class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12 max-1000-form-container">
-            <a href="jovascript:void(0);" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
-            <a href="<?= base_url('item-groups/' . $itemgroup->id . '/delete') ?>" data-method="POST" class="btn btn-danger btn-fill show-edit-toggler pull-right"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp; Delete</a>
+            <a href="#" class="btn btn-info btn-fill show-edit-toggler"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp; Back</a>
+            <a href="<?= base_url('item-group/' . $itemGroup->id . '/delete') ?>" data-method="POST" class="btn btn-danger btn-fill show-edit-toggler pull-right"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp; Delete</a>
         </div>
     </div>
     <div class="row">
@@ -74,13 +74,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div id="validation-errors" class="col-md-12">
                         </div>
                     </div>
-                    <?= form_open('item-groups/' . $itemgroup->id . '/update', array('id' => 'group_edit', 'method' => 'post', 'novalidate' => true)) ?>
-
+                    <?= form_open('item-group/' . $itemGroup->id . '/update', array('id' => 'group_edit', 'method' => 'post', 'novalidate' => true)) ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Item-Group Name<span class="red-mark">*</span></label>
-                                <input class="form-control" placeholder="Item-Group Name" name="name" value="<?= $itemgroup->name ?>" type="text">
+                                <label>Item Group Name<span class="red-mark">*</span></label>
+                                <input class="form-control" placeholder="Item Group Name" name="name" value="<?= $itemGroup->name ?>" type="text">
                             </div>
                         </div>
                     </div>
@@ -109,8 +108,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 
-<!-- end section -->
-
 <script>
 $(document).ready(function() {
     $('input#items').tagsinput({
@@ -127,12 +124,11 @@ $(document).ready(function() {
             }
         });
     <?php
-    if ($groupitems) {
-        foreach ($groupitems as $groupitem) {
-            echo "$('input#items').tagsinput('add', " . json_encode($groupitem) . ");";
+    if ($groupItems) {
+        foreach ($groupItems as $groupItem) {
+            echo "$('input#items').tagsinput('add', " . json_encode($groupItem) . ");";
         }
     }
     ?>
 });
-
 </script>

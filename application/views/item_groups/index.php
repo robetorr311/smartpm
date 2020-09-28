@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?><div class="container-fluid">
     <div class="row page-header-buttons">
         <div class="col-md-12">
-            <a href="<?= base_url('item-groups/create') ?>" class="btn btn-info btn-fill">New Item-Group</a>
+            <a href="<?= base_url('item-group/create') ?>" class="btn btn-info btn-fill">New Item Group</a>
         </div>
     </div>
     <div class="row">
@@ -21,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Item-Groups</h4>
+                    <h4 class="title">Item Groups</h4>
                 </div>
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped">
@@ -32,13 +32,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Associated Items Count</th>
                         </thead>
                         <tbody>
-                            <?php if (!empty($itemgroups)) : ?>
-                                <?php foreach ($itemgroups as $itemgroup) : ?>
+                            <?php if (!empty($itemGroups)) : ?>
+                                <?php foreach ($itemGroups as $itemGroup) : ?>
                                     <tr>
-                                        <td class="text-center"><a href="<?= base_url('item-groups/' . $itemgroup->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
-                                        <td><?= $itemgroup->id ?></td>
-                                        <td><?= $itemgroup->name ?></td>
-                                        <td><?= $itemgroup->items_count ?></td>
+                                        <td class="text-center"><a href="<?= base_url('item-group/' . $itemGroup->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
+                                        <td><?= $itemGroup->id ?></td>
+                                        <td><?= $itemGroup->name ?></td>
+                                        <td><?= $itemGroup->items_count ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

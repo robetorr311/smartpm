@@ -9,12 +9,12 @@ class ItemGroup extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['ItemGroupModel','ItemModel','GroupItemsMappingModel']);
+        $this->load->model(['ItemGroupModel', 'ItemModel', 'ItemGroupsItemsMapModel']);
         $this->load->library(['pagination', 'form_validation']);
 
-        $this->itemgroup = new ItemGroupModel();
+        $this->itemGroup = new ItemGroupModel();
         $this->item = new ItemModel();
-        $this->group_items_mapping = new GroupItemsMappingModel();
+        $this->item_groups_items_map = new ItemGroupsItemsMapModel();
     }
 
     /*** Group Listing Page ***/
@@ -23,13 +23,13 @@ class ItemGroup extends CI_Controller
     {
         authAccess();
 
-        $itemgroups = $this->itemgroup->allGroups();
-        
+        $itemGroups = $this->itemGroup->allItemGroups();
+
         $this->load->view('header', [
             'title' => $this->title
         ]);
         $this->load->view('item_groups/index', [
-            'itemgroups' => $itemgroups,
+            'itemGroups' => $itemGroups
         ]);
         $this->load->view('footer');
     }
@@ -40,78 +40,79 @@ class ItemGroup extends CI_Controller
     {
         authAccess();
 
-        $items = $this->item->allItems();
+        $items = $this->item->getItemList();
 
         $this->load->view('header', [
-            'title' => $this->title,
+            'title' => $this->title
         ]);
-        $this->load->view('item_groups/create',['items' => $items]);
+        $this->load->view('item_groups/create', [
+            'items' => $items
+        ]);
         $this->load->view('footer');
     }
 
-    /*** Store New Group information***/
+    /*** Store New Group information ***/
 
     public function store()
     {
         authAccess();
+
         // Validations
-        $this->form_validation->set_rules('name', 'Item-Group Name', 'trim|required|is_unique[item_groups.name]',['is_unique' => 'This Item-Group Name already exists.']);
+        $this->form_validation->set_rules('name', 'Item Group Name', 'trim|required');
 
         if ($this->form_validation->run() == TRUE) {
             $postdata = $this->input->post();
-            $itemsArray = (!empty($postdata['items'])) ? explode(",",$postdata['items']) : [];
-            unset($postdata['items']);
-            
+
             // Save to item-group table
-            $insert = $this->itemgroup->insert([
-                'name' => $postdata['name'],
+            $insert = $this->itemGroup->insert([
+                'name' => $postdata['name']
             ]);
 
             if ($insert) {
-                if (!empty($itemsArray)) {
-                    $groupMapping = $data = [];
-                    $data['group_id'] = $insert;
+                $errors = '';
 
-                    foreach ($itemsArray as $val) {
-                        $data['item_id'] = $val;
-                        $groupMapping [] = $data;
-                    }
-                    // Save to group-item table
-                    if(!empty($groupMapping)) {
-                        $this->group_items_mapping->insert_batch($groupMapping);
-                        unset($groupMapping, $data);
+                if (!empty($postdata['items'])) {
+                    $itemsArray = explode(",", $postdata['items']);
+                    $itemsInsert = $this->item_groups_items_map->insertByItemArr($itemsArray, $insert);
+                    if (!$itemsInsert) {
+                        $errors .= '<p>Unable to add Items.</p>';
                     }
                 }
-                redirect('item-groups/'.$insert);
+
+                if (!empty($errors)) {
+                    $this->session->set_flashdata('errors', $errors);
+                }
+
+                redirect('item-group/' . $insert);
             } else {
-                $this->session->set_flashdata('errors', '<p>Unable to Create Group.</p>');
-                redirect('item-groups/create');
+                $this->session->set_flashdata('errors', '<p>Unable to Create Item Group.</p>');
+                redirect('item-group/create');
             }
         } else {
             $this->session->set_flashdata('errors', validation_errors());
-            redirect('item-groups/create');
+            redirect('item-group/create');
         }
     }
 
     /*** View Group information by group-id ***/
 
     public function show($id)
-    {   
+    {
         authAccess();
 
-        $itemgroup = $this->itemgroup->getGroupById($id);
-    
-        if ($itemgroup) {
+        $itemGroup = $this->itemGroup->getItemGroupById($id);
 
-            $groupitems = $this->group_items_mapping->getItemsByGroupId($id);
+        if ($itemGroup) {
+
+            $groupItems = $this->item_groups_items_map->getItemsByItemGroupId($id);
             $items = $this->item->allItems();
-           
+
             $this->load->view('header', [
                 'title' => $this->title,
             ]);
             $this->load->view('item_groups/show', [
-                'itemgroup' => $itemgroup,
-                'groupitems' => $groupitems,
+                'itemGroup' => $itemGroup,
+                'groupItems' => $groupItems,
                 'items' => $items
             ]);
             $this->load->view('footer');
@@ -126,47 +127,47 @@ class ItemGroup extends CI_Controller
     public function update($id)
     {
         authAccess();
-       
-        $itemgroup = $this->itemgroup->getGroupById($id);
-       
-        if ($itemgroup) {
-            $this->form_validation->set_rules('name', 'Item-Group Name', 'trim|required|callback_check_group_name['.$id.']');
+
+        $itemGroup = $this->itemGroup->getItemGroupById($id);
+
+        if ($itemGroup) {
+            $this->form_validation->set_rules('name', 'Item Group Name', 'trim|required');
 
             if ($this->form_validation->run() == TRUE) {
-
                 $postdata = $this->input->post();
-                
-                $itemsArray = (!empty($postdata['items'])) ? explode(",",$postdata['items']) : [];
-                unset($postdata['items']);
-                $update = $this->itemgroup->update($id,[
-                    'name' => $postdata['name'],
+
+                $update = $this->itemGroup->update($id, [
+                    'name' => $postdata['name']
                 ]);
 
-                if($update) {
-                    $this->group_items_mapping->removeGroupItemsByGroupId($id);
-                    if (!empty($itemsArray)) {
-                        $groupMapping = $data = [];
-                        $data['group_id'] = $id;
-    
-                        foreach ($itemsArray as $val) {
-                            $data['item_id'] = $val;
-                            $groupMapping [] = $data;
-                        }
-                        
-                        // Save to group-item table
-                        if(!empty($groupMapping)) {
-                            $this->group_items_mapping->insert_batch($groupMapping);
-                            unset($groupMapping, $data);
+                if ($update) {
+                    $errors = '';
+
+                    $old_items = $this->item_groups_items_map->getItemsByItemGroupId($id);
+                    $old_items = ($old_items) ? array_column($old_items, 'id') : [];
+                    $items = $postdata['items'];
+                    $items = (!empty($items)) ? explode(',', $items) : [];
+                    $items_insert = array_diff($items, $old_items);
+                    if (count($items_insert)) {
+                        $itemsInsert = $this->item_groups_items_map->insertByItemArr($items_insert, $id);
+                        if (!$itemsInsert) {
+                            $errors .= '<p>Unable to add new Items.</p>';
                         }
                     }
-
+                    $items_remove = array_diff($old_items, $items);
+                    if (count($items_remove)) {
+                        $itemsRemove = $this->item_groups_items_map->removeByItemArrId($items_remove, $id);
+                        if (!$itemsRemove) {
+                            $errors .= '<p>Unable to remove existing Items.</p>';
+                        }
+                    }
                 } else {
                     $this->session->set_flashdata('error', '<p>Unable to Update Item.</p>');
                 }
             } else {
                 $this->session->set_flashdata('errors', validation_errors());
             }
-            redirect('item-groups/' . $id);
+            redirect('item-group/' . $id);
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('item-groups');
@@ -174,14 +175,14 @@ class ItemGroup extends CI_Controller
     }
 
     /*** To Remove Group (soft-delete) ***/
-    
+
     public function delete($id)
     {
         authAccess();
-        $group = $this->itemgroup->getGroupById($id);
 
-        if ($group) {
-            $delete = $this->itemgroup->delete($id);
+        $itemGroup = $this->itemGroup->getItemGroupById($id);
+        if ($itemGroup) {
+            $delete = $this->itemGroup->delete($id);
             if (!$delete) {
                 $this->session->set_flashdata('errors', '<p>Unable to delete Item.</p>');
             }
@@ -191,26 +192,28 @@ class ItemGroup extends CI_Controller
         redirect('item-groups');
     }
 
-    /*** Validation of Group-name while update ***/
-
-    public function check_group_name($name, $id)
+    public function ajaxRecord($id)
     {
-        $result = $this->itemgroup->check_group_name($name, $id);
+        authAccess();
 
-        if($result == 0)
-            $response = true;
-        else {
-            $this->form_validation->set_message('check_group_name', 'This Item-Group Name already exists.');
-            $response = false;
+        if ($id == 0) {
+            $items = $this->item->getUnassignedItemList();
+            if ($items) {
+                echo json_encode([
+                    'items' => $items
+                ]);
+            } else {
+                echo 'ERROR';
+            }
+        } else {
+            $itemGroup = $this->itemGroup->getItemGroupById($id);
+            $groupItems = $this->item_groups_items_map->getItemsByItemGroupId($id);
+            if ($itemGroup && $groupItems) {
+                $itemGroup->items = $groupItems;
+                echo json_encode($itemGroup);
+            } else {
+                echo 'ERROR';
+            }
         }
-        return $response;
-    }
-
-   
-    public function getItemsByGroupId()
-    {
-        $group_id  = $this->input->post('group_id');
-        $groupitems = $this->group_items_mapping->getItemsByGroupId($group_id);
-        echo json_encode($groupitems);
     }
 }

@@ -5,8 +5,8 @@ var aliases = {
     title: 'Title',
     note: 'Note',
     sub_title: 'Sub Title',
-    group:'Group',
-    item: 'Item-Group',
+    group:'Item Group',
+    item: 'Item',
     amount: 'Quantity',
     unit_price: 'Price'
 };
@@ -87,6 +87,27 @@ $(document).ready(function () {
         width: '100%'
     });
 
+    $('form#estimate_edit .group-container .items-dropdown').each(function (i, e) {
+        var oldval = $(e).data('oldval');
+        var groupVal = $(e).closest('.duplicate-container.description-container').find('.groups-dropdown').val();
+        $.ajax({
+            url: '/item-group/ajax-record/' + groupVal,
+            type: 'GET'
+        }).done(function (response) {
+            if (response != 'ERROR') {
+                var results = JSON.parse(response);
+                var option_data = "<option value=''disabled selected>Select Item</option>";
+                if (results && results.items && results.items.length > 0) {
+                    results.items.forEach((item) => {
+                        option_data += "<option value='" + item.id + "'>" + item.name + "</option>";
+                    });
+                }
+                $(e).closest('.duplicate-container.description-container').find('.items-dropdown').html(option_data);
+                $(e).closest('.duplicate-container.description-container').find('.items-dropdown').val(oldval);
+            }
+        });
+    });
+
     $('form#estimate_edit .group-container select').select2({
         width: '100%'
     });
@@ -129,14 +150,6 @@ $(document).ready(function () {
             options_groups += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
         });
 
-        // items dropdown
-        var options_items = '';
-        $(this).closest('.duplicate-container.group-container').find('.items-dropdown').first().find('option').each(function () {
-            var option = $(this);
-            var optionVal = option.val();
-            options_items += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
-        });
-
         var htmlToAdd = `<div data-index="${index}" class="duplicate-container group-container">
             <hr />
             <div class="row">
@@ -164,7 +177,7 @@ $(document).ready(function () {
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-3">
-                                <label>Item-Group<span class="red-mark">*</span></label>
+                                <label>Item Group<span class="red-mark">*</span></label>
                             </div>
                             <div class="col-md-3">
                                 <label>Item<span class="red-mark">*</span></label>
@@ -197,7 +210,7 @@ $(document).ready(function () {
                                             
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="desc_group[${index}][0][item]" class="form-control items-dropdown">${options_items}</select>
+                                            <select name="desc_group[${index}][0][item]" class="form-control items-dropdown"><option value="" disabled selected>Select Item</option></select>
                                         </div>
                                     </div>
                                    
@@ -273,14 +286,6 @@ $(document).ready(function () {
             options_groups += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
         });
 
-        // Items dropdown
-        var options_items = '';
-        $(this).closest('.duplicate-container').find('.items-dropdown').find('option').each(function () {
-            var option = $(this);
-            var optionVal = option.val();
-            options_items += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
-        });
-
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
             <div class="col-md-6 no-vertical-padding">
                 <div class="row">
@@ -290,8 +295,7 @@ $(document).ready(function () {
                         
                     </div>
                     <div class="col-md-6">
-                        <select name="desc_group[${parent_index}][${index}][item]" class="form-control items-dropdown">${options_items}</select>
-                        
+                        <select name="desc_group[${parent_index}][${index}][item]" class="form-control items-dropdown"><option value="" disabled selected>Select Item</option></select>
                     </div>
                 </div>
                 <textarea class="form-control item_description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
@@ -354,24 +358,22 @@ $(document).ready(function () {
 
     // Get items by group id
     $('form#estimate_edit').on('change', '.group-container .groups-dropdown', function () {
-        
         var selectEl = $(this);
         var group_id = selectEl.val();
         $.ajax({
-            url: '/item-groups/get-group-items/',
-            type: 'POST',
-            data: {group_id : group_id}
+            url: '/item-group/ajax-record/' + group_id,
+            type: 'GET'
         }).done(function (response) {
-            var results = JSON.parse(response);
-            var option_data = "<option value=''disabled selected>Select Item</option>";
-            if(results.length > 0) {
-               
-                results.forEach((element) => {   
-                    option_data += "<option value='"+element.id+"'>"+element.name+"</option>"; 
-                });
-               
+            if (response != 'ERROR') {
+                var results = JSON.parse(response);
+                var option_data = "<option value=''disabled selected>Select Item</option>";
+                if (results && results.items && results.items.length > 0) {
+                    results.items.forEach((item) => {
+                        option_data += "<option value='" + item.id + "'>" + item.name + "</option>";
+                    });
+                }
+                selectEl.closest('.description-container').find('.items-dropdown').html(option_data);
             }
-            selectEl.closest('.description-container').find('.items-dropdown').first().html(option_data);
         });
     });
 
