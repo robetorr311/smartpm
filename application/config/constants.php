@@ -88,3 +88,9 @@ define('DEFAULT_BASE_URL', '');
 // Company assets folder
 define('COMPANY_ASSETS_FOLDER','assets/company_photo/');
 
+// Company logo url
+define('COMPANY_LOGO_PATH','assets/img/logo.png');
+
+// Default Theme color
+define('DEFAULT_THEME_COLOR','#FFA500');
+

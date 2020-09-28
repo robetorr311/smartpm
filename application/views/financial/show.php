@@ -133,6 +133,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Attachments</label>
+                                <div>
+                                    <?php
+                                    if (!empty($attachments)) {
+                                        foreach ($attachments as $attachment) {
+                                            echo '<div class="existing-financial-attachment"><i class="fa fa-paperclip" aria-hidden="true"></i> ' . $attachment->attachment . ' &nbsp; <a class="text-info" target="_blank" href="' . base_url('/assets/financial_files/' . $attachment->attachment) . '"><i class="fa fa-cloud-download" aria-hidden="true"></i></a></div>';
+                                        }
+                                    } else {
+                                        echo '-';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
                 <?php if ($financial->type == 2) { ?>
@@ -167,7 +185,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div id="validation-errors" class="col-md-12">
                         </div>
                     </div>
-                    <form id="financial_edit" action="<?= base_url('financial/record/' . $financial->id . '/update') ?>" method="post" novalidate>
+                    <form id="financial_edit" action="<?= base_url('financial/record/' . $financial->id . '/update') ?>" method="post" enctype="multipart/form-data" novalidate>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -305,6 +323,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Notes</label>
                                     <textarea id="note-input" class="form-control" name="notes" placeholder="Notes" rows="10"><?= $financial->notes ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Attachments</label>
+                                    <input id="attachments" class="form-control" type="file" name="attachments[]" multiple>
+                                    <div id="attachment_list"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Existing Attachments</label>
+                                    <div>
+                                        <?php
+                                        if (!empty($attachments)) {
+                                            foreach ($attachments as $attachment) {
+                                                echo '<div class="existing-financial-attachment"><input type="hidden" name="attachment_ids[]" value="' . $attachment->id . '" /><i class="fa fa-paperclip" aria-hidden="true"></i> ' . $attachment->attachment . ' &nbsp; <i class="fa fa-trash text-danger" aria-hidden="true"></i></div>';
+                                            }
+                                        } else {
+                                            echo '-';
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

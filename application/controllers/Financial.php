@@ -9,19 +9,19 @@ class Financial extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'VendorModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel']);
+        $this->load->model(['FinancialModel', 'UserModel', 'LeadModel', 'VendorModel', 'FinancialSubtypesModel', 'FinancialAccCodesModel', 'FinancialMethodsModel', 'FinancialBankAccsModel', 'StatesModel', 'FinancialAttachmentModel']);
         $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->financial = new FinancialModel();
         $this->user = new UserModel();
         $this->lead = new LeadModel();
         $this->vendor = new VendorModel();
-        // $this->type = new FinancialTypesModel();
         $this->subtype = new FinancialSubtypesModel();
         $this->accCode = new FinancialAccCodesModel();
         $this->method = new FinancialMethodsModel();
         $this->bankAcc = new FinancialBankAccsModel();
         $this->state = new StatesModel();
+        $this->financial_attachment = new FinancialAttachmentModel();
     }
 
     public function index()
@@ -101,6 +101,7 @@ class Financial extends CI_Controller
         $this->form_validation->set_rules('notes', 'Notes', 'trim');
 
         if ($this->form_validation->run() == TRUE) {
+            $this->attachmentFileSizeCheck($_FILES['attachments'], 'financial/record/create');
             $financialData = $this->input->post();
 
             if (($financialData['type'] == '2' || $financialData['type'] == '7') && $financialData['amount'] > 0) {
@@ -132,6 +133,11 @@ class Financial extends CI_Controller
             $insert = $this->financial->insert($insertData);
 
             if ($insert) {
+                $files = $this->saveAttachments($_FILES['attachments']);
+                if (!empty($files)) {
+                    $this->financial_attachment->insertArr($files, $insert);
+                }
+
                 redirect('financial/record/' . $insert);
             } else {
                 $this->session->set_flashdata('errors', '<p>Unable to Create Financial Record.</p>');
@@ -192,6 +198,7 @@ class Financial extends CI_Controller
             $methodKeys = implode(',', array_column($this->method->allMethods(), 'id'));
             $bankAccountKeys = implode(',', array_column($this->bankAcc->allBankAccs(), 'id'));
             $stateKeys = implode(',', array_column($this->state->allStates(), 'id'));
+            $attachmentKeys = implode(',', array_column($this->financial_attachment->allAttachmentsByFinancialId($id), 'id'));
 
             $this->form_validation->set_rules('party', 'Party', 'trim|required|numeric|in_list[1,2]');
             $this->form_validation->set_rules('vendor_id', 'Party Name', 'trim|numeric|in_list[' . $vendorKeys . ']');
@@ -205,8 +212,10 @@ class Financial extends CI_Controller
             $this->form_validation->set_rules('bank_account', 'Bank Account', 'trim|numeric|in_list[' . $bankAccountKeys . ']');
             $this->form_validation->set_rules('state', 'State', 'trim|required|numeric|in_list[' . $stateKeys . ']');
             $this->form_validation->set_rules('notes', 'Notes', 'trim');
+            $this->form_validation->set_rules('attachment_ids[]', 'Attachment IDs', 'trim|numeric|in_list[' . $attachmentKeys . ']');
 
             if ($this->form_validation->run() == TRUE) {
+                $this->attachmentFileSizeCheck($_FILES['attachments'], 'financial/record/' . $id);
                 $financialData = $this->input->post();
 
                 if (($financialData['type'] == '2' || $financialData['type'] == '7') && $financialData['amount'] > 0) {
@@ -242,6 +251,13 @@ class Financial extends CI_Controller
             } else {
                 $this->session->set_flashdata('errors', validation_errors());
             }
+                
+            $this->financial_attachment->deleteByFinancialIdWithExceptionIds($id, $financialData['attachment_ids']);
+            $files = $this->saveAttachments($_FILES['attachments']);
+            if (!empty($files)) {
+                $this->financial_attachment->insertArr($files, $id);
+            }
+
             redirect('financial/record/' . $id);
         } else {
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
@@ -263,6 +279,7 @@ class Financial extends CI_Controller
             $methods = $this->method->allMethods();
             $bankAccounts = $this->bankAcc->allBankAccs();
             $states = $this->state->allStates();
+            $attachments = $this->financial_attachment->allAttachmentsByFinancialId($id);
 
             $this->load->view('header', [
                 'title' => $this->title
@@ -277,7 +294,8 @@ class Financial extends CI_Controller
                 'accountingCodes' => $accountingCodes,
                 'methods' => $methods,
                 'bankAccounts' => $bankAccounts,
-                'states' => $states
+                'states' => $states,
+                'attachments' => $attachments
             ]);
             $this->load->view('footer');
         } else {
@@ -402,5 +420,48 @@ class Financial extends CI_Controller
             $this->session->set_flashdata('errors', '<p>Invalid Request.</p>');
             redirect('financial/records');
         }
+    }
+
+    /**
+     * Private Methods
+     */
+    private function attachmentFileSizeCheck($files, $redirectOnFail)
+    {
+        foreach ($files['size'] as $key => $file_size) {
+            if ($file_size > 104857600) {
+                // Error Only 100MB
+                $this->session->set_flashdata('errors', '<p>Max file size limit is 100MB</p>');
+                redirect($redirectOnFail);
+                die();
+            }
+        }
+    }
+
+    private function saveAttachments($files)
+    {
+        $file_names = [];
+
+        foreach ($files['name'] as $key => $file_name) {
+            if ($files['error'][$key] !== 0) {
+                continue;
+            }
+            $file = pathinfo($file_name);
+            $tmp_file_ext = $file['extension'];
+            $tmp_file_name_only = $file['filename'];
+            $tmp_i = 1;
+
+            $new_name = $tmp_file_name_only . '.' . $tmp_file_ext;
+            $sourcePath = $files["tmp_name"][$key];
+            $targetPath = "assets/financial_files/" . $new_name;
+            while (file_exists($targetPath)) {
+                $new_name = $tmp_file_name_only . '_' . $tmp_i . '.' . $tmp_file_ext;
+                $targetPath = "assets/financial_files/" . $new_name;
+                $tmp_i++;
+            }
+            move_uploaded_file($sourcePath, $targetPath);
+            $file_names[] = basename($targetPath);
+        }
+
+        return $file_names;
     }
 }

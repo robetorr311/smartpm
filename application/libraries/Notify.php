@@ -13,10 +13,21 @@ class Notify
         $this->m_twilioCred = new M_TwilioCredModel();
 
         $this->twilioClient = false;
-        $this->logoUrl = 'https://smartpm.app/assets/img/logo.png';
+        
 
-        if (isset($this->session->logoUrl) && $this->session->logoUrl != '') {
-            $this->logoUrl = base_url('assets/company_photo/' . $this->session->logoUrl);
+        // Email template - header color
+        $admindata = $this->CI->session->userdata('admindata');
+        if(!empty($admindata['color'])) {
+            $this->theme_color = $admindata['color'];
+        } else {
+            $this->theme_color = DEFAULT_THEME_COLOR;
+        }
+
+        // Email template  - header logo
+        if (isset($this->CI->session->logoUrl) && $this->CI->session->logoUrl != '') {
+            $this->logoUrl = base_url('assets/company_photo/' . $this->CI->session->logoUrl);
+        } else {
+            $this->logoUrl = base_url(COMPANY_LOGO_PATH);
         }
 
         if (isset($this->CI->session->company_code)) {
@@ -47,7 +58,9 @@ class Notify
         $this->CI->email->to($email);
         $this->CI->email->subject('Reset Password - SmartPM');
         $html_message = $this->CI->load->view('template/email/reset-password.php', [
-            'token' => $token
+            'token' => $token,
+            'theme_color' => $this->theme_color,
+            'logoUrl' => $this->logoUrl
         ], true);
         $this->CI->email->message($html_message);
         if (!$this->CI->email->send(false)) {
@@ -56,33 +69,45 @@ class Notify
         }
     }
 
+    /*** Sends an email to user to generate password ***/
+    
     public function createPassword($email, $token, $logoUrl)
     {
         $this->CI->email->to($email);
+        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
         $this->CI->email->subject('Create Password - SmartPM');
         $html_message = $this->CI->load->view('template/email/create-password.php', [
             'token' => $token,
-            'logoUrl' => $logoUrl
+            'logoUrl' => $logoUrl,
+            'theme_color' => $this->theme_color
+        ], true);
+        
+        $this->CI->email->message($html_message);
+        $this->CI->email->send();
+    }
+
+    
+    public function emailVerification($email, $company_code, $token)
+    {
+        $this->CI->email->to($email);
+        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
+        $this->CI->email->subject('Email Verification - SmartPM');
+        $html_message = $this->CI->load->view('template/email/email-verification.php', [
+            'company_code' => $company_code,
+            'token' => $token,
+            'theme_color' => $this->theme_color,
+            'logoUrl' => $this->logoUrl
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
 
-    public function emailVerification($email, $company_code, $token)
-    {
-        $this->CI->email->to($email);
-        $this->CI->email->subject('Email Verification - SmartPM');
-        $html_message = $this->CI->load->view('template/email/email-verification.php', [
-            'company_code' => $company_code,
-            'token' => $token
-        ], true);
-        $this->CI->email->message($html_message);
-        $this->CI->email->send();
-    }
+     /*** Sends an email on forgot company-code ***/
 
     public function sendCompanyCode($email, $company_code)
     {
         $this->CI->email->to($email);
+        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
         $this->CI->email->subject('Forgot Company Code - SmartPM');
         $html_message = $this->CI->load->view('template/email/forgot-company-code.php', [
             'company_code' => $company_code
@@ -99,7 +124,8 @@ class Notify
             'logoUrl' => $this->logoUrl,
             'task_name' => $task_name,
             'note' => $note,
-            'link' => $link
+            'link' => $link,
+            'theme_color' => $this->theme_color
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
@@ -118,6 +144,8 @@ class Notify
         }
     }
 
+    /*** Sends an email when user is tagged in task ***/
+
     public function sendTaskTagNotification($email, $task_id, $task_name, $note, $link)
     {
         $this->CI->email->to($email);
@@ -127,7 +155,8 @@ class Notify
             'task_id' => $task_id,
             'task_name' => $task_name,
             'note' => $note,
-            'link' => $link
+            'link' => $link,
+            'theme_color'=> $this->theme_color,
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
@@ -146,6 +175,8 @@ class Notify
         }
     }
 
+    /*** Sends an email when user is assigned in task ***/
+
     public function sendTaskAssignNotification($email, $task_id, $task_name)
     {
         $this->CI->email->to($email);
@@ -153,7 +184,9 @@ class Notify
         $html_message = $this->CI->load->view('template/email/task-assign-notification.php', [
             'logoUrl' => $this->logoUrl,
             'task_id' => $task_id,
-            'task_name' => $task_name
+            'task_name' => $task_name,
+            'theme_color'=> $this->theme_color,
+            
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
@@ -168,6 +201,7 @@ class Notify
             'lead_id' => $lead_id,
             'lead_name' => $lead_name,
             'link' => $link,
+            'theme_color'=> $this->theme_color,
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
@@ -189,10 +223,12 @@ class Notify
     public function sendWelcomeUserNotification($email, $name, $logoUrl = false)
     {
         $this->CI->email->to($email);
+        $this->CI->email->from(getenv('EMAIL_SMTP_USER'), 'SmartPM Notification');
         $this->CI->email->subject('Welcome to SmartPM');
         $html_message = $this->CI->load->view('template/email/welcome-user-notification.php', [
             'name' => $name,
-            'logoUrl' => $logoUrl
+            'logoUrl' => $this->logoUrl,
+            'theme_color'=> $this->theme_color,
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
@@ -236,7 +272,8 @@ class Notify
         $html_message = $this->CI->load->view('template/email/invoice-notification.php', [
             'logoUrl' => $this->logoUrl,
             'client_name' => $client_name,
-            'user_name' => $user_name
+            'user_name' => $user_name,
+            'theme_color'=> $this->theme_color,
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
