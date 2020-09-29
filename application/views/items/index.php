@@ -28,8 +28,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <thead>
                             <th class="text-center">View</th>
                             <th>ID</th>
-                            <th>Item Group</th>
                             <th>Display Name </th>
+                            <th>Item Group</th>
                             <th>Line/ Style/ Type</th>
                             <th>Internal Part #</th>
                             <th>Quantity Units</th>
