@@ -33,10 +33,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <?= form_open('item/store', array('id' => 'item_create', 'method' => 'post', 'novalidate' => true)) ?>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Item Name<span class="red-mark">*</span></label>
                                 <input class="form-control" placeholder="Item Name" name="name" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Item Group<span class="red-mark">*</span></label>
+                                <select class="form-control" id="item_group_id" name="item_group_id">
+                                    <option value="" disabled selected>Select Item Group</option>
+                                    <?php foreach ($itemGroups as $itemGroup) : ?>
+                                        <option value="<?= $itemGroup->id ?>"><?= $itemGroup->name ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                     </div>

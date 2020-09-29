@@ -239,11 +239,6 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= base_url('item-groups') ?>">
-                                        <span class="sidebar-normal">Item Groups</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('items') ?>">
                                         <span class="sidebar-normal">Items</span>
                                     </a>
@@ -266,6 +261,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url('setting/task-options') ?>">
                                         <span class="sidebar-normal">Task Options</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= base_url('setting/item-options') ?>">
+                                        <span class="sidebar-normal">Item Options</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
