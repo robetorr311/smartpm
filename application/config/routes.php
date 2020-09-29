@@ -435,7 +435,6 @@ $route['item-group/store']['post'] = 'itemGroup/store';
 $route['item-group/(:num)'] = 'itemGroup/show/$1';
 $route['item-group/(:num)/update']['post'] = 'itemGroup/update/$1';
 $route['item-group/(:num)/delete']['post'] = 'itemGroup/delete/$1';
-$route['item-group/ajax-record/(:num)'] = 'itemGroup/ajaxRecord/$1';
 
 // Wildcard
 $route['(.+)'] = 'errors/page_missing';
