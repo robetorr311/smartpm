@@ -35,6 +35,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label>Item Group</label>
+                                <p><?= $item->item_group_name ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label>Line/ Style / Type</label>
                                 <p><?= $item->line_style_type ?></p>
                             </div>
@@ -100,10 +108,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?= form_open('item/' . $item->id . '/update', array('id' => 'item_edit', 'method' => 'post', 'novalidate' => true)) ?>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Item Name<span class="red-mark">*</span></label>
                                 <input class="form-control" placeholder="Item Name" name="name" value="<?= $item->name ?>" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Item Group<span class="red-mark">*</span></label>
+                                <select class="form-control" id="item_group_id" name="item_group_id">
+                                    <option value="" disabled<?= empty($item->item_group_id) ? ' selected' : '' ?>>Select Item Group</option>
+                                    <?php foreach ($itemGroups as $itemGroup) : ?>
+                                        <option value="<?= $itemGroup->id ?>"<?= $item->item_group_id == $itemGroup->id ? ' selected' : '' ?>><?= $itemGroup->name ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                     </div>

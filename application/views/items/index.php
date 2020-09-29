@@ -28,6 +28,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <thead>
                             <th class="text-center">View</th>
                             <th>ID</th>
+                            <th>Item Group</th>
                             <th>Display Name </th>
                             <th>Line/ Style/ Type</th>
                             <th>Internal Part #</th>
@@ -41,6 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <td class="text-center"><a href="<?= base_url('item/' . $item->id) ?>" class="text-info"><i class="fa fa-eye"></i></a></td>
                                         <td><?= $item->id ?></td>
                                         <td><?= $item->name ?></td>
+                                        <td><?= $item->item_group_name ?></td>
                                         <td><?= $item->line_style_type ?></td>
                                         <td><?= $item->internal_part_no ?></td>
                                         <td><?= $item->quantity_units ?></td>

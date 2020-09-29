@@ -400,6 +400,10 @@ $route['setting/financial-options/bankAcc/(:num)/delete']['post'] = 'financialOp
 $route['setting/financial-options/state/store']['post'] = 'financialOptions/insertState';
 $route['setting/financial-options/state/(:num)/update']['post'] = 'financialOptions/updateState/$1';
 $route['setting/financial-options/state/(:num)/delete']['post'] = 'financialOptions/deleteState/$1';
+$route['setting/item-options'] = 'itemOptions/index';
+$route['setting/item-options/item-group/store']['post'] = 'itemOptions/insertItemGroup';
+$route['setting/item-options/item-group/(:num)/update']['post'] = 'itemOptions/updateItemGroup/$1';
+$route['setting/item-options/item-group/(:num)/delete']['post'] = 'itemOptions/deleteItemGroup/$1';
 $route['setting/client-options'] = 'clientOptions/index';
 $route['setting/client-options/lead-source/store']['post'] = 'clientOptions/insertLeadSource';
 $route['setting/client-options/lead-source/(:num)/update']['post'] = 'clientOptions/updateLeadSource/$1';
@@ -427,14 +431,6 @@ $route['setting/user-options/cell-notif-suffix/(:num)/delete']['post'] = 'userOp
 $route['search/leads']['post'] = 'search/leads';
 $route['search/tasks']['post'] = 'search/tasks';
 $route['search/users']['post'] = 'search/users';
-
-// Item Groups Managment Routes
-$route['item-groups'] = 'itemGroup/index';
-$route['item-group/create'] = 'ItemGroup/create';
-$route['item-group/store']['post'] = 'itemGroup/store';
-$route['item-group/(:num)'] = 'itemGroup/show/$1';
-$route['item-group/(:num)/update']['post'] = 'itemGroup/update/$1';
-$route['item-group/(:num)/delete']['post'] = 'itemGroup/delete/$1';
 
 // Wildcard
 $route['(.+)'] = 'errors/page_missing';

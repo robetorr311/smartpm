@@ -7,9 +7,11 @@ class ItemModel extends CI_Model
 
     public function allItems()
     {
+        $this->db->select('items.*, item_groups.name AS item_group_name');
         $this->db->from($this->table);
-        $this->db->where('is_deleted', FALSE);
-        $this->db->order_by('created_at', 'ASC');
+        $this->db->join('item_groups as item_groups', 'items.item_group_id=item_groups.id', 'left');
+        $this->db->where('items.is_deleted', FALSE);
+        $this->db->order_by('items.created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -25,10 +27,12 @@ class ItemModel extends CI_Model
     
     public function getItemById($id)
     {
+        $this->db->select('items.*, item_groups.name AS item_group_name');
         $this->db->from($this->table);
+        $this->db->join('item_groups as item_groups', 'items.item_group_id=item_groups.id', 'left');
         $this->db->where([
-            'id' => $id,
-            'is_deleted' => FALSE
+            'items.id' => $id,
+            'items.is_deleted' => FALSE
         ]);
         $query = $this->db->get();
         $result = $query->first_row();
