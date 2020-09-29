@@ -35,16 +35,6 @@ class ItemModel extends CI_Model
         return $result ? $result : false;
     }
 
-    public function getUnassignedItemList($select = "id, name")
-    {
-		$this->db->select($select);
-        $this->db->from($this->table);
-        $this->db->where('is_deleted', FALSE);
-		$this->db->where_not_in('id', "(SELECT item_id FROM item_groups_items_map)", false);
-		$query = $this->db->get();
-		return $query->result();
-    }
-
     public function insert($data)
     {
         $insert = $this->db->insert($this->table, $data);

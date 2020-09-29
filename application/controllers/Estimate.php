@@ -9,7 +9,7 @@ class Estimate extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel', 'AssembliesModel', 'FinancialModel', 'LeadMaterialModel','ItemGroupModel']);
+        $this->load->model(['EstimateModel', 'EstimateDescriptionGroupModel', 'EstimateDescriptionModel', 'LeadModel', 'UserModel', 'ItemModel', 'AdminSettingModel', 'ActivityLogsModel', 'AssembliesModel', 'FinancialModel', 'LeadMaterialModel']);
         $this->load->library(['pagination', 'form_validation', 'pdf']);
 
         $this->estimate = new EstimateModel();
@@ -17,7 +17,6 @@ class Estimate extends CI_Controller
         $this->estimate_desc = new EstimateDescriptionModel();
         $this->lead = new LeadModel();
         $this->user = new UserModel();
-        $this->itemGroup = new ItemGroupModel();
         $this->item = new ItemModel();
         $this->admin_setting = new AdminSettingModel();
         $this->activityLogs = new ActivityLogsModel();
@@ -78,9 +77,9 @@ class Estimate extends CI_Controller
                 redirect($o_sub_base_path != '' ? ('lead/' . $o_sub_base_path . 's') : 'leads');
             }
         }
-         // Dropdown values
+
         $clients = $this->lead->getLeadList();
-        $itemGroups = $this->itemGroup->getItemGroupList();
+        $items = $this->item->getItemList();
         $assemblies = $this->assemblies->getAssembliesList();
 
         $this->load->view('header', [
@@ -89,7 +88,7 @@ class Estimate extends CI_Controller
         ]);
         $this->load->view('estimate/create', [
             'clients' => $clients,
-            'itemGroups' => $itemGroups,
+            'items' => $items,
             'assemblies' => $assemblies,
             'clientId' => $clientId,
             'sub_base_path' => $sub_base_path
@@ -100,7 +99,7 @@ class Estimate extends CI_Controller
     public function store($clientId = false, $sub_base_path = '')
     {
         authAccess();
-     
+
         $o_sub_base_path = $sub_base_path;
         $sub_base_path = $sub_base_path != '' ? ($sub_base_path . '/') : $sub_base_path;
         if ($clientId) {
@@ -119,7 +118,6 @@ class Estimate extends CI_Controller
                 $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][sub_title]', 'Sub Title', 'trim|required');
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item Group', 'trim|required|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][unit_price]', 'Price', 'trim|numeric');
@@ -150,7 +148,6 @@ class Estimate extends CI_Controller
                         $order = 1;
                         foreach ($desc_group as $desc) {
                             $insert_desc = $this->estimate_desc->insert([
-                                'group_id' => $desc['group'],
                                 'item' => $desc['item'],
                                 'description' => $desc['description'],
                                 'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
@@ -211,7 +208,6 @@ class Estimate extends CI_Controller
                 unset($desc_group['id']);
                 unset($desc_group['sub_title']);
                 foreach ($desc_group as $id_desc => $desc) {
-                    $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][group]', 'Item Group', 'trim|required|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][item]', 'item', 'trim|required|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][amount]', 'Quantity', 'trim|numeric');
                     $this->form_validation->set_rules('desc_group[' . $id_desc_group . '][' . $id_desc . '][unit_price]', 'Price', 'trim|numeric');
@@ -260,7 +256,6 @@ class Estimate extends CI_Controller
                                 foreach ($desc_group as $desc) {
                                     if (isset($desc['id'])) {
                                         $update_desc = $this->estimate_desc->update($desc['id'], [
-                                            'group_id' => $desc['group'],
                                             'item' => $desc['item'],
                                             'description' => $desc['description'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
@@ -270,7 +265,6 @@ class Estimate extends CI_Controller
                                         ]);
                                     } else {
                                         $insert_desc = $this->estimate_desc->insert([
-                                            'group_id' => $desc['group'],
                                             'item' => $desc['item'],
                                             'description' => $desc['description'],
                                             'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
@@ -295,7 +289,6 @@ class Estimate extends CI_Controller
                                 $order = 1;
                                 foreach ($desc_group as $desc) {
                                     $insert_desc = $this->estimate_desc->insert([
-                                        'group_id' => $desc['group'],
                                         'item' => $desc['item'],
                                         'description' => $desc['description'],
                                         'amount' => empty($desc['amount']) ? NULL : $desc['amount'],
@@ -359,9 +352,8 @@ class Estimate extends CI_Controller
             $estimate_desc_groups = $this->estimate_desc_group->allEstimateDescGroupsByEstimateId($id);
             $estimate_desc_group_ids = array_column($estimate_desc_groups, 'id');
             $estimate_descs = $this->estimate_desc->allEstimateDescsByIds($estimate_desc_group_ids);
-            // Dropdown values
             $clients = $this->lead->getLeadList();
-            $itemGroups = $this->itemGroup->getItemGroupList();
+            $items = $this->item->getItemList();
 
             $descs = [];
             if ($estimate_descs) {
@@ -372,12 +364,12 @@ class Estimate extends CI_Controller
                     $descs[$desc->description_group_id][] = $desc;
                 }
             }
-            
+
             $vars['estimate'] = $estimate;
             $vars['estimate_desc_groups'] = $estimate_desc_groups;
             $vars['descs'] = $descs;
             $vars['clients'] = $clients;
-            $vars['itemGroups'] = $itemGroups;
+            $vars['items'] = $items;
             $vars['clientId'] = $clientId;
             $vars['sub_base_path'] = $sub_base_path;
 
@@ -385,7 +377,6 @@ class Estimate extends CI_Controller
                 'title' => $this->title,
                 'sortable' => true
             ]);
-            
             $this->load->view('estimate/show', $vars);
             $this->load->view('footer');
         } else {
@@ -477,7 +468,6 @@ class Estimate extends CI_Controller
             $pdfContent[] = '<div>';
             $pdfContent[] = '<table><tr>';
             $pdfContent[] = '<td>' . (($this->session->logoUrl != '') ? '<img width="100" src="' . base_url('assets/company_photo/' . $this->session->logoUrl) . '">' : 'LOGO') . '</td>';
-            
             $pdfContent[] = '<td align="right" style="line-height: 50px; vertical-align: middle;">Estimate #: ' . $estimate->estimate_number . '</td>';
             $pdfContent[] = '</tr></table>';
             $pdfContent[] = '</div>';
@@ -498,7 +488,6 @@ class Estimate extends CI_Controller
             $pdfContent[] = '</div>';
             $pdfContent[] = '<div>';
             $pdfContent[] = $estimate->title . '<br />';
-            
             $pdfContent[] = '<table cellspacing="0" cellpadding="5"><tr style="background-color: #333; color: #FFF;"><th width="258">Item</th><th width="70" align="right">Qty</th><th width="70">Unit</th><th width="70" align="right">Price</th><th width="70" align="right">Total</th></tr>';
 
             $total = 0;

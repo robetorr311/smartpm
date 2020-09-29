@@ -5,8 +5,7 @@ var aliases = {
     title: 'Title',
     note: 'Note',
     sub_title: 'Sub Title',
-    group:'Item Group',
-    item: 'Item',
+    item: 'Description',
     amount: 'Quantity',
     unit_price: 'Price'
 };
@@ -38,14 +37,6 @@ form.addEventListener("submit", function (e) {
 
         $(this).find('.duplicate-container.description-container').each(function () {
             var ele_index_2 = parseInt($(this).data('index'));
-
-            validationJson[`desc_group[${ele_index_1}][${ele_index_2}][group]`] = {
-                presence: true,
-                numericality: {
-                    notValid: ' contains invalid value'
-                }
-            };
-
             validationJson[`desc_group[${ele_index_1}][${ele_index_2}][item]`] = {
                 presence: true,
                 numericality: {
@@ -62,8 +53,7 @@ form.addEventListener("submit", function (e) {
                     notValid: ' contains invalid value'
                 }
             };
-            
-            _aliases[`desc_group[${ele_index_1}][${ele_index_2}][group]`] = aliases.group;
+
             _aliases[`desc_group[${ele_index_1}][${ele_index_2}][item]`] = aliases.item;
             _aliases[`desc_group[${ele_index_1}][${ele_index_2}][amount]`] = aliases.amount;
             _aliases[`desc_group[${ele_index_1}][${ele_index_2}][unit_price]`] = aliases.unit_price;
@@ -87,34 +77,13 @@ $(document).ready(function () {
         width: '100%'
     });
 
-    $('form#estimate_edit .group-container .items-dropdown').each(function (i, e) {
-        var oldval = $(e).data('oldval');
-        var groupVal = $(e).closest('.duplicate-container.description-container').find('.groups-dropdown').val();
-        $.ajax({
-            url: '/item-group/ajax-record/' + groupVal,
-            type: 'GET'
-        }).done(function (response) {
-            if (response != 'ERROR') {
-                var results = JSON.parse(response);
-                var option_data = "<option value=''disabled selected>Select Item</option>";
-                if (results && results.items && results.items.length > 0) {
-                    results.items.forEach((item) => {
-                        option_data += "<option value='" + item.id + "'>" + item.name + "</option>";
-                    });
-                }
-                $(e).closest('.duplicate-container.description-container').find('.items-dropdown').html(option_data);
-                $(e).closest('.duplicate-container.description-container').find('.items-dropdown').val(oldval);
-            }
-        });
-    });
-
     $('form#estimate_edit .group-container select').select2({
         width: '100%'
     });
 
     $('form#estimate_edit .group-container select, form#estimate_edit .group-container input').on('input', itemValuesChange);
 
-    $('form#estimate_edit').on('change', '.group-container .items-dropdown', function () {
+    $('form#estimate_edit').on('change', '.group-container select', function () {
         var selectEl = $(this);
         var itemId = selectEl.val();
         $.ajax({
@@ -130,7 +99,6 @@ $(document).ready(function () {
 
     $('form#estimate_edit').on('click', '.duplicate-container.group-container .duplicate-buttons.group-duplicate-buttons span#add', function () {
         var index = 0;
-        
 
         // find next index for new controls
         $('.duplicate-container.group-container').each(function () {
@@ -141,13 +109,11 @@ $(document).ready(function () {
         });
 
         // find dropdown list
-
-        // Groups dropdown
-        var options_groups = '';
-        $(this).closest('.duplicate-container.group-container').find('.groups-dropdown').first().find('option').each(function () {
+        var options = '';
+        $(this).closest('.duplicate-container.group-container').find('select').first().find('option').each(function () {
             var option = $(this);
             var optionVal = option.val();
-            options_groups += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
+            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
         });
 
         var htmlToAdd = `<div data-index="${index}" class="duplicate-container group-container">
@@ -176,10 +142,7 @@ $(document).ready(function () {
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-3">
-                                <label>Item Group<span class="red-mark">*</span></label>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label>Item<span class="red-mark">*</span></label>
                             </div>
                             <div class="col-md-5 no-vertical-padding">
@@ -202,19 +165,10 @@ $(document).ready(function () {
                         </div>
                         <div class="sortable-items">
                             <div data-index="0" class="row duplicate-container description-container">
-                                <div class="col-md-6 no-vertical-padding">
-                                    <div class ="row">
-                                        <div class="col-md-6">
-                                            <i class="fa fa-bars handle" aria-hidden="true"></i>
-                                            <select name="desc_group[${index}][0][group]" class="form-control groups-dropdown">${options_groups}</select>
-                                            
-                                        </div>
-                                        <div class="col-md-6">
-                                            <select name="desc_group[${index}][0][item]" class="form-control items-dropdown"><option value="" disabled selected>Select Item</option></select>
-                                        </div>
-                                    </div>
-                                   
-                                    <textarea class="form-control item-description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
+                                <div class="col-md-6">
+                                <i class="fa fa-bars handle" aria-hidden="true"></i>
+                                    <select name="desc_group[${index}][0][item]" class="form-control">${options}</select>
+                                    <textarea class="form-control item_description" name="desc_group[${index}][0][description]" placeholder="Description"></textarea>
                                 </div>
                                 <div class="col-md-5 no-vertical-padding">
                                     <div class="row">
@@ -276,28 +230,18 @@ $(document).ready(function () {
             }
         });
 
-         // find dropdown list
-
-        // Groups dropdown
-        var options_groups = '';
-        $(this).closest('.duplicate-container').find('.groups-dropdown').find('option').each(function () {
+        // find dropdown list
+        var options = '';
+        $(this).closest('.duplicate-container').find('select').find('option').each(function () {
             var option = $(this);
             var optionVal = option.val();
-            options_groups += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
+            options += '<option value="' + optionVal + '"' + (optionVal == '' ? ' disabled selected' : '') + '>' + option.html() + '</option>';
         });
 
         var htmlToAdd = `<div data-index="${index}" class="row duplicate-container description-container">
-            <div class="col-md-6 no-vertical-padding">
-                <div class="row">
-                    <div class="col-md-6">
-                        <i class="fa fa-bars handle" aria-hidden="true"></i>
-                        <select name="desc_group[${parent_index}][${index}][group]" class="form-control groups-dropdown">${options_groups}</select>
-                        
-                    </div>
-                    <div class="col-md-6">
-                        <select name="desc_group[${parent_index}][${index}][item]" class="form-control items-dropdown"><option value="" disabled selected>Select Item</option></select>
-                    </div>
-                </div>
+            <div class="col-md-6">
+                <i class="fa fa-bars handle" aria-hidden="true"></i>
+                <select name="desc_group[${parent_index}][${index}][item]" class="form-control">${options}</select>
                 <textarea class="form-control item_description" name="desc_group[${parent_index}][${index}][description]" placeholder="Description"></textarea>
             </div>
             <div class="col-md-5 no-vertical-padding">
@@ -355,26 +299,4 @@ $(document).ready(function () {
             currency: 'USD',
         }));
     }
-
-    // Get items by group id
-    $('form#estimate_edit').on('change', '.group-container .groups-dropdown', function () {
-        var selectEl = $(this);
-        var group_id = selectEl.val();
-        $.ajax({
-            url: '/item-group/ajax-record/' + group_id,
-            type: 'GET'
-        }).done(function (response) {
-            if (response != 'ERROR') {
-                var results = JSON.parse(response);
-                var option_data = "<option value=''disabled selected>Select Item</option>";
-                if (results && results.items && results.items.length > 0) {
-                    results.items.forEach((item) => {
-                        option_data += "<option value='" + item.id + "'>" + item.name + "</option>";
-                    });
-                }
-                selectEl.closest('.description-container').find('.items-dropdown').html(option_data);
-            }
-        });
-    });
-
 });

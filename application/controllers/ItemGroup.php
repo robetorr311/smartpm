@@ -191,29 +191,4 @@ class ItemGroup extends CI_Controller
         }
         redirect('item-groups');
     }
-
-    public function ajaxRecord($id)
-    {
-        authAccess();
-
-        if ($id == 0) {
-            $items = $this->item->getUnassignedItemList();
-            if ($items) {
-                echo json_encode([
-                    'items' => $items
-                ]);
-            } else {
-                echo 'ERROR';
-            }
-        } else {
-            $itemGroup = $this->itemGroup->getItemGroupById($id);
-            $groupItems = $this->item_groups_items_map->getItemsByItemGroupId($id);
-            if ($itemGroup && $groupItems) {
-                $itemGroup->items = $groupItems;
-                echo json_encode($itemGroup);
-            } else {
-                echo 'ERROR';
-            }
-        }
-    }
 }
