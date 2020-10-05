@@ -147,9 +147,8 @@ class Notify
 
     /*** Sends an email when user is tagged in task ***/
 
-    public function sendTaskTagNotificationtag($email, $task_id, $task_name, $note, $link)
+    public function sendTaskTagNotification($email, $task_id, $task_name, $note, $link)
     {
-        $username=$this->userm->getUserNameByEmailId($email);
         $task=$this->taskm->getTaskById($task_id);
         $this->CI->email->to($email);
         $this->CI->email->subject('You have been tagged in a Task - SmartPM');
@@ -160,48 +159,16 @@ class Notify
             'note' => $note,
             'link' => $link,
             'theme_color'=> $this->theme_color,
-            'username'=>$username,
             'created_user_fullname'=>$task->created_user_fullname,
             'assigned_user_fullname'=>$task->assigned_user_fullname
         ], true);
         $this->CI->email->message($html_message);
         $this->CI->email->send();
     }
-
-
-    public function sendTaskTagNotification($email, $task_id, $task_name, $note, $link)
-    {
-        $this->CI->email->to($email);
-        $this->CI->email->subject('You have been tagged in a Task - SmartPM');
-        $html_message = $this->CI->load->view('template/email/task-tag-notification.php', [
-            'logoUrl' => $this->logoUrl,
-            'task_id' => $task_id,
-            'task_name' => $task_name,
-            'note' => $note,
-            'link' => $link,
-            'theme_color'=> $this->theme_color,
-        ], true);
-        $this->CI->email->message($html_message);
-        $this->CI->email->send();
-    }
-
-    public function sendTaskTagNotificationMobtag($phone, $task_id, $task_name, $note, $link)
-    {
-        $task=$this->taskm->getTaskById($task_id);
-        $text= ' Task Created by: '. $task->created_user_fullname . ' Assignated to: '.$task->assigned_user_fullname.' ';        
-        if ($this->twilioClient) {
-            $this->twilioClient->messages->create(
-                $phone,
-                [
-                    'from' => $this->twilio_number,
-                    'body' => 'Smartpm.app: #' . $task_id . ' ' . $task_name . ' (' . $link . ') "' . $text . $note . '"'
-                ]
-            );
-        }
-    }
-
     public function sendTaskTagNotificationMob($phone, $task_id, $task_name, $note, $link)
     {
+        $task=$this->taskm->getTaskById($task_id);
+        $text= ' Task Asignated and Created by: '. $task->created_user_fullname . ' Assignated to: '.$task->assigned_user_fullname.' '; 
         if ($this->twilioClient) {
             $this->twilioClient->messages->create(
                 $phone,

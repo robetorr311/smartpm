@@ -37,7 +37,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tbody>
                       <tr>
                         <td style="border-collapse: collapse; mso-line-height-rule: exactly; font-family: 'Open Sans', Arial, sans-serif; font-size: 16px; line-height: 20px; color: #333333;" valign="top" align="left">
-                          <p>Smartpm.app: <a target="_blank" href="<?= $link ?>"><b>#<?= $task_id ?> <?= $task_name ?> - <?= $username ?> Created by: <?= $created_user_fullname ?> Assignated to: <?= $assigned_user_fullname ?>  </b></a> "<?= $note ?>"</p>
+                          <p>Smartpm.app: <a target="_blank" href="<?= $link ?>"><b>#<?= $task_id ?> <?= $task_name ?> - Created And Tagged by: <?= $created_user_fullname ?> Task Assignated to: <?= $assigned_user_fullname ?>  </b></a> "<?= $note ?>"</p>
                         </td>
                       </tr>
                     </tbody>

@@ -141,7 +141,7 @@ class Tasks extends CI_Controller
                     $userEmailIds = $this->user->getEmailIdArrByUserIds($users);
                     foreach ($userEmailIds as $userEmailId) {
                         $this->notify = new Notify();
-                        $this->notify->sendTaskTagNotificationtag($userEmailId, $insert, $taskData['name'], $taskData['note'], base_url('task/' . $insert));
+                        $this->notify->sendTaskTagNotification($userEmailId, $insert, $taskData['name'], $taskData['note'], base_url('task/' . $insert));
                     }
 
                     $phoneNos = $this->user->getPhoneArrByUserIds($users);
