@@ -214,7 +214,18 @@ class UserModel extends CI_Model
 		$query = $this->db->get();
 		return array_column($query->result_array(), 'email_id');
 	}
-
+	public function getUserNameByEmailId($email_id)
+	{
+		$this->db->select('username');
+		$this->db->from($this->table);
+		$this->db->where([
+			'email_id' => $email_id,
+			'is_deleted' => FALSE
+		]);
+		$query = $this->db->get();
+		$result = $query->first_row();
+		return $result ? $result : false;
+	}
 	public function getMobEmailIdArrByUserIds($userIds)
 	{
 		$this->db->select("CONCAT(users.cell_1, user_cell_notif_suffixs.suffix) AS mob_email_id");
